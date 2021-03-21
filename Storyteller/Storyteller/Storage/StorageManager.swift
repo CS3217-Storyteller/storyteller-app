@@ -29,7 +29,7 @@ class StorageManager {
         return url.deletingPathExtension().lastPathComponent
     }
 
-    func getLevel(at index: Int) -> Project? {
+    func getProject(at index: Int) -> Project? {
         guard dataURLs.indices.contains(index) else {
             return nil
         }
