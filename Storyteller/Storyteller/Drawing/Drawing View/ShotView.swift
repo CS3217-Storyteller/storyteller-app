@@ -35,11 +35,11 @@ class ShotView: UIView {
     }
 
     func setPKDelegate(delegate: PKCanvasViewDelegate) {
-        layerViews.forEach({ $0.delegate = delegate})
+        layerViews.forEach({ $0.delegate = delegate })
     }
 
     func updateZoomScale(scale: CGFloat) {
-        layerViews.forEach{ layerView in
+        layerViews.forEach { layerView in
             // TODO: Enable the following two lines after
             // implementing canvas rotation and zooming
 //            layerView.minimumZoomScale = scale * Constants.minLayerZoomScale

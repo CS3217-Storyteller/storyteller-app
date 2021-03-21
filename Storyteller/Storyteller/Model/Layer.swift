@@ -12,4 +12,3 @@ struct Layer {
     var drawing: PKDrawing
     var canvasSize: CGSize
 }
-

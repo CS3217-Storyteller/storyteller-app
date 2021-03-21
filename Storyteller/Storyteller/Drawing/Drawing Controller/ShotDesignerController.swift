@@ -10,7 +10,7 @@ import PencilKit
 
 class ShotDesignerController: UIViewController {
 
-    @IBOutlet weak var shotView: ShotView!
+    @IBOutlet private var shotView: ShotView!
 
     var toolPicker = PKToolPicker()
 
@@ -45,7 +45,6 @@ class ShotDesignerController: UIViewController {
 
         shotView.setPKDelegate(delegate: self)
     }
-
 
     var canvasScale = CGFloat(1) {
         didSet {

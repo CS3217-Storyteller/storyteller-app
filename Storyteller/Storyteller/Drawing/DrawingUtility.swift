@@ -10,11 +10,12 @@ import Foundation
 class DrawingUtility {
     static func generateLayerView(for layer: Layer) -> LayerView {
         let layerView = LayerView(canvasSize: layer.canvasSize)
-        
+
         switch layer.layerType {
         case .drawing:
             layerView.drawing = layer.drawing
-        default: break
+        default:
+            break
         }
 
         return layerView
