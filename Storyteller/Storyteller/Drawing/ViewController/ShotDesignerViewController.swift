@@ -8,12 +8,10 @@ import UIKit
 import PencilKit
 
 class ShotDesignerViewController: UIViewController {
-
     @IBOutlet private var shotView: ShotView!
-    @IBOutlet var duplicateButton: UIButton!
+    @IBOutlet private var duplicateButton: UIButton!
     
     var toolPicker = PKToolPicker()
-
     // should be intialized via segue
     // TODO enable the following line after implementing ModelManager
 //    var modelManager: ModelManager!
@@ -23,16 +21,15 @@ class ShotDesignerViewController: UIViewController {
     var canvasSize: CGSize {
         modelManager.getCanvasSize(of: shotLabel)
     }
-    
-    
+
     func setModelManager(to modelManager: ModelManager) {
         self.modelManager = modelManager
     }
-    
+
     func setShotLabel(to shotLabel: ShotLabel) {
         self.shotLabel = shotLabel
     }
-    
+
     // MARK: - View Life Cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -61,11 +58,8 @@ class ShotDesignerViewController: UIViewController {
                 shotView.setUpLayerViews(layerViews, toolPicker: toolPicker)
             }
         }
-        
-        
         shotView.layerViews.last?.becomeFirstResponder()
         shotView.setPKDelegate(delegate: self)
-        
     }
 
     var canvasScale = CGFloat(1) {
@@ -73,7 +67,6 @@ class ShotDesignerViewController: UIViewController {
             shotView.updateZoomScale(scale: canvasScale)
         }
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
@@ -81,14 +74,14 @@ class ShotDesignerViewController: UIViewController {
         self.view.addGestureRecognizer(swipeRight)
         self.view.bringSubviewToFront(self.duplicateButton)
     }
-    
+
     @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
-        if (gesture.location(in: self.view).x < 50) {
+        if gesture.location(in: self.view).x < 50 {
             dismiss(animated: true, completion: nil)
         }
     }
 
-    @IBAction func duplicateShot(_ sender: UIButton) {
+    @IBAction private func duplicateShot(_ sender: UIButton) {
         guard let shot = self.modelManager.getShot(of: self.shotLabel) else {
             return
         }
@@ -96,7 +89,7 @@ class ShotDesignerViewController: UIViewController {
         self.modelManager.addShot(ofShot: newShotLabel, layers: shot.layers, backgroundColor: .white)
 //        self.shotLabel = newShotLabel
     }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         canvasScale = shotView.bounds.width / canvasSize.width

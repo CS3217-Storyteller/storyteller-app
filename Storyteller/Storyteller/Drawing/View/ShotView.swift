@@ -19,10 +19,6 @@ class ShotView: UIView {
         }
 
         layerViews.forEach({ add(layerView: $0, toolPicker: toolPicker) })
-        
-        
-        
-        
     }
 
     func add(layerView: LayerView, toolPicker: PKToolPicker) {

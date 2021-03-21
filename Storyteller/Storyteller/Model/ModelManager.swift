@@ -18,7 +18,7 @@ class ModelManager {
     }
 
     func getBackgroundColor(of shotLabel: ShotLabel) -> UIColor? {
-        return getShot(of: shotLabel)?.backgroundColor.uiColor
+        getShot(of: shotLabel)?.backgroundColor.uiColor
     }
 
     func getProject(of projectLabel: ProjectLabel) -> Project? {
@@ -128,8 +128,8 @@ class ModelManager {
     }
 
     func addLayer(type: LayerType,
-                  withDrawing drawing: PKDrawing = PKDrawing(),
-                  to shotLabel: ShotLabel) {
+                  to shotLabel: ShotLabel,
+                  withDrawing drawing: PKDrawing = PKDrawing()) {
         let projectIndex = shotLabel.projectIndex
         guard let shot = getShot(of: shotLabel) else {
             return

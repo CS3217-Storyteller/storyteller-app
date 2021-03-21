@@ -12,8 +12,8 @@ struct Scene: Codable {
     let canvasSize: CGSize
 
     mutating func updateShot(ofShot shotLabel: ShotLabel,
-                    atLayer layer: Int,
-                    withDrawing drawing: PKDrawing) {
+                             atLayer layer: Int,
+                             withDrawing drawing: PKDrawing) {
         let shotIndex = shotLabel.shotIndex
         guard shots.indices.contains(shotIndex) else {
             return
@@ -33,4 +33,3 @@ struct Scene: Codable {
         shots[shotIndex].addLayer(layer)
     }
 }
-

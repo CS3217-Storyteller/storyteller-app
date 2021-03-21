@@ -9,12 +9,12 @@ import UIKit
 
 class ProjectViewController: UIViewController {
 
-    @IBOutlet var collectionView: UICollectionView!
-    
-    private var modelManager: ModelManager = ModelManager()
-    
+    @IBOutlet private var collectionView: UICollectionView!
+
+    private var modelManager = ModelManager()
+
     private var NumOfProjects: Int = 0
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         modelManager.observers.append(self)
@@ -29,8 +29,8 @@ class ProjectViewController: UIViewController {
         self.view.addSubview(collectionView)
         self.NumOfProjects = self.modelManager.projects.count
     }
-    
-    @IBAction func addProject(_ sender: UIButton) {
+
+    @IBAction private func addProject(_ sender: UIButton) {
         let canvasSize = Constants.defaultCanvasSize
         let projectTitle = "Project \(self.NumOfProjects)"
         self.modelManager.addProject(canvasSize: canvasSize, title: projectTitle)
@@ -40,8 +40,11 @@ class ProjectViewController: UIViewController {
 }
 
 extension ProjectViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let projectViewCell = self.collectionView.dequeueReusableCell(withReuseIdentifier: ProjectViewCell.identifier, for: indexPath) as? ProjectViewCell else {
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let projectViewCell = self.collectionView
+                .dequeueReusableCell(withReuseIdentifier: ProjectViewCell.identifier,
+                                     for: indexPath) as? ProjectViewCell else {
             return UICollectionViewCell()
         }
         projectViewCell.setTitle(from: indexPath.row)
@@ -49,35 +52,43 @@ extension ProjectViewController: UICollectionViewDelegate {
     }
 }
 
-    
 extension ProjectViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.modelManager.projects.count
+        self.modelManager.projects.count
     }
 }
 
 extension ProjectViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
         let itemWidth = (self.view.frame.width / 5) - 5
         let itemHeight = (self.view.frame.width / 5) - 5
         return CGSize(width: itemWidth, height: itemHeight)
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 3
+
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        3
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 3
+
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        3
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3)
+
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets {
+        UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.collectionView.deselectItem(at: indexPath, animated: true)
-        guard let sceneViewController = self.storyboard?.instantiateViewController(identifier: "SceneViewController") as? SceneViewController else {
+        guard let sceneViewController = self.storyboard?
+                .instantiateViewController(identifier: "SceneViewController") as? SceneViewController else {
             return
         }
         sceneViewController.modalPresentationStyle = .fullScreen

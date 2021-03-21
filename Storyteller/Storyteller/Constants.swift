@@ -17,4 +17,5 @@ class Constants {
 
     static let maxLayerZoomScale = CGFloat(3)
     static let minLayerZoomScale = CGFloat(0.2)
+
 }
