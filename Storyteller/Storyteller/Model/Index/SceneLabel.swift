@@ -7,10 +7,18 @@
 
 import Foundation
 
-class SceneLabel {
+struct SceneLabel {
+    var projectLabel: ProjectLabel
     var sceneIndex: Int
 
-    init(sceneIndex: Int) {
+    init(projectLabel: ProjectLabel, sceneIndex: Int) {
+        self.projectLabel = projectLabel
         self.sceneIndex = sceneIndex
+    }
+
+    // TODO: Delete this after fully implement labelling
+    init() {
+        self.projectLabel = ProjectLabel()
+        self.sceneIndex = 0
     }
 }

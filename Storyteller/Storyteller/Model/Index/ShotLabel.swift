@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ShotLabel {
+struct ShotLabel {
     var sceneLabel: SceneLabel
     var shotIndex: Int
 
@@ -18,7 +18,7 @@ class ShotLabel {
 
     // TODO: Delete this after fully implement labelling
     init() {
-        self.sceneLabel = SceneLabel(sceneIndex: 0)
+        self.sceneLabel = SceneLabel()
         self.shotIndex = 0
     }
 }
