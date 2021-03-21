@@ -22,22 +22,37 @@ class ModelManager {
 
     func getProject(of projectLabel: ProjectLabel) -> Project? {
         let projectIndex = projectLabel.projectIndex
+        guard projectIndex < projects.count && projectIndex >= 0 else {
+            return nil
+        }
         return projects[projectIndex]
     }
 
     func getScene(of sceneLabel: SceneLabel) -> Scene? {
-        let projectIndex = sceneLabel.projectIndex
+        let projectLabel = sceneLabel.projectLabel
+        guard let project = getProject(of: projectLabel) else {
+            return nil
+        }
+        let scenes = project.scenes
         let sceneIndex = sceneLabel.sceneIndex
-        let scene = projects[projectIndex].scenes[sceneIndex]
+        guard sceneIndex < scenes.count && sceneIndex >= 0 else {
+            return nil
+        }
+        let scene = scenes[sceneIndex]
         return scene
     }
 
     func getShot(of shotLabel: ShotLabel) -> Shot? {
-        let projectIndex = shotLabel.projectIndex
-        let sceneIndex = shotLabel.sceneIndex
+        let sceneLabel = shotLabel.sceneLabel
+        guard let scene = getScene(of: sceneLabel) else {
+            return nil
+        }
+        let shots = scene.shots
         let shotIndex = shotLabel.shotIndex
-        let scene = projects[projectIndex].scenes[sceneIndex]
-        let shot = scene.shots[shotIndex]
+        guard shotIndex < shots.count && shotIndex >= 0 else {
+            return nil
+        }
+        let shot = shots[shotIndex]
         return shot
     }
 
@@ -78,7 +93,6 @@ class ModelManager {
         guard let project = getProject(of: projectLabel) else {
             return
         }
-
         let index = projects[projectIndex].scenes.count
         let label = SceneLabel(projectLabel: projectLabel, sceneIndex: index)
         let scene = Scene(shots: shots, label: label, canvasSize: project.canvasSize)
