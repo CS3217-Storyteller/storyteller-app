@@ -22,7 +22,7 @@
 		A29A18D42607198600710943 /* StorageUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A18D22607198600710943 /* StorageUtility.swift */; };
 		A29A18F026071A3700710943 /* StorytellerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A18EF26071A3700710943 /* StorytellerTests.swift */; };
 		B3755AA22605F21400EC0F56 /* LayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AA12605F21400EC0F56 /* LayerView.swift */; };
-		B3755AAB26062B9700EC0F56 /* ShotDesignerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AAA26062B9700EC0F56 /* ShotDesignerController.swift */; };
+		B3755AAB26062B9700EC0F56 /* ShotDesignerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AAA26062B9700EC0F56 /* ShotDesignerViewController.swift */; };
 		B3755AB3260643C000EC0F56 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AB2260643C000EC0F56 /* Constants.swift */; };
 		B3755AB92606454900EC0F56 /* ShotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AB82606454900EC0F56 /* ShotView.swift */; };
 		B3755AC0260646F200EC0F56 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755ABF260646F200EC0F56 /* ModelManager.swift */; };
@@ -63,7 +63,7 @@
 		A29A18EF26071A3700710943 /* StorytellerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorytellerTests.swift; sourceTree = "<group>"; };
 		A29A18F126071A3700710943 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B3755AA12605F21400EC0F56 /* LayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerView.swift; sourceTree = "<group>"; };
-		B3755AAA26062B9700EC0F56 /* ShotDesignerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotDesignerController.swift; sourceTree = "<group>"; };
+		B3755AAA26062B9700EC0F56 /* ShotDesignerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotDesignerViewController.swift; sourceTree = "<group>"; };
 		B3755AB2260643C000EC0F56 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B3755AB82606454900EC0F56 /* ShotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotView.swift; sourceTree = "<group>"; };
 		B3755ABF260646F200EC0F56 /* ModelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
@@ -174,32 +174,32 @@
 			path = StorytellerTests;
 			sourceTree = "<group>";
 		};
-		B3755AA02605F1E100EC0F56 /* Drawing View */ = {
+		B3755AA02605F1E100EC0F56 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				B3755AA12605F21400EC0F56 /* LayerView.swift */,
 				B3755AB82606454900EC0F56 /* ShotView.swift */,
 			);
-			path = "Drawing View";
+			path = View;
 			sourceTree = "<group>";
 		};
 		B3755AA826062B7500EC0F56 /* Drawing */ = {
 			isa = PBXGroup;
 			children = (
 				B3755ABE260646E600EC0F56 /* Model */,
-				B3755AA926062B7C00EC0F56 /* Drawing Controller */,
-				B3755AA02605F1E100EC0F56 /* Drawing View */,
+				B3755AA926062B7C00EC0F56 /* ViewController */,
+				B3755AA02605F1E100EC0F56 /* View */,
 				B3755AD526065C0700EC0F56 /* DrawingUtility.swift */,
 			);
 			path = Drawing;
 			sourceTree = "<group>";
 		};
-		B3755AA926062B7C00EC0F56 /* Drawing Controller */ = {
+		B3755AA926062B7C00EC0F56 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				B3755AAA26062B9700EC0F56 /* ShotDesignerController.swift */,
+				B3755AAA26062B9700EC0F56 /* ShotDesignerViewController.swift */,
 			);
-			path = "Drawing Controller";
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		B3755ABE260646E600EC0F56 /* Model */ = {
@@ -324,7 +324,7 @@
 			files = (
 				A209158C26070595001A242E /* SceneShotViewCell.swift in Sources */,
 				A2091585260703D1001A242E /* SceneViewController.swift in Sources */,
-				B3755AAB26062B9700EC0F56 /* ShotDesignerController.swift in Sources */,
+				B3755AAB26062B9700EC0F56 /* ShotDesignerViewController.swift in Sources */,
 				A209158926070553001A242E /* SceneHeaderView.swift in Sources */,
 				A29A18D42607198600710943 /* StorageUtility.swift in Sources */,
 				B3755AC0260646F200EC0F56 /* ModelManager.swift in Sources */,

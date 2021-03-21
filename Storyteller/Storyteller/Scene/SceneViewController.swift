@@ -75,7 +75,13 @@ extension SceneViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.collectionView.deselectItem(at: indexPath, animated: true)
-        print(indexPath)
+        
+        guard let shotDesignerController = self.storyboard?.instantiateViewController(identifier: "ShotDesignerViewController") as? ShotDesignerViewController else {
+            return
+        }
+        shotDesignerController.modalPresentationStyle = .fullScreen
+        self.present(shotDesignerController, animated: true, completion: nil)
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {

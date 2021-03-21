@@ -8,7 +8,7 @@
 import UIKit
 import PencilKit
 
-class ShotDesignerController: UIViewController {
+class ShotDesignerViewController: UIViewController {
 
     @IBOutlet private var shotView: ShotView!
 
@@ -61,7 +61,7 @@ class ShotDesignerController: UIViewController {
 }
 
 // MARK: - Actions
-extension ShotDesignerController {
+extension ShotDesignerViewController {
     @IBAction private func zoomToFit() {
         shotView.updateZoomScale(scale: canvasScale)
     }
@@ -69,7 +69,7 @@ extension ShotDesignerController {
 }
 
 // MARK: - PKCanvasViewDelegate
-extension ShotDesignerController: PKCanvasViewDelegate {
+extension ShotDesignerViewController: PKCanvasViewDelegate {
     func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
         guard let layerView = canvasView as? LayerView,
               let index = shotView.layerViews.firstIndex(of: layerView) else {
