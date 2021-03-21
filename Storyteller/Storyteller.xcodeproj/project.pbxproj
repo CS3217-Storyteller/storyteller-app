@@ -20,9 +20,7 @@
 		A24F63022600CC7500FC7CD4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A24F63002600CC7500FC7CD4 /* LaunchScreen.storyboard */; };
 		A29A18F026071A3700710943 /* StorytellerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A18EF26071A3700710943 /* StorytellerTests.swift */; };
 		A29A19302607239E00710943 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A192C2607239E00710943 /* StorageManager.swift */; };
-		A29A19312607239E00710943 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A192F2607239E00710943 /* StorageManager.swift */; };
 		A29A19322607239E00710943 /* StorageUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A192E2607239E00710943 /* StorageUtility.swift */; };
-		A29A19332607239E00710943 /* StorageUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A192D2607239E00710943 /* StorageUtility.swift */; };
 		A29A19522607242000710943 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19272607237100710943 /* ModelManager.swift */; };
 		A29A19552607242600710943 /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19282607237100710943 /* Layer.swift */; };
 		A29A19582607242800710943 /* Shot.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19292607237100710943 /* Shot.swift */; };
@@ -76,9 +74,7 @@
 		A29A19282607237100710943 /* Layer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layer.swift; sourceTree = "<group>"; };
 		A29A19292607237100710943 /* Shot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shot.swift; sourceTree = "<group>"; };
 		A29A192C2607239E00710943 /* StorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
-		A29A192D2607239E00710943 /* StorageUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageUtility.swift; sourceTree = "<group>"; };
 		A29A192E2607239E00710943 /* StorageUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageUtility.swift; sourceTree = "<group>"; };
-		A29A192F2607239E00710943 /* StorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		B3755AA12605F21400EC0F56 /* LayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerView.swift; sourceTree = "<group>"; };
 		B3755AAA26062B9700EC0F56 /* ShotDesignerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotDesignerViewController.swift; sourceTree = "<group>"; };
 		B3755AB2260643C000EC0F56 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -199,17 +195,14 @@
 				A29A19282607237100710943 /* Layer.swift */,
 				A29A19292607237100710943 /* Shot.swift */,
 			);
-			name = Model;
-			path = "/Users/johnp/Projects/storyteller-app/Storyteller/Storyteller/Model";
-			sourceTree = "<absolute>";
+			path = Model;
+			sourceTree = "<group>";
 		};
 		A29A192B2607239E00710943 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
 				A29A192C2607239E00710943 /* StorageManager.swift */,
-				A29A192F2607239E00710943 /* StorageManager.swift */,
 				A29A192E2607239E00710943 /* StorageUtility.swift */,
-				A29A192D2607239E00710943 /* StorageUtility.swift */,
 			);
 			name = Storage;
 			path = Storyteller/Storage;
@@ -362,10 +355,8 @@
 				A29A19672607244000710943 /* ProjectLabel.swift in Sources */,
 				B3755AA22605F21400EC0F56 /* LayerView.swift in Sources */,
 				A29A196A2607244200710943 /* SceneLabel.swift in Sources */,
-				A29A19332607239E00710943 /* StorageUtility.swift in Sources */,
 				A24F62F82600CC7300FC7CD4 /* SceneDelegate.swift in Sources */,
 				B3755AB3260643C000EC0F56 /* Constants.swift in Sources */,
-				A29A19312607239E00710943 /* StorageManager.swift in Sources */,
 				A209157F2606FE3F001A242E /* ProjectViewController.swift in Sources */,
 				B3755AD626065C0700EC0F56 /* DrawingUtility.swift in Sources */,
 			);
