@@ -21,11 +21,16 @@ class SceneShotViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.contentView.backgroundColor = .white
         self.contentView.addSubview(self.imageView)
     }
     
     required init?(coder: NSCoder) {
         fatalError()
+    }
+    
+    func setImage(image: UIImage) {
+        self.imageView.image = image
     }
     
     override func layoutSubviews() {

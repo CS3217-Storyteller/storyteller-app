@@ -14,8 +14,6 @@ class SceneViewController: UIViewController {
     
     var projectLabel: ProjectLabel?
     var modelManager: ModelManager?
-    
-    var NumOfScenes: Int = 0
 
     func setProjectLabel(to projectLabel: ProjectLabel) {
         self.projectLabel = projectLabel
@@ -62,10 +60,10 @@ class SceneViewController: UIViewController {
 
 extension SceneViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let sceneCell = self.collectionView.dequeueReusableCell(withReuseIdentifier:
-                                                            SceneShotViewCell.identifier, for: indexPath)
-        let addCell = self.collectionView.dequeueReusableCell(withReuseIdentifier:
-                                                            AddShotViewCell.identifier, for: indexPath)
+        guard let sceneCell = self.collectionView.dequeueReusableCell(withReuseIdentifier: SceneShotViewCell.identifier, for: indexPath) as? SceneShotViewCell,
+              let addCell = self.collectionView.dequeueReusableCell(withReuseIdentifier: AddShotViewCell.identifier, for: indexPath) as? AddShotViewCell else {
+            return UICollectionViewCell()
+        }
         guard let modelManager = self.modelManager,
               let projectLabel = self.projectLabel
         else {
@@ -77,6 +75,15 @@ extension SceneViewController: UICollectionViewDelegate {
         }
         
         if (indexPath.row < scene.shots.count) {
+            
+            let shotLabel = ShotLabel(sceneLabel: sceneLabel, shotIndex: indexPath.row)
+            guard let shot = modelManager.getShot(of: shotLabel) else {
+                return UICollectionViewCell()
+            }
+            if !shot.layers.isEmpty {
+                let thumbnail = shot.layers[0].drawing.image(from: CGRect(x: 0, y: 0, width: Constants.screenWidth, height: Constants.screenHeight), scale: 1.0)
+                sceneCell.setImage(image: thumbnail)
+            }
             return sceneCell
         } else {
             return addCell
@@ -144,28 +151,27 @@ extension SceneViewController: UICollectionViewDelegateFlowLayout {
             return
         }
         shotDesignerController.modalPresentationStyle = .fullScreen
-        self.present(shotDesignerController, animated: true, completion: nil)
         
-//        guard let modelManager = self.modelManager,
-//              let projectLabel = self.projectLabel
-//        else {
-//            return
-//        }
-//        let sceneLabel = SceneLabel(projectLabel: projectLabel, sceneIndex: indexPath.section)
-//        guard let scene = modelManager.getScene(of: sceneLabel) else {
-//            return
-//        }
-//        
-//        if (indexPath.row < scene.shots.count) {
-//            self.present(shotDesignerController, animated: true, completion: nil)
-//        }
-//        
-//        else {
-//            self.present(shotDesignerController, animated: true, completion: nil)
-//        }
-//        
-
+        guard let modelManager = self.modelManager,
+              let projectLabel = self.projectLabel
+        else {
+            return
+        }
+        let sceneLabel = SceneLabel(projectLabel: projectLabel, sceneIndex: indexPath.section)
+        guard let scene = modelManager.getScene(of: sceneLabel) else {
+            return
+        }
         
+        let shotLabel = ShotLabel(sceneLabel: sceneLabel, shotIndex: indexPath.row)
+        
+        if (indexPath.row < scene.shots.count) {
+            shotDesignerController.setModelManager(to: modelManager)
+            shotDesignerController.setShotLabel(to: shotLabel)
+            self.present(shotDesignerController, animated: true, completion: nil)
+        } else {
+            modelManager.addShot(ofShot: shotLabel, layers: [], backgroundColor: .white)
+            self.collectionView.reloadData()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {

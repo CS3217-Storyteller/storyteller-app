@@ -15,6 +15,7 @@ struct Project: Codable {
     mutating func updateShot(ofShot shotLabel: ShotLabel,
                             atLayer layer: Int,
                             withDrawing drawing: PKDrawing) {
+        
         let sceneIndex = shotLabel.sceneIndex
         guard scenes.indices.contains(sceneIndex) else {
             return

@@ -17,6 +17,7 @@ class ProjectViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         self.collectionView.collectionViewLayout = layout
