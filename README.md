@@ -6,13 +6,40 @@ Marcus | Pan Yongjing | Tian Fang
 
 ### Overview
 
-Give an introduction of your project, you can probably copy-paste a lot of stuff from the project proposal. We will however be reading through it carefully so if you simply copy-pasted and didn't bother to fix some minor inconsistencies, we will take off points.
+> Give an introduction of your project, you can probably copy-paste a lot of stuff from the project proposal. We will however be reading through it carefully so if you simply copy-pasted and didn't bother to fix some minor inconsistencies, we will take off points.
+
+Storyteller is created to help filmmakers and videographers design their storyboards easily using their iPads. Users can draw rough sketches for their storyboard ideas and the application make it easy for them to manage storyboard projects, create multiple scenes, add shots to scenes, reorder shots and edit those shots in scenes.  Morever, Storyteller can allow them to share their storyboards with others (e.g. crew members, project mates etc.) via the application. This is significantly more efficient that the traditional method of printing physical copies or managing digital storyboards of incompatible formats.
+
+### Features and Specifications
+
+> Here is where you list the features and specifications of your project. It should be updated as the project develops.
+
+> Be specific. For example, are your gizmos resizable? Are the bounding areas of the triangles triangles or rectangles etc. Highlight some practical issues as well. When a user presses a key and the flipper flips, what happens if the user continues to hold down the key? Does the flipper stay up?
+
+View and Select Projects
+- User can view the projects that he has and select accordingly
+
+View Scenes and select Shots
+- User can see a list of all shots grouped by the scenes they belong to.
+- Shots are arranged in chronological order
+
+Canvas
+- User can draw on the canvas
+- Tools on the canvas
+  - Pens of different colour
+  - Ruler
 
 ### Features and Specifications
 
 Here is where you list the features and specifications of your project. It should be updated as the project develops.
 
 Be specific. For example, are your gizmos resizable? Are the bounding areas of the triangles triangles or rectangles etc. Highlight some practical issues as well. When a user presses a key and the flipper flips, what happens if the user continues to hold down the key? Does the flipper stay up?
+
+
+
+
+
+
 
 ### User Manual
 
