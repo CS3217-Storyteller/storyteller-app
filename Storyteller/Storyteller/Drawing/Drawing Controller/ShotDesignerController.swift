@@ -76,7 +76,6 @@ extension ShotDesignerController: PKCanvasViewDelegate {
               let index = shotView.layerViews.firstIndex(of: layerView) else {
             return
         }
-
-        modelManager.updateDrawing(ofShot: shotLabel, atLayer: index)
+        modelManager.updateDrawing(ofShot: shotLabel, atLayer: index, drawing: layerView.drawing)
     }
 }
