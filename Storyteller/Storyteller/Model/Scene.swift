@@ -27,7 +27,10 @@ struct Scene: Codable {
     }
 
     mutating func addLayer(_ layer: Layer, to shotLabel: ShotLabel) {
-        let index = shotLabel.shotIndex
-        shots[index].addLayer(layer)
+        let shotIndex = shotLabel.shotIndex
+        guard shots.indices.contains(shotIndex) else {
+            return
+        }
+        shots[shotIndex].addLayer(layer)
     }
 }
