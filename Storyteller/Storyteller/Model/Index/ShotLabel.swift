@@ -5,6 +5,8 @@
 //  Created by TFang on 20/3/21.
 //
 
+import Foundation
+
 struct ShotLabel {
     var sceneLabel: SceneLabel
     var shotIndex: Int
@@ -16,7 +18,15 @@ struct ShotLabel {
 
     // TODO: Delete this after fully implement labelling
     init() {
-        self.sceneLabel = SceneLabel(sceneIndex: 0)
+        self.sceneLabel = SceneLabel()
         self.shotIndex = 0
+    }
+
+    var projectIndex: Int {
+        sceneLabel.projectIndex
+    }
+
+    var sceneIndex: Int {
+        sceneLabel.sceneIndex
     }
 }
