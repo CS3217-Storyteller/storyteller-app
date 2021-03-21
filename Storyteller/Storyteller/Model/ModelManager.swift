@@ -22,6 +22,5 @@ class ModelManager {
     }
 
     func updateDrawing(ofShot: ShotLabel, atLayer: Int, drawing: PKDrawing) {
-
     }
 }
