@@ -10,7 +10,7 @@ import PencilKit
 
 class ShotDesignerController: UIViewController {
 
-    @IBOutlet weak var shotView: ShotView!
+    @IBOutlet private var shotView: ShotView!
 
     var toolPicker = PKToolPicker()
 
@@ -46,7 +46,6 @@ class ShotDesignerController: UIViewController {
         shotView.setPKDelegate(delegate: self)
     }
 
-
     var canvasScale = CGFloat(1) {
         didSet {
             shotView.updateZoomScale(scale: canvasScale)
@@ -76,7 +75,6 @@ extension ShotDesignerController: PKCanvasViewDelegate {
               let index = shotView.layerViews.firstIndex(of: layerView) else {
             return
         }
-
-        modelManager.updateDrawing(ofShot: shotLabel, atLayer: index)
+        modelManager.updateDrawing(ofShot: shotLabel, atLayer: index, drawing: layerView.drawing)
     }
 }
