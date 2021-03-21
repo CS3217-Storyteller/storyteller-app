@@ -5,9 +5,7 @@
 //  Created by TFang on 20/3/21.
 //
 
-import Foundation
-
-class SceneLabel {
+struct SceneLabel {
     var sceneIndex: Int
 
     init(sceneIndex: Int) {

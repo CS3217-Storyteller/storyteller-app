@@ -5,9 +5,7 @@
 //  Created by TFang on 20/3/21.
 //
 
-import Foundation
-
-class ShotLabel {
+struct ShotLabel {
     var sceneLabel: SceneLabel
     var shotIndex: Int
 

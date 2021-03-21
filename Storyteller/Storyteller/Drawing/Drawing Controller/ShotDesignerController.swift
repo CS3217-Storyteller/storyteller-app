@@ -77,6 +77,6 @@ extension ShotDesignerController: PKCanvasViewDelegate {
             return
         }
 
-        modelManager.updateDrawing(ofShot: shotLabel, atLayer: index)
+        modelManager.updateDrawing(ofShot: shotLabel, atLayer: index, drawing: layerView.drawing)
     }
 }

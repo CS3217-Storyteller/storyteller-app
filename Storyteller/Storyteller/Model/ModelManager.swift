@@ -21,7 +21,7 @@ class ModelManager {
         return CGSize(width: Constants.screenWidth, height: Constants.screenHeight)
     }
 
-    func updateDrawing(ofShot: ShotLabel, atLayer: Int) {
+    func updateDrawing(ofShot: ShotLabel, atLayer: Int, drawing: PKDrawing) {
 
     }
 }
