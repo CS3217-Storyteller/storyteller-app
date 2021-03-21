@@ -18,6 +18,9 @@
 		A24F62FD2600CC7300FC7CD4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A24F62FB2600CC7300FC7CD4 /* Main.storyboard */; };
 		A24F62FF2600CC7500FC7CD4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A24F62FE2600CC7500FC7CD4 /* Assets.xcassets */; };
 		A24F63022600CC7500FC7CD4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A24F63002600CC7500FC7CD4 /* LaunchScreen.storyboard */; };
+		A29A18D32607198600710943 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A18D12607198600710943 /* StorageManager.swift */; };
+		A29A18D42607198600710943 /* StorageUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A18D22607198600710943 /* StorageUtility.swift */; };
+		A29A18F026071A3700710943 /* StorytellerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A18EF26071A3700710943 /* StorytellerTests.swift */; };
 		B3755AA22605F21400EC0F56 /* LayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AA12605F21400EC0F56 /* LayerView.swift */; };
 		B3755AAB26062B9700EC0F56 /* ShotDesignerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AAA26062B9700EC0F56 /* ShotDesignerController.swift */; };
 		B3755AB3260643C000EC0F56 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AB2260643C000EC0F56 /* Constants.swift */; };
@@ -29,6 +32,16 @@
 		B3755AD3260651DC00EC0F56 /* LayerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AD2260651DC00EC0F56 /* LayerType.swift */; };
 		B3755AD626065C0700EC0F56 /* DrawingUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AD526065C0700EC0F56 /* DrawingUtility.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A29A18F226071A3700710943 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A24F62EA2600CC7300FC7CD4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A24F62F12600CC7300FC7CD4;
+			remoteInfo = Storyteller;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		A209157E2606FE3F001A242E /* ProjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewController.swift; sourceTree = "<group>"; };
@@ -44,6 +57,11 @@
 		A24F62FE2600CC7500FC7CD4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A24F63012600CC7500FC7CD4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A24F63032600CC7500FC7CD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A29A18D12607198600710943 /* StorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StorageManager.swift; path = Storyteller/Storage/StorageManager.swift; sourceTree = SOURCE_ROOT; };
+		A29A18D22607198600710943 /* StorageUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StorageUtility.swift; path = Storyteller/Storage/StorageUtility.swift; sourceTree = SOURCE_ROOT; };
+		A29A18ED26071A3600710943 /* StorytellerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StorytellerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A29A18EF26071A3700710943 /* StorytellerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorytellerTests.swift; sourceTree = "<group>"; };
+		A29A18F126071A3700710943 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B3755AA12605F21400EC0F56 /* LayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerView.swift; sourceTree = "<group>"; };
 		B3755AAA26062B9700EC0F56 /* ShotDesignerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotDesignerController.swift; sourceTree = "<group>"; };
 		B3755AB2260643C000EC0F56 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -58,6 +76,13 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		A24F62EF2600CC7300FC7CD4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A29A18EA26071A3600710943 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -89,7 +114,9 @@
 		A24F62E92600CC7300FC7CD4 = {
 			isa = PBXGroup;
 			children = (
+				A29A18CF2607193200710943 /* Storage */,
 				A24F62F42600CC7300FC7CD4 /* Storyteller */,
+				A29A18EE26071A3600710943 /* StorytellerTests */,
 				A24F62F32600CC7300FC7CD4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -98,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				A24F62F22600CC7300FC7CD4 /* Storyteller.app */,
+				A29A18ED26071A3600710943 /* StorytellerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -126,6 +154,24 @@
 				A24F62F92600CC7300FC7CD4 /* ViewController.swift */,
 			);
 			path = "ViewController+View";
+			sourceTree = "<group>";
+		};
+		A29A18CF2607193200710943 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				A29A18D12607198600710943 /* StorageManager.swift */,
+				A29A18D22607198600710943 /* StorageUtility.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		A29A18EE26071A3600710943 /* StorytellerTests */ = {
+			isa = PBXGroup;
+			children = (
+				A29A18EF26071A3700710943 /* StorytellerTests.swift */,
+				A29A18F126071A3700710943 /* Info.plist */,
+			);
+			path = StorytellerTests;
 			sourceTree = "<group>";
 		};
 		B3755AA02605F1E100EC0F56 /* Drawing View */ = {
@@ -196,6 +242,24 @@
 			productReference = A24F62F22600CC7300FC7CD4 /* Storyteller.app */;
 			productType = "com.apple.product-type.application";
 		};
+		A29A18EC26071A3600710943 /* StorytellerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A29A18F426071A3700710943 /* Build configuration list for PBXNativeTarget "StorytellerTests" */;
+			buildPhases = (
+				A29A18E926071A3600710943 /* Sources */,
+				A29A18EA26071A3600710943 /* Frameworks */,
+				A29A18EB26071A3600710943 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A29A18F326071A3700710943 /* PBXTargetDependency */,
+			);
+			name = StorytellerTests;
+			productName = StorytellerTests;
+			productReference = A29A18ED26071A3600710943 /* StorytellerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -207,6 +271,10 @@
 				TargetAttributes = {
 					A24F62F12600CC7300FC7CD4 = {
 						CreatedOnToolsVersion = 12.4;
+					};
+					A29A18EC26071A3600710943 = {
+						CreatedOnToolsVersion = 12.4;
+						TestTargetID = A24F62F12600CC7300FC7CD4;
 					};
 				};
 			};
@@ -224,6 +292,7 @@
 			projectRoot = "";
 			targets = (
 				A24F62F12600CC7300FC7CD4 /* Storyteller */,
+				A29A18EC26071A3600710943 /* StorytellerTests */,
 			);
 		};
 /* End PBXProject section */
@@ -239,6 +308,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A29A18EB26071A3600710943 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -250,11 +326,13 @@
 				A2091585260703D1001A242E /* SceneViewController.swift in Sources */,
 				B3755AAB26062B9700EC0F56 /* ShotDesignerController.swift in Sources */,
 				A209158926070553001A242E /* SceneHeaderView.swift in Sources */,
+				A29A18D42607198600710943 /* StorageUtility.swift in Sources */,
 				B3755AC0260646F200EC0F56 /* ModelManager.swift in Sources */,
 				B3755AB92606454900EC0F56 /* ShotView.swift in Sources */,
 				A2091590260705EB001A242E /* ProjectViewCell.swift in Sources */,
 				B3755AD026064E4700EC0F56 /* Layer.swift in Sources */,
 				A24F62FA2600CC7300FC7CD4 /* ViewController.swift in Sources */,
+				A29A18D32607198600710943 /* StorageManager.swift in Sources */,
 				A24F62F62600CC7300FC7CD4 /* AppDelegate.swift in Sources */,
 				B3755AA22605F21400EC0F56 /* LayerView.swift in Sources */,
 				A24F62F82600CC7300FC7CD4 /* SceneDelegate.swift in Sources */,
@@ -267,7 +345,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A29A18E926071A3600710943 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A29A18F026071A3700710943 /* StorytellerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A29A18F326071A3700710943 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A24F62F12600CC7300FC7CD4 /* Storyteller */;
+			targetProxy = A29A18F226071A3700710943 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		A24F62FB2600CC7300FC7CD4 /* Main.storyboard */ = {
@@ -441,6 +535,44 @@
 			};
 			name = Release;
 		};
+		A29A18F526071A3700710943 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = StorytellerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.johnpan.StorytellerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Storyteller.app/Storyteller";
+			};
+			name = Debug;
+		};
+		A29A18F626071A3700710943 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = StorytellerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.johnpan.StorytellerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Storyteller.app/Storyteller";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -458,6 +590,15 @@
 			buildConfigurations = (
 				A24F63072600CC7500FC7CD4 /* Debug */,
 				A24F63082600CC7500FC7CD4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A29A18F426071A3700710943 /* Build configuration list for PBXNativeTarget "StorytellerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A29A18F526071A3700710943 /* Debug */,
+				A29A18F626071A3700710943 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
