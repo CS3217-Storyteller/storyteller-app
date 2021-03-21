@@ -30,11 +30,17 @@ struct Project: Codable {
 
     mutating func addShot(_ shot: Shot, to sceneLabel: SceneLabel) {
         let sceneIndex = sceneLabel.sceneIndex
+        guard scenes.indices.contains(sceneIndex) else {
+            return
+        }
         scenes[sceneIndex].addShot(shot)
     }
 
     mutating func addLayer(_ layer: Layer, to shotLabel: ShotLabel) {
         let sceneIndex = shotLabel.sceneIndex
+        guard scenes.indices.contains(sceneIndex) else {
+            return
+        }
         scenes[sceneIndex].addLayer(layer, to: shotLabel)
     }
 }
