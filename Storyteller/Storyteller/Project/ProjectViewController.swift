@@ -17,6 +17,8 @@ class ProjectViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        modelManager.observers.append(self)
+
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         self.collectionView.collectionViewLayout = layout
@@ -84,8 +86,12 @@ extension ProjectViewController: UICollectionViewDelegateFlowLayout {
         sceneViewController.setModelManager(to: self.modelManager)
         self.present(sceneViewController, animated: true, completion: nil)
     }
-    
-    
-    
+
 }
 
+// MARK: - ModelManagerObserver
+extension ProjectViewController: ModelManagerObserver {
+    func modelDidChanged() {
+        collectionView.reloadData()
+    }
+}

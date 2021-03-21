@@ -25,6 +25,7 @@ class SceneViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         self.collectionView.collectionViewLayout = layout
@@ -43,6 +44,7 @@ class SceneViewController: UIViewController {
            let projectLabel = self.projectLabel,
            let project = modelManager.getProject(of: projectLabel) {
             self.projectTitle.text = project.title
+            modelManager.observers.append(self)
         }
     }
     
@@ -180,5 +182,12 @@ extension SceneViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: self.view.frame.size.width, height: 50)
+    }
+}
+
+// MARK: - ModelManagerObserver
+extension SceneViewController: ModelManagerObserver {
+    func modelDidChanged() {
+        collectionView.reloadData()
     }
 }

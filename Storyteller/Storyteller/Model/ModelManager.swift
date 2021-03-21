@@ -11,6 +11,8 @@ class ModelManager {
     var projects: [Project]
     private let storageManager = StorageManager()
 
+    var observers = [ModelManagerObserver]()
+
     init() {
         self.projects = storageManager.getAllProjects()
     }
@@ -68,7 +70,8 @@ class ModelManager {
     }
 
     private func saveProject(_ project: Project) {
-        _ = storageManager.saveProject(project: project)
+        storageManager.saveProject(project: project)
+        observers.forEach({ $0.modelDidChanged() })
     }
 
     func updateDrawing(ofShot shotLabel: ShotLabel,
@@ -135,4 +138,9 @@ class ModelManager {
         projects[projectIndex].addLayer(layer, to: shotLabel)
         saveProject(projects[projectIndex])
     }
+}
+
+protocol ModelManagerObserver {
+    /// Invoked when the model changes.
+    func modelDidChanged()
 }

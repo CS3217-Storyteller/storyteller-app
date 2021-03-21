@@ -53,6 +53,7 @@ class StorageManager {
     }
 
     // MARK: - Save
+    @discardableResult
     func saveProject(project: Project) -> Bool {
         let fileName = project.title
         let fileUrl = StorageUtility.getFileUrl(of: fileName)
