@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A209157F2606FE3F001A242E /* ProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A209157E2606FE3F001A242E /* ProjectViewController.swift */; };
+		A2091585260703D1001A242E /* SceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2091584260703D1001A242E /* SceneViewController.swift */; };
+		A209158926070553001A242E /* SceneHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A209158826070553001A242E /* SceneHeaderView.swift */; };
+		A209158C26070595001A242E /* SceneShotViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A209158B26070595001A242E /* SceneShotViewCell.swift */; };
+		A2091590260705EB001A242E /* ProjectViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A209158F260705EB001A242E /* ProjectViewCell.swift */; };
 		A24F62F62600CC7300FC7CD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24F62F52600CC7300FC7CD4 /* AppDelegate.swift */; };
 		A24F62F82600CC7300FC7CD4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24F62F72600CC7300FC7CD4 /* SceneDelegate.swift */; };
 		A24F62FA2600CC7300FC7CD4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24F62F92600CC7300FC7CD4 /* ViewController.swift */; };
@@ -23,22 +28,14 @@
 		B3755AD026064E4700EC0F56 /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755ACF26064E4700EC0F56 /* Layer.swift */; };
 		B3755AD3260651DC00EC0F56 /* LayerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AD2260651DC00EC0F56 /* LayerType.swift */; };
 		B3755AD626065C0700EC0F56 /* DrawingUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AD526065C0700EC0F56 /* DrawingUtility.swift */; };
-		B37F3A1F26070975000B6F8C /* StorytellerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37F3A1E26070975000B6F8C /* StorytellerTests.swift */; };
-		B37F3A2C26070C23000B6F8C /* StorageUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37F3A2B26070C23000B6F8C /* StorageUtility.swift */; };
-		B37F3A3226070CCD000B6F8C /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37F3A3126070CCD000B6F8C /* StorageManager.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		B37F3A2126070976000B6F8C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A24F62EA2600CC7300FC7CD4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = A24F62F12600CC7300FC7CD4;
-			remoteInfo = Storyteller;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
+		A209157E2606FE3F001A242E /* ProjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewController.swift; sourceTree = "<group>"; };
+		A2091584260703D1001A242E /* SceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneViewController.swift; sourceTree = "<group>"; };
+		A209158826070553001A242E /* SceneHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneHeaderView.swift; sourceTree = "<group>"; };
+		A209158B26070595001A242E /* SceneShotViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneShotViewCell.swift; sourceTree = "<group>"; };
+		A209158F260705EB001A242E /* ProjectViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewCell.swift; sourceTree = "<group>"; };
 		A24F62F22600CC7300FC7CD4 /* Storyteller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Storyteller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A24F62F52600CC7300FC7CD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A24F62F72600CC7300FC7CD4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -57,11 +54,6 @@
 		B3755ACF26064E4700EC0F56 /* Layer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layer.swift; sourceTree = "<group>"; };
 		B3755AD2260651DC00EC0F56 /* LayerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerType.swift; sourceTree = "<group>"; };
 		B3755AD526065C0700EC0F56 /* DrawingUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingUtility.swift; sourceTree = "<group>"; };
-		B37F3A1C26070975000B6F8C /* StorytellerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StorytellerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B37F3A1E26070975000B6F8C /* StorytellerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorytellerTests.swift; sourceTree = "<group>"; };
-		B37F3A2026070976000B6F8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B37F3A2B26070C23000B6F8C /* StorageUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageUtility.swift; sourceTree = "<group>"; };
-		B37F3A3126070CCD000B6F8C /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,21 +64,32 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B37F3A1926070975000B6F8C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A20915812606FE51001A242E /* Project */ = {
+			isa = PBXGroup;
+			children = (
+				A209157E2606FE3F001A242E /* ProjectViewController.swift */,
+				A209158F260705EB001A242E /* ProjectViewCell.swift */,
+			);
+			path = Project;
+			sourceTree = "<group>";
+		};
+		A2091583260703B0001A242E /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				A2091584260703D1001A242E /* SceneViewController.swift */,
+				A209158826070553001A242E /* SceneHeaderView.swift */,
+				A209158B26070595001A242E /* SceneShotViewCell.swift */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
 		A24F62E92600CC7300FC7CD4 = {
 			isa = PBXGroup;
 			children = (
 				A24F62F42600CC7300FC7CD4 /* Storyteller */,
-				B37F3A1D26070975000B6F8C /* StorytellerTests */,
 				A24F62F32600CC7300FC7CD4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -95,7 +98,6 @@
 			isa = PBXGroup;
 			children = (
 				A24F62F22600CC7300FC7CD4 /* Storyteller.app */,
-				B37F3A1C26070975000B6F8C /* StorytellerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -103,9 +105,9 @@
 		A24F62F42600CC7300FC7CD4 /* Storyteller */ = {
 			isa = PBXGroup;
 			children = (
-				B37F3A2A26070C06000B6F8C /* Storage */,
-				B3755ABE260646E600EC0F56 /* Model */,
 				B3755AA826062B7500EC0F56 /* Drawing */,
+				A20915812606FE51001A242E /* Project */,
+				A2091583260703B0001A242E /* Scene */,
 				A24F630C2600CC8D00FC7CD4 /* ViewController+View */,
 				A24F62F52600CC7300FC7CD4 /* AppDelegate.swift */,
 				A24F62F72600CC7300FC7CD4 /* SceneDelegate.swift */,
@@ -138,6 +140,7 @@
 		B3755AA826062B7500EC0F56 /* Drawing */ = {
 			isa = PBXGroup;
 			children = (
+				B3755ABE260646E600EC0F56 /* Model */,
 				B3755AA926062B7C00EC0F56 /* Drawing Controller */,
 				B3755AA02605F1E100EC0F56 /* Drawing View */,
 				B3755AD526065C0700EC0F56 /* DrawingUtility.swift */,
@@ -173,24 +176,6 @@
 			path = Index;
 			sourceTree = "<group>";
 		};
-		B37F3A1D26070975000B6F8C /* StorytellerTests */ = {
-			isa = PBXGroup;
-			children = (
-				B37F3A1E26070975000B6F8C /* StorytellerTests.swift */,
-				B37F3A2026070976000B6F8C /* Info.plist */,
-			);
-			path = StorytellerTests;
-			sourceTree = "<group>";
-		};
-		B37F3A2A26070C06000B6F8C /* Storage */ = {
-			isa = PBXGroup;
-			children = (
-				B37F3A3126070CCD000B6F8C /* StorageManager.swift */,
-				B37F3A2B26070C23000B6F8C /* StorageUtility.swift */,
-			);
-			path = Storage;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -201,7 +186,6 @@
 				A24F62EE2600CC7300FC7CD4 /* Sources */,
 				A24F62EF2600CC7300FC7CD4 /* Frameworks */,
 				A24F62F02600CC7300FC7CD4 /* Resources */,
-				B37F3A1726070940000B6F8C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -211,24 +195,6 @@
 			productName = Storyteller;
 			productReference = A24F62F22600CC7300FC7CD4 /* Storyteller.app */;
 			productType = "com.apple.product-type.application";
-		};
-		B37F3A1B26070975000B6F8C /* StorytellerTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B37F3A2326070976000B6F8C /* Build configuration list for PBXNativeTarget "StorytellerTests" */;
-			buildPhases = (
-				B37F3A1826070975000B6F8C /* Sources */,
-				B37F3A1926070975000B6F8C /* Frameworks */,
-				B37F3A1A26070975000B6F8C /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B37F3A2226070976000B6F8C /* PBXTargetDependency */,
-			);
-			name = StorytellerTests;
-			productName = StorytellerTests;
-			productReference = B37F3A1C26070975000B6F8C /* StorytellerTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -241,10 +207,6 @@
 				TargetAttributes = {
 					A24F62F12600CC7300FC7CD4 = {
 						CreatedOnToolsVersion = 12.4;
-					};
-					B37F3A1B26070975000B6F8C = {
-						CreatedOnToolsVersion = 12.4;
-						TestTargetID = A24F62F12600CC7300FC7CD4;
 					};
 				};
 			};
@@ -262,7 +224,6 @@
 			projectRoot = "";
 			targets = (
 				A24F62F12600CC7300FC7CD4 /* Storyteller */,
-				B37F3A1B26070975000B6F8C /* StorytellerTests */,
 			);
 		};
 /* End PBXProject section */
@@ -278,75 +239,35 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B37F3A1A26070975000B6F8C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		B37F3A1726070940000B6F8C /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A24F62EE2600CC7300FC7CD4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A209158C26070595001A242E /* SceneShotViewCell.swift in Sources */,
+				A2091585260703D1001A242E /* SceneViewController.swift in Sources */,
 				B3755AAB26062B9700EC0F56 /* ShotDesignerController.swift in Sources */,
+				A209158926070553001A242E /* SceneHeaderView.swift in Sources */,
 				B3755AC0260646F200EC0F56 /* ModelManager.swift in Sources */,
 				B3755AB92606454900EC0F56 /* ShotView.swift in Sources */,
+				A2091590260705EB001A242E /* ProjectViewCell.swift in Sources */,
 				B3755AD026064E4700EC0F56 /* Layer.swift in Sources */,
 				A24F62FA2600CC7300FC7CD4 /* ViewController.swift in Sources */,
 				A24F62F62600CC7300FC7CD4 /* AppDelegate.swift in Sources */,
-				B37F3A2C26070C23000B6F8C /* StorageUtility.swift in Sources */,
 				B3755AA22605F21400EC0F56 /* LayerView.swift in Sources */,
 				A24F62F82600CC7300FC7CD4 /* SceneDelegate.swift in Sources */,
 				B3755AB3260643C000EC0F56 /* Constants.swift in Sources */,
 				B3755AD3260651DC00EC0F56 /* LayerType.swift in Sources */,
 				B3755ACD26064B8500EC0F56 /* ShotLabel.swift in Sources */,
-				B37F3A3226070CCD000B6F8C /* StorageManager.swift in Sources */,
 				B3755AC826064B5D00EC0F56 /* SceneLabel.swift in Sources */,
+				A209157F2606FE3F001A242E /* ProjectViewController.swift in Sources */,
 				B3755AD626065C0700EC0F56 /* DrawingUtility.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B37F3A1826070975000B6F8C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B37F3A1F26070975000B6F8C /* StorytellerTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		B37F3A2226070976000B6F8C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = A24F62F12600CC7300FC7CD4 /* Storyteller */;
-			targetProxy = B37F3A2126070976000B6F8C /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		A24F62FB2600CC7300FC7CD4 /* Main.storyboard */ = {
@@ -495,7 +416,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.storyteller.Storyteller;
+				PRODUCT_BUNDLE_IDENTIFIER = com.StoryTeller.Storyteller;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -513,50 +434,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.storyteller.Storyteller;
+				PRODUCT_BUNDLE_IDENTIFIER = com.StoryTeller.Storyteller;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		B37F3A2426070976000B6F8C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = M3JC2347GD;
-				INFOPLIST_FILE = StorytellerTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.storyteller.StorytellerTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Storyteller.app/Storyteller";
-			};
-			name = Debug;
-		};
-		B37F3A2526070976000B6F8C /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = M3JC2347GD;
-				INFOPLIST_FILE = StorytellerTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.storyteller.StorytellerTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Storyteller.app/Storyteller";
 			};
 			name = Release;
 		};
@@ -577,15 +458,6 @@
 			buildConfigurations = (
 				A24F63072600CC7500FC7CD4 /* Debug */,
 				A24F63082600CC7500FC7CD4 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B37F3A2326070976000B6F8C /* Build configuration list for PBXNativeTarget "StorytellerTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B37F3A2426070976000B6F8C /* Debug */,
-				B37F3A2526070976000B6F8C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
