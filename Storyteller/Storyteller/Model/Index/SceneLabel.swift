@@ -21,4 +21,8 @@ struct SceneLabel {
         self.projectLabel = ProjectLabel()
         self.sceneIndex = 0
     }
+
+    var projectIndex: Int {
+        projectLabel.projectIndex
+    }
 }

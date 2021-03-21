@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C9BA77A2607003300E0DD24 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9BA7792607003300E0DD24 /* Project.swift */; };
+		2C9BA77D2607006900E0DD24 /* ProjectLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9BA77C2607006900E0DD24 /* ProjectLabel.swift */; };
+		2C9BA7802607017D00E0DD24 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9BA77F2607017D00E0DD24 /* Scene.swift */; };
+		2C9BA7832607026800E0DD24 /* Shot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9BA7822607026800E0DD24 /* Shot.swift */; };
 		A24F62F62600CC7300FC7CD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24F62F52600CC7300FC7CD4 /* AppDelegate.swift */; };
 		A24F62F82600CC7300FC7CD4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24F62F72600CC7300FC7CD4 /* SceneDelegate.swift */; };
 		A24F62FA2600CC7300FC7CD4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24F62F92600CC7300FC7CD4 /* ViewController.swift */; };
@@ -26,6 +30,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2C9BA7792607003300E0DD24 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		2C9BA77C2607006900E0DD24 /* ProjectLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectLabel.swift; sourceTree = "<group>"; };
+		2C9BA77F2607017D00E0DD24 /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
+		2C9BA7822607026800E0DD24 /* Shot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shot.swift; sourceTree = "<group>"; };
 		A24F62F22600CC7300FC7CD4 /* Storyteller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Storyteller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A24F62F52600CC7300FC7CD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A24F62F72600CC7300FC7CD4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -129,6 +137,9 @@
 			isa = PBXGroup;
 			children = (
 				B3755ABF260646F200EC0F56 /* ModelManager.swift */,
+				2C9BA7792607003300E0DD24 /* Project.swift */,
+				2C9BA77F2607017D00E0DD24 /* Scene.swift */,
+				2C9BA7822607026800E0DD24 /* Shot.swift */,
 				B3755ACF26064E4700EC0F56 /* Layer.swift */,
 				B3755AD2260651DC00EC0F56 /* LayerType.swift */,
 				B3755AC626064B4300EC0F56 /* Index */,
@@ -140,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				B3755AC726064B5D00EC0F56 /* SceneLabel.swift */,
+				2C9BA77C2607006900E0DD24 /* ProjectLabel.swift */,
 				B3755ACC26064B8500EC0F56 /* ShotLabel.swift */,
 			);
 			path = Index;
@@ -217,9 +229,13 @@
 			files = (
 				B3755AAB26062B9700EC0F56 /* ShotDesignerController.swift in Sources */,
 				B3755AC0260646F200EC0F56 /* ModelManager.swift in Sources */,
+				2C9BA7832607026800E0DD24 /* Shot.swift in Sources */,
+				2C9BA77D2607006900E0DD24 /* ProjectLabel.swift in Sources */,
 				B3755AB92606454900EC0F56 /* ShotView.swift in Sources */,
+				2C9BA7802607017D00E0DD24 /* Scene.swift in Sources */,
 				B3755AD026064E4700EC0F56 /* Layer.swift in Sources */,
 				A24F62FA2600CC7300FC7CD4 /* ViewController.swift in Sources */,
+				2C9BA77A2607003300E0DD24 /* Project.swift in Sources */,
 				A24F62F62600CC7300FC7CD4 /* AppDelegate.swift in Sources */,
 				B3755AA22605F21400EC0F56 /* LayerView.swift in Sources */,
 				A24F62F82600CC7300FC7CD4 /* SceneDelegate.swift in Sources */,

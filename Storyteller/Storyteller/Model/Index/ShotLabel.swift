@@ -21,4 +21,12 @@ struct ShotLabel {
         self.sceneLabel = SceneLabel()
         self.shotIndex = 0
     }
+
+    var projectIndex: Int {
+        sceneLabel.projectIndex
+    }
+
+    var sceneIndex: Int {
+        sceneLabel.sceneIndex
+    }
 }
