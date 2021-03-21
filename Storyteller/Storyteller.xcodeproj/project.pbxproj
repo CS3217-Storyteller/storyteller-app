@@ -18,18 +18,24 @@
 		A24F62FD2600CC7300FC7CD4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A24F62FB2600CC7300FC7CD4 /* Main.storyboard */; };
 		A24F62FF2600CC7500FC7CD4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A24F62FE2600CC7500FC7CD4 /* Assets.xcassets */; };
 		A24F63022600CC7500FC7CD4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A24F63002600CC7500FC7CD4 /* LaunchScreen.storyboard */; };
-		A29A18D32607198600710943 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A18D12607198600710943 /* StorageManager.swift */; };
-		A29A18D42607198600710943 /* StorageUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A18D22607198600710943 /* StorageUtility.swift */; };
 		A29A18F026071A3700710943 /* StorytellerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A18EF26071A3700710943 /* StorytellerTests.swift */; };
+		A29A19302607239E00710943 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A192C2607239E00710943 /* StorageManager.swift */; };
+		A29A19312607239E00710943 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A192F2607239E00710943 /* StorageManager.swift */; };
+		A29A19322607239E00710943 /* StorageUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A192E2607239E00710943 /* StorageUtility.swift */; };
+		A29A19332607239E00710943 /* StorageUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A192D2607239E00710943 /* StorageUtility.swift */; };
+		A29A19522607242000710943 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19272607237100710943 /* ModelManager.swift */; };
+		A29A19552607242600710943 /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19282607237100710943 /* Layer.swift */; };
+		A29A19582607242800710943 /* Shot.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19292607237100710943 /* Shot.swift */; };
+		A29A195B2607243300710943 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19202607237100710943 /* Scene.swift */; };
+		A29A195E2607243500710943 /* LayerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19212607237100710943 /* LayerType.swift */; };
+		A29A19612607243800710943 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19222607237100710943 /* Project.swift */; };
+		A29A19642607243E00710943 /* ShotLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19232607237100710943 /* ShotLabel.swift */; };
+		A29A19672607244000710943 /* ProjectLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19242607237100710943 /* ProjectLabel.swift */; };
+		A29A196A2607244200710943 /* SceneLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19252607237100710943 /* SceneLabel.swift */; };
 		B3755AA22605F21400EC0F56 /* LayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AA12605F21400EC0F56 /* LayerView.swift */; };
 		B3755AAB26062B9700EC0F56 /* ShotDesignerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AAA26062B9700EC0F56 /* ShotDesignerViewController.swift */; };
 		B3755AB3260643C000EC0F56 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AB2260643C000EC0F56 /* Constants.swift */; };
 		B3755AB92606454900EC0F56 /* ShotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AB82606454900EC0F56 /* ShotView.swift */; };
-		B3755AC0260646F200EC0F56 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755ABF260646F200EC0F56 /* ModelManager.swift */; };
-		B3755AC826064B5D00EC0F56 /* SceneLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AC726064B5D00EC0F56 /* SceneLabel.swift */; };
-		B3755ACD26064B8500EC0F56 /* ShotLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755ACC26064B8500EC0F56 /* ShotLabel.swift */; };
-		B3755AD026064E4700EC0F56 /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755ACF26064E4700EC0F56 /* Layer.swift */; };
-		B3755AD3260651DC00EC0F56 /* LayerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AD2260651DC00EC0F56 /* LayerType.swift */; };
 		B3755AD626065C0700EC0F56 /* DrawingUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AD526065C0700EC0F56 /* DrawingUtility.swift */; };
 /* End PBXBuildFile section */
 
@@ -57,20 +63,26 @@
 		A24F62FE2600CC7500FC7CD4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A24F63012600CC7500FC7CD4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A24F63032600CC7500FC7CD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A29A18D12607198600710943 /* StorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StorageManager.swift; path = Storyteller/Storage/StorageManager.swift; sourceTree = SOURCE_ROOT; };
-		A29A18D22607198600710943 /* StorageUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StorageUtility.swift; path = Storyteller/Storage/StorageUtility.swift; sourceTree = SOURCE_ROOT; };
 		A29A18ED26071A3600710943 /* StorytellerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StorytellerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A29A18EF26071A3700710943 /* StorytellerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorytellerTests.swift; sourceTree = "<group>"; };
 		A29A18F126071A3700710943 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A29A19202607237100710943 /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
+		A29A19212607237100710943 /* LayerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerType.swift; sourceTree = "<group>"; };
+		A29A19222607237100710943 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		A29A19232607237100710943 /* ShotLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotLabel.swift; sourceTree = "<group>"; };
+		A29A19242607237100710943 /* ProjectLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectLabel.swift; sourceTree = "<group>"; };
+		A29A19252607237100710943 /* SceneLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneLabel.swift; sourceTree = "<group>"; };
+		A29A19272607237100710943 /* ModelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
+		A29A19282607237100710943 /* Layer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layer.swift; sourceTree = "<group>"; };
+		A29A19292607237100710943 /* Shot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shot.swift; sourceTree = "<group>"; };
+		A29A192C2607239E00710943 /* StorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		A29A192D2607239E00710943 /* StorageUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageUtility.swift; sourceTree = "<group>"; };
+		A29A192E2607239E00710943 /* StorageUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageUtility.swift; sourceTree = "<group>"; };
+		A29A192F2607239E00710943 /* StorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		B3755AA12605F21400EC0F56 /* LayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerView.swift; sourceTree = "<group>"; };
 		B3755AAA26062B9700EC0F56 /* ShotDesignerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotDesignerViewController.swift; sourceTree = "<group>"; };
 		B3755AB2260643C000EC0F56 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B3755AB82606454900EC0F56 /* ShotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotView.swift; sourceTree = "<group>"; };
-		B3755ABF260646F200EC0F56 /* ModelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
-		B3755AC726064B5D00EC0F56 /* SceneLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneLabel.swift; sourceTree = "<group>"; };
-		B3755ACC26064B8500EC0F56 /* ShotLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotLabel.swift; sourceTree = "<group>"; };
-		B3755ACF26064E4700EC0F56 /* Layer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layer.swift; sourceTree = "<group>"; };
-		B3755AD2260651DC00EC0F56 /* LayerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerType.swift; sourceTree = "<group>"; };
 		B3755AD526065C0700EC0F56 /* DrawingUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingUtility.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -114,7 +126,6 @@
 		A24F62E92600CC7300FC7CD4 = {
 			isa = PBXGroup;
 			children = (
-				A29A18CF2607193200710943 /* Storage */,
 				A24F62F42600CC7300FC7CD4 /* Storyteller */,
 				A29A18EE26071A3600710943 /* StorytellerTests */,
 				A24F62F32600CC7300FC7CD4 /* Products */,
@@ -133,6 +144,8 @@
 		A24F62F42600CC7300FC7CD4 /* Storyteller */ = {
 			isa = PBXGroup;
 			children = (
+				A29A192B2607239E00710943 /* Storage */,
+				A29A192A2607237100710943 /* Model */,
 				B3755AA826062B7500EC0F56 /* Drawing */,
 				A20915812606FE51001A242E /* Project */,
 				A2091583260703B0001A242E /* Scene */,
@@ -156,15 +169,6 @@
 			path = "ViewController+View";
 			sourceTree = "<group>";
 		};
-		A29A18CF2607193200710943 /* Storage */ = {
-			isa = PBXGroup;
-			children = (
-				A29A18D12607198600710943 /* StorageManager.swift */,
-				A29A18D22607198600710943 /* StorageUtility.swift */,
-			);
-			path = Storage;
-			sourceTree = "<group>";
-		};
 		A29A18EE26071A3600710943 /* StorytellerTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -173,6 +177,43 @@
 			);
 			path = StorytellerTests;
 			sourceTree = "<group>";
+		};
+		A29A19262607237100710943 /* Index */ = {
+			isa = PBXGroup;
+			children = (
+				A29A19232607237100710943 /* ShotLabel.swift */,
+				A29A19242607237100710943 /* ProjectLabel.swift */,
+				A29A19252607237100710943 /* SceneLabel.swift */,
+			);
+			path = Index;
+			sourceTree = "<group>";
+		};
+		A29A192A2607237100710943 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A29A19262607237100710943 /* Index */,
+				A29A19202607237100710943 /* Scene.swift */,
+				A29A19212607237100710943 /* LayerType.swift */,
+				A29A19222607237100710943 /* Project.swift */,
+				A29A19272607237100710943 /* ModelManager.swift */,
+				A29A19282607237100710943 /* Layer.swift */,
+				A29A19292607237100710943 /* Shot.swift */,
+			);
+			name = Model;
+			path = "/Users/johnp/Projects/storyteller-app/Storyteller/Storyteller/Model";
+			sourceTree = "<absolute>";
+		};
+		A29A192B2607239E00710943 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				A29A192C2607239E00710943 /* StorageManager.swift */,
+				A29A192F2607239E00710943 /* StorageManager.swift */,
+				A29A192E2607239E00710943 /* StorageUtility.swift */,
+				A29A192D2607239E00710943 /* StorageUtility.swift */,
+			);
+			name = Storage;
+			path = Storyteller/Storage;
+			sourceTree = SOURCE_ROOT;
 		};
 		B3755AA02605F1E100EC0F56 /* View */ = {
 			isa = PBXGroup;
@@ -186,7 +227,6 @@
 		B3755AA826062B7500EC0F56 /* Drawing */ = {
 			isa = PBXGroup;
 			children = (
-				B3755ABE260646E600EC0F56 /* Model */,
 				B3755AA926062B7C00EC0F56 /* ViewController */,
 				B3755AA02605F1E100EC0F56 /* View */,
 				B3755AD526065C0700EC0F56 /* DrawingUtility.swift */,
@@ -200,26 +240,6 @@
 				B3755AAA26062B9700EC0F56 /* ShotDesignerViewController.swift */,
 			);
 			path = ViewController;
-			sourceTree = "<group>";
-		};
-		B3755ABE260646E600EC0F56 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				B3755ABF260646F200EC0F56 /* ModelManager.swift */,
-				B3755ACF26064E4700EC0F56 /* Layer.swift */,
-				B3755AD2260651DC00EC0F56 /* LayerType.swift */,
-				B3755AC626064B4300EC0F56 /* Index */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		B3755AC626064B4300EC0F56 /* Index */ = {
-			isa = PBXGroup;
-			children = (
-				B3755AC726064B5D00EC0F56 /* SceneLabel.swift */,
-				B3755ACC26064B8500EC0F56 /* ShotLabel.swift */,
-			);
-			path = Index;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -322,24 +342,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A29A19642607243E00710943 /* ShotLabel.swift in Sources */,
 				A209158C26070595001A242E /* SceneShotViewCell.swift in Sources */,
 				A2091585260703D1001A242E /* SceneViewController.swift in Sources */,
 				B3755AAB26062B9700EC0F56 /* ShotDesignerViewController.swift in Sources */,
+				A29A19582607242800710943 /* Shot.swift in Sources */,
+				A29A19302607239E00710943 /* StorageManager.swift in Sources */,
+				A29A195E2607243500710943 /* LayerType.swift in Sources */,
+				A29A19552607242600710943 /* Layer.swift in Sources */,
 				A209158926070553001A242E /* SceneHeaderView.swift in Sources */,
-				A29A18D42607198600710943 /* StorageUtility.swift in Sources */,
-				B3755AC0260646F200EC0F56 /* ModelManager.swift in Sources */,
+				A29A19522607242000710943 /* ModelManager.swift in Sources */,
 				B3755AB92606454900EC0F56 /* ShotView.swift in Sources */,
 				A2091590260705EB001A242E /* ProjectViewCell.swift in Sources */,
-				B3755AD026064E4700EC0F56 /* Layer.swift in Sources */,
 				A24F62FA2600CC7300FC7CD4 /* ViewController.swift in Sources */,
-				A29A18D32607198600710943 /* StorageManager.swift in Sources */,
+				A29A195B2607243300710943 /* Scene.swift in Sources */,
+				A29A19322607239E00710943 /* StorageUtility.swift in Sources */,
+				A29A19612607243800710943 /* Project.swift in Sources */,
 				A24F62F62600CC7300FC7CD4 /* AppDelegate.swift in Sources */,
+				A29A19672607244000710943 /* ProjectLabel.swift in Sources */,
 				B3755AA22605F21400EC0F56 /* LayerView.swift in Sources */,
+				A29A196A2607244200710943 /* SceneLabel.swift in Sources */,
+				A29A19332607239E00710943 /* StorageUtility.swift in Sources */,
 				A24F62F82600CC7300FC7CD4 /* SceneDelegate.swift in Sources */,
 				B3755AB3260643C000EC0F56 /* Constants.swift in Sources */,
-				B3755AD3260651DC00EC0F56 /* LayerType.swift in Sources */,
-				B3755ACD26064B8500EC0F56 /* ShotLabel.swift in Sources */,
-				B3755AC826064B5D00EC0F56 /* SceneLabel.swift in Sources */,
+				A29A19312607239E00710943 /* StorageManager.swift in Sources */,
 				A209157F2606FE3F001A242E /* ProjectViewController.swift in Sources */,
 				B3755AD626065C0700EC0F56 /* DrawingUtility.swift in Sources */,
 			);
