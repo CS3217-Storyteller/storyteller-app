@@ -10,6 +10,7 @@ import PencilKit
 struct Layer {
     var layerType: LayerType
     var drawing: PKDrawing
+    let canvasSize: CGSize
 
     mutating func setDrawingTo(_ updatedDrawing: PKDrawing) {
         drawing = updatedDrawing

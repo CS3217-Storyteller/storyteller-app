@@ -65,7 +65,8 @@ extension ProjectViewController: UICollectionViewDelegateFlowLayout {
             return
         }
         sceneViewController.modalPresentationStyle = .fullScreen
-        self.present(sceneViewController, animated: true, completion: nil)
+
+        navigationController?.pushViewController(sceneViewController, animated: true)
     }
     
 }

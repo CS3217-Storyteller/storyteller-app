@@ -37,8 +37,11 @@ class ShotDesignerViewController: UIViewController {
         shotView.frame.size = canvasSize
         shotView.backgroundColor = modelManager.getBackgroundColor(of: shotLabel)
         // TODO add drawings and setup tool picker
-        let layerViews = modelManager.getLayers(of: shotLabel)
-            .map({ DrawingUtility.generateLayerView(for: $0) })
+        guard let layers = modelManager.getLayers(of: shotLabel) else {
+            return
+        }
+        let layerViews = layers.map({ DrawingUtility.generateLayerView(for: $0) })
+
         shotView.setUpLayerViews(layerViews, toolPicker: toolPicker)
 
         shotView.layerViews.last?.becomeFirstResponder()
