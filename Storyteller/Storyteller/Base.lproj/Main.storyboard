@@ -116,7 +116,21 @@
                         <subviews>
                             <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3l-Ka-Bz4" customClass="ShotView" customModule="Storyteller" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="1194" height="834"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xeM-SX-OZu">
+                                        <rect key="frame" x="997" y="50" width="147" height="55"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                        <state key="normal" title="Duplicate"/>
+                                        <connections>
+                                            <action selector="duplicateShot:" destination="mXm-tZ-pGV" eventType="touchUpInside" id="Vpv-bS-IhJ"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="xeM-SX-OZu" secondAttribute="trailing" constant="50" id="1Rn-5f-ZZb"/>
+                                    <constraint firstItem="xeM-SX-OZu" firstAttribute="top" secondItem="h3l-Ka-Bz4" secondAttribute="top" constant="50" id="TQf-Iq-SwA"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="nX2-Db-Tvg"/>
@@ -130,6 +144,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="yjz-aL-qCV"/>
                     <connections>
+                        <outlet property="duplicateButton" destination="xeM-SX-OZu" id="LcE-NK-hi6"/>
                         <outlet property="shotView" destination="h3l-Ka-Bz4" id="Miq-Xl-utc"/>
                     </connections>
                 </viewController>
