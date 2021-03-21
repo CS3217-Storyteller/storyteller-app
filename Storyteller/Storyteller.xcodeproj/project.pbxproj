@@ -177,9 +177,9 @@
 		A29A19262607237100710943 /* Index */ = {
 			isa = PBXGroup;
 			children = (
-				A29A19232607237100710943 /* ShotLabel.swift */,
 				A29A19242607237100710943 /* ProjectLabel.swift */,
 				A29A19252607237100710943 /* SceneLabel.swift */,
+				A29A19232607237100710943 /* ShotLabel.swift */,
 			);
 			path = Index;
 			sourceTree = "<group>";
@@ -188,12 +188,12 @@
 			isa = PBXGroup;
 			children = (
 				A29A19262607237100710943 /* Index */,
-				A29A19202607237100710943 /* Scene.swift */,
 				A29A19212607237100710943 /* LayerType.swift */,
-				A29A19222607237100710943 /* Project.swift */,
 				A29A19272607237100710943 /* ModelManager.swift */,
-				A29A19282607237100710943 /* Layer.swift */,
+				A29A19222607237100710943 /* Project.swift */,
+				A29A19202607237100710943 /* Scene.swift */,
 				A29A19292607237100710943 /* Shot.swift */,
+				A29A19282607237100710943 /* Layer.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";

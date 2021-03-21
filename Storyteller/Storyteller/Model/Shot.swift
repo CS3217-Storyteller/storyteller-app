@@ -11,6 +11,7 @@ struct Shot {
     var layers: [Layer]
     var label: ShotLabel
     var backgroundColor: UIColor
+    let canvasSize: CGSize
 
     mutating func updateLayer(_ layerIndex: Int, withDrawing drawing: PKDrawing) {
         layers[layerIndex].setDrawingTo(drawing)

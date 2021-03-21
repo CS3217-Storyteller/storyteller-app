@@ -10,7 +10,7 @@ import PencilKit
 struct Project {
     var scenes: [Scene]
     var label: ProjectLabel
-    var canvasSize: CGSize
+    let canvasSize: CGSize
 
     mutating func updateShot(ofShot shotLabel: ShotLabel,
                             atLayer layer: Int,
