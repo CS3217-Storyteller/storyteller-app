@@ -24,6 +24,8 @@
 		B3755AD3260651DC00EC0F56 /* LayerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AD2260651DC00EC0F56 /* LayerType.swift */; };
 		B3755AD626065C0700EC0F56 /* DrawingUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AD526065C0700EC0F56 /* DrawingUtility.swift */; };
 		B37F3A1F26070975000B6F8C /* StorytellerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37F3A1E26070975000B6F8C /* StorytellerTests.swift */; };
+		B37F3A2C26070C23000B6F8C /* StorageUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37F3A2B26070C23000B6F8C /* StorageUtility.swift */; };
+		B37F3A3226070CCD000B6F8C /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37F3A3126070CCD000B6F8C /* StorageManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +60,8 @@
 		B37F3A1C26070975000B6F8C /* StorytellerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StorytellerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B37F3A1E26070975000B6F8C /* StorytellerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorytellerTests.swift; sourceTree = "<group>"; };
 		B37F3A2026070976000B6F8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B37F3A2B26070C23000B6F8C /* StorageUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageUtility.swift; sourceTree = "<group>"; };
+		B37F3A3126070CCD000B6F8C /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +103,7 @@
 		A24F62F42600CC7300FC7CD4 /* Storyteller */ = {
 			isa = PBXGroup;
 			children = (
+				B37F3A2A26070C06000B6F8C /* Storage */,
 				B3755ABE260646E600EC0F56 /* Model */,
 				B3755AA826062B7500EC0F56 /* Drawing */,
 				A24F630C2600CC8D00FC7CD4 /* ViewController+View */,
@@ -175,6 +180,15 @@
 				B37F3A2026070976000B6F8C /* Info.plist */,
 			);
 			path = StorytellerTests;
+			sourceTree = "<group>";
+		};
+		B37F3A2A26070C06000B6F8C /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				B37F3A3126070CCD000B6F8C /* StorageManager.swift */,
+				B37F3A2B26070C23000B6F8C /* StorageUtility.swift */,
+			);
+			path = Storage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -304,11 +318,13 @@
 				B3755AD026064E4700EC0F56 /* Layer.swift in Sources */,
 				A24F62FA2600CC7300FC7CD4 /* ViewController.swift in Sources */,
 				A24F62F62600CC7300FC7CD4 /* AppDelegate.swift in Sources */,
+				B37F3A2C26070C23000B6F8C /* StorageUtility.swift in Sources */,
 				B3755AA22605F21400EC0F56 /* LayerView.swift in Sources */,
 				A24F62F82600CC7300FC7CD4 /* SceneDelegate.swift in Sources */,
 				B3755AB3260643C000EC0F56 /* Constants.swift in Sources */,
 				B3755AD3260651DC00EC0F56 /* LayerType.swift in Sources */,
 				B3755ACD26064B8500EC0F56 /* ShotLabel.swift in Sources */,
+				B37F3A3226070CCD000B6F8C /* StorageManager.swift in Sources */,
 				B3755AC826064B5D00EC0F56 /* SceneLabel.swift in Sources */,
 				B3755AD626065C0700EC0F56 /* DrawingUtility.swift in Sources */,
 			);
