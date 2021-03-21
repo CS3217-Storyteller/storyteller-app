@@ -29,17 +29,6 @@ Canvas
   - Pens of different colour
   - Ruler
 
-### Features and Specifications
-
-Here is where you list the features and specifications of your project. It should be updated as the project develops.
-
-Be specific. For example, are your gizmos resizable? Are the bounding areas of the triangles triangles or rectangles etc. Highlight some practical issues as well. When a user presses a key and the flipper flips, what happens if the user continues to hold down the key? Does the flipper stay up?
-
-
-
-
-
-
 
 ### User Manual
 
