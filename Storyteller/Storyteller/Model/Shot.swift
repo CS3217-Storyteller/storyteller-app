@@ -7,10 +7,10 @@
 
 import PencilKit
 
-struct Shot {
+struct Shot: Codable {
     var layers: [Layer]
     var label: ShotLabel
-    var backgroundColor: UIColor
+    var backgroundColor: Color
     let canvasSize: CGSize
 
     mutating func updateLayer(_ layerIndex: Int, withDrawing drawing: PKDrawing) {

@@ -7,7 +7,7 @@
 
 import PencilKit
 
-struct Layer {
+struct Layer: Codable {
     var layerType: LayerType
     var drawing: PKDrawing
     let canvasSize: CGSize

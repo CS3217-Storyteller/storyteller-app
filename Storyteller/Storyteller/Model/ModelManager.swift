@@ -17,7 +17,7 @@ class ModelManager {
     }
 
     func getBackgroundColor(of shotLabel: ShotLabel) -> UIColor? {
-        return getShot(of: shotLabel)?.backgroundColor
+        return getShot(of: shotLabel)?.backgroundColor.uiColor
     }
 
     func getProject(of projectLabel: ProjectLabel) -> Project? {
@@ -107,7 +107,10 @@ class ModelManager {
         }
         let projectIndex = shotLabel.projectIndex
         let sceneLabel = shotLabel.sceneLabel
-        let shot = Shot(layers: layers, label: shotLabel, backgroundColor: backgroundColor, canvasSize: scene.canvasSize)
+        let shot = Shot(layers: layers,
+                        label: shotLabel,
+                        backgroundColor: Color(uiColor: backgroundColor),
+                        canvasSize: scene.canvasSize)
         projects[projectIndex].addShot(shot, to: sceneLabel)
     }
 

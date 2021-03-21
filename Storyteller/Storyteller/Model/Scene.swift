@@ -7,7 +7,7 @@
 
 import PencilKit
 
-struct Scene {
+struct Scene: Codable {
     var shots: [Shot]
     var label: SceneLabel
     let canvasSize: CGSize

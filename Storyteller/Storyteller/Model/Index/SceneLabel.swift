@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SceneLabel {
+struct SceneLabel: Codable {
     var projectLabel: ProjectLabel
     var sceneIndex: Int
 

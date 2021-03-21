@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ProjectLabel {
+struct ProjectLabel: Codable {
     var projectIndex: Int
     var projectTitle: String
 

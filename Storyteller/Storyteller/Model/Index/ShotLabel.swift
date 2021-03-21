@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ShotLabel {
+struct ShotLabel: Codable {
     var sceneLabel: SceneLabel
     var shotIndex: Int
 
