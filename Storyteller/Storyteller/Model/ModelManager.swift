@@ -22,7 +22,7 @@ class ModelManager {
 
     func getProject(of projectLabel: ProjectLabel) -> Project? {
         let projectIndex = projectLabel.projectIndex
-        guard projectIndex < projects.count && projectIndex >= 0 else {
+        guard projects.indices.contains(projectIndex) else {
             return nil
         }
         return projects[projectIndex]
@@ -35,7 +35,7 @@ class ModelManager {
         }
         let scenes = project.scenes
         let sceneIndex = sceneLabel.sceneIndex
-        guard sceneIndex < scenes.count && sceneIndex >= 0 else {
+        guard scenes.indices.contains(sceneIndex) else {
             return nil
         }
         let scene = scenes[sceneIndex]
@@ -49,7 +49,7 @@ class ModelManager {
         }
         let shots = scene.shots
         let shotIndex = shotLabel.shotIndex
-        guard shotIndex < shots.count && shotIndex >= 0 else {
+        guard shots.indices.contains(shotIndex) else {
             return nil
         }
         let shot = shots[shotIndex]
@@ -76,6 +76,9 @@ class ModelManager {
                        atLayer layer: Int,
                        withDrawing drawing: PKDrawing) {
         let projectIndex = shotLabel.projectIndex
+        guard projects.indices.contains(projectIndex) else {
+            return
+        }
         projects[projectIndex].updateShot(ofShot: shotLabel,
                                           atLayer: layer,
                                           withDrawing: drawing)

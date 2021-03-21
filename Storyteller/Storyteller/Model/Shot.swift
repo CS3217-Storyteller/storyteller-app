@@ -14,6 +14,9 @@ struct Shot: Codable {
     let canvasSize: CGSize
 
     mutating func updateLayer(_ layerIndex: Int, withDrawing drawing: PKDrawing) {
+        guard layers.indices.contains(layerIndex) else {
+            return
+        }
         layers[layerIndex].setDrawingTo(drawing)
     }
 
