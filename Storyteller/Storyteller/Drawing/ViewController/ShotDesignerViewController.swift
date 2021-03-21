@@ -4,7 +4,6 @@
 //
 //  Created by TFang on 20/3/21.
 //
-
 import UIKit
 import PencilKit
 
@@ -24,7 +23,6 @@ class ShotDesignerViewController: UIViewController {
         modelManager.getCanvasSize(of: shotLabel)
     }
     // MARK: - View Life Cycle
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
@@ -34,10 +32,14 @@ class ShotDesignerViewController: UIViewController {
     }
 
     private func setUpShot() {
+        
+        
+        
         shotView.frame.size = canvasSize
         shotView.backgroundColor = modelManager.getBackgroundColor(of: shotLabel)
         // TODO add drawings and setup tool picker
         guard let layers = modelManager.getLayers(of: shotLabel) else {
+            print("Hello")
             return
         }
         let layerViews = layers.map({ DrawingUtility.generateLayerView(for: $0) })

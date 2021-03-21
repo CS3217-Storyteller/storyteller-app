@@ -4,10 +4,9 @@
 //
 //  Created by TFang on 20/3/21.
 //
-
 import Foundation
 
-struct ShotLabel {
+struct ShotLabel: Codable {
     var sceneLabel: SceneLabel
     var shotIndex: Int
 

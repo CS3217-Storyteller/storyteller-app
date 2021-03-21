@@ -9,65 +9,82 @@ import UIKit
 
 class ProjectViewController: UIViewController {
 
-    
     @IBOutlet var collectionView: UICollectionView!
+    
+    private var modelManager: ModelManager = ModelManager()
+    
+    private var NumOfProjects: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let layout = UICollectionViewFlowLayout()
-                layout.scrollDirection = .vertical
-                self.collectionView.collectionViewLayout = layout
-                self.collectionView.backgroundColor = .systemGray
-                self.collectionView.register(ProjectViewCell.self, forCellWithReuseIdentifier: ProjectViewCell.identifier)
-                self.collectionView.delegate = self
-                self.collectionView.dataSource = self
-                self.view.addSubview(collectionView)
+        layout.scrollDirection = .vertical
+        self.collectionView.collectionViewLayout = layout
+        self.collectionView.backgroundColor = .systemGray
+        self.collectionView.register(ProjectViewCell.self, forCellWithReuseIdentifier: ProjectViewCell.identifier)
+        self.collectionView.delegate = self
+        self.collectionView.dataSource = self
+        self.view.addSubview(collectionView)
+    }
+    
+    @IBAction func addProject(_ sender: UIButton) {
+        let canvasSize = Constants.defaultCanvasSize
+        let projectTitle = "Project \(self.NumOfProjects)"
+        self.modelManager.addProject(canvasSize: canvasSize, title: projectTitle)
+        self.NumOfProjects += 1
+        self.collectionView.reloadData()
     }
 }
 
 extension ProjectViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: ProjectViewCell.identifier, for: indexPath)
-        return cell
+        guard let projectViewCell = self.collectionView.dequeueReusableCell(withReuseIdentifier: ProjectViewCell.identifier, for: indexPath) as? ProjectViewCell else {
+            return UICollectionViewCell()
+        }
+        projectViewCell.setTitle(from: indexPath.row)
+        return projectViewCell
     }
 }
 
     
 extension ProjectViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 30
+        return self.modelManager.projects.count
     }
 }
 
 extension ProjectViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let itemWidth = (self.view.frame.width / 3) - 3
-        let itemHeight = (self.view.frame.width / 3) - 3
+        let itemWidth = (self.view.frame.width / 5) - 5
+        let itemHeight = (self.view.frame.width / 5) - 5
         return CGSize(width: itemWidth, height: itemHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 2
+        return 3
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 2
+        return 3
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
+        return UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.collectionView.deselectItem(at: indexPath, animated: true)
-        print(indexPath.row)
         guard let sceneViewController = self.storyboard?.instantiateViewController(identifier: "SceneViewController") as? SceneViewController else {
             return
         }
         sceneViewController.modalPresentationStyle = .fullScreen
-
-        navigationController?.pushViewController(sceneViewController, animated: true)
+        let projectLabel = ProjectLabel(projectIndex: indexPath.row)
+        sceneViewController.setProjectLabel(to: projectLabel)
+        sceneViewController.setModelManager(to: self.modelManager)
+        self.present(sceneViewController, animated: true, completion: nil)
     }
+    
+    
     
 }
 

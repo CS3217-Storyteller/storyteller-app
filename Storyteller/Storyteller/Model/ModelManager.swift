@@ -4,40 +4,54 @@
 //
 //  Created by TFang on 20/3/21.
 //
-
 import PencilKit
 
 // TODO
 class ModelManager {
     var projects: [Project]
+    private let storageManager = StorageManager()
 
-    // TODO: Read from persistence?
     init() {
-        self.projects = [Project]()
+        self.projects = storageManager.getAllProjects()
     }
 
     func getBackgroundColor(of shotLabel: ShotLabel) -> UIColor? {
-        return getShot(of: shotLabel)?.backgroundColor
+        return getShot(of: shotLabel)?.backgroundColor.uiColor
     }
 
     func getProject(of projectLabel: ProjectLabel) -> Project? {
         let projectIndex = projectLabel.projectIndex
+        guard projects.indices.contains(projectIndex) else {
+            return nil
+        }
         return projects[projectIndex]
     }
 
     func getScene(of sceneLabel: SceneLabel) -> Scene? {
-        let projectIndex = sceneLabel.projectIndex
+        let projectLabel = sceneLabel.projectLabel
+        guard let project = getProject(of: projectLabel) else {
+            return nil
+        }
+        let scenes = project.scenes
         let sceneIndex = sceneLabel.sceneIndex
-        let scene = projects[projectIndex].scenes[sceneIndex]
+        guard scenes.indices.contains(sceneIndex) else {
+            return nil
+        }
+        let scene = scenes[sceneIndex]
         return scene
     }
 
     func getShot(of shotLabel: ShotLabel) -> Shot? {
-        let projectIndex = shotLabel.projectIndex
-        let sceneIndex = shotLabel.sceneIndex
+        let sceneLabel = shotLabel.sceneLabel
+        guard let scene = getScene(of: sceneLabel) else {
+            return nil
+        }
+        let shots = scene.shots
         let shotIndex = shotLabel.shotIndex
-        let scene = projects[projectIndex].scenes[sceneIndex]
-        let shot = scene.shots[shotIndex]
+        guard shots.indices.contains(shotIndex) else {
+            return nil
+        }
+        let shot = shots[shotIndex]
         return shot
     }
 
@@ -49,28 +63,37 @@ class ModelManager {
     }
 
     func getCanvasSize(of shotLabel: ShotLabel) -> CGSize {
-        // return CGSize(width: Constants.screenWidth, height: Constants.screenHeight)
         let projectIndex = shotLabel.projectIndex
         return projects[projectIndex].canvasSize
     }
 
-    // TODO: continuous update, write TO persistence also
+    private func saveProject(_ project: Project) {
+        _ = storageManager.saveProject(project: project)
+    }
+
     func updateDrawing(ofShot shotLabel: ShotLabel,
                        atLayer layer: Int,
                        withDrawing drawing: PKDrawing) {
         let projectIndex = shotLabel.projectIndex
+        guard projects.indices.contains(projectIndex) else {
+            return
+        }
         projects[projectIndex].updateShot(ofShot: shotLabel,
                                           atLayer: layer,
                                           withDrawing: drawing)
+        saveProject(projects[projectIndex])
     }
 
     func addProject(canvasSize: CGSize, title: String, scenes: [Scene] = [Scene]()) {
         let index = projects.count
-        let label = ProjectLabel(title: title, projectIndex: index)
+        let label = ProjectLabel(projectIndex: index)
         let project = Project(scenes: scenes,
                               label: label,
-                              canvasSize: canvasSize)
+                              canvasSize: canvasSize,
+                              title: title
+        )
         projects.append(project)
+        saveProject(project)
     }
 
     func addScene(projectLabel: ProjectLabel, shots: [Shot] = [Shot]()) {
@@ -78,11 +101,11 @@ class ModelManager {
         guard let project = getProject(of: projectLabel) else {
             return
         }
-
         let index = projects[projectIndex].scenes.count
         let label = SceneLabel(projectLabel: projectLabel, sceneIndex: index)
         let scene = Scene(shots: shots, label: label, canvasSize: project.canvasSize)
         projects[projectIndex].addScene(scene)
+        saveProject(projects[projectIndex])
     }
 
     func addShot(ofShot shotLabel: ShotLabel,
@@ -93,8 +116,12 @@ class ModelManager {
         }
         let projectIndex = shotLabel.projectIndex
         let sceneLabel = shotLabel.sceneLabel
-        let shot = Shot(layers: layers, label: shotLabel, backgroundColor: backgroundColor, canvasSize: scene.canvasSize)
+        let shot = Shot(layers: layers,
+                        label: shotLabel,
+                        backgroundColor: Color(uiColor: backgroundColor),
+                        canvasSize: scene.canvasSize)
         projects[projectIndex].addShot(shot, to: sceneLabel)
+        saveProject(projects[projectIndex])
     }
 
     func addLayer(type: LayerType,
@@ -106,5 +133,6 @@ class ModelManager {
         }
         let layer = Layer(layerType: type, drawing: drawing, canvasSize: shot.canvasSize)
         projects[projectIndex].addLayer(layer, to: shotLabel)
+        saveProject(projects[projectIndex])
     }
 }

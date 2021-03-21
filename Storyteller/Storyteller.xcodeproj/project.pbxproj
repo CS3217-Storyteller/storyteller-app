@@ -30,6 +30,8 @@
 		A29A19642607243E00710943 /* ShotLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19232607237100710943 /* ShotLabel.swift */; };
 		A29A19672607244000710943 /* ProjectLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19242607237100710943 /* ProjectLabel.swift */; };
 		A29A196A2607244200710943 /* SceneLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19252607237100710943 /* SceneLabel.swift */; };
+		A2F2C8962607634800FD4FF6 /* AddShotViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F2C8952607634800FD4FF6 /* AddShotViewCell.swift */; };
+		A2F2C89A260768E900FD4FF6 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F2C899260768E900FD4FF6 /* Color.swift */; };
 		B3755AA22605F21400EC0F56 /* LayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AA12605F21400EC0F56 /* LayerView.swift */; };
 		B3755AAB26062B9700EC0F56 /* ShotDesignerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AAA26062B9700EC0F56 /* ShotDesignerViewController.swift */; };
 		B3755AB3260643C000EC0F56 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AB2260643C000EC0F56 /* Constants.swift */; };
@@ -75,6 +77,8 @@
 		A29A19292607237100710943 /* Shot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shot.swift; sourceTree = "<group>"; };
 		A29A192C2607239E00710943 /* StorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		A29A192E2607239E00710943 /* StorageUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageUtility.swift; sourceTree = "<group>"; };
+		A2F2C8952607634800FD4FF6 /* AddShotViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddShotViewCell.swift; sourceTree = "<group>"; };
+		A2F2C899260768E900FD4FF6 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		B3755AA12605F21400EC0F56 /* LayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerView.swift; sourceTree = "<group>"; };
 		B3755AAA26062B9700EC0F56 /* ShotDesignerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotDesignerViewController.swift; sourceTree = "<group>"; };
 		B3755AB2260643C000EC0F56 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -115,6 +119,7 @@
 				A2091584260703D1001A242E /* SceneViewController.swift */,
 				A209158826070553001A242E /* SceneHeaderView.swift */,
 				A209158B26070595001A242E /* SceneShotViewCell.swift */,
+				A2F2C8952607634800FD4FF6 /* AddShotViewCell.swift */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -194,6 +199,7 @@
 				A29A19202607237100710943 /* Scene.swift */,
 				A29A19292607237100710943 /* Shot.swift */,
 				A29A19282607237100710943 /* Layer.swift */,
+				A2F2C899260768E900FD4FF6 /* Color.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -350,7 +356,9 @@
 				A24F62FA2600CC7300FC7CD4 /* ViewController.swift in Sources */,
 				A29A195B2607243300710943 /* Scene.swift in Sources */,
 				A29A19322607239E00710943 /* StorageUtility.swift in Sources */,
+				A2F2C8962607634800FD4FF6 /* AddShotViewCell.swift in Sources */,
 				A29A19612607243800710943 /* Project.swift in Sources */,
+				A2F2C89A260768E900FD4FF6 /* Color.swift in Sources */,
 				A24F62F62600CC7300FC7CD4 /* AppDelegate.swift in Sources */,
 				A29A19672607244000710943 /* ProjectLabel.swift in Sources */,
 				B3755AA22605F21400EC0F56 /* LayerView.swift in Sources */,

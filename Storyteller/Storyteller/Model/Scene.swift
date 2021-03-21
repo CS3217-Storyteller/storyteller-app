@@ -4,10 +4,9 @@
 //
 //  Created by Marcus on 21/3/21.
 //
-
 import PencilKit
 
-struct Scene {
+struct Scene: Codable {
     var shots: [Shot]
     var label: SceneLabel
     let canvasSize: CGSize
@@ -16,6 +15,9 @@ struct Scene {
                     atLayer layer: Int,
                     withDrawing drawing: PKDrawing) {
         let shotIndex = shotLabel.shotIndex
+        guard shots.indices.contains(shotIndex) else {
+            return
+        }
         shots[shotIndex].updateLayer(layer, withDrawing: drawing)
     }
 
@@ -24,7 +26,11 @@ struct Scene {
     }
 
     mutating func addLayer(_ layer: Layer, to shotLabel: ShotLabel) {
-        let index = shotLabel.shotIndex
-        shots[index].addLayer(layer)
+        let shotIndex = shotLabel.shotIndex
+        guard shots.indices.contains(shotIndex) else {
+            return
+        }
+        shots[shotIndex].addLayer(layer)
     }
 }
+

@@ -4,10 +4,9 @@
 //
 //  Created by TFang on 20/3/21.
 //
-
 import PencilKit
 
-struct Layer {
+struct Layer: Codable {
     var layerType: LayerType
     var drawing: PKDrawing
     let canvasSize: CGSize
@@ -16,4 +15,3 @@ struct Layer {
         drawing = updatedDrawing
     }
 }
-
