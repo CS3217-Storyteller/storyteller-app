@@ -55,6 +55,9 @@ class SceneViewController: UIViewController {
         self.collectionView.reloadData()
     }
     
+    @IBAction func backButton(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
 }
 
 
@@ -167,6 +170,7 @@ extension SceneViewController: UICollectionViewDelegateFlowLayout {
         if (indexPath.row < scene.shots.count) {
             shotDesignerController.setModelManager(to: modelManager)
             shotDesignerController.setShotLabel(to: shotLabel)
+            shotDesignerController.modalTransitionStyle = .flipHorizontal
             self.present(shotDesignerController, animated: true, completion: nil)
         } else {
             modelManager.addShot(ofShot: shotLabel, layers: [], backgroundColor: .white)

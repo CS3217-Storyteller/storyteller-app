@@ -17,7 +17,6 @@ class ProjectViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         self.collectionView.collectionViewLayout = layout
@@ -26,6 +25,7 @@ class ProjectViewController: UIViewController {
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.view.addSubview(collectionView)
+        self.NumOfProjects = self.modelManager.projects.count
     }
     
     @IBAction func addProject(_ sender: UIButton) {

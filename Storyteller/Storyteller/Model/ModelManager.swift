@@ -74,9 +74,6 @@ class ModelManager {
     func updateDrawing(ofShot shotLabel: ShotLabel,
                        atLayer layer: Int,
                        withDrawing drawing: PKDrawing) {
-        
-        print("before")
-        
         let projectIndex = shotLabel.projectIndex
         guard projects.indices.contains(projectIndex) else {
             return
@@ -84,9 +81,6 @@ class ModelManager {
         projects[projectIndex].updateShot(ofShot: shotLabel,
                                           atLayer: layer,
                                           withDrawing: drawing)
-        
-        print("after")
-        
         saveProject(projects[projectIndex])
     }
 

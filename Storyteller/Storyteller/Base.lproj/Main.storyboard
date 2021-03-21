@@ -120,7 +120,7 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="nX2-Db-Tvg"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="h3l-Ka-Bz4" firstAttribute="trailing" secondItem="LS0-sP-w2o" secondAttribute="trailing" id="3GT-zU-9yx"/>
                             <constraint firstItem="h3l-Ka-Bz4" firstAttribute="top" secondItem="LS0-sP-w2o" secondAttribute="top" id="M5o-WA-cUG"/>
@@ -135,7 +135,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JMV-yF-8bm" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1946" y="66"/>
+            <point key="canvasLocation" x="1945.7286432160804" y="65.467625899280577"/>
         </scene>
         <!--Scene View Controller-->
         <scene sceneID="c1k-Ex-fdQ">
@@ -165,13 +165,26 @@
                                         <color key="textColor" name="AccentColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JCH-Sf-ffD">
+                                        <rect key="frame" x="20" y="25" width="70" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="tJm-3q-SXP"/>
+                                            <constraint firstAttribute="width" constant="70" id="uWN-c3-8jG"/>
+                                        </constraints>
+                                        <state key="normal" image="arrow.backward" catalog="system"/>
+                                        <connections>
+                                            <action selector="backButton:" destination="mcS-65-Qo3" eventType="touchUpInside" id="Wus-UM-jPk"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="0xn-aL-7X5"/>
                                     <constraint firstItem="0DZ-Wa-Rsz" firstAttribute="centerY" secondItem="e93-Xi-wXS" secondAttribute="centerY" id="QY3-SY-fhe"/>
+                                    <constraint firstItem="JCH-Sf-ffD" firstAttribute="leading" secondItem="e93-Xi-wXS" secondAttribute="leading" constant="20" id="WSy-TU-cgg"/>
                                     <constraint firstAttribute="trailing" secondItem="y7O-Rf-5oH" secondAttribute="trailing" constant="20" id="b47-nO-0RL"/>
                                     <constraint firstItem="y7O-Rf-5oH" firstAttribute="centerY" secondItem="e93-Xi-wXS" secondAttribute="centerY" id="eFj-2A-SFu"/>
+                                    <constraint firstItem="JCH-Sf-ffD" firstAttribute="centerY" secondItem="e93-Xi-wXS" secondAttribute="centerY" id="fFM-Gf-ujs"/>
                                     <constraint firstItem="0DZ-Wa-Rsz" firstAttribute="centerX" secondItem="e93-Xi-wXS" secondAttribute="centerX" id="fpC-Xo-a35"/>
                                 </constraints>
                             </view>
@@ -220,6 +233,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrow.backward" catalog="system" width="128" height="98"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

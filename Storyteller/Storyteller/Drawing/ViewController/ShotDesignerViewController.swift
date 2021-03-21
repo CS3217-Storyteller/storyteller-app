@@ -42,7 +42,7 @@ class ShotDesignerViewController: UIViewController {
     }
 
     private func setUpShot() {
-        
+        shotView.frame.origin = CGPoint(x: 0, y: 200)
         shotView.frame.size = canvasSize
         shotView.backgroundColor = modelManager.getBackgroundColor(of: shotLabel)
         // TODO add drawings and setup tool picker
@@ -70,6 +70,19 @@ class ShotDesignerViewController: UIViewController {
     var canvasScale = CGFloat(1) {
         didSet {
             shotView.updateZoomScale(scale: canvasScale)
+        }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        self.view.addGestureRecognizer(swipeRight)
+    }
+    
+    @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+        if (gesture.location(in: self.view).x < 50) {
+            dismiss(animated: true, completion: nil)
         }
     }
 
