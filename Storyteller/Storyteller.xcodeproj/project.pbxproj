@@ -114,7 +114,6 @@
 		A24F62E92600CC7300FC7CD4 = {
 			isa = PBXGroup;
 			children = (
-				A29A18CF2607193200710943 /* Storage */,
 				A24F62F42600CC7300FC7CD4 /* Storyteller */,
 				A29A18EE26071A3600710943 /* StorytellerTests */,
 				A24F62F32600CC7300FC7CD4 /* Products */,
@@ -133,6 +132,7 @@
 		A24F62F42600CC7300FC7CD4 /* Storyteller */ = {
 			isa = PBXGroup;
 			children = (
+				A29A18CF2607193200710943 /* Storage */,
 				B3755AA826062B7500EC0F56 /* Drawing */,
 				A20915812606FE51001A242E /* Project */,
 				A2091583260703B0001A242E /* Scene */,
