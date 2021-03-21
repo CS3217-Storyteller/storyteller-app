@@ -7,7 +7,7 @@
 
 import PencilKit
 
-struct Project {
+struct Project: Codable {
     var scenes: [Scene]
     var label: ProjectLabel
     let canvasSize: CGSize
@@ -16,6 +16,9 @@ struct Project {
                             atLayer layer: Int,
                             withDrawing drawing: PKDrawing) {
         let sceneIndex = shotLabel.sceneIndex
+        guard scenes.indices.contains(sceneIndex) else {
+            return
+        }
         scenes[sceneIndex].updateShot(ofShot: shotLabel,
                                       atLayer: layer,
                                       withDrawing: drawing)

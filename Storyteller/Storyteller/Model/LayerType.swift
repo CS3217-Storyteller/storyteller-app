@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum LayerType {
+enum LayerType: Codable {
     case drawing
     case image
 }
