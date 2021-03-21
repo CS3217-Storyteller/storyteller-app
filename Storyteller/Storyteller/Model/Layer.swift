@@ -4,7 +4,6 @@
 //
 //  Created by TFang on 20/3/21.
 //
-
 import PencilKit
 
 struct Layer: Codable {
@@ -16,4 +15,3 @@ struct Layer: Codable {
         drawing = updatedDrawing
     }
 }
-

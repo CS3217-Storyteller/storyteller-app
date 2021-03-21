@@ -4,7 +4,6 @@
 //
 //  Created by Marcus on 21/3/21.
 //
-
 import PencilKit
 
 struct Shot: Codable {

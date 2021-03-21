@@ -4,7 +4,6 @@
 //
 //  Created by TFang on 20/3/21.
 //
-
 import PencilKit
 
 // TODO
@@ -87,10 +86,12 @@ class ModelManager {
 
     func addProject(canvasSize: CGSize, title: String, scenes: [Scene] = [Scene]()) {
         let index = projects.count
-        let label = ProjectLabel(title: title, projectIndex: index)
+        let label = ProjectLabel(projectIndex: index)
         let project = Project(scenes: scenes,
                               label: label,
-                              canvasSize: canvasSize)
+                              canvasSize: canvasSize,
+                              title: title
+        )
         projects.append(project)
         saveProject(project)
     }

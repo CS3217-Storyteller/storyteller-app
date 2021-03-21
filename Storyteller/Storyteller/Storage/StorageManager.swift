@@ -4,7 +4,6 @@
 //
 //  Created by TFang on 21/3/21.
 //
-
 import Foundation
 
 class StorageManager {
@@ -55,7 +54,7 @@ class StorageManager {
 
     // MARK: - Save
     func saveProject(project: Project) -> Bool {
-        let fileName = project.label.projectTitle
+        let fileName = project.title
         let fileUrl = StorageUtility.getFileUrl(of: fileName)
         guard (try? JSONEncoder().encode(project).write(to: fileUrl)) != nil else {
             return false

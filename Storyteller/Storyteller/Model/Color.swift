@@ -1,10 +1,3 @@
-//
-//  Color.swift
-//  Storyteller
-//
-//  Created by Marcus on 21/3/21.
-//
-
 import UIKit
 
 struct Color: Codable {

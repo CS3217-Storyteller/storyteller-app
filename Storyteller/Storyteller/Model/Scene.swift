@@ -4,7 +4,6 @@
 //
 //  Created by Marcus on 21/3/21.
 //
-
 import PencilKit
 
 struct Scene: Codable {
@@ -34,3 +33,4 @@ struct Scene: Codable {
         shots[shotIndex].addLayer(layer)
     }
 }
+

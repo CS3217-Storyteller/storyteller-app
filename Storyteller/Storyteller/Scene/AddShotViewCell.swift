@@ -1,5 +1,5 @@
 //
-//  ShotViewCell.swift
+//  AddShotViewCell.swift
 //  Storyteller
 //
 //  Created by John Pan on 21/3/21.
@@ -7,30 +7,25 @@
 
 import UIKit
 
-class SceneShotViewCell: UICollectionViewCell {
+class AddShotViewCell: UICollectionViewCell {
     
-    static let identifier = "SceneShotViewCell"
-    
+    static let identifier = "AddShotViewCell"
+
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.image = UIImage(named: "shot")
+        imageView.image = UIImage(named: "add-shot")
         return imageView
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.contentView.backgroundColor = .white
         self.contentView.addSubview(self.imageView)
     }
     
     required init?(coder: NSCoder) {
         fatalError()
-    }
-    
-    func setImage(image: UIImage) {
-        self.imageView.image = image
     }
     
     override func layoutSubviews() {
@@ -42,4 +37,5 @@ class SceneShotViewCell: UICollectionViewCell {
         super.prepareForReuse()
 //        self.imageView.image = nil
     }
+
 }

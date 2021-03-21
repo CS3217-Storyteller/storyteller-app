@@ -4,17 +4,18 @@
 //
 //  Created by Marcus on 21/3/21.
 //
-
 import PencilKit
 
 struct Project: Codable {
     var scenes: [Scene]
     var label: ProjectLabel
     let canvasSize: CGSize
+    let title: String
 
     mutating func updateShot(ofShot shotLabel: ShotLabel,
                             atLayer layer: Int,
                             withDrawing drawing: PKDrawing) {
+        
         let sceneIndex = shotLabel.sceneIndex
         guard scenes.indices.contains(sceneIndex) else {
             return
