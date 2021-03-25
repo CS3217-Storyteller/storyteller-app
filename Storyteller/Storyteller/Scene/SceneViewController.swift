@@ -25,6 +25,8 @@ class SceneViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationItem.hidesBackButton = true
 
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -58,7 +60,7 @@ class SceneViewController: UIViewController {
     }
 
     @IBAction private func backButton(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
 }
 
@@ -192,7 +194,8 @@ extension SceneViewController: UICollectionViewDelegateFlowLayout {
             shotDesignerController.setModelManager(to: modelManager)
             shotDesignerController.setShotLabel(to: shotLabel)
             shotDesignerController.modalTransitionStyle = .flipHorizontal
-            self.present(shotDesignerController, animated: true, completion: nil)
+//            self.present(shotDesignerController, animated: true, completion: nil)
+            self.navigationController?.pushViewController(shotDesignerController, animated: true)
         } else {
             modelManager.addShot(ofShot: shotLabel, layers: [], backgroundColor: .white)
             self.collectionView.reloadData()

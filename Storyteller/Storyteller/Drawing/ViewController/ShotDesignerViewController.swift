@@ -77,7 +77,7 @@ class ShotDesignerViewController: UIViewController {
 
     @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
         if gesture.location(in: self.view).x < 50 {
-            dismiss(animated: true, completion: nil)
+            self.navigationController?.popViewController(animated: true)
         }
     }
 

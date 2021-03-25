@@ -95,7 +95,8 @@ extension ProjectViewController: UICollectionViewDelegateFlowLayout {
         let projectLabel = ProjectLabel(projectIndex: indexPath.row)
         sceneViewController.setProjectLabel(to: projectLabel)
         sceneViewController.setModelManager(to: self.modelManager)
-        self.present(sceneViewController, animated: true, completion: nil)
+//        self.present(sceneViewController, animated: true, completion: nil)
+        self.navigationController?.pushViewController(sceneViewController, animated: true)
     }
 
 }
