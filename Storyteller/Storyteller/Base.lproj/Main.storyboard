@@ -85,6 +85,7 @@
                     <connections>
                         <outlet property="collectionView" destination="wfm-g6-ORl" id="tjc-5U-Xvu"/>
                         <outletCollection property="collectionView" destination="nu9-GC-VIB" id="yQP-fg-G30"/>
+                        <segue destination="mcS-65-Qo3" kind="show" id="Arh-Q2-rHW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7u3-mr-1iH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -139,7 +140,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e93-Xi-wXS">
-                                <rect key="frame" x="0.0" y="0.0" width="1194" height="100"/>
+                                <rect key="frame" x="0.0" y="50" width="1194" height="100"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y7O-Rf-5oH">
                                         <rect key="frame" x="1124" y="25" width="50" height="50"/>
@@ -182,7 +183,7 @@
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="LAJ-1h-XVO">
-                                <rect key="frame" x="0.0" y="120" width="1194" height="694"/>
+                                <rect key="frame" x="0.0" y="170" width="1194" height="644"/>
                                 <color key="backgroundColor" systemColor="quaternaryLabelColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="N7K-Yo-zH4">
                                     <size key="itemSize" width="128" height="128"/>
@@ -214,10 +215,12 @@
                             <constraint firstItem="e93-Xi-wXS" firstAttribute="leading" secondItem="sa1-7i-Q7L" secondAttribute="leading" id="oM9-3N-5no"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="Tkj-gm-md6"/>
                     <connections>
                         <outlet property="collectionView" destination="LAJ-1h-XVO" id="m6Q-kN-l5K"/>
                         <outlet property="projectTitle" destination="0DZ-Wa-Rsz" id="tpX-sI-A7i"/>
                         <outletCollection property="collectionView" destination="5EB-ZE-Y4q" id="Y2L-oV-EOK"/>
+                        <segue destination="mXm-tZ-pGV" kind="show" id="rxQ-Lh-nOo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tkQ-SI-LQP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
