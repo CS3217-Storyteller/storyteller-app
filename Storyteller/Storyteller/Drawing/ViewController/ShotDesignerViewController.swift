@@ -9,7 +9,6 @@ import PencilKit
 
 class ShotDesignerViewController: UIViewController {
     @IBOutlet private var shotView: ShotView!
-    @IBOutlet private var duplicateButton: UIButton!
     
     var toolPicker = PKToolPicker()
     // should be intialized via segue
@@ -72,7 +71,6 @@ class ShotDesignerViewController: UIViewController {
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
         swipeRight.direction = UISwipeGestureRecognizer.Direction.right
         self.view.addGestureRecognizer(swipeRight)
-        self.view.bringSubviewToFront(self.duplicateButton)
     }
 
     @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
@@ -81,13 +79,12 @@ class ShotDesignerViewController: UIViewController {
         }
     }
 
-    @IBAction private func duplicateShot(_ sender: UIButton) {
+    @IBAction func duplicateShot(_ sender: UIBarButtonItem) {
         guard let shot = self.modelManager.getShot(of: self.shotLabel) else {
             return
         }
         let newShotLabel = ShotLabel(sceneLabel: self.shotLabel.sceneLabel, shotIndex: self.shotLabel.shotIndex + 1)
         self.modelManager.addShot(ofShot: newShotLabel, layers: shot.layers, backgroundColor: .white)
-//        self.shotLabel = newShotLabel
     }
 
     override func viewDidLayoutSubviews() {
