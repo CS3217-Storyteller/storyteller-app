@@ -1,13 +1,15 @@
 //
-//  ShotLabel.swift
+//  LayerLabel.swift
 //  Storyteller
 //
-//  Created by TFang on 20/3/21.
+//  Created by mmarcus on 27/3/21.
 //
+
 import Foundation
 
-struct ShotLabel: Codable {
+struct LayerLabel {
     var projectId: UUID
     var sceneId: UUID
     var shotId: UUID
+    var layerId: UUID
 }
