@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2C36EC742607383700250ADE /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C36EC732607383700250ADE /* Color.swift */; };
+		89F207E3260F1E1B00D5A78F /* LayerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89F207E2260F1E1B00D5A78F /* LayerLabel.swift */; };
 		A209157F2606FE3F001A242E /* ProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A209157E2606FE3F001A242E /* ProjectViewController.swift */; };
 		A2091585260703D1001A242E /* SceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2091584260703D1001A242E /* SceneViewController.swift */; };
 		A209158926070553001A242E /* SceneHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A209158826070553001A242E /* SceneHeaderView.swift */; };
@@ -52,6 +53,7 @@
 
 /* Begin PBXFileReference section */
 		2C36EC732607383700250ADE /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		89F207E2260F1E1B00D5A78F /* LayerLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerLabel.swift; sourceTree = "<group>"; };
 		A209157E2606FE3F001A242E /* ProjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewController.swift; sourceTree = "<group>"; };
 		A2091584260703D1001A242E /* SceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneViewController.swift; sourceTree = "<group>"; };
 		A209158826070553001A242E /* SceneHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneHeaderView.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 			children = (
 				A29A19242607237100710943 /* ProjectLabel.swift */,
 				A29A19252607237100710943 /* SceneLabel.swift */,
+				89F207E2260F1E1B00D5A78F /* LayerLabel.swift */,
 				A29A19232607237100710943 /* ShotLabel.swift */,
 			);
 			path = Index;
@@ -358,6 +361,7 @@
 				A2091590260705EB001A242E /* ProjectViewCell.swift in Sources */,
 				A24F62FA2600CC7300FC7CD4 /* ViewController.swift in Sources */,
 				A29A195B2607243300710943 /* Scene.swift in Sources */,
+				89F207E3260F1E1B00D5A78F /* LayerLabel.swift in Sources */,
 				A29A19322607239E00710943 /* StorageUtility.swift in Sources */,
 				A2F2C8962607634800FD4FF6 /* AddShotViewCell.swift in Sources */,
 				A29A19612607243800710943 /* Project.swift in Sources */,

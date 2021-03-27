@@ -92,7 +92,8 @@ extension ProjectViewController: UICollectionViewDelegateFlowLayout {
             return
         }
         sceneViewController.modalPresentationStyle = .fullScreen
-        let projectLabel = ProjectLabel(projectIndex: indexPath.row)
+        let projectLabel = ProjectLabel(projectId: UUID()) // TODO: pass in proper ID
+        // let projectLabel = ProjectLabel(projectIndex: indexPath.row)
         sceneViewController.setProjectLabel(to: projectLabel)
         sceneViewController.setModelManager(to: self.modelManager)
 //        self.present(sceneViewController, animated: true, completion: nil)

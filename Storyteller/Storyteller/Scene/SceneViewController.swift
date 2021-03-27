@@ -80,18 +80,20 @@ extension SceneViewController: UICollectionViewDelegate {
         else {
             return UICollectionViewCell()
         }
-        let sceneLabel = SceneLabel(projectLabel: projectLabel, sceneIndex: indexPath.section)
+        let sceneLabel = projectLabel.generateSceneLabel(withId: UUID()) // TODO: pass proper id!
+        // let sceneLabel = SceneLabel(projectLabel: projectLabel, sceneIndex: indexPath.section)
         guard let scene = modelManager.getScene(of: sceneLabel) else {
             return UICollectionViewCell()
         }
 
         if indexPath.row < scene.shots.count {
-            let shotLabel = ShotLabel(sceneLabel: sceneLabel, shotIndex: indexPath.row)
+            let shotLabel = sceneLabel.generateShotLabel(withId: UUID()) // TODO: pass proper id!
+            // let shotLabel = ShotLabel(sceneLabel: sceneLabel, shotIndex: indexPath.row)
             guard let shot = modelManager.getShot(of: shotLabel) else {
                 return UICollectionViewCell()
             }
             if !shot.layers.isEmpty {
-                let thumbnail = shot.layers[0].drawing
+                let thumbnail = shot.orderedLayers[0].drawing
                     .image(from: CGRect(x: 0, y: 0,
                                         width: Constants.screenWidth,
                                         height: Constants.screenHeight), scale: 1.0)
@@ -124,7 +126,8 @@ extension SceneViewController: UICollectionViewDataSource {
         else {
             return 0
         }
-        let sceneLabel = SceneLabel(projectLabel: projectLabel, sceneIndex: section)
+        let sceneLabel = projectLabel.generateSceneLabel(withId: UUID()) // TODO: pass in correct ID
+        // let sceneLabel = SceneLabel(projectLabel: projectLabel, sceneIndex: section)
         guard let scene = modelManager.getScene(of: sceneLabel) else {
             return 0
         }
@@ -183,12 +186,13 @@ extension SceneViewController: UICollectionViewDelegateFlowLayout {
         else {
             return
         }
-        let sceneLabel = SceneLabel(projectLabel: projectLabel, sceneIndex: indexPath.section)
+        let sceneLabel = projectLabel.generateSceneLabel(withId: UUID()) // TODO: pass in proper ID
+        // let sceneLabel = SceneLabel(projectLabel: projectLabel, sceneIndex: indexPath.section)
         guard let scene = modelManager.getScene(of: sceneLabel) else {
             return
         }
 
-        let shotLabel = ShotLabel(sceneLabel: sceneLabel, shotIndex: indexPath.row)
+        let shotLabel = sceneLabel.generateShotLabel(withId: UUID()) // TODO: pass in proper ID
 
         if indexPath.row < scene.shots.count {
             shotDesignerController.setModelManager(to: modelManager)
@@ -197,7 +201,7 @@ extension SceneViewController: UICollectionViewDelegateFlowLayout {
 //            self.present(shotDesignerController, animated: true, completion: nil)
             self.navigationController?.pushViewController(shotDesignerController, animated: true)
         } else {
-            modelManager.addShot(ofShot: shotLabel, layers: [], backgroundColor: .white)
+            modelManager.addShot(ofShot: shotLabel, backgroundColor: .white)
             self.collectionView.reloadData()
         }
     }

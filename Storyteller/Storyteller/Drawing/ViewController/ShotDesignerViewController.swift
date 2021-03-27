@@ -18,7 +18,7 @@ class ShotDesignerViewController: UIViewController {
     var shotLabel: ShotLabel!
 
     var canvasSize: CGSize {
-        modelManager.getCanvasSize(of: shotLabel)
+        modelManager.getCanvasSize(of: shotLabel)! // TODO: Proper unwrapping
     }
 
     func setModelManager(to modelManager: ModelManager) {
@@ -83,8 +83,10 @@ class ShotDesignerViewController: UIViewController {
         guard let shot = self.modelManager.getShot(of: self.shotLabel) else {
             return
         }
-        let newShotLabel = ShotLabel(sceneLabel: self.shotLabel.sceneLabel, shotIndex: self.shotLabel.shotIndex + 1)
-        self.modelManager.addShot(ofShot: newShotLabel, layers: shot.layers, backgroundColor: .white)
+        let newShotLabel = self.shotLabel.withShotId(UUID())
+        self.modelManager.addShot(ofShot: newShotLabel, shot: shot, backgroundColor: .white)
+        // let newShotLabel = ShotLabel(sceneLabel: self.shotLabel.sceneLabel, shotIndex: self.shotLabel.shotIndex + 1)
+        // self.modelManager.addShot(ofShot: newShotLabel, layers: shot.layers, backgroundColor: .white)
     }
 
     override func viewDidLayoutSubviews() {
