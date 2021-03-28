@@ -16,7 +16,7 @@ struct Shot: Codable {
         guard layers.indices.contains(layerIndex) else {
             return
         }
-        layers[layerIndex].setDrawingTo(drawing)
+        layers[layerIndex].setDrawing(to: drawing)
     }
 
     mutating func addLayer(_ layer: Layer) {

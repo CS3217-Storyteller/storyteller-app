@@ -39,6 +39,7 @@
 		B3320D22260F6BA10063558A /* NormalLayerMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3320D21260F6BA10063558A /* NormalLayerMerger.swift */; };
 		B3320D26260F6C8A0063558A /* MergableLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3320D25260F6C8A0063558A /* MergableLayer.swift */; };
 		B3320D62260F92330063558A /* LayerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3320D61260F92330063558A /* LayerComponent.swift */; };
+		B33549572610B0CA00B881ED /* StorageLeafComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B33549562610B0CA00B881ED /* StorageLeafComponent.swift */; };
 		B3755AA22605F21400EC0F56 /* LayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AA12605F21400EC0F56 /* LayerView.swift */; };
 		B3755AAB26062B9700EC0F56 /* ShotDesignerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AAA26062B9700EC0F56 /* ShotDesignerViewController.swift */; };
 		B3755AB3260643C000EC0F56 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AB2260643C000EC0F56 /* Constants.swift */; };
@@ -93,6 +94,7 @@
 		B3320D21260F6BA10063558A /* NormalLayerMerger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalLayerMerger.swift; sourceTree = "<group>"; };
 		B3320D25260F6C8A0063558A /* MergableLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergableLayer.swift; sourceTree = "<group>"; };
 		B3320D61260F92330063558A /* LayerComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerComponent.swift; sourceTree = "<group>"; };
+		B33549562610B0CA00B881ED /* StorageLeafComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageLeafComponent.swift; sourceTree = "<group>"; };
 		B3755AA12605F21400EC0F56 /* LayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerView.swift; sourceTree = "<group>"; };
 		B3755AAA26062B9700EC0F56 /* ShotDesignerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotDesignerViewController.swift; sourceTree = "<group>"; };
 		B3755AB2260643C000EC0F56 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 		A29A192B2607239E00710943 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				B33549552610B0B400B881ED /* StorageModel */,
 				A29A192C2607239E00710943 /* StorageManager.swift */,
 				A29A192E2607239E00710943 /* StorageUtility.swift */,
 			);
@@ -241,6 +244,14 @@
 				B3320D61260F92330063558A /* LayerComponent.swift */,
 			);
 			path = Drawing;
+			sourceTree = "<group>";
+		};
+		B33549552610B0B400B881ED /* StorageModel */ = {
+			isa = PBXGroup;
+			children = (
+				B33549562610B0CA00B881ED /* StorageLeafComponent.swift */,
+			);
+			path = StorageModel;
 			sourceTree = "<group>";
 		};
 		B3755AA02605F1E100EC0F56 /* View */ = {
@@ -420,6 +431,7 @@
 				A24F62F82600CC7300FC7CD4 /* SceneDelegate.swift in Sources */,
 				B3320D1E260F6AB20063558A /* LayerMerger.swift in Sources */,
 				B3755AB3260643C000EC0F56 /* Constants.swift in Sources */,
+				B33549572610B0CA00B881ED /* StorageLeafComponent.swift in Sources */,
 				B3320D62260F92330063558A /* LayerComponent.swift in Sources */,
 				A209157F2606FE3F001A242E /* ProjectViewController.swift in Sources */,
 				B3320D16260F65060063558A /* LayerVisitor.swift in Sources */,
