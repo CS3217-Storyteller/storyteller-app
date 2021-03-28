@@ -9,7 +9,7 @@ struct StorageCompositeComponent: Codable {
     var components = [StorageLeafComponent]()
 
     init(_ composite: CompositeComponent) {
-        composite.components.forEach( { components.append(StorageLeafComponent($0)) })
+        composite.components.forEach({ components.append(StorageLeafComponent($0)) })
     }
 
 }

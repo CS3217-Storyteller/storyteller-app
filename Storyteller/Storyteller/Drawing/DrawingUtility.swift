@@ -9,15 +9,8 @@ import Foundation
 
 class DrawingUtility {
     static func generateLayerView(for layer: Layer) -> LayerView {
-        let layerView = LayerView(canvasSize: layer.canvasSize)
-
-        switch layer.layerType {
-        case .drawing:
-            layerView.drawing = layer.drawing
-        default:
-            break
-        }
-
-        return layerView
+        let merger = NormalLayerMerger(canvasSize: layer.canvasSize)
+        layer.addToMerger(merger)
+        return merger.mergedLayer
     }
 }

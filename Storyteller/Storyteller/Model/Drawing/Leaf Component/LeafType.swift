@@ -10,5 +10,5 @@ enum LeafType: String {
 }
 
 extension LeafType: Codable {
-    
+
 }

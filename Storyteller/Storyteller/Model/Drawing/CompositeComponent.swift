@@ -10,14 +10,16 @@ import PencilKit
 struct CompositeComponent: LayerComponent {
     var components: [LeafComponent]
 
-    var frame: CGRect {
-        components.map({ $0.frame }).reduce(CGRect.zero, { $0.union($1)})
+    var canvasSize: CGSize {
+        components.first?.canvasSize ?? .zero
     }
 
-    
+    var frame: CGRect {
+        components.map({ $0.frame }).reduce(CGRect.zero, { $0.union($1) })
+    }
 
     mutating func setDrawing(to drawing: PKDrawing) {
-        guard let index = components.lastIndex(where: { $0.leafType != .drawing} ) else {
+        guard let index = components.lastIndex(where: { $0.leafType != .drawing }) else {
             return
         }
         components[index].setDrawing(to: drawing)

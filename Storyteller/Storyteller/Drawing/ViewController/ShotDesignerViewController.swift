@@ -9,7 +9,7 @@ import PencilKit
 
 class ShotDesignerViewController: UIViewController {
     @IBOutlet private var shotView: ShotView!
-    
+
     var toolPicker = PKToolPicker()
     // should be intialized via segue
     var modelManager: ModelManager!
@@ -65,7 +65,7 @@ class ShotDesignerViewController: UIViewController {
         }
     }
 
-    @IBAction func duplicateShot(_ sender: UIBarButtonItem) {
+    @IBAction private func duplicateShot(_ sender: UIBarButtonItem) {
         guard let shot = self.modelManager.getShot(of: self.shotLabel) else {
             return
         }
@@ -91,10 +91,9 @@ extension ShotDesignerViewController {
 // MARK: - PKCanvasViewDelegate
 extension ShotDesignerViewController: PKCanvasViewDelegate {
     func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
-        guard let layerView = canvasView as? LayerView,
-              let index = shotView.layerViews.firstIndex(of: layerView) else {
+        guard let index = shotView.indexOfLayer(containing: canvasView) else {
             return
         }
-        modelManager.updateDrawing(ofShot: shotLabel, atLayer: index, withDrawing: layerView.drawing)
+        modelManager.updateDrawing(ofShot: shotLabel, atLayer: index, withDrawing: canvasView.drawing)
     }
 }

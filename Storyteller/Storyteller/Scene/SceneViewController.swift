@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import PencilKit
 
 class SceneViewController: UIViewController {
 
@@ -25,7 +26,7 @@ class SceneViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.navigationItem.hidesBackButton = true
 
         let layout = UICollectionViewFlowLayout()
@@ -91,10 +92,10 @@ extension SceneViewController: UICollectionViewDelegate {
                 return UICollectionViewCell()
             }
             if !shot.layers.isEmpty {
-                let thumbnail = shot.layers[0].drawing
-                    .image(from: CGRect(x: 0, y: 0,
-                                        width: Constants.screenWidth,
-                                        height: Constants.screenHeight), scale: 1.0)
+                // TODO: implement generating thumbnail
+                let thumbnail = PKDrawing().image(from: CGRect(x: 0, y: 0,
+                                                               width: Constants.screenWidth,
+                                                               height: Constants.screenHeight), scale: 1.0)
                 sceneCell.setImage(image: thumbnail)
             }
             return sceneCell

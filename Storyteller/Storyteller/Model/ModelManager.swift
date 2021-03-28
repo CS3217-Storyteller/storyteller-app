@@ -134,7 +134,7 @@ class ModelManager {
         guard let shot = getShot(of: shotLabel) else {
             return
         }
-        let layer = Layer(layerType: type, drawing: drawing, canvasSize: shot.canvasSize)
+        let layer = Layer(layerWithDrawing: drawing, canvasSize: shot.canvasSize)
         projects[projectIndex].addLayer(layer, to: shotLabel)
         saveProject(projects[projectIndex])
     }

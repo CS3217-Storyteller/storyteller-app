@@ -8,11 +8,12 @@
 import PencilKit
 
 protocol LayerComponent {
+    var canvasSize: CGSize { get }
     var frame: CGRect { get }
     mutating func setDrawing(to drawing: PKDrawing)
     func addToMerger(_ merger: LayerMerger)
 }
 
 extension LayerComponent {
-    mutating func setDrawing(to drawing: PKDrawing){}
+    mutating func setDrawing(to drawing: PKDrawing) {}
 }

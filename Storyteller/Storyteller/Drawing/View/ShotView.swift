@@ -10,6 +10,9 @@ import PencilKit
 class ShotView: UIView {
     var layerViews = [LayerView]()
 
+    func indexOfLayer(containing canvasView: PKCanvasView) -> Int? {
+        layerViews.firstIndex(where: { $0.canvasView === canvasView })
+    }
     func setUpLayerViews(_ layerViews: [LayerView], toolPicker: PKToolPicker) {
 
         guard !layerViews.isEmpty else {
@@ -25,8 +28,11 @@ class ShotView: UIView {
         layerViews.append(layerView)
         addSubview(layerView)
 
-        toolPicker.setVisible(true, forFirstResponder: layerView)
-        toolPicker.addObserver(layerView)
+        guard let canvasView = layerView.canvasView else {
+            return
+        }
+        toolPicker.setVisible(true, forFirstResponder: canvasView)
+        toolPicker.addObserver(canvasView)
     }
 
     func setUpBackgroundColor(color: UIColor) {
@@ -34,7 +40,7 @@ class ShotView: UIView {
     }
 
     func setPKDelegate(delegate: PKCanvasViewDelegate) {
-        layerViews.forEach({ $0.delegate = delegate })
+        layerViews.compactMap({ $0.canvasView }).forEach({ $0.delegate = delegate })
     }
 
     func updateZoomScale(scale: CGFloat) {
@@ -43,9 +49,9 @@ class ShotView: UIView {
             // implementing canvas rotation and zooming
 //            layerView.minimumZoomScale = scale * Constants.minLayerZoomScale
 //            layerView.maximumZoomScale = scale * Constants.maxLayerZoomScale
-            layerView.minimumZoomScale = scale
-            layerView.maximumZoomScale = scale
-            layerView.zoomScale = scale
+            layerView.canvasView?.minimumZoomScale = scale
+            layerView.canvasView?.maximumZoomScale = scale
+            layerView.canvasView?.zoomScale = scale
         }
 
     }

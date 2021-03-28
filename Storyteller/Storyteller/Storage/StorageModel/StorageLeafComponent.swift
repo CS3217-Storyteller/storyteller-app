@@ -7,7 +7,7 @@
 
 enum StorageLeafComponent: Codable {
     case drawing(DrawingComponent)
-    
+
     init(_ leaf: LeafComponent) {
         if let component = leaf as? DrawingComponent {
             self = StorageLeafComponent.drawing(component)
@@ -23,7 +23,10 @@ enum StorageLeafComponent: Codable {
             self = .drawing(component)
             return
         }
-        throw DecodingError.typeMismatch(StorageLeafComponent.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for StorageLeafComponent"))
+        throw DecodingError
+        .typeMismatch(StorageLeafComponent.self,
+                      DecodingError.Context(codingPath: decoder.codingPath,
+                                            debugDescription: "Wrong type for StorageLeafComponent"))
     }
 
     func encode(to encoder: Encoder) throws {

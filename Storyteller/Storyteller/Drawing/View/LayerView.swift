@@ -8,7 +8,11 @@
 import UIKit
 import PencilKit
 
-class LayerView: PKCanvasView {
+class LayerView: UIView {
+
+    var canvasView: PKCanvasView? {
+        subviews.compactMap({ $0 as? PKCanvasView }).last
+    }
 
     init(canvasSize: CGSize) {
         let frame = CGRect(origin: .zero, size: canvasSize)

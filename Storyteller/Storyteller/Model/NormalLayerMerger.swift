@@ -9,16 +9,21 @@ import PencilKit
 
 class NormalLayerMerger: LayerMerger {
 
-    var mergedLayer: UIView?
+    let canvasSize: CGSize
+    var mergedLayer: LayerView
     var canvasView: PKCanvasView?
 
-    func mergeDrawing(component: DrawingComponent) {
-        // TODO
+    init(canvasSize: CGSize) {
+        self.canvasSize = canvasSize
+        self.mergedLayer = LayerView(canvasSize: canvasSize)
     }
 
-    func merge(layer1: MergableLayer, layer2: MergableLayer) -> MergableLayer {
-        layer2.view.addSubview(layer1.view)
-        layer2.view.bringSubviewToFront(layer1.view)
-        return layer2
+    func mergeDrawing(component: DrawingComponent) {
+        let canvasView = PKCanvasView()
+        canvasView.drawing = component.drawing
+
+        mergedLayer.addSubview(canvasView)
+        self.canvasView = canvasView
     }
+
 }
