@@ -12,8 +12,6 @@ class ShotDesignerViewController: UIViewController {
     
     var toolPicker = PKToolPicker()
     // should be intialized via segue
-    // TODO enable the following line after implementing ModelManager
-//    var modelManager: ModelManager!
     var modelManager: ModelManager!
     var shotLabel: ShotLabel!
 
@@ -64,18 +62,6 @@ class ShotDesignerViewController: UIViewController {
     var canvasScale = CGFloat(1) {
         didSet {
             shotView.updateZoomScale(scale: canvasScale)
-        }
-    }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture))
-        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
-        self.view.addGestureRecognizer(swipeRight)
-    }
-
-    @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
-        if gesture.location(in: self.view).x < 50 {
-            self.navigationController?.popViewController(animated: true)
         }
     }
 

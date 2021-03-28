@@ -33,6 +33,12 @@
 		A29A196A2607244200710943 /* SceneLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19252607237100710943 /* SceneLabel.swift */; };
 		A2F2C8962607634800FD4FF6 /* AddShotViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F2C8952607634800FD4FF6 /* AddShotViewCell.swift */; };
 		A2F2C89A260768E900FD4FF6 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F2C899260768E900FD4FF6 /* Color.swift */; };
+		B3320D16260F65060063558A /* LayerVisitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3320D15260F65060063558A /* LayerVisitor.swift */; };
+		B3320D1A260F692E0063558A /* Mergable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3320D19260F692E0063558A /* Mergable.swift */; };
+		B3320D1E260F6AB20063558A /* LayerMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3320D1D260F6AB20063558A /* LayerMerger.swift */; };
+		B3320D22260F6BA10063558A /* NormalLayerMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3320D21260F6BA10063558A /* NormalLayerMerger.swift */; };
+		B3320D26260F6C8A0063558A /* MergableLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3320D25260F6C8A0063558A /* MergableLayer.swift */; };
+		B3320D62260F92330063558A /* LayerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3320D61260F92330063558A /* LayerComponent.swift */; };
 		B3755AA22605F21400EC0F56 /* LayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AA12605F21400EC0F56 /* LayerView.swift */; };
 		B3755AAB26062B9700EC0F56 /* ShotDesignerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AAA26062B9700EC0F56 /* ShotDesignerViewController.swift */; };
 		B3755AB3260643C000EC0F56 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AB2260643C000EC0F56 /* Constants.swift */; };
@@ -81,6 +87,12 @@
 		A29A192E2607239E00710943 /* StorageUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageUtility.swift; sourceTree = "<group>"; };
 		A2F2C8952607634800FD4FF6 /* AddShotViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddShotViewCell.swift; sourceTree = "<group>"; };
 		A2F2C899260768E900FD4FF6 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		B3320D15260F65060063558A /* LayerVisitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerVisitor.swift; sourceTree = "<group>"; };
+		B3320D19260F692E0063558A /* Mergable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mergable.swift; sourceTree = "<group>"; };
+		B3320D1D260F6AB20063558A /* LayerMerger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerMerger.swift; sourceTree = "<group>"; };
+		B3320D21260F6BA10063558A /* NormalLayerMerger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalLayerMerger.swift; sourceTree = "<group>"; };
+		B3320D25260F6C8A0063558A /* MergableLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MergableLayer.swift; sourceTree = "<group>"; };
+		B3320D61260F92330063558A /* LayerComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerComponent.swift; sourceTree = "<group>"; };
 		B3755AA12605F21400EC0F56 /* LayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerView.swift; sourceTree = "<group>"; };
 		B3755AAA26062B9700EC0F56 /* ShotDesignerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotDesignerViewController.swift; sourceTree = "<group>"; };
 		B3755AB2260643C000EC0F56 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -201,7 +213,13 @@
 				A29A19202607237100710943 /* Scene.swift */,
 				A29A19292607237100710943 /* Shot.swift */,
 				2C36EC732607383700250ADE /* Color.swift */,
+				B3320D58260F921C0063558A /* Drawing */,
 				A29A19282607237100710943 /* Layer.swift */,
+				B3320D19260F692E0063558A /* Mergable.swift */,
+				B3320D25260F6C8A0063558A /* MergableLayer.swift */,
+				B3320D15260F65060063558A /* LayerVisitor.swift */,
+				B3320D1D260F6AB20063558A /* LayerMerger.swift */,
+				B3320D21260F6BA10063558A /* NormalLayerMerger.swift */,
 				A2F2C899260768E900FD4FF6 /* Color.swift */,
 			);
 			path = Model;
@@ -216,6 +234,14 @@
 			name = Storage;
 			path = Storyteller/Storage;
 			sourceTree = SOURCE_ROOT;
+		};
+		B3320D58260F921C0063558A /* Drawing */ = {
+			isa = PBXGroup;
+			children = (
+				B3320D61260F92330063558A /* LayerComponent.swift */,
+			);
+			path = Drawing;
+			sourceTree = "<group>";
 		};
 		B3755AA02605F1E100EC0F56 /* View */ = {
 			isa = PBXGroup;
@@ -254,6 +280,7 @@
 				A24F62EE2600CC7300FC7CD4 /* Sources */,
 				A24F62EF2600CC7300FC7CD4 /* Frameworks */,
 				A24F62F02600CC7300FC7CD4 /* Resources */,
+				B3320D12260F640E0063558A /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -339,6 +366,26 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		B3320D12260F640E0063558A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		A24F62EE2600CC7300FC7CD4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -349,10 +396,12 @@
 				A2091585260703D1001A242E /* SceneViewController.swift in Sources */,
 				B3755AAB26062B9700EC0F56 /* ShotDesignerViewController.swift in Sources */,
 				A29A19582607242800710943 /* Shot.swift in Sources */,
+				B3320D1A260F692E0063558A /* Mergable.swift in Sources */,
 				A29A19302607239E00710943 /* StorageManager.swift in Sources */,
 				A29A195E2607243500710943 /* LayerType.swift in Sources */,
 				A29A19552607242600710943 /* Layer.swift in Sources */,
 				A209158926070553001A242E /* SceneHeaderView.swift in Sources */,
+				B3320D26260F6C8A0063558A /* MergableLayer.swift in Sources */,
 				A29A19522607242000710943 /* ModelManager.swift in Sources */,
 				B3755AB92606454900EC0F56 /* ShotView.swift in Sources */,
 				A2091590260705EB001A242E /* ProjectViewCell.swift in Sources */,
@@ -361,6 +410,7 @@
 				A29A19322607239E00710943 /* StorageUtility.swift in Sources */,
 				A2F2C8962607634800FD4FF6 /* AddShotViewCell.swift in Sources */,
 				A29A19612607243800710943 /* Project.swift in Sources */,
+				B3320D22260F6BA10063558A /* NormalLayerMerger.swift in Sources */,
 				A2F2C89A260768E900FD4FF6 /* Color.swift in Sources */,
 				A24F62F62600CC7300FC7CD4 /* AppDelegate.swift in Sources */,
 				A29A19672607244000710943 /* ProjectLabel.swift in Sources */,
@@ -368,8 +418,11 @@
 				B3755AA22605F21400EC0F56 /* LayerView.swift in Sources */,
 				A29A196A2607244200710943 /* SceneLabel.swift in Sources */,
 				A24F62F82600CC7300FC7CD4 /* SceneDelegate.swift in Sources */,
+				B3320D1E260F6AB20063558A /* LayerMerger.swift in Sources */,
 				B3755AB3260643C000EC0F56 /* Constants.swift in Sources */,
+				B3320D62260F92330063558A /* LayerComponent.swift in Sources */,
 				A209157F2606FE3F001A242E /* ProjectViewController.swift in Sources */,
+				B3320D16260F65060063558A /* LayerVisitor.swift in Sources */,
 				B3755AD626065C0700EC0F56 /* DrawingUtility.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

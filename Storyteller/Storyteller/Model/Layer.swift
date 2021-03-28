@@ -1,17 +1,64 @@
+////
+////  Layer.swift
+////  Storyteller
+////
+////  Created by TFang on 20/3/21.
+////
+//import PencilKit
 //
-//  Layer.swift
-//  Storyteller
+//protocol Layer: Codable {
+////    var layerType: LayerType { get }
+//    var drawing: PKDrawing { get set }
+//    var canvasSize: CGSize { get }
 //
-//  Created by TFang on 20/3/21.
+//    func addToMerger(_ merger: LayerMerger)
+//    mutating func setDrawingTo(_ updatedDrawing: PKDrawing)
+//}
 //
-import PencilKit
-
-struct Layer: Codable {
-    var layerType: LayerType
-    var drawing: PKDrawing
-    let canvasSize: CGSize
-
-    mutating func setDrawingTo(_ updatedDrawing: PKDrawing) {
-        drawing = updatedDrawing
-    }
-}
+//struct DrawingLayer: Layer {
+//
+//
+//    var layerType: LayerType
+//    var drawing: PKDrawing
+//    let canvasSize: CGSize
+//
+//    func addToMerger(_ merger: LayerMerger) {
+//        merger.mergeDrawing(layer: self)
+//    }
+//    mutating func setDrawingTo(_ updatedDrawing: PKDrawing) {
+//        drawing = updatedDrawing
+//    }
+//}
+//
+//struct ImageLayer: Layer {
+//
+//
+//    var layerType: LayerType
+//    var drawing: PKDrawing
+//    let canvasSize: CGSize
+//
+//    func addToMerger(_ merger: LayerMerger) {
+//        merger.mergeDrawing(layer: self)
+//    }
+//    mutating func setDrawingTo(_ updatedDrawing: PKDrawing) {
+//        drawing = updatedDrawing
+//    }
+//}
+//
+//class LayerDecorator: Layer {
+//    private var layer: Layer
+//
+//    init(layer: Layer) {
+//        self.layer = layer
+//    }
+//
+//    func addToMerger(_ merger: LayerMerger) {
+//        layer.addToMerger(merger)
+//    }
+//}
+//
+//class ImageLayerDecorator: LayerDecorator {
+//    override func addToMerger(_ merger: LayerMerger) {
+//        layer.addToMerger(merger)
+//    }
+//}
