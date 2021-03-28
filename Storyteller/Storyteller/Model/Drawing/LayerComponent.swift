@@ -15,23 +15,8 @@ import PencilKit
 //        component.addToMerger(merger)
 //    }
 //}
-protocol LayerComponent: Codable {
-    var frame: CGRect { get }
-    func isComposite() -> Bool
-    func extractDrawing() -> PKDrawing?
-    func addToMerger(_ merger: LayerMerger)
-}
 
-extension LayerComponent {
-    func isComposite() -> Bool {
-        false
-    }
-    func extractDrawing() -> PKDrawing? {
-        nil
-    }
-}
-
-struct CompositeLayerComponent: LayerComponent {
+class CompositeLayerComponent: Codable {
     var frame: CGRect {
         guard let drawingBounds = drawingComponent?.drawing.bounds else {
             return children.map({ $0.frame }).reduce(CGRect.zero, { $0.union($1)})
@@ -39,15 +24,15 @@ struct CompositeLayerComponent: LayerComponent {
         return children.map({ $0.frame }).reduce(drawingBounds, { $0.union($1)})
     }
 
-    private var children = [LayerComponent]()
+    private var children = [CompositeLayerComponent]()
     var drawingComponent: DrawingComponent?
 
     func isComposite() -> Bool {
         true
     }
 
-    mutating func appendDrawing(_ drawing: PKDrawing?) {
-        guard let drawing = drawing else {
+    func appendDrawing(_ drawing: PKDrawing?) {
+        guard let drawing = drawing, isComposite() else {
             return
         }
 
@@ -56,13 +41,17 @@ struct CompositeLayerComponent: LayerComponent {
         }
     }
 
-    mutating func extractDrawing() -> PKDrawing? {
+    func extractDrawing() -> PKDrawing? {
         let drawing = drawingComponent?.drawing
         drawingComponent = nil
         return drawing
     }
 
-    mutating func add(component: LayerComponent) {
+    func add(component: CompositeLayerComponent) {
+        guard isComposite() else {
+            return
+        }
+
         appendDrawing(component.extractDrawing())
 
         guard !(component is DrawingComponent) else {
@@ -79,27 +68,32 @@ struct CompositeLayerComponent: LayerComponent {
         drawingComponent?.addToMerger(merger)
     }
 
-}
-
-extension CompositeLayerComponent: Codable {
+    // MARK: - Codable
     enum CodingKeys: String, CodingKey {
         case drawingComponent
         case children
-        case additionalInfo
     }
+
+    required init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        drawingComponent = try values.decode(DrawingComponent.self, forKey: .drawingComponent)
+        children = try values.decode([CompositeLayerComponent].self, forKey: .children)
+    }
+
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(drawingComponent, forKey: .drawingComponent)
         try container.encode(children, forKey: .children)
-
-        var additionalInfo = container.nestedContainer(keyedBy: AdditionalInfoKeys.self, forKey: .additionalInfo)
-        try additionalInfo.encode(elevation, forKey: .elevation)
     }
+
 }
 
-struct DrawingComponent: LayerComponent {
-    var frame: CGRect {
+class DrawingComponent: CompositeLayerComponent {
+    override var frame: CGRect {
         drawing.bounds
+    }
+    override func isComposite() -> Bool {
+        false
     }
 
     private(set) var drawing: PKDrawing
@@ -108,23 +102,35 @@ struct DrawingComponent: LayerComponent {
         self.drawing = drawing
     }
 
-    func addToMerger(_ merger: LayerMerger) {
+    override func addToMerger(_ merger: LayerMerger) {
         merger.mergeDrawing(component: self)
     }
 
-    func extractDrawing() -> PKDrawing? {
+    override func extractDrawing() -> PKDrawing? {
         drawing
     }
 
-    mutating func appendDrawing(_ toAppend: PKDrawing) {
+    func appendDrawing(_ toAppend: PKDrawing) {
         drawing.append(toAppend)
     }
 
-    mutating func setDrawingTo(_ updatedDrawing: PKDrawing) {
+    func setDrawingTo(_ updatedDrawing: PKDrawing) {
         drawing = updatedDrawing
+    }
+
+    // MARK: - Codable
+    enum CodingKeys: String, CodingKey {
+        case drawing
+    }
+
+    required init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        drawing = try values.decode(PKDrawing.self, forKey: .drawing)
+    }
+
+    override func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(drawing, forKey: .drawing)
     }
 }
 
-extension DrawingComponent: Codable {
-
-}
