@@ -6,7 +6,7 @@
 //
 import PencilKit
 
-struct Shot: Codable {
+struct Shot {
     var layers: [Layer]
     var label: ShotLabel
     var backgroundColor: Color

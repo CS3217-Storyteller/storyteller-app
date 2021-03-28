@@ -5,23 +5,16 @@
 //  Created by TFang on 28/3/21.
 //
 
-import Foundation
-
-enum StorageError: Error {
-    case invalidLeafComponent
-}
-
 enum StorageLeafComponent: Codable {
     case drawing(DrawingComponent)
-
-
-    init(leaf: LeafComponent) throws {
+    
+    init(_ leaf: LeafComponent) {
         if let component = leaf as? DrawingComponent {
             self = StorageLeafComponent.drawing(component)
             return
         }
 
-        throw StorageError.invalidLeafComponent
+        fatalError("Failed to initilaize StorageLeafComponent")
     }
 
     init(from decoder: Decoder) throws {
@@ -30,7 +23,7 @@ enum StorageLeafComponent: Codable {
             self = .drawing(component)
             return
         }
-        throw DecodingError.typeMismatch(CompositeElement.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for CompositeElement"))
+        throw DecodingError.typeMismatch(StorageLeafComponent.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for StorageLeafComponent"))
     }
 
     func encode(to encoder: Encoder) throws {
@@ -38,6 +31,15 @@ enum StorageLeafComponent: Codable {
         switch self {
         case .drawing(let component):
             try container.encode(component)
+        }
+    }
+}
+
+extension StorageLeafComponent {
+    var leafComponent: LeafComponent {
+        switch self {
+        case .drawing(let component):
+            return component
         }
     }
 }

@@ -6,8 +6,8 @@
 //
 import PencilKit
 
-struct Layer: Codable {
-    var component: CompositeLayerComponent
+struct Layer {
+    var component: CompositeComponent
     var canvasSize: CGSize
 
     func addToMerger(_ merger: LayerMerger) {

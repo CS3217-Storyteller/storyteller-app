@@ -38,7 +38,7 @@ class StorageManager {
     }
 
     private func loadProject(from url: URL) -> Project? {
-        try? JSONDecoder().decode(Project.self, from: Data(contentsOf: url))
+        try? JSONDecoder().decode(StorageProject.self, from: Data(contentsOf: url)).project
     }
 
     func getAllProjects() -> [Project] {
@@ -57,7 +57,7 @@ class StorageManager {
     func saveProject(project: Project) -> Bool {
         let fileName = project.title
         let fileUrl = StorageUtility.getFileUrl(of: fileName)
-        guard (try? JSONEncoder().encode(project).write(to: fileUrl)) != nil else {
+        guard (try? JSONEncoder().encode(StorageProject(project)).write(to: fileUrl)) != nil else {
             return false
         }
         return true

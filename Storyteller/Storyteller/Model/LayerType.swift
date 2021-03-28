@@ -10,10 +10,6 @@ enum LayerType: String {
     case image
 }
 
-// MARK: Hashable
-extension LayerType: Hashable {
-}
-
 // MARK: Codable
 extension LayerType: Codable {
 }

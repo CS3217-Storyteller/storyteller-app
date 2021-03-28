@@ -12,16 +12,8 @@ class NormalLayerMerger: LayerMerger {
     var mergedLayer: UIView?
     var canvasView: PKCanvasView?
 
-    func mergeDrawing(layer: DrawingLayer) {
-        <#code#>
-    }
-
     func mergeDrawing(component: DrawingComponent) {
-        <#code#>
-    }
-    
-    func getMergableDrawing(layer: DrawingLayer) -> MergableLayer {
-        
+        // TODO
     }
 
     func merge(layer1: MergableLayer, layer2: MergableLayer) -> MergableLayer {

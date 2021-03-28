@@ -9,6 +9,5 @@ import UIKit
 import PencilKit
 
 protocol LayerMerger {
-    func mergeDrawing(layer: DrawingLayer)
     func mergeDrawing(component: DrawingComponent)
 }
