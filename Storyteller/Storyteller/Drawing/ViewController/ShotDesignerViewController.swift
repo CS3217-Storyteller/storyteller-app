@@ -7,7 +7,7 @@
 import UIKit
 import PencilKit
 
-class ShotDesignerViewController: UIViewController {
+class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
     @IBOutlet private var shotView: ShotView!
 
     var toolPicker = PKToolPicker()
@@ -42,6 +42,7 @@ class ShotDesignerViewController: UIViewController {
     // MARK: - View Life Cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        toolPicker.addObserver(self)
 
         shotView.frame.size = canvasSize
         shotView.bounds.size = canvasSize
@@ -78,7 +79,6 @@ class ShotDesignerViewController: UIViewController {
         shotView.transform = zoomToFitTransform.concatenating(shotTransform)
 
         shotView.center = canvasCenter
-
     }
 
     @IBAction private func duplicateShot(_ sender: UIBarButtonItem) {
@@ -112,6 +112,12 @@ extension ShotDesignerViewController: PKCanvasViewDelegate {
     }
 }
 
+// MARK: - PKToolPickerObserver {
+extension ShotDesignerViewController {
+    func toolPickerFramesObscuredDidChange(_ toolPicker: PKToolPicker) {
+        updateShotTransform()
+    }
+}
 // MARK: - Resize
 extension ShotDesignerViewController {
     var windowSize: CGSize {
@@ -124,20 +130,12 @@ extension ShotDesignerViewController {
         windowSize.height
     }
 
-    var navBarHeight: CGFloat {
-        navigationController?.navigationBar.frame.height ?? 0
-    }
-
-    var toolbarHeight: CGFloat {
-        navigationController?.toolbar.frame.height ?? 0
-    }
-
     var topInset: CGFloat {
-        navBarHeight + view.safeAreaInsets.top
+        view.safeAreaInsets.top
     }
 
     var bottomInset: CGFloat {
-        toolbarHeight + view.safeAreaInsets.bottom
+        max(view.safeAreaInsets.bottom, toolPicker.frameObscured(in: view).height)
     }
 
     var canvasMaxHeight: CGFloat {
@@ -167,12 +165,8 @@ extension ShotDesignerViewController {
     }
     var zoomToFitTransform: CGAffineTransform {
         CGAffineTransform(scaleX: canvasScale, y: canvasScale)
-            .translatedBy(x: canvasCenterTranslation.x, y: canvasCenterTranslation.y)
     }
 
-//    var canvasScale: CGFloat {
-//        shotView.bounds.width / canvasSize.width
-//    }
     var canvasScale: CGFloat {
         let widthScale = canvasMaxWidth / shotView.bounds.width
         let heightScale = canvasMaxHeight / shotView.bounds.height

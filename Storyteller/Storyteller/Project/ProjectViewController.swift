@@ -15,6 +15,10 @@ class ProjectViewController: UIViewController {
 
     private var NumOfProjects: Int = 0
 
+    override var prefersStatusBarHidden: Bool {
+        true
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         modelManager.observers.append(self)
