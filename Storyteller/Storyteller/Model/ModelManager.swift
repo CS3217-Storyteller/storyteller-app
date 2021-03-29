@@ -112,14 +112,20 @@ class ModelManager {
     }
 
     func addShot(ofShot shotLabel: ShotLabel,
-                 layers: [Layer],
-                 backgroundColor: UIColor) {
+                 layers: [Layer] = [],
+                 backgroundColor: UIColor = .white) {
         guard let scene = getScene(of: shotLabel.sceneLabel) else {
             return
         }
+        var layersInNewShot = layers
+        if layers.isEmpty {
+            layersInNewShot = [Layer(layerWithDrawing: PKDrawing(),
+                                     canvasSize: scene.canvasSize)]
+        }
+
         let projectIndex = shotLabel.projectIndex
         let sceneLabel = shotLabel.sceneLabel
-        let shot = Shot(layers: layers,
+        let shot = Shot(layers: layersInNewShot,
                         label: shotLabel,
                         backgroundColor: Color(uiColor: backgroundColor),
                         canvasSize: scene.canvasSize)

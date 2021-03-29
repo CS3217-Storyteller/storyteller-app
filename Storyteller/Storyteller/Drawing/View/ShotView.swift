@@ -10,6 +10,12 @@ import PencilKit
 class ShotView: UIView {
     var layerViews = [LayerView]()
 
+    var selectedLayer = 0
+    
+    var currentCanvasView: PKCanvasView? {
+        layerViews[selectedLayer].canvasView
+    }
+
     func indexOfLayer(containing canvasView: PKCanvasView) -> Int? {
         layerViews.firstIndex(where: { $0.canvasView === canvasView })
     }

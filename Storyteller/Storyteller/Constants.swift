@@ -13,6 +13,9 @@ class Constants {
     static let screenWidth = UIScreen.main.bounds.width
     static let screenHeight = UIScreen.main.bounds.height
 
+    static let horizontalCanvasMargin = CGFloat(20)
+    static let verticalCanvasMargin = CGFloat(20)
+
     static let defaultCanvasSize = screenSize
 
     static let maxLayerZoomScale = CGFloat(3)

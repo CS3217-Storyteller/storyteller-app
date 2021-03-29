@@ -198,7 +198,7 @@ extension SceneViewController: UICollectionViewDelegateFlowLayout {
 //            self.present(shotDesignerController, animated: true, completion: nil)
             self.navigationController?.pushViewController(shotDesignerController, animated: true)
         } else {
-            modelManager.addShot(ofShot: shotLabel, layers: [], backgroundColor: .white)
+            modelManager.addShot(ofShot: shotLabel, backgroundColor: .white)
             self.collectionView.reloadData()
         }
     }

@@ -29,3 +29,9 @@ struct ShotLabel: Codable {
         sceneLabel.sceneIndex
     }
 }
+
+extension ShotLabel {
+    var nextLabel: ShotLabel {
+        ShotLabel(sceneLabel: sceneLabel, shotIndex: shotIndex + 1)
+    }
+}

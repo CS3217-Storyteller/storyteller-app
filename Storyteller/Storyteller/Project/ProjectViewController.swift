@@ -31,6 +31,7 @@ class ProjectViewController: UIViewController {
     }
 
     @IBAction private func addProject(_ sender: UIButton) {
+        // TODO: Allow customize canvasSize
         let canvasSize = Constants.defaultCanvasSize
         let projectTitle = "Project \(self.NumOfProjects)"
         self.modelManager.addProject(canvasSize: canvasSize, title: projectTitle)

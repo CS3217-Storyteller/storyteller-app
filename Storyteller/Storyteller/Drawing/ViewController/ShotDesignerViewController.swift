@@ -15,8 +15,11 @@ class ShotDesignerViewController: UIViewController {
     var modelManager: ModelManager!
     var shotLabel: ShotLabel!
 
+    var shot: Shot? {
+        modelManager.getShot(of: shotLabel)
+    }
     var canvasSize: CGSize {
-        modelManager.getCanvasSize(of: shotLabel)
+        shot?.canvasSize ?? .zero
     }
 
     func setModelManager(to modelManager: ModelManager) {
@@ -39,8 +42,8 @@ class ShotDesignerViewController: UIViewController {
     private func setUpShot() {
         shotView.frame.origin = CGPoint(x: 0, y: 200)
         shotView.frame.size = canvasSize
-        shotView.backgroundColor = modelManager.getBackgroundColor(of: shotLabel)
-        // TODO add drawings and setup tool picker
+        shotView.backgroundColor = shot?.backgroundColor.uiColor
+
         guard let layers = modelManager.getLayers(of: shotLabel) else {
             return
         }
@@ -59,23 +62,19 @@ class ShotDesignerViewController: UIViewController {
         shotView.setPKDelegate(delegate: self)
     }
 
-    var canvasScale = CGFloat(1) {
-        didSet {
-            shotView.updateZoomScale(scale: canvasScale)
-        }
-    }
-
     @IBAction private func duplicateShot(_ sender: UIBarButtonItem) {
-        guard let shot = self.modelManager.getShot(of: self.shotLabel) else {
+        guard let shot = shot else {
             return
         }
-        let newShotLabel = ShotLabel(sceneLabel: self.shotLabel.sceneLabel, shotIndex: self.shotLabel.shotIndex + 1)
-        self.modelManager.addShot(ofShot: newShotLabel, layers: shot.layers, backgroundColor: .white)
+
+        modelManager.addShot(ofShot: shotLabel.nextLabel,
+                             layers: shot.layers,
+                             backgroundColor: shot.backgroundColor.uiColor)
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        canvasScale = shotView.bounds.width / canvasSize.width
+        zoomToFit()
     }
 
 }
@@ -83,6 +82,7 @@ class ShotDesignerViewController: UIViewController {
 // MARK: - Actions
 extension ShotDesignerViewController {
     @IBAction private func zoomToFit() {
+
         shotView.updateZoomScale(scale: canvasScale)
     }
 
@@ -95,5 +95,27 @@ extension ShotDesignerViewController: PKCanvasViewDelegate {
             return
         }
         modelManager.updateDrawing(ofShot: shotLabel, atLayer: index, withDrawing: canvasView.drawing)
+    }
+}
+
+// MARK: - Resize
+extension ShotDesignerViewController {
+    var canvasMaxHeight: CGFloat {
+        let navBarHeight = navigationController?.navigationBar.frame.height ?? 0
+        let toolbarHeight = navigationController?.toolbar.frame.height ?? 0
+        return Constants.screenHeight - navBarHeight
+            - toolbarHeight - Constants.verticalCanvasMargin * 2
+    }
+
+    var canvasMaxWidth: CGFloat {
+        Constants.screenWidth
+    }
+
+    var canvasMaxSize: CGSize {
+        CGSize(width: canvasMaxWidth, height: canvasMaxHeight)
+    }
+
+    var canvasScale: CGFloat {
+        shotView.bounds.width / canvasSize.width
     }
 }

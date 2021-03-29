@@ -3,6 +3,7 @@
     <device id="ipad11_0rounded" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -18,6 +19,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="1194" height="834"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="wfm-g6-ORl">
+                                <rect key="frame" x="0.0" y="170" width="1194" height="644"/>
+                                <color key="backgroundColor" systemColor="quaternaryLabelColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="86K-PX-quL">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ProjectViewCell" id="dtQ-pH-v1R">
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="T0m-ej-fnT">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hgd-iu-Icr">
                                 <rect key="frame" x="0.0" y="50" width="1194" height="100"/>
                                 <subviews>
@@ -48,26 +69,6 @@
                                     <constraint firstItem="o7h-cc-Nfq" firstAttribute="centerY" secondItem="Hgd-iu-Icr" secondAttribute="centerY" id="ZHL-wT-iW5"/>
                                 </constraints>
                             </view>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="wfm-g6-ORl">
-                                <rect key="frame" x="0.0" y="170" width="1194" height="644"/>
-                                <color key="backgroundColor" systemColor="quaternaryLabelColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="86K-PX-quL">
-                                    <size key="itemSize" width="128" height="128"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ProjectViewCell" id="dtQ-pH-v1R">
-                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="T0m-ej-fnT">
-                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </collectionViewCellContentView>
-                                    </collectionViewCell>
-                                </cells>
-                            </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="QCX-0b-a1m"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -100,21 +101,32 @@
                         <rect key="frame" x="0.0" y="0.0" width="1194" height="834"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3l-Ka-Bz4" customClass="ShotView" customModule="Storyteller" customModuleProvider="target">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="20x20px-grid" translatesAutoresizingMaskIntoConstraints="NO" id="mNZ-3l-gCc">
                                 <rect key="frame" x="0.0" y="0.0" width="1194" height="834"/>
+                            </imageView>
+                            <view opaque="NO" alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3l-Ka-Bz4" customClass="ShotView" customModule="Storyteller" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="1194" height="834"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="nX2-Db-Tvg"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="h3l-Ka-Bz4" firstAttribute="trailing" secondItem="LS0-sP-w2o" secondAttribute="trailing" id="3GT-zU-9yx"/>
-                            <constraint firstItem="h3l-Ka-Bz4" firstAttribute="top" secondItem="LS0-sP-w2o" secondAttribute="top" id="M5o-WA-cUG"/>
-                            <constraint firstItem="h3l-Ka-Bz4" firstAttribute="leading" secondItem="LS0-sP-w2o" secondAttribute="leading" id="X1B-I7-fg2"/>
-                            <constraint firstItem="h3l-Ka-Bz4" firstAttribute="bottom" secondItem="LS0-sP-w2o" secondAttribute="bottom" id="lb8-e3-5mI"/>
+                            <constraint firstAttribute="trailing" secondItem="mNZ-3l-gCc" secondAttribute="trailing" id="NRE-BO-YE3"/>
+                            <constraint firstItem="mNZ-3l-gCc" firstAttribute="top" secondItem="LS0-sP-w2o" secondAttribute="top" id="QxN-f7-xnJ"/>
+                            <constraint firstAttribute="bottom" secondItem="mNZ-3l-gCc" secondAttribute="bottom" id="UDB-t3-wNL"/>
+                            <constraint firstItem="mNZ-3l-gCc" firstAttribute="leading" secondItem="LS0-sP-w2o" secondAttribute="leading" id="hT5-83-MUI"/>
                         </constraints>
                     </view>
-                    <toolbarItems/>
+                    <toolbarItems>
+                        <barButtonItem title="Zoom To Fit" id="nii-Lx-BvZ">
+                            <imageReference key="image" image="rectangle.center.inset.fill" catalog="system" symbolScale="large"/>
+                            <connections>
+                                <action selector="zoomToFit" destination="mXm-tZ-pGV" id="mg7-4K-4bs"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" id="Q8o-sb-o8D">
                         <barButtonItem key="rightBarButtonItem" title="Duplicate" id="KzC-k5-zaS">
                             <connections>
@@ -247,8 +259,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="20x20px-grid" width="1920" height="1138"/>
         <image name="arrow.backward" catalog="system" width="128" height="98"/>
         <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="rectangle.center.inset.fill" catalog="system" width="128" height="93"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
