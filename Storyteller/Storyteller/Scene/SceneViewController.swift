@@ -93,9 +93,7 @@ extension SceneViewController: UICollectionViewDelegate {
             }
             if !shot.layers.isEmpty {
                 // TODO: implement generating thumbnail
-                let thumbnail = PKDrawing().image(from: CGRect(x: 0, y: 0,
-                                                               width: Constants.screenWidth,
-                                                               height: Constants.screenHeight), scale: 1.0)
+                let thumbnail = UIImage()
                 sceneCell.setImage(image: thumbnail)
             }
             return sceneCell

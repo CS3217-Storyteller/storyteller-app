@@ -11,23 +11,29 @@ class ShotView: UIView {
     var layerViews = [LayerView]()
 
     var selectedLayer = 0
-    
+
     var currentCanvasView: PKCanvasView? {
         layerViews[selectedLayer].canvasView
+    }
+
+    func reset() {
+        layerViews = []
+        subviews.forEach({ $0.removeFromSuperview() })
     }
 
     func indexOfLayer(containing canvasView: PKCanvasView) -> Int? {
         layerViews.firstIndex(where: { $0.canvasView === canvasView })
     }
-    func setUpLayerViews(_ layerViews: [LayerView], toolPicker: PKToolPicker) {
+    func setUpLayerViews(_ layerViews: [LayerView], toolPicker: PKToolPicker,
+                         PKDelegate: PKCanvasViewDelegate) {
 
         guard !layerViews.isEmpty else {
-            let layerView = LayerView(canvasSize: frame.size)
-            add(layerView: layerView, toolPicker: toolPicker)
             return
         }
 
         layerViews.forEach({ add(layerView: $0, toolPicker: toolPicker) })
+
+        layerViews.compactMap({ $0.canvasView }).forEach({ $0.delegate = PKDelegate })
     }
 
     func add(layerView: LayerView, toolPicker: PKToolPicker) {
@@ -43,10 +49,6 @@ class ShotView: UIView {
 
     func setUpBackgroundColor(color: UIColor) {
         self.backgroundColor = color
-    }
-
-    func setPKDelegate(delegate: PKCanvasViewDelegate) {
-        layerViews.compactMap({ $0.canvasView }).forEach({ $0.delegate = delegate })
     }
 
     func updateZoomScale(scale: CGFloat) {

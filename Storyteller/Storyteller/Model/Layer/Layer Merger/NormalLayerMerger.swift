@@ -18,8 +18,11 @@ class NormalLayerMerger: LayerMerger {
         self.mergedLayer = LayerView(canvasSize: canvasSize)
     }
 
+    var frame: CGRect {
+        CGRect(origin: .zero, size: canvasSize)
+    }
     func mergeDrawing(component: DrawingComponent) {
-        let canvasView = PKCanvasView()
+        let canvasView = PKCanvasView(frame: frame)
         canvasView.drawing = component.drawing
 
         mergedLayer.addSubview(canvasView)

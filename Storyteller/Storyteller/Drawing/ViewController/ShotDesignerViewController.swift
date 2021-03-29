@@ -15,6 +15,11 @@ class ShotDesignerViewController: UIViewController {
     var modelManager: ModelManager!
     var shotLabel: ShotLabel!
 
+    var shotTransform = CGAffineTransform.identity {
+        didSet {
+            updateShotTransform()
+        }
+    }
     var shot: Shot? {
         modelManager.getShot(of: shotLabel)
     }
@@ -30,36 +35,50 @@ class ShotDesignerViewController: UIViewController {
         self.shotLabel = shotLabel
     }
 
+    override var prefersStatusBarHidden: Bool {
+        true
+    }
+
     // MARK: - View Life Cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        setUpShot()
+        shotView.frame.size = canvasSize
+        shotView.bounds.size = canvasSize
 
+        updateShot()
+
+        navigationController?.setToolbarHidden(false, animated: false)
         navigationItem.leftItemsSupplementBackButton = true
     }
 
-    private func setUpShot() {
-        shotView.frame.origin = CGPoint(x: 0, y: 200)
-        shotView.frame.size = canvasSize
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateShotTransform()
+    }
+
+    private func updateShot() {
+        updateShotTransform()
+
         shotView.backgroundColor = shot?.backgroundColor.uiColor
 
-        guard let layers = modelManager.getLayers(of: shotLabel) else {
+        guard let layers = modelManager.getLayers(of: shotLabel),
+              !layers.isEmpty else {
             return
         }
 
-        if !layers.isEmpty {
-            let layerViews = layers.map({ DrawingUtility.generateLayerView(for: $0) })
-            shotView.setUpLayerViews(layerViews, toolPicker: toolPicker)
-        } else {
-            modelManager.addLayer(type: .drawing, to: shotLabel)
-            if let newLayers = modelManager.getLayers(of: shotLabel) {
-                let layerViews = newLayers.map({ DrawingUtility.generateLayerView(for: $0) })
-                shotView.setUpLayerViews(layerViews, toolPicker: toolPicker)
-            }
-        }
-        shotView.layerViews.last?.becomeFirstResponder()
-        shotView.setPKDelegate(delegate: self)
+        let layerViews = layers.map({ DrawingUtility.generateLayerView(for: $0) })
+        shotView.setUpLayerViews(layerViews, toolPicker: toolPicker, PKDelegate: self)
+
+        shotView.currentCanvasView?.becomeFirstResponder()
+    }
+
+    private func updateShotTransform() {
+        shotView.transform = .identity
+        shotView.transform = zoomToFitTransform.concatenating(shotTransform)
+
+        shotView.center = canvasCenter
+
     }
 
     @IBAction private func duplicateShot(_ sender: UIBarButtonItem) {
@@ -72,18 +91,13 @@ class ShotDesignerViewController: UIViewController {
                              backgroundColor: shot.backgroundColor.uiColor)
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        zoomToFit()
-    }
-
 }
 
 // MARK: - Actions
 extension ShotDesignerViewController {
     @IBAction private func zoomToFit() {
-
-        shotView.updateZoomScale(scale: canvasScale)
+        shotTransform = .identity
+        updateShotTransform()
     }
 
 }
@@ -100,22 +114,69 @@ extension ShotDesignerViewController: PKCanvasViewDelegate {
 
 // MARK: - Resize
 extension ShotDesignerViewController {
+    var windowSize: CGSize {
+        view.frame.size
+    }
+    var windowWidth: CGFloat {
+        windowSize.width
+    }
+    var windowHeight: CGFloat {
+        windowSize.height
+    }
+
+    var navBarHeight: CGFloat {
+        navigationController?.navigationBar.frame.height ?? 0
+    }
+
+    var toolbarHeight: CGFloat {
+        navigationController?.toolbar.frame.height ?? 0
+    }
+
+    var topInset: CGFloat {
+        navBarHeight + view.safeAreaInsets.top
+    }
+
+    var bottomInset: CGFloat {
+        toolbarHeight + view.safeAreaInsets.bottom
+    }
+
     var canvasMaxHeight: CGFloat {
-        let navBarHeight = navigationController?.navigationBar.frame.height ?? 0
-        let toolbarHeight = navigationController?.toolbar.frame.height ?? 0
-        return Constants.screenHeight - navBarHeight
-            - toolbarHeight - Constants.verticalCanvasMargin * 2
+        windowHeight - topInset - bottomInset - Constants.verticalCanvasMargin * 2
     }
 
     var canvasMaxWidth: CGFloat {
-        Constants.screenWidth
+        windowWidth - Constants.horizontalCanvasMargin * 2
     }
 
     var canvasMaxSize: CGSize {
         CGSize(width: canvasMaxWidth, height: canvasMaxHeight)
     }
 
+    var canvasCenterY: CGFloat {
+        topInset + Constants.verticalCanvasMargin + canvasMaxHeight / 2
+    }
+    var canvasCenterX: CGFloat {
+        windowWidth / 2
+    }
+    var canvasCenter: CGPoint {
+        CGPoint(x: canvasCenterX, y: canvasCenterY)
+    }
+
+    var canvasCenterTranslation: (x: CGFloat, y: CGFloat) {
+        (canvasCenterX - shotView.center.x, canvasCenterY - shotView.center.y)
+    }
+    var zoomToFitTransform: CGAffineTransform {
+        CGAffineTransform(scaleX: canvasScale, y: canvasScale)
+            .translatedBy(x: canvasCenterTranslation.x, y: canvasCenterTranslation.y)
+    }
+
+//    var canvasScale: CGFloat {
+//        shotView.bounds.width / canvasSize.width
+//    }
     var canvasScale: CGFloat {
-        shotView.bounds.width / canvasSize.width
+        let widthScale = canvasMaxWidth / shotView.bounds.width
+        let heightScale = canvasMaxHeight / shotView.bounds.height
+        return min(widthScale, heightScale)
+
     }
 }
