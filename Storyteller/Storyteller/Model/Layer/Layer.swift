@@ -7,17 +7,17 @@
 import PencilKit
 
 struct Layer {
-    var component: CompositeComponent
+    var component: LayerComponentNode
     var canvasSize: CGSize
 
-    init(component: CompositeComponent, canvasSize: CGSize) {
+    init(component: LayerComponentNode, canvasSize: CGSize) {
         self.component = component
         self.canvasSize = canvasSize
     }
     init(layerWithDrawing: PKDrawing, canvasSize: CGSize) {
         let drawingComponent = DrawingComponent(drawing: layerWithDrawing,
                                                 canvasSize: canvasSize)
-        self.component = CompositeComponent(components: [drawingComponent])
+        self.component = LayerComponentNode(components: [drawingComponent])
         self.canvasSize = canvasSize
     }
 

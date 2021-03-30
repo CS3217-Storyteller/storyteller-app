@@ -8,6 +8,12 @@
 import PencilKit
 
 struct DrawingComponent: LeafComponent {
+
+    var rotation = CGFloat.zero
+    var scale = CGFloat.zero
+    var xTranslation = CGFloat.zero
+    var yTranslation = CGFloat.zero
+
     private(set) var leafType = LeafType.drawing
 
     private(set) var drawing: PKDrawing
@@ -21,8 +27,10 @@ struct DrawingComponent: LeafComponent {
         self.canvasSize = canvasSize
     }
 
-    mutating func setDrawing(to drawing: PKDrawing) {
-        self.drawing = drawing
+    func setDrawing(to drawing: PKDrawing) -> DrawingComponent{
+        var newComponent = self
+        newComponent.drawing = drawing
+        return newComponent
     }
 
     func addToMerger(_ merger: LayerMerger) {
