@@ -44,6 +44,7 @@ struct LayerComponentNode: Codable {
         return newNode
     }
 
+    // MARK: - Codable
     enum CodingKeys: String, CodingKey {
         case children
         case drawing
@@ -88,6 +89,7 @@ struct LayerComponentNode: Codable {
     }
 }
 
+// MARK: - LayerComponent
 extension LayerComponentNode: LayerComponent {
     var canvasSize: CGSize {
         switch type {
