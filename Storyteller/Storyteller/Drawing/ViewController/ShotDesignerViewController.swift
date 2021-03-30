@@ -15,7 +15,7 @@ class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
     var modelManager: ModelManager!
     var shotLabel: ShotLabel!
 
-    var shotTransform = CGAffineTransform.identity {
+    var canvasTransform = CGAffineTransform.identity {
         didSet {
             updateShotTransform()
         }
@@ -76,9 +76,48 @@ class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
 
     private func updateShotTransform() {
         shotView.transform = .identity
-        shotView.transform = zoomToFitTransform.concatenating(shotTransform)
+        shotView.transform = zoomToFitTransform.concatenating(canvasTransform)
 
         shotView.center = canvasCenter
+    }
+
+    private var panPosition = CGPoint.zero
+}
+
+// MARK: - Gestures
+extension ShotDesignerViewController {
+    @IBAction private func moveCanvas(_ sender: UIPanGestureRecognizer) {
+        switch sender.state {
+        case .began:
+            panPosition = sender.location(in: view)
+        case .changed:
+            let location = sender.location(in: view)
+            let offsetX = location.x - panPosition.x
+            let offsetY = location.y - panPosition.y
+            canvasTransform = canvasTransform
+                .concatenating(CGAffineTransform(translationX: offsetX, y: offsetY))
+            panPosition = location
+        default:
+            return
+        }
+    }
+
+    @IBAction private func resizeCanvas(_ sender: UIPinchGestureRecognizer) {
+        let scale = sender.scale
+        canvasTransform = canvasTransform.scaledBy(x: scale, y: scale)
+        sender.scale = 1
+    }
+    @IBAction private func rotateCanvas(_ sender: UIRotationGestureRecognizer) {
+        let rotation = sender.rotation
+        canvasTransform = canvasTransform.rotated(by: rotation)
+        sender.rotation = .zero
+    }
+}
+// MARK: - Actions
+extension ShotDesignerViewController {
+    @IBAction private func zoomToFit() {
+        canvasTransform = .identity
+        updateShotTransform()
     }
 
     @IBAction private func duplicateShot(_ sender: UIBarButtonItem) {
@@ -90,16 +129,6 @@ class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
                              layers: shot.layers,
                              backgroundColor: shot.backgroundColor.uiColor)
     }
-
-}
-
-// MARK: - Actions
-extension ShotDesignerViewController {
-    @IBAction private func zoomToFit() {
-        shotTransform = .identity
-        updateShotTransform()
-    }
-
 }
 
 // MARK: - PKCanvasViewDelegate
@@ -118,7 +147,7 @@ extension ShotDesignerViewController {
         updateShotTransform()
     }
 }
-// MARK: - Resize
+// MARK: - Zoom To Fit Resize
 extension ShotDesignerViewController {
     var windowSize: CGSize {
         view.frame.size
@@ -171,6 +200,15 @@ extension ShotDesignerViewController {
         let widthScale = canvasMaxWidth / shotView.bounds.width
         let heightScale = canvasMaxHeight / shotView.bounds.height
         return min(widthScale, heightScale)
+    }
+}
 
+// MARK: UIGestureRecognizerDelegate
+extension ShotDesignerViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                           shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        gestureRecognizer is UIRotationGestureRecognizer
+            || gestureRecognizer is UIPinchGestureRecognizer
+            || gestureRecognizer is UIPanGestureRecognizer
     }
 }

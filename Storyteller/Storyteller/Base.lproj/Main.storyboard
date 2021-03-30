@@ -108,6 +108,12 @@
                                 <rect key="frame" x="0.0" y="0.0" width="1194" height="834"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="Qsm-mj-MM0" appends="YES" id="Xlj-OC-18T"/>
+                                    <outletCollection property="gestureRecognizers" destination="gG1-Rm-Yjc" appends="YES" id="csW-wU-LZQ"/>
+                                    <outletCollection property="gestureRecognizers" destination="3se-UB-g1d" appends="YES" id="eIf-vG-hzQ"/>
+                                </connections>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="nX2-Db-Tvg"/>
@@ -140,6 +146,21 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JMV-yF-8bm" sceneMemberID="firstResponder"/>
+                <pinchGestureRecognizer id="Qsm-mj-MM0">
+                    <connections>
+                        <action selector="resizeCanvas:" destination="mXm-tZ-pGV" id="91r-U6-yXc"/>
+                    </connections>
+                </pinchGestureRecognizer>
+                <rotationGestureRecognizer id="gG1-Rm-Yjc">
+                    <connections>
+                        <action selector="rotateCanvas:" destination="mXm-tZ-pGV" id="w17-9D-q83"/>
+                    </connections>
+                </rotationGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="2" id="3se-UB-g1d">
+                    <connections>
+                        <action selector="moveCanvas:" destination="mXm-tZ-pGV" id="EAg-dW-k0n"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="2653.2663316582916" y="65.467625899280577"/>
         </scene>
