@@ -149,16 +149,19 @@
                 <pinchGestureRecognizer id="Qsm-mj-MM0">
                     <connections>
                         <action selector="resizeCanvas:" destination="mXm-tZ-pGV" id="91r-U6-yXc"/>
+                        <outlet property="delegate" destination="mXm-tZ-pGV" id="Ax7-hZ-pDd"/>
                     </connections>
                 </pinchGestureRecognizer>
                 <rotationGestureRecognizer id="gG1-Rm-Yjc">
                     <connections>
                         <action selector="rotateCanvas:" destination="mXm-tZ-pGV" id="w17-9D-q83"/>
+                        <outlet property="delegate" destination="mXm-tZ-pGV" id="VjY-Og-PB6"/>
                     </connections>
                 </rotationGestureRecognizer>
                 <panGestureRecognizer minimumNumberOfTouches="2" id="3se-UB-g1d">
                     <connections>
                         <action selector="moveCanvas:" destination="mXm-tZ-pGV" id="EAg-dW-k0n"/>
+                        <outlet property="delegate" destination="mXm-tZ-pGV" id="4EA-Sz-5ZI"/>
                     </connections>
                 </panGestureRecognizer>
             </objects>
