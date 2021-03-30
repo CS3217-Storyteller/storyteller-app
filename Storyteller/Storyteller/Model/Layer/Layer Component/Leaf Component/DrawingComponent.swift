@@ -8,11 +8,7 @@
 import PencilKit
 
 struct DrawingComponent: LayerComponent {
-
-    var rotation = CGFloat.zero
-    var scale = CGFloat.zero
-    var xTranslation = CGFloat.zero
-    var yTranslation = CGFloat.zero
+    var transformInfo = TransformInfo()
 
     private(set) var drawing: PKDrawing
     let canvasSize: CGSize

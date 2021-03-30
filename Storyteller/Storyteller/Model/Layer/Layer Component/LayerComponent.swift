@@ -11,10 +11,7 @@ protocol LayerComponent: Codable {
     var canvasSize: CGSize { get }
     var frame: CGRect { get }
 
-    var rotation: CGFloat { get set }
-    var scale: CGFloat { get set }
-    var xTranslation: CGFloat { get set }
-    var yTranslation: CGFloat { get set }
+    var transformInfo: TransformInfo { get set }
 
     func setDrawing(to drawing: PKDrawing) -> Self
     func addToMerger(_ merger: LayerMerger)
@@ -26,18 +23,14 @@ extension LayerComponent {
 
 extension LayerComponent {
     mutating func scaled(by scale: CGFloat) {
-        guard scale >= 0 else {
-            return
-        }
-        self.scale *= scale
+        transformInfo.scaled(by: scale)
     }
 
     mutating func rotated(by angle: CGFloat) {
-        self.rotation += angle
+        transformInfo.rotated(by: angle)
     }
 
     mutating func translatedBy(x: CGFloat, y: CGFloat) {
-        self.xTranslation += x
-        self.yTranslation += y
+        transformInfo.translatedBy(x: x, y: y)
     }
 }

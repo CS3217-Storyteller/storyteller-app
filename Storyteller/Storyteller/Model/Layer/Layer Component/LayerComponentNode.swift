@@ -13,10 +13,7 @@ struct LayerComponentNode: Codable {
         case drawing(DrawingComponent)
     }
 
-    var rotation = CGFloat.zero
-    var scale = CGFloat.zero
-    var xTranslation = CGFloat.zero
-    var yTranslation = CGFloat.zero
+    var transformInfo = TransformInfo()
 
     var type: NodeType
 
@@ -51,10 +48,7 @@ struct LayerComponentNode: Codable {
         case children
         case drawing
 
-        case rotation
-        case scale
-        case xTranslation
-        case yTranslation
+        case transformInfo
     }
 
     enum CodableError: Error {
@@ -65,10 +59,7 @@ struct LayerComponentNode: Codable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
 
-        try container.encode(rotation, forKey: .rotation)
-        try container.encode(scale, forKey: .scale)
-        try container.encode(xTranslation, forKey: .xTranslation)
-        try container.encode(yTranslation, forKey: .yTranslation)
+        try container.encode(transformInfo, forKey: .transformInfo)
 
         switch type {
         case .composite(let children):
@@ -81,10 +72,7 @@ struct LayerComponentNode: Codable {
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        rotation = try container.decode(CGFloat.self, forKey: .rotation)
-        scale = try container.decode(CGFloat.self, forKey: .scale)
-        xTranslation = try container.decode(CGFloat.self, forKey: .xTranslation)
-        yTranslation = try container.decode(CGFloat.self, forKey: .yTranslation)
+        transformInfo = try container.decode(TransformInfo.self, forKey: .transformInfo)
 
         if let children = try? container.decode([LayerComponentNode].self, forKey: .children) {
             self.type = .composite(children)

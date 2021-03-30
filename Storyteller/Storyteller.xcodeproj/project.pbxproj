@@ -51,6 +51,7 @@
 		B3755AB3260643C000EC0F56 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AB2260643C000EC0F56 /* Constants.swift */; };
 		B3755AB92606454900EC0F56 /* ShotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AB82606454900EC0F56 /* ShotView.swift */; };
 		B3755AD626065C0700EC0F56 /* DrawingUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AD526065C0700EC0F56 /* DrawingUtility.swift */; };
+		B3E8C29D2613899700713B69 /* TransformInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E8C29C2613899700713B69 /* TransformInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +113,7 @@
 		B3755AB2260643C000EC0F56 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B3755AB82606454900EC0F56 /* ShotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotView.swift; sourceTree = "<group>"; };
 		B3755AD526065C0700EC0F56 /* DrawingUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingUtility.swift; sourceTree = "<group>"; };
+		B3E8C29C2613899700713B69 /* TransformInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -310,6 +312,7 @@
 				B3320D61260F92330063558A /* LayerComponent.swift */,
 				B30AA8792610C4BC008B6714 /* Leaf Component */,
 				B30AA86B2610C478008B6714 /* LayerComponentNode.swift */,
+				B3E8C29C2613899700713B69 /* TransformInfo.swift */,
 			);
 			path = "Layer Component";
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 				B30AA8592610C3B5008B6714 /* StorageProject.swift in Sources */,
 				A29A19552607242600710943 /* Layer.swift in Sources */,
 				A209158926070553001A242E /* SceneHeaderView.swift in Sources */,
+				B3E8C29D2613899700713B69 /* TransformInfo.swift in Sources */,
 				A29A19522607242000710943 /* ModelManager.swift in Sources */,
 				B35115D626137BE20056886C /* LayerTableController.swift in Sources */,
 				B3755AB92606454900EC0F56 /* ShotView.swift in Sources */,
