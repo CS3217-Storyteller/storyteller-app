@@ -7,26 +7,26 @@
 import PencilKit
 
 struct Layer {
-    var component: LayerComponentNode
     var canvasSize: CGSize
+    var node: LayerComponentNode
 
-    init(component: LayerComponentNode, canvasSize: CGSize) {
-        self.component = component
+    init(node: LayerComponentNode, canvasSize: CGSize) {
+        self.node = node
         self.canvasSize = canvasSize
     }
+
     init(layerWithDrawing: PKDrawing, canvasSize: CGSize) {
-        let drawingComponent = DrawingComponent(drawing: layerWithDrawing,
-                                                canvasSize: canvasSize)
-        self.component = LayerComponentNode(components: [drawingComponent])
         self.canvasSize = canvasSize
+        self.node = LayerComponentNode(layerWithDrawing: layerWithDrawing,
+                                       canvasSize: canvasSize)
     }
 
     func addToMerger(_ merger: LayerMerger) {
-        component.addToMerger(merger)
+        node.addToMerger(merger)
     }
 
     mutating func setDrawing(to drawing: PKDrawing) {
-        component.setDrawing(to: drawing)
+        self.node = node.setDrawing(to: drawing)
     }
 
 }

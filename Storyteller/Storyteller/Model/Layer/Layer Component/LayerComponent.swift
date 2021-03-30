@@ -7,13 +7,15 @@
 
 import PencilKit
 
-protocol LayerComponent {
+protocol LayerComponent: Codable {
     var canvasSize: CGSize { get }
     var frame: CGRect { get }
+
     var rotation: CGFloat { get set }
     var scale: CGFloat { get set }
     var xTranslation: CGFloat { get set }
     var yTranslation: CGFloat { get set }
+
     func setDrawing(to drawing: PKDrawing) -> Self
     func addToMerger(_ merger: LayerMerger)
 }

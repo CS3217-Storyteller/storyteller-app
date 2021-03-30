@@ -7,14 +7,12 @@
 
 import PencilKit
 
-struct DrawingComponent: LeafComponent {
+struct DrawingComponent: LayerComponent {
 
     var rotation = CGFloat.zero
     var scale = CGFloat.zero
     var xTranslation = CGFloat.zero
     var yTranslation = CGFloat.zero
-
-    private(set) var leafType = LeafType.drawing
 
     private(set) var drawing: PKDrawing
     let canvasSize: CGSize
