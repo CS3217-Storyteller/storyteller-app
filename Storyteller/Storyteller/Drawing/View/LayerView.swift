@@ -23,5 +23,4 @@ class LayerView: UIView {
         super.init(coder: coder)
     }
 
-    
 }

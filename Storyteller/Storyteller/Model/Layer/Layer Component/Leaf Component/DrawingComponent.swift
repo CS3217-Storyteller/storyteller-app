@@ -25,7 +25,7 @@ struct DrawingComponent: LayerComponent {
         self.canvasSize = canvasSize
     }
 
-    func setDrawing(to drawing: PKDrawing) -> DrawingComponent{
+    func setDrawing(to drawing: PKDrawing) -> DrawingComponent {
         var newComponent = self
         newComponent.drawing = drawing
         return newComponent

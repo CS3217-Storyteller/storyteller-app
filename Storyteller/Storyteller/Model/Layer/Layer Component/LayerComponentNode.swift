@@ -29,8 +29,8 @@ struct LayerComponentNode: Codable {
     var containsDrawing: Bool {
         switch type {
         case .composite(let children):
-            return children.reduce(false, { $0 || $1.containsDrawing})
-        case .drawing(_):
+            return children.contains(where: { $0.containsDrawing })
+        case .drawing:
             return true
         }
     }
@@ -41,7 +41,7 @@ struct LayerComponentNode: Codable {
         case .composite(var children):
             children.append(node)
             newNode.type = NodeType.composite(children)
-        case .drawing(_):
+        case .drawing:
             newNode.type = NodeType.composite([self, node])
         }
         return newNode

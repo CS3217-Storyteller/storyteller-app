@@ -125,20 +125,36 @@
                             <constraint firstItem="mNZ-3l-gCc" firstAttribute="leading" secondItem="LS0-sP-w2o" secondAttribute="leading" id="hT5-83-MUI"/>
                         </constraints>
                     </view>
-                    <toolbarItems>
-                        <barButtonItem title="Zoom To Fit" id="nii-Lx-BvZ">
-                            <imageReference key="image" image="rectangle.center.inset.fill" catalog="system" symbolScale="large"/>
-                            <connections>
-                                <action selector="zoomToFit" destination="mXm-tZ-pGV" id="mg7-4K-4bs"/>
-                            </connections>
-                        </barButtonItem>
-                    </toolbarItems>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" id="Q8o-sb-o8D">
-                        <barButtonItem key="rightBarButtonItem" title="Duplicate" id="KzC-k5-zaS">
-                            <connections>
-                                <action selector="duplicateShot:" destination="mXm-tZ-pGV" id="x4v-hJ-ZUv"/>
-                            </connections>
-                        </barButtonItem>
+                        <leftBarButtonItems>
+                            <barButtonItem title="Zoom To Fit" id="nii-Lx-BvZ">
+                                <imageReference key="image" image="rectangle.center.inset.fill" catalog="system" symbolScale="large"/>
+                                <connections>
+                                    <action selector="zoomToFit" destination="mXm-tZ-pGV" id="mg7-4K-4bs"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem enabled="NO" title="Item" id="qzp-pG-u8W">
+                                <imageReference key="image" image="cursorarrow.and.square.on.square.dashed" catalog="system" renderingMode="original"/>
+                            </barButtonItem>
+                            <barButtonItem style="plain" id="nJl-hs-fSb">
+                                <switch key="customView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="U5L-Y5-Pcv">
+                                    <rect key="frame" x="125" y="9.5" width="51" height="31"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <connections>
+                                        <action selector="toggleTransformLayer:" destination="mXm-tZ-pGV" eventType="valueChanged" id="R40-5Z-oIg"/>
+                                    </connections>
+                                </switch>
+                            </barButtonItem>
+                        </leftBarButtonItems>
+                        <rightBarButtonItems>
+                            <barButtonItem image="plus.rectangle.on.rectangle" catalog="system" id="KzC-k5-zaS">
+                                <connections>
+                                    <action selector="duplicateShot:" destination="mXm-tZ-pGV" id="x4v-hJ-ZUv"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Item" image="square.3.stack.3d.top.fill" catalog="system" id="udt-Zi-k10"/>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -166,6 +182,34 @@
                 </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="2653.2663316582916" y="65.467625899280577"/>
+        </scene>
+        <!--Table View Controller-->
+        <scene sceneID="78a-Xr-Ce8">
+            <objects>
+                <tableViewController id="Q19-Vs-gRv" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="3aX-Q6-a4G">
+                        <rect key="frame" x="0.0" y="0.0" width="1194" height="834"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="FRH-ws-8kQ">
+                                <rect key="frame" x="0.0" y="28" width="1194" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="FRH-ws-8kQ" id="Twf-UM-FCh">
+                                    <rect key="frame" x="0.0" y="0.0" width="1194" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Q19-Vs-gRv" id="g5l-2e-mgY"/>
+                            <outlet property="delegate" destination="Q19-Vs-gRv" id="4ce-va-7LB"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8IJ-mK-5pb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3342" y="77"/>
         </scene>
         <!--Scene View Controller-->
         <scene sceneID="c1k-Ex-fdQ">
@@ -285,8 +329,11 @@
     <resources>
         <image name="20x20px-grid" width="1920" height="1138"/>
         <image name="arrow.backward" catalog="system" width="128" height="98"/>
+        <image name="cursorarrow.and.square.on.square.dashed" catalog="system" width="128" height="119"/>
         <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="plus.rectangle.on.rectangle" catalog="system" width="128" height="96"/>
         <image name="rectangle.center.inset.fill" catalog="system" width="128" height="93"/>
+        <image name="square.3.stack.3d.top.fill" catalog="system" width="128" height="124"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

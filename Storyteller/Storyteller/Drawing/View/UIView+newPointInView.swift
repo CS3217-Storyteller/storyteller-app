@@ -27,7 +27,7 @@ extension UIView {
 
     /// Helper to get point back relative to center
     func pointRelativeToCenter(_ point: CGPoint) -> CGPoint {
-        return CGPoint(x: point.x + center.x, y: point.y + center.y)
+        CGPoint(x: point.x + center.x, y: point.y + center.y)
     }
 
     /// Helper to get point relative to transformed coords

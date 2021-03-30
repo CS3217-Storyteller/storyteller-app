@@ -10,6 +10,8 @@ import PencilKit
 class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
     @IBOutlet private var shotView: ShotView!
 
+    var editingMode = EditingMode.free
+
     var toolPicker = PKToolPicker()
     // should be intialized via segue
     var modelManager: ModelManager!
@@ -128,6 +130,10 @@ extension ShotDesignerViewController {
         modelManager.addShot(ofShot: shotLabel.nextLabel,
                              layers: shot.layers,
                              backgroundColor: shot.backgroundColor.uiColor)
+    }
+
+    @IBAction private func toggleTransformLayer(_ sender: UISwitch) {
+        editingMode = sender.isOn ? .transformLayer : .free
     }
 }
 
