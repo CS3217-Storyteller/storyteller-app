@@ -10,29 +10,39 @@ import PencilKit
 class ShotView: UIView {
     var layerViews = [LayerView]()
 
-    var selectedLayer = 0
+    var selectedLayerIndex = 0 {
+        didSet {
+            selectLayer(at: selectedLayerIndex)
+        }
+    }
 
     var currentCanvasView: PKCanvasView? {
-        layerViews[selectedLayer].canvasView
+        layerViews[selectedLayerIndex].canvasView
     }
 
-    func reset() {
-        layerViews = []
-        subviews.forEach({ $0.removeFromSuperview() })
+    func selectLayer(at index: Int) {
+        guard layerViews.indices.contains(index) else {
+            return
+        }
+        layerViews[index].canvasView?.becomeFirstResponder()
     }
 
+    // TODO: remove this
     func indexOfLayer(containing canvasView: PKCanvasView) -> Int? {
         layerViews.firstIndex(where: { $0.canvasView === canvasView })
     }
     func setUpLayerViews(_ layerViews: [LayerView], toolPicker: PKToolPicker,
                          PKDelegate: PKCanvasViewDelegate) {
-        reset()
+        let oldViews = self.layerViews
         guard !layerViews.isEmpty else {
             return
         }
 
         layerViews.forEach({ add(layerView: $0, toolPicker: toolPicker) })
         layerViews.compactMap({ $0.canvasView }).forEach({ $0.delegate = PKDelegate })
+
+        self.layerViews.removeFirst(oldViews.count)
+        oldViews.forEach({ $0.removeFromSuperview() })
     }
 
     func add(layerView: LayerView, toolPicker: PKToolPicker) {
@@ -48,5 +58,10 @@ class ShotView: UIView {
 
     func setUpBackgroundColor(color: UIColor) {
         self.backgroundColor = color
+    }
+
+    func reset() {
+        layerViews = []
+        subviews.forEach({ $0.removeFromSuperview() })
     }
 }

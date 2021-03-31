@@ -18,19 +18,25 @@ extension TransformInfo: Codable {
 }
 
 extension TransformInfo {
-    mutating func scaled(by scale: CGFloat) {
+    func scaled(by scale: CGFloat) -> TransformInfo {
         guard scale >= 0 else {
-            return
+            return self
         }
-        self.scale *= scale
+        var newInfo = self
+        newInfo.scale *= scale
+        return newInfo
     }
 
-    mutating func rotated(by angle: CGFloat) {
-        self.rotation += angle
+    func rotated(by angle: CGFloat) -> TransformInfo {
+        var newInfo = self
+        newInfo.rotation += angle
+        return newInfo
     }
 
-    mutating func translatedBy(x: CGFloat, y: CGFloat) {
-        self.xTranslation += x
-        self.yTranslation += y
+    func translatedBy(x: CGFloat, y: CGFloat) -> TransformInfo {
+        var newInfo = self
+        newInfo.xTranslation += x
+        newInfo.yTranslation += y
+        return newInfo
     }
 }

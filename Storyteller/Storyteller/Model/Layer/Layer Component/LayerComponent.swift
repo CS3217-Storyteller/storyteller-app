@@ -17,6 +17,7 @@ protocol LayerComponent {
 
     var transformInfo: TransformInfo { get set }
 
+    func updateTransformInfo(info: TransformInfo) -> Self
     func setDrawing(to drawing: PKDrawing) -> Self
     func addToMerger(_ merger: LayerMerger)
 }
@@ -34,15 +35,18 @@ extension LayerComponent {
 }
 
 extension LayerComponent {
-    mutating func scaled(by scale: CGFloat) {
-        transformInfo.scaled(by: scale)
+    func scaled(by scale: CGFloat) -> Self {
+        let newInfo = transformInfo.scaled(by: scale)
+        return updateTransformInfo(info: newInfo)
     }
 
-    mutating func rotated(by angle: CGFloat) {
-        transformInfo.rotated(by: angle)
+    func rotated(by angle: CGFloat) -> Self {
+        let newInfo = transformInfo.rotated(by: angle)
+        return updateTransformInfo(info: newInfo)
     }
 
-    mutating func translatedBy(x: CGFloat, y: CGFloat) {
-        transformInfo.translatedBy(x: x, y: y)
+    func translatedBy(x: CGFloat, y: CGFloat) -> Self {
+        let newInfo = transformInfo.translatedBy(x: x, y: y)
+        return updateTransformInfo(info: newInfo)
     }
 }

@@ -24,7 +24,14 @@ struct Project {
                                       atLayer: layer,
                                       withDrawing: drawing)
     }
-
+    mutating func update(layer: Layer, at layerIndex: Int,
+                         ofShot shotLabel: ShotLabel) {
+        let sceneIndex = shotLabel.sceneIndex
+        guard scenes.indices.contains(sceneIndex) else {
+            return
+        }
+        scenes[sceneIndex].update(layer: layer, at: layerIndex, ofShot: shotLabel)
+    }
     mutating func addScene(_ scene: Scene) {
         scenes.append(scene)
     }

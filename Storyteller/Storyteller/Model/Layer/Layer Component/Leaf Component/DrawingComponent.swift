@@ -8,7 +8,8 @@
 import PencilKit
 
 struct DrawingComponent: LayerComponent {
-    var transformInfo = TransformInfo()
+
+    var transformInfo: TransformInfo
 
     private(set) var drawing: PKDrawing
     let canvasSize: CGSize
@@ -23,9 +24,15 @@ struct DrawingComponent: LayerComponent {
         return drawing.image(from: CGRect(origin: .zero, size: canvasSize), scale: 1)
     }
 
-    init(drawing: PKDrawing, canvasSize: CGSize) {
+    init(drawing: PKDrawing, canvasSize: CGSize,
+         transformInfo: TransformInfo = TransformInfo()) {
+        self.transformInfo = transformInfo
         self.drawing = drawing
         self.canvasSize = canvasSize
+    }
+
+    func updateTransformInfo(info: TransformInfo) -> DrawingComponent {
+        DrawingComponent(drawing: drawing, canvasSize: canvasSize, transformInfo: info)
     }
 
     func setDrawing(to drawing: PKDrawing) -> DrawingComponent {

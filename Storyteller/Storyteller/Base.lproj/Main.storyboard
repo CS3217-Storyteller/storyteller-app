@@ -144,15 +144,6 @@
                                     <action selector="toggleTransformLayer:" destination="mXm-tZ-pGV" id="8GH-TY-tMu"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem style="plain" id="nJl-hs-fSb">
-                                <switch key="customView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="U5L-Y5-Pcv">
-                                    <rect key="frame" x="125" y="9.5" width="51" height="31"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <connections>
-                                        <action selector="toggleTransformLayer2:" destination="mXm-tZ-pGV" eventType="valueChanged" id="R40-5Z-oIg"/>
-                                    </connections>
-                                </switch>
-                            </barButtonItem>
                         </leftBarButtonItems>
                         <rightBarButtonItems>
                             <barButtonItem image="plus.rectangle.on.rectangle" catalog="system" id="KzC-k5-zaS">
@@ -171,7 +162,6 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="layerTableButton" destination="udt-Zi-k10" id="OAe-tB-B2a"/>
                         <outlet property="shotView" destination="h3l-Ka-Bz4" id="Miq-Xl-utc"/>
                         <outlet property="transformLayerButton" destination="qzp-pG-u8W" id="PWc-th-jEu"/>
                     </connections>
@@ -179,19 +169,19 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JMV-yF-8bm" sceneMemberID="firstResponder"/>
                 <pinchGestureRecognizer id="Qsm-mj-MM0">
                     <connections>
-                        <action selector="resizeCanvas:" destination="mXm-tZ-pGV" id="91r-U6-yXc"/>
+                        <action selector="handlePinch:" destination="mXm-tZ-pGV" id="91r-U6-yXc"/>
                         <outlet property="delegate" destination="mXm-tZ-pGV" id="Ax7-hZ-pDd"/>
                     </connections>
                 </pinchGestureRecognizer>
                 <rotationGestureRecognizer id="gG1-Rm-Yjc">
                     <connections>
-                        <action selector="rotateCanvas:" destination="mXm-tZ-pGV" id="w17-9D-q83"/>
+                        <action selector="handleRotation:" destination="mXm-tZ-pGV" id="w17-9D-q83"/>
                         <outlet property="delegate" destination="mXm-tZ-pGV" id="VjY-Og-PB6"/>
                     </connections>
                 </rotationGestureRecognizer>
                 <panGestureRecognizer minimumNumberOfTouches="2" id="3se-UB-g1d">
                     <connections>
-                        <action selector="moveCanvas:" destination="mXm-tZ-pGV" id="EAg-dW-k0n"/>
+                        <action selector="handlePan:" destination="mXm-tZ-pGV" id="EAg-dW-k0n"/>
                         <outlet property="delegate" destination="mXm-tZ-pGV" id="4EA-Sz-5ZI"/>
                     </connections>
                 </panGestureRecognizer>

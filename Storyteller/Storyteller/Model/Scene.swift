@@ -20,7 +20,14 @@ struct Scene {
         }
         shots[shotIndex].updateLayer(layer, withDrawing: drawing)
     }
-
+    mutating func update(layer: Layer, at layerIndex: Int,
+                         ofShot shotLabel: ShotLabel) {
+        let shotIndex = shotLabel.shotIndex
+        guard shots.indices.contains(shotIndex) else {
+            return
+        }
+        shots[shotIndex].update(layer: layer, at: layerIndex)
+    }
     mutating func addShot(_ shot: Shot) {
         shots.append(shot)
     }

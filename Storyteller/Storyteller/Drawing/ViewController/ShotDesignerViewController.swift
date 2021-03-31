@@ -11,17 +11,14 @@ class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
     @IBOutlet private var shotView: ShotView!
 
     @IBOutlet private var transformLayerButton: TransformLayerButton!
-    @IBOutlet private var layerTableButton: LayerTableButton!
 
     var editingMode = EditingMode.free {
         didSet {
             switch editingMode {
             case .free:
                 transformLayerButton.unselect()
-                layerTableButton.unselect()
             case .transformLayer:
                 transformLayerButton.select()
-                layerTableButton.unselect()
             }
         }
     }
@@ -41,6 +38,19 @@ class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
     }
     var canvasSize: CGSize {
         shot?.canvasSize ?? .zero
+    }
+
+    var selectedLayerIndex: Int {
+        get {
+            shotView.selectedLayerIndex
+        }
+        set {
+            shotView.selectedLayerIndex = newValue
+        }
+    }
+
+    var selectedLayer: Layer? {
+        modelManager.getLayer(at: selectedLayerIndex, of: shotLabel)
     }
 
     func setModelManager(to modelManager: ModelManager) {
@@ -102,7 +112,15 @@ class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
 
 // MARK: - Gestures
 extension ShotDesignerViewController {
-    @IBAction private func moveCanvas(_ sender: UIPanGestureRecognizer) {
+    @IBAction private func handlePan(_ sender: UIPanGestureRecognizer) {
+        switch editingMode {
+        case .free:
+            moveCanvas(sender)
+        default:
+            moveLayer(sender)
+        }
+    }
+    private func moveCanvas(_ sender: UIPanGestureRecognizer) {
         switch sender.state {
         case .began:
             panPosition = sender.location(in: view)
@@ -117,17 +135,50 @@ extension ShotDesignerViewController {
             return
         }
     }
+    private func moveLayer(_ sender: UIPanGestureRecognizer) {
 
-    @IBAction private func resizeCanvas(_ sender: UIPinchGestureRecognizer) {
+    }
+
+    @IBAction private func handlePinch(_ sender: UIPinchGestureRecognizer) {
+        switch editingMode {
+        case .free:
+            scaleCanvas(sender)
+        default:
+            scaleLayer(sender)
+        }
+    }
+    private func scaleCanvas(_ sender: UIPinchGestureRecognizer) {
         let scale = sender.scale
         canvasTransform = canvasTransform.scaledBy(x: scale, y: scale)
         sender.scale = 1
     }
-    @IBAction private func rotateCanvas(_ sender: UIRotationGestureRecognizer) {
+    private func scaleLayer(_ sender: UIPinchGestureRecognizer) {
+
+    }
+
+    @IBAction private func handleRotation(_ sender: UIRotationGestureRecognizer) {
+        switch editingMode {
+        case .free:
+            rotateCanvas(sender)
+        default:
+            rotateLayer(sender)
+        }
+    }
+    private func rotateCanvas(_ sender: UIRotationGestureRecognizer) {
         let rotation = sender.rotation
         canvasTransform = canvasTransform.rotated(by: rotation)
         sender.rotation = .zero
     }
+    private func rotateLayer(_ sender: UIRotationGestureRecognizer) {
+        guard let layer = selectedLayer else {
+            return
+        }
+        let rotation = sender.rotation
+        // TODO: also change view
+        modelManager.update(layer: layer.rotated(by: rotation), at: selectedLayerIndex,
+                            ofShot: shotLabel)
+    }
+
 }
 
 // MARK: - Actions
@@ -155,23 +206,22 @@ extension ShotDesignerViewController {
         }
     }
 
-//    @IBAction private func toggleTransformLayer2(_ sender: UISwitch) {
-//        editingMode = sender.isOn ? .transformLayer : .free
-//    }
 }
 
 // MARK: - ModelManagerObserver
 extension ShotDesignerViewController: ModelManagerObserver {
     func modelDidChanged() {
+        updateShot()
     }
 }
 // MARK: - PKCanvasViewDelegate
 extension ShotDesignerViewController: PKCanvasViewDelegate {
     func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
-        guard let index = shotView.indexOfLayer(containing: canvasView) else {
+        guard let newLayer = selectedLayer?.setDrawing(to: canvasView.drawing) else {
             return
         }
-        modelManager.updateDrawing(ofShot: shotLabel, atLayer: index, withDrawing: canvasView.drawing)
+        modelManager.update(layer: newLayer, at: selectedLayerIndex, ofShot: shotLabel)
+//        modelManager.updateDrawing(ofShot: shotLabel, atLayer: index, withDrawing: canvasView.drawing)
     }
 }
 
@@ -179,6 +229,21 @@ extension ShotDesignerViewController: PKCanvasViewDelegate {
 extension ShotDesignerViewController {
     func toolPickerFramesObscuredDidChange(_ toolPicker: PKToolPicker) {
         updateShotTransform()
+    }
+}
+
+// MARK: - Segues
+extension ShotDesignerViewController {
+    @IBAction private func layerTableDidDismiss(_ segue: UIStoryboardSegue) {
+        if let layerTable = segue.source as? LayerTableController {
+            selectedLayerIndex = layerTable.selectedLayerIndex
+        }
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let layerTable = segue.destination as? LayerTableController {
+            layerTable.selectedLayerIndex = selectedLayerIndex
+        }
     }
 }
 // MARK: - Zoom To Fit Resize

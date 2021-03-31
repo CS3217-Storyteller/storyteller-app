@@ -23,6 +23,12 @@ struct Shot {
         layers[layerIndex].setDrawing(to: drawing)
     }
 
+    mutating func update(layer: Layer, at layerIndex: Int) {
+        guard layers.indices.contains(layerIndex) else {
+            return
+        }
+        layers[layerIndex] = layer
+    }
     mutating func addLayer(_ layer: Layer) {
         layers.append(layer)
     }

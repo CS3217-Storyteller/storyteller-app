@@ -20,11 +20,22 @@ class NormalLayerMerger: LayerMerger {
     var frame: CGRect {
         CGRect(origin: .zero, size: canvasSize)
     }
+    func getTransform(from info: TransformInfo) -> CGAffineTransform {
+        print(info)
+        return CGAffineTransform(translationX: info.xTranslation, y: info.yTranslation)
+            .rotated(by: info.rotation)
+            .scaledBy(x: info.scale, y: info.scale)
+    }
     func mergeDrawing(component: DrawingComponent) {
+        let drawingLayerView = LayerView(canvasSize: canvasSize)
+
         let canvasView = PKCanvasView(frame: frame)
         canvasView.drawing = component.drawing
 
-        canvasView.setAnchorPoint(component.anchorPoint)
-        mergedLayer.addSubview(canvasView)
+        drawingLayerView.setAnchorPoint(component.anchorPoint)
+        drawingLayerView.transform = getTransform(from: component.transformInfo)
+        drawingLayerView.addSubview(canvasView)
+
+        mergedLayer.addSubview(drawingLayerView)
     }
 }

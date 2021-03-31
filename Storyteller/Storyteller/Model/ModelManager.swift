@@ -63,6 +63,14 @@ class ModelManager {
         return shot.layers
     }
 
+    func getLayer(at layerIndex: Int, of shotLabel: ShotLabel) -> Layer? {
+        guard let layers = getLayers(of: shotLabel),
+              layers.indices.contains(layerIndex) else {
+            return nil
+        }
+        return layers[layerIndex]
+    }
+
     func getCanvasSize(of shotLabel: ShotLabel) -> CGSize {
         let projectIndex = shotLabel.projectIndex
         return projects[projectIndex].canvasSize
@@ -73,6 +81,7 @@ class ModelManager {
         observers.forEach({ $0.modelDidChanged() })
     }
 
+    // TODO: remove all updateDrawing since we are using update(layer) now
     func updateDrawing(ofShot shotLabel: ShotLabel,
                        atLayer layer: Int,
                        withDrawing drawing: PKDrawing) {
@@ -141,6 +150,17 @@ class ModelManager {
         }
         let layer = Layer(layerWithDrawing: drawing, canvasSize: shot.canvasSize)
         projects[projectIndex].addLayer(layer, to: shotLabel)
+        saveProject(projects[projectIndex])
+    }
+
+    // MARK: - Layers
+    func update(layer: Layer, at layerIndex: Int, ofShot shotLabel: ShotLabel) {
+        let projectIndex = shotLabel.projectIndex
+        guard projects.indices.contains(projectIndex) else {
+            return
+        }
+        projects[projectIndex].update(layer: layer, at: layerIndex, ofShot: shotLabel)
+
         saveProject(projects[projectIndex])
     }
 }

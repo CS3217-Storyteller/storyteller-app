@@ -13,14 +13,17 @@ struct LayerComponentNode {
         case drawing(DrawingComponent)
     }
 
-    var transformInfo = TransformInfo()
+    var transformInfo: TransformInfo
     var type: NodeType
 
     init(transformInfo: TransformInfo, type: NodeType) {
         self.transformInfo = transformInfo
         self.type = type
     }
-    init(layerWithDrawing: PKDrawing, canvasSize: CGSize) {
+    init(layerWithDrawing: PKDrawing, canvasSize: CGSize,
+         transformInfo: TransformInfo = TransformInfo()) {
+        self.transformInfo = transformInfo
+
         let drawingComponent = DrawingComponent(drawing: layerWithDrawing,
                                                 canvasSize: canvasSize)
         self.type = NodeType.drawing(drawingComponent)
@@ -77,6 +80,10 @@ extension LayerComponentNode: LayerComponent {
         }
     }
 
+    func updateTransformInfo(info: TransformInfo) -> LayerComponentNode {
+        LayerComponentNode(transformInfo: info, type: type)
+    }
+
     func setDrawing(to drawing: PKDrawing) -> LayerComponentNode {
         var newNode = self
         switch type {
@@ -100,5 +107,6 @@ extension LayerComponentNode: LayerComponent {
             return drawingComponent.addToMerger(merger)
         }
     }
-
+    func reduce<Result>(_ initialResult: Result, _ nextPartialResult: (Result, LayerComponent) throws -> Result) rethrows -> Result {
+    }
 }
