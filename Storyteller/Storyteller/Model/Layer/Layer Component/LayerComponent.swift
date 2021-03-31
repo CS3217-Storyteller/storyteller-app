@@ -7,7 +7,7 @@
 
 import PencilKit
 
-protocol LayerComponent: Codable {
+protocol LayerComponent {
     var canvasSize: CGSize { get }
     var frame: CGRect { get }
     var anchorPoint: CGPoint { get }
@@ -19,8 +19,13 @@ protocol LayerComponent: Codable {
 }
 
 extension LayerComponent {
+    // TODO: the anchor point for Image Layer should be just the center point
     var anchorPoint: CGPoint {
-        CGPoint(x: frame.midX / frame.size.width, y: frame.midY / frame.size.height)
+        guard !(frame.isEmpty || frame.isInfinite) else {
+            return CGPoint(x: 0.5, y: 0.5)
+        }
+        return CGPoint(x: frame.midX / canvasSize.width,
+                       y: frame.midY / canvasSize.height)
     }
     mutating func setDrawing(to drawing: PKDrawing) {}
 }

@@ -46,6 +46,7 @@
 		B35115C0261341980056886C /* UIView+setAnchorPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35115BF261341980056886C /* UIView+setAnchorPoint.swift */; };
 		B35115D22613790F0056886C /* EditingMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35115D12613790F0056886C /* EditingMode.swift */; };
 		B35115D626137BE20056886C /* LayerTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35115D526137BE20056886C /* LayerTableController.swift */; };
+		B36F0C23261425D400BB697F /* StorageComponentNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36F0C22261425D400BB697F /* StorageComponentNode.swift */; };
 		B3755AA22605F21400EC0F56 /* LayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AA12605F21400EC0F56 /* LayerView.swift */; };
 		B3755AAB26062B9700EC0F56 /* ShotDesignerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AAA26062B9700EC0F56 /* ShotDesignerViewController.swift */; };
 		B3755AB3260643C000EC0F56 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AB2260643C000EC0F56 /* Constants.swift */; };
@@ -108,6 +109,7 @@
 		B35115BF261341980056886C /* UIView+setAnchorPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+setAnchorPoint.swift"; sourceTree = "<group>"; };
 		B35115D12613790F0056886C /* EditingMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditingMode.swift; sourceTree = "<group>"; };
 		B35115D526137BE20056886C /* LayerTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerTableController.swift; sourceTree = "<group>"; };
+		B36F0C22261425D400BB697F /* StorageComponentNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageComponentNode.swift; sourceTree = "<group>"; };
 		B3755AA12605F21400EC0F56 /* LayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerView.swift; sourceTree = "<group>"; };
 		B3755AAA26062B9700EC0F56 /* ShotDesignerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotDesignerViewController.swift; sourceTree = "<group>"; };
 		B3755AB2260643C000EC0F56 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 				B30AA85C2610C3D7008B6714 /* StorageScene.swift */,
 				B30AA8602610C3F7008B6714 /* StorageShot.swift */,
 				B30AA8652610C419008B6714 /* StorageLayer.swift */,
+				B36F0C22261425D400BB697F /* StorageComponentNode.swift */,
 			);
 			path = StorageModel;
 			sourceTree = "<group>";
@@ -454,6 +457,7 @@
 				B3755AAB26062B9700EC0F56 /* ShotDesignerViewController.swift in Sources */,
 				A29A19582607242800710943 /* Shot.swift in Sources */,
 				A29A19302607239E00710943 /* StorageManager.swift in Sources */,
+				B36F0C23261425D400BB697F /* StorageComponentNode.swift in Sources */,
 				A29A195E2607243500710943 /* LayerType.swift in Sources */,
 				B35115C0261341980056886C /* UIView+setAnchorPoint.swift in Sources */,
 				B35115D22613790F0056886C /* EditingMode.swift in Sources */,

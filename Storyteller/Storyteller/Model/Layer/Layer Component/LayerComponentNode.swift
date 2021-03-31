@@ -7,16 +7,19 @@
 
 import PencilKit
 
-struct LayerComponentNode: Codable {
+struct LayerComponentNode {
     enum NodeType {
         case composite([LayerComponentNode])
         case drawing(DrawingComponent)
     }
 
     var transformInfo = TransformInfo()
-
     var type: NodeType
 
+    init(transformInfo: TransformInfo, type: NodeType) {
+        self.transformInfo = transformInfo
+        self.type = type
+    }
     init(layerWithDrawing: PKDrawing, canvasSize: CGSize) {
         let drawingComponent = DrawingComponent(drawing: layerWithDrawing,
                                                 canvasSize: canvasSize)
@@ -42,50 +45,6 @@ struct LayerComponentNode: Codable {
             newNode.type = NodeType.composite([self, node])
         }
         return newNode
-    }
-
-    // MARK: - Codable
-    enum CodingKeys: String, CodingKey {
-        case children
-        case drawing
-
-        case transformInfo
-    }
-
-    enum CodableError: Error {
-        case decoding(String)
-        case encoding(String)
-    }
-
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-
-        try container.encode(transformInfo, forKey: .transformInfo)
-
-        switch type {
-        case .composite(let children):
-            var childrenContainer = container.nestedUnkeyedContainer(forKey: .children)
-            try childrenContainer.encode(contentsOf: children)
-        case .drawing(let drawingComponent):
-            try container.encode(drawingComponent, forKey: .drawing)
-        }
-    }
-
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        transformInfo = try container.decode(TransformInfo.self, forKey: .transformInfo)
-
-        if let children = try? container.decode([LayerComponentNode].self, forKey: .children) {
-            self.type = .composite(children)
-            return
-        }
-
-        if let drawingComponent = try? container.decode(DrawingComponent.self, forKey: .drawing) {
-            self.type = .drawing(drawingComponent)
-            return
-        }
-
-        throw CodableError.decoding("Error while decoding LayerComponentNode")
     }
 }
 

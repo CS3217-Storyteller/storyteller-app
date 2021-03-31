@@ -13,7 +13,7 @@ struct DrawingComponent: LayerComponent {
     private(set) var drawing: PKDrawing
     let canvasSize: CGSize
     var frame: CGRect {
-        drawing.bounds
+        drawing.bounds.intersection(CGRect(origin: .zero, size: canvasSize))
     }
 
     init(drawing: PKDrawing, canvasSize: CGSize) {
