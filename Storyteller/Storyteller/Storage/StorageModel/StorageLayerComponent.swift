@@ -15,7 +15,7 @@ struct StorageLayerComponent: Codable {
     var type: StorageNodeType
 
     init(_ node: LayerComponent) {
-        self = StorageLayerComponent.generateLayerComponent(node)
+        self = StorageLayerComponent.generateStorageComponent(node)
     }
 
     init(transformInfo: TransformInfo, type: StorageNodeType) {
@@ -23,14 +23,14 @@ struct StorageLayerComponent: Codable {
         self.type = type
     }
 
-    static func generateLayerComponent(_ node: LayerComponent) -> StorageLayerComponent {
-        if let drawingComponent = node as? DrawingComponent {
-            return StorageLayerComponent(transformInfo: node.transformInfo,
+    static func generateStorageComponent(_ layerComponent: LayerComponent) -> StorageLayerComponent {
+        if let drawingComponent = layerComponent as? DrawingComponent {
+            return StorageLayerComponent(transformInfo: layerComponent.transformInfo,
                                          type: .drawing(drawingComponent))
         }
-        if let composite = node as? CompositeComponent {
-            let storageChildren = composite.children.map({ generateLayerComponent($0) })
-            return StorageLayerComponent(transformInfo: node.transformInfo,
+        if let composite = layerComponent as? CompositeComponent {
+            let storageChildren = composite.children.map({ generateStorageComponent($0) })
+            return StorageLayerComponent(transformInfo: layerComponent.transformInfo,
                                          type: .composite(storageChildren))
         }
 
@@ -82,11 +82,11 @@ struct StorageLayerComponent: Codable {
 }
 
 extension StorageLayerComponent {
-    static func generateLayerComponent(_ component: StorageLayerComponent) -> LayerComponent {
-        switch component.type {
+    static func generateLayerComponent(_ storageComponent: StorageLayerComponent) -> LayerComponent {
+        switch storageComponent.type {
         case .composite(let storageChildren):
             let children = storageChildren.map({ generateLayerComponent($0) })
-            return CompositeComponent(transformInfo: component.transformInfo,
+            return CompositeComponent(transformInfo: storageComponent.transformInfo,
                                       children: children)
         case .drawing(let drawingComponent):
             return drawingComponent
