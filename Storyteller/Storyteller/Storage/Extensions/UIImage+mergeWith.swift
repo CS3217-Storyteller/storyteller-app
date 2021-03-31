@@ -9,7 +9,7 @@ import UIKit
 /// Adapted from:
 /// https://stackoverflow.com/questions/32006128/how-to-merge-two-uiimages
 extension UIImage {
-  func mergeWith(topImage: UIImage) -> UIImage {
+  func mergeWith(_ topImage: UIImage) -> UIImage {
     let bottomImage = self
 
     UIGraphicsBeginImageContext(size)

@@ -9,8 +9,11 @@ import PencilKit
 
 protocol LayerComponent {
     var canvasSize: CGSize { get }
+
     var frame: CGRect { get }
     var anchorPoint: CGPoint { get }
+
+    var image: UIImage { get }
 
     var transformInfo: TransformInfo { get set }
 

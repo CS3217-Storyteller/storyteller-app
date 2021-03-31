@@ -10,6 +10,10 @@ struct Layer {
     var canvasSize: CGSize
     var node: LayerComponentNode
 
+    var image: UIImage {
+        node.image
+    }
+
     init(node: LayerComponentNode, canvasSize: CGSize) {
         self.node = node
         self.canvasSize = canvasSize

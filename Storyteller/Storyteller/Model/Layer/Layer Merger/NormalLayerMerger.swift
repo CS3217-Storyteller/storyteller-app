@@ -24,9 +24,6 @@ class NormalLayerMerger: LayerMerger {
         let canvasView = PKCanvasView(frame: frame)
         canvasView.drawing = component.drawing
 
-        print("frame: \(component.frame)")
-        print("canvasSize: \(component.canvasSize)")
-        print(component.anchorPoint)
         canvasView.setAnchorPoint(component.anchorPoint)
         mergedLayer.addSubview(canvasView)
     }

@@ -6,7 +6,6 @@
 //
 import PencilKit
 
-// TODO
 class ModelManager {
     var projects: [Project]
     private let storageManager = StorageManager()

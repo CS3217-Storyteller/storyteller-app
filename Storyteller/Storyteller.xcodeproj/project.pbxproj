@@ -46,6 +46,7 @@
 		B35115C0261341980056886C /* UIView+setAnchorPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35115BF261341980056886C /* UIView+setAnchorPoint.swift */; };
 		B35115D22613790F0056886C /* EditingMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35115D12613790F0056886C /* EditingMode.swift */; };
 		B35115D626137BE20056886C /* LayerTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35115D526137BE20056886C /* LayerTableController.swift */; };
+		B35FA28826143B7900D656E3 /* UIImage+clearImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35FA28726143B7900D656E3 /* UIImage+clearImage.swift */; };
 		B36F0C23261425D400BB697F /* StorageComponentNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36F0C22261425D400BB697F /* StorageComponentNode.swift */; };
 		B3755AA22605F21400EC0F56 /* LayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AA12605F21400EC0F56 /* LayerView.swift */; };
 		B3755AAB26062B9700EC0F56 /* ShotDesignerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AAA26062B9700EC0F56 /* ShotDesignerViewController.swift */; };
@@ -109,6 +110,7 @@
 		B35115BF261341980056886C /* UIView+setAnchorPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+setAnchorPoint.swift"; sourceTree = "<group>"; };
 		B35115D12613790F0056886C /* EditingMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditingMode.swift; sourceTree = "<group>"; };
 		B35115D526137BE20056886C /* LayerTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerTableController.swift; sourceTree = "<group>"; };
+		B35FA28726143B7900D656E3 /* UIImage+clearImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+clearImage.swift"; sourceTree = "<group>"; };
 		B36F0C22261425D400BB697F /* StorageComponentNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageComponentNode.swift; sourceTree = "<group>"; };
 		B3755AA12605F21400EC0F56 /* LayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerView.swift; sourceTree = "<group>"; };
 		B3755AAA26062B9700EC0F56 /* ShotDesignerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotDesignerViewController.swift; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 		A29A192B2607239E00710943 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				B36F0C27261435C200BB697F /* Extensions */,
 				B33549552610B0B400B881ED /* StorageModel */,
 				A29A192C2607239E00710943 /* StorageManager.swift */,
 				A29A192E2607239E00710943 /* StorageUtility.swift */,
@@ -277,12 +280,22 @@
 			path = StorageModel;
 			sourceTree = "<group>";
 		};
+		B36F0C27261435C200BB697F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B30AA88F2610D384008B6714 /* UIImage+mergeWith.swift */,
+				B35FA28726143B7900D656E3 /* UIImage+clearImage.swift */,
+				B35115BF261341980056886C /* UIView+setAnchorPoint.swift */,
+				B35115B926123B510056886C /* UIView+newPointInView.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		B3755AA02605F1E100EC0F56 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				B3755AA12605F21400EC0F56 /* LayerView.swift */,
 				B3755AB82606454900EC0F56 /* ShotView.swift */,
-				B35115B926123B510056886C /* UIView+newPointInView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -293,7 +306,6 @@
 				B3755AA926062B7C00EC0F56 /* ViewController */,
 				B3755AA02605F1E100EC0F56 /* View */,
 				B3755AD526065C0700EC0F56 /* DrawingUtility.swift */,
-				B30AA88F2610D384008B6714 /* UIImage+mergeWith.swift */,
 			);
 			path = Drawing;
 			sourceTree = "<group>";
@@ -324,7 +336,6 @@
 			children = (
 				B3320D1D260F6AB20063558A /* LayerMerger.swift */,
 				B3320D21260F6BA10063558A /* NormalLayerMerger.swift */,
-				B35115BF261341980056886C /* UIView+setAnchorPoint.swift */,
 			);
 			path = "Layer Merger";
 			sourceTree = "<group>";
@@ -467,6 +478,7 @@
 				B3E8C29D2613899700713B69 /* TransformInfo.swift in Sources */,
 				A29A19522607242000710943 /* ModelManager.swift in Sources */,
 				B35115D626137BE20056886C /* LayerTableController.swift in Sources */,
+				B35FA28826143B7900D656E3 /* UIImage+clearImage.swift in Sources */,
 				B3755AB92606454900EC0F56 /* ShotView.swift in Sources */,
 				A2091590260705EB001A242E /* ProjectViewCell.swift in Sources */,
 				A29A195B2607243300710943 /* Scene.swift in Sources */,

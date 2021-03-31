@@ -96,9 +96,7 @@ extension SceneViewController: UICollectionViewDelegate {
                 return UICollectionViewCell()
             }
             if !shot.layers.isEmpty {
-                // TODO: implement generating thumbnail
-                let thumbnail = UIImage()
-                sceneCell.setImage(image: thumbnail)
+                sceneCell.setImage(image: shot.thumbnail)
             }
             return sceneCell
         } else {

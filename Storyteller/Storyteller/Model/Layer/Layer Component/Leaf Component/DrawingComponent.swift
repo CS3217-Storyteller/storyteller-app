@@ -16,6 +16,13 @@ struct DrawingComponent: LayerComponent {
         drawing.bounds.intersection(CGRect(origin: .zero, size: canvasSize))
     }
 
+    var image: UIImage {
+        guard !(frame.isEmpty || frame.isInfinite) else {
+            return UIImage.clearImage(ofSize: canvasSize)
+        }
+        return drawing.image(from: CGRect(origin: .zero, size: canvasSize), scale: 1)
+    }
+
     init(drawing: PKDrawing, canvasSize: CGSize) {
         self.drawing = drawing
         self.canvasSize = canvasSize

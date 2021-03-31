@@ -68,6 +68,15 @@ extension LayerComponentNode: LayerComponent {
         }
     }
 
+    var image: UIImage {
+        switch type {
+        case .composite(let children):
+            return children.reduce(UIImage.clearImage(ofSize: canvasSize), { $0.mergeWith($1.image) })
+        case .drawing(let drawingComponent):
+            return drawingComponent.image
+        }
+    }
+
     func setDrawing(to drawing: PKDrawing) -> LayerComponentNode {
         var newNode = self
         switch type {

@@ -49,17 +49,4 @@ class ShotView: UIView {
     func setUpBackgroundColor(color: UIColor) {
         self.backgroundColor = color
     }
-
-    func updateZoomScale(scale: CGFloat) {
-        layerViews.forEach { layerView in
-            // TODO: Enable the following two lines after
-            // implementing canvas rotation and zooming
-//            layerView.minimumZoomScale = scale * Constants.minLayerZoomScale
-//            layerView.maximumZoomScale = scale * Constants.maxLayerZoomScale
-            layerView.canvasView?.minimumZoomScale = scale
-            layerView.canvasView?.maximumZoomScale = scale
-            layerView.canvasView?.zoomScale = scale
-        }
-
-    }
 }
