@@ -291,7 +291,6 @@
 				B3755AA02605F1E100EC0F56 /* View */,
 				B3755AD526065C0700EC0F56 /* DrawingUtility.swift */,
 				B30AA88F2610D384008B6714 /* UIImage+mergeWith.swift */,
-				B35115BF261341980056886C /* UIView+setAnchorPoint.swift */,
 			);
 			path = Drawing;
 			sourceTree = "<group>";
@@ -322,6 +321,7 @@
 			children = (
 				B3320D1D260F6AB20063558A /* LayerMerger.swift */,
 				B3320D21260F6BA10063558A /* NormalLayerMerger.swift */,
+				B35115BF261341980056886C /* UIView+setAnchorPoint.swift */,
 			);
 			path = "Layer Merger";
 			sourceTree = "<group>";

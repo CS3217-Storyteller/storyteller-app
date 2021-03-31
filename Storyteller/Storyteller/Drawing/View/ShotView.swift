@@ -26,13 +26,12 @@ class ShotView: UIView {
     }
     func setUpLayerViews(_ layerViews: [LayerView], toolPicker: PKToolPicker,
                          PKDelegate: PKCanvasViewDelegate) {
-
+        reset()
         guard !layerViews.isEmpty else {
             return
         }
 
         layerViews.forEach({ add(layerView: $0, toolPicker: toolPicker) })
-
         layerViews.compactMap({ $0.canvasView }).forEach({ $0.delegate = PKDelegate })
     }
 

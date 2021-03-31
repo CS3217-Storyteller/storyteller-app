@@ -10,6 +10,7 @@ import PencilKit
 protocol LayerComponent: Codable {
     var canvasSize: CGSize { get }
     var frame: CGRect { get }
+    var anchorPoint: CGPoint { get }
 
     var transformInfo: TransformInfo { get set }
 
@@ -18,6 +19,9 @@ protocol LayerComponent: Codable {
 }
 
 extension LayerComponent {
+    var anchorPoint: CGPoint {
+        CGPoint(x: frame.midX / frame.size.width, y: frame.midY / frame.size.height)
+    }
     mutating func setDrawing(to drawing: PKDrawing) {}
 }
 

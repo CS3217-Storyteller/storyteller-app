@@ -42,9 +42,10 @@ class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
     }
 
     // MARK: - View Life Cycle
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidLoad() {
+        super.viewDidLoad()
         toolPicker.addObserver(self)
+        modelManager.observers.append(self)
 
         shotView.frame.size = canvasSize
         shotView.bounds.size = canvasSize
@@ -61,8 +62,6 @@ class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
     }
 
     private func updateShot() {
-        updateShotTransform()
-
         shotView.backgroundColor = shot?.backgroundColor.uiColor
 
         guard let layers = modelManager.getLayers(of: shotLabel),
@@ -72,8 +71,9 @@ class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
 
         let layerViews = layers.map({ DrawingUtility.generateLayerView(for: $0) })
         shotView.setUpLayerViews(layerViews, toolPicker: toolPicker, PKDelegate: self)
-
         shotView.currentCanvasView?.becomeFirstResponder()
+
+        updateShotTransform()
     }
 
     private func updateShotTransform() {
@@ -115,6 +115,7 @@ extension ShotDesignerViewController {
         sender.rotation = .zero
     }
 }
+
 // MARK: - Actions
 extension ShotDesignerViewController {
     @IBAction private func zoomToFit() {
@@ -137,6 +138,11 @@ extension ShotDesignerViewController {
     }
 }
 
+// MARK: - ModelManagerObserver
+extension ShotDesignerViewController: ModelManagerObserver {
+    func modelDidChanged() {
+    }
+}
 // MARK: - PKCanvasViewDelegate
 extension ShotDesignerViewController: PKCanvasViewDelegate {
     func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
@@ -168,7 +174,6 @@ extension ShotDesignerViewController {
     var topInset: CGFloat {
         view.safeAreaInsets.top
     }
-
     var bottomInset: CGFloat {
         max(view.safeAreaInsets.bottom, toolPicker.frameObscured(in: view).height)
     }
@@ -176,11 +181,9 @@ extension ShotDesignerViewController {
     var canvasMaxHeight: CGFloat {
         windowHeight - topInset - bottomInset - Constants.verticalCanvasMargin * 2
     }
-
     var canvasMaxWidth: CGFloat {
         windowWidth - Constants.horizontalCanvasMargin * 2
     }
-
     var canvasMaxSize: CGSize {
         CGSize(width: canvasMaxWidth, height: canvasMaxHeight)
     }
@@ -198,15 +201,17 @@ extension ShotDesignerViewController {
     var canvasCenterTranslation: (x: CGFloat, y: CGFloat) {
         (canvasCenterX - shotView.center.x, canvasCenterY - shotView.center.y)
     }
-    var zoomToFitTransform: CGAffineTransform {
-        CGAffineTransform(scaleX: canvasScale, y: canvasScale)
-    }
 
     var canvasScale: CGFloat {
         let widthScale = canvasMaxWidth / shotView.bounds.width
         let heightScale = canvasMaxHeight / shotView.bounds.height
         return min(widthScale, heightScale)
     }
+
+    var zoomToFitTransform: CGAffineTransform {
+        CGAffineTransform(scaleX: canvasScale, y: canvasScale)
+    }
+
 }
 
 // MARK: UIGestureRecognizerDelegate
