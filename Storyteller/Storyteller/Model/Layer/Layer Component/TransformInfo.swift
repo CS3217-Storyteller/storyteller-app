@@ -8,7 +8,7 @@ import CoreGraphics
 
 struct TransformInfo {
     var rotation = CGFloat.zero
-    var scale = CGFloat.zero
+    var scale = CGFloat(1)
     var xTranslation = CGFloat.zero
     var yTranslation = CGFloat.zero
 }

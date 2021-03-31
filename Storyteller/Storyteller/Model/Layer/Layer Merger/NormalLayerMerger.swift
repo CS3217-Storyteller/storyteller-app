@@ -20,22 +20,34 @@ class NormalLayerMerger: LayerMerger {
     var frame: CGRect {
         CGRect(origin: .zero, size: canvasSize)
     }
-    func getTransform(from info: TransformInfo) -> CGAffineTransform {
-        print(info)
-        return CGAffineTransform(translationX: info.xTranslation, y: info.yTranslation)
-            .rotated(by: info.rotation)
-            .scaledBy(x: info.scale, y: info.scale)
-    }
-    func mergeDrawing(component: DrawingComponent) {
+
+    func mergeDrawing(component: DrawingComponent) -> LayerView {
         let drawingLayerView = LayerView(canvasSize: canvasSize)
 
         let canvasView = PKCanvasView(frame: frame)
         canvasView.drawing = component.drawing
-
-        drawingLayerView.setAnchorPoint(component.anchorPoint)
-        drawingLayerView.transform = getTransform(from: component.transformInfo)
         drawingLayerView.addSubview(canvasView)
 
-        mergedLayer.addSubview(drawingLayerView)
+        transformLayer(layerView: drawingLayerView, component: component)
+        return drawingLayerView
+    }
+
+    func merge(results: [LayerView], composite: CompositeComponent) -> LayerView {
+        let mergedLayerView = LayerView(canvasSize: canvasSize)
+
+        results.forEach({ mergedLayerView.addSubview($0) })
+
+        transformLayer(layerView: mergedLayerView, component: composite)
+        return mergedLayerView
+    }
+
+    private func transformLayer(layerView: LayerView, component: LayerComponent) {
+        layerView.setAnchorPoint(component.anchorPoint)
+        layerView.transform = getTransform(from: component.transformInfo)
+    }
+    private func getTransform(from info: TransformInfo) -> CGAffineTransform {
+        CGAffineTransform(translationX: info.xTranslation, y: info.yTranslation)
+            .rotated(by: info.rotation)
+            .scaledBy(x: info.scale, y: info.scale)
     }
 }

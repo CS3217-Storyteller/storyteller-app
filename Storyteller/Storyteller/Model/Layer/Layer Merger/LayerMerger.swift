@@ -9,5 +9,8 @@ import UIKit
 import PencilKit
 
 protocol LayerMerger {
-    func mergeDrawing(component: DrawingComponent)
+    associatedtype T
+    func mergeDrawing(component: DrawingComponent) -> T
+
+    func merge(results: [T], composite: CompositeComponent) -> T
 }

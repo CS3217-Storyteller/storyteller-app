@@ -7,19 +7,17 @@
 
 import PencilKit
 
-protocol LayerComponent {
+protocol LayerComponent: Transformable {
     var canvasSize: CGSize { get }
-
-    var frame: CGRect { get }
-    var anchorPoint: CGPoint { get }
 
     var image: UIImage { get }
 
-    var transformInfo: TransformInfo { get set }
-
-    func updateTransformInfo(info: TransformInfo) -> Self
+    var containsDrawing: Bool { get }
     func setDrawing(to drawing: PKDrawing) -> Self
-    func addToMerger(_ merger: LayerMerger)
+
+    func reduce<Result>(_ initialResult: Result,
+                        _ nextPartialResult: (Result, LayerComponent) throws -> Result) rethrows -> Result
+    func merge<Result, Merger>(merger: Merger) -> Result where Merger.T == Result, Merger: LayerMerger
 }
 
 extension LayerComponent {
@@ -31,22 +29,8 @@ extension LayerComponent {
         return CGPoint(x: frame.midX / canvasSize.width,
                        y: frame.midY / canvasSize.height)
     }
+    var containsDrawing: Bool {
+        false
+    }
     mutating func setDrawing(to drawing: PKDrawing) {}
-}
-
-extension LayerComponent {
-    func scaled(by scale: CGFloat) -> Self {
-        let newInfo = transformInfo.scaled(by: scale)
-        return updateTransformInfo(info: newInfo)
-    }
-
-    func rotated(by angle: CGFloat) -> Self {
-        let newInfo = transformInfo.rotated(by: angle)
-        return updateTransformInfo(info: newInfo)
-    }
-
-    func translatedBy(x: CGFloat, y: CGFloat) -> Self {
-        let newInfo = transformInfo.translatedBy(x: x, y: y)
-        return updateTransformInfo(info: newInfo)
-    }
 }

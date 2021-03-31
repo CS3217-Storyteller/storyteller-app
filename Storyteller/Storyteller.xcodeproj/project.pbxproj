@@ -36,7 +36,6 @@
 		B30AA85D2610C3D7008B6714 /* StorageScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30AA85C2610C3D7008B6714 /* StorageScene.swift */; };
 		B30AA8612610C3F7008B6714 /* StorageShot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30AA8602610C3F7008B6714 /* StorageShot.swift */; };
 		B30AA8662610C419008B6714 /* StorageLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30AA8652610C419008B6714 /* StorageLayer.swift */; };
-		B30AA86C2610C478008B6714 /* LayerComponentNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30AA86B2610C478008B6714 /* LayerComponentNode.swift */; };
 		B30AA8812610C544008B6714 /* DrawingComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30AA8802610C544008B6714 /* DrawingComponent.swift */; };
 		B30AA8902610D384008B6714 /* UIImage+mergeWith.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30AA88F2610D384008B6714 /* UIImage+mergeWith.swift */; };
 		B3320D1E260F6AB20063558A /* LayerMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3320D1D260F6AB20063558A /* LayerMerger.swift */; };
@@ -49,7 +48,9 @@
 		B35FA28826143B7900D656E3 /* UIImage+clearImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35FA28726143B7900D656E3 /* UIImage+clearImage.swift */; };
 		B35FA29426143FA400D656E3 /* SelectableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35FA29326143FA400D656E3 /* SelectableView.swift */; };
 		B35FA2982614401C00D656E3 /* TransformLayerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35FA2972614401C00D656E3 /* TransformLayerButton.swift */; };
-		B36F0C23261425D400BB697F /* StorageComponentNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B36F0C22261425D400BB697F /* StorageComponentNode.swift */; };
+		B35FA2B82614A84900D656E3 /* CompositeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35FA2B72614A84900D656E3 /* CompositeComponent.swift */; };
+		B35FA2BC2614AB7100D656E3 /* StorageLayerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35FA2BB2614AB7100D656E3 /* StorageLayerComponent.swift */; };
+		B35FA2C42614C22A00D656E3 /* Transformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35FA2C32614C22A00D656E3 /* Transformable.swift */; };
 		B3755AA22605F21400EC0F56 /* LayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AA12605F21400EC0F56 /* LayerView.swift */; };
 		B3755AAB26062B9700EC0F56 /* ShotDesignerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AAA26062B9700EC0F56 /* ShotDesignerViewController.swift */; };
 		B3755AB3260643C000EC0F56 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AB2260643C000EC0F56 /* Constants.swift */; };
@@ -102,7 +103,6 @@
 		B30AA85C2610C3D7008B6714 /* StorageScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageScene.swift; sourceTree = "<group>"; };
 		B30AA8602610C3F7008B6714 /* StorageShot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageShot.swift; sourceTree = "<group>"; };
 		B30AA8652610C419008B6714 /* StorageLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageLayer.swift; sourceTree = "<group>"; };
-		B30AA86B2610C478008B6714 /* LayerComponentNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerComponentNode.swift; sourceTree = "<group>"; };
 		B30AA8802610C544008B6714 /* DrawingComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingComponent.swift; sourceTree = "<group>"; };
 		B30AA88F2610D384008B6714 /* UIImage+mergeWith.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+mergeWith.swift"; sourceTree = "<group>"; };
 		B3320D1D260F6AB20063558A /* LayerMerger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerMerger.swift; sourceTree = "<group>"; };
@@ -115,7 +115,9 @@
 		B35FA28726143B7900D656E3 /* UIImage+clearImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+clearImage.swift"; sourceTree = "<group>"; };
 		B35FA29326143FA400D656E3 /* SelectableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableView.swift; sourceTree = "<group>"; };
 		B35FA2972614401C00D656E3 /* TransformLayerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformLayerButton.swift; sourceTree = "<group>"; };
-		B36F0C22261425D400BB697F /* StorageComponentNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageComponentNode.swift; sourceTree = "<group>"; };
+		B35FA2B72614A84900D656E3 /* CompositeComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeComponent.swift; sourceTree = "<group>"; };
+		B35FA2BB2614AB7100D656E3 /* StorageLayerComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageLayerComponent.swift; sourceTree = "<group>"; };
+		B35FA2C32614C22A00D656E3 /* Transformable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transformable.swift; sourceTree = "<group>"; };
 		B3755AA12605F21400EC0F56 /* LayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerView.swift; sourceTree = "<group>"; };
 		B3755AAA26062B9700EC0F56 /* ShotDesignerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotDesignerViewController.swift; sourceTree = "<group>"; };
 		B3755AB2260643C000EC0F56 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -279,7 +281,7 @@
 				B30AA85C2610C3D7008B6714 /* StorageScene.swift */,
 				B30AA8602610C3F7008B6714 /* StorageShot.swift */,
 				B30AA8652610C419008B6714 /* StorageLayer.swift */,
-				B36F0C22261425D400BB697F /* StorageComponentNode.swift */,
+				B35FA2BB2614AB7100D656E3 /* StorageLayerComponent.swift */,
 			);
 			path = StorageModel;
 			sourceTree = "<group>";
@@ -330,8 +332,9 @@
 			isa = PBXGroup;
 			children = (
 				B3E8C29C2613899700713B69 /* TransformInfo.swift */,
+				B35FA2C32614C22A00D656E3 /* Transformable.swift */,
 				B3320D61260F92330063558A /* LayerComponent.swift */,
-				B30AA86B2610C478008B6714 /* LayerComponentNode.swift */,
+				B35FA2B72614A84900D656E3 /* CompositeComponent.swift */,
 				B30AA8792610C4BC008B6714 /* Leaf Component */,
 			);
 			path = "Layer Component";
@@ -475,11 +478,11 @@
 				B35FA2982614401C00D656E3 /* TransformLayerButton.swift in Sources */,
 				A29A19582607242800710943 /* Shot.swift in Sources */,
 				A29A19302607239E00710943 /* StorageManager.swift in Sources */,
-				B36F0C23261425D400BB697F /* StorageComponentNode.swift in Sources */,
 				A29A195E2607243500710943 /* LayerType.swift in Sources */,
 				B35115C0261341980056886C /* UIView+setAnchorPoint.swift in Sources */,
 				B35115D22613790F0056886C /* EditingMode.swift in Sources */,
 				B30AA8592610C3B5008B6714 /* StorageProject.swift in Sources */,
+				B35FA2B82614A84900D656E3 /* CompositeComponent.swift in Sources */,
 				A29A19552607242600710943 /* Layer.swift in Sources */,
 				A209158926070553001A242E /* SceneHeaderView.swift in Sources */,
 				B35FA29426143FA400D656E3 /* SelectableView.swift in Sources */,
@@ -489,6 +492,7 @@
 				B35FA28826143B7900D656E3 /* UIImage+clearImage.swift in Sources */,
 				B3755AB92606454900EC0F56 /* ShotView.swift in Sources */,
 				A2091590260705EB001A242E /* ProjectViewCell.swift in Sources */,
+				B35FA2C42614C22A00D656E3 /* Transformable.swift in Sources */,
 				A29A195B2607243300710943 /* Scene.swift in Sources */,
 				A29A19322607239E00710943 /* StorageUtility.swift in Sources */,
 				A2F2C8962607634800FD4FF6 /* AddShotViewCell.swift in Sources */,
@@ -502,12 +506,12 @@
 				2C36EC742607383700250ADE /* Color.swift in Sources */,
 				B3755AA22605F21400EC0F56 /* LayerView.swift in Sources */,
 				A29A196A2607244200710943 /* SceneLabel.swift in Sources */,
+				B35FA2BC2614AB7100D656E3 /* StorageLayerComponent.swift in Sources */,
 				A24F62F82600CC7300FC7CD4 /* SceneDelegate.swift in Sources */,
 				B30AA8902610D384008B6714 /* UIImage+mergeWith.swift in Sources */,
 				B30AA8612610C3F7008B6714 /* StorageShot.swift in Sources */,
 				B3320D1E260F6AB20063558A /* LayerMerger.swift in Sources */,
 				B3755AB3260643C000EC0F56 /* Constants.swift in Sources */,
-				B30AA86C2610C478008B6714 /* LayerComponentNode.swift in Sources */,
 				B3320D62260F92330063558A /* LayerComponent.swift in Sources */,
 				A209157F2606FE3F001A242E /* ProjectViewController.swift in Sources */,
 				B30AA8812610C544008B6714 /* DrawingComponent.swift in Sources */,

@@ -9,8 +9,6 @@ import Foundation
 
 class DrawingUtility {
     static func generateLayerView(for layer: Layer) -> LayerView {
-        let merger = NormalLayerMerger(canvasSize: layer.canvasSize)
-        layer.addToMerger(merger)
-        return merger.mergedLayer
+        layer.component.merge(merger: NormalLayerMerger(canvasSize: layer.canvasSize))
     }
 }

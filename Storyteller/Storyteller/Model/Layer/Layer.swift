@@ -8,43 +8,38 @@ import PencilKit
 
 struct Layer {
     var canvasSize: CGSize
-    var node: LayerComponentNode
+    var component: LayerComponent
 
     var image: UIImage {
-        node.image
+        component.image
     }
 
-    init(node: LayerComponentNode, canvasSize: CGSize) {
-        self.node = node
+    init(component: LayerComponent, canvasSize: CGSize) {
+        self.component = component
         self.canvasSize = canvasSize
     }
 
     init(layerWithDrawing: PKDrawing, canvasSize: CGSize) {
         self.canvasSize = canvasSize
-        self.node = LayerComponentNode(layerWithDrawing: layerWithDrawing,
-                                       canvasSize: canvasSize)
-    }
-
-    func addToMerger(_ merger: LayerMerger) {
-        node.addToMerger(merger)
+        self.component = DrawingComponent(drawing: layerWithDrawing, canvasSize: canvasSize)
     }
 
     func setDrawing(to drawing: PKDrawing) -> Layer {
-        Layer(node: node.setDrawing(to: drawing), canvasSize: canvasSize)
+        Layer(component: component.setDrawing(to: drawing), canvasSize: canvasSize)
     }
 
 }
 
 extension Layer {
     func scaled(by scale: CGFloat) -> Layer {
-        Layer(node: node.scaled(by: scale), canvasSize: canvasSize)
+        Layer(component: component.scaled(by: scale), canvasSize: canvasSize)
     }
 
     func rotated(by angle: CGFloat) -> Layer {
-        Layer(node: node.rotated(by: angle), canvasSize: canvasSize)
+        Layer(component: component.rotated(by: angle), canvasSize: canvasSize)
     }
 
     func translatedBy(x: CGFloat, y: CGFloat) -> Layer {
-        Layer(node: node.translatedBy(x: x, y: y), canvasSize: canvasSize)
+        Layer(component: component.translatedBy(x: x, y: y), canvasSize: canvasSize)
     }
 }

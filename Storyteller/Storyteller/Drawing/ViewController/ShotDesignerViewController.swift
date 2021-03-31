@@ -211,6 +211,7 @@ extension ShotDesignerViewController {
 // MARK: - ModelManagerObserver
 extension ShotDesignerViewController: ModelManagerObserver {
     func modelDidChanged() {
+        // TODO: disable this since PKCanvasView will get refreshed every time
         updateShot()
     }
 }

@@ -8,11 +8,11 @@
 import CoreGraphics
 
 struct StorageLayer: Codable {
-    var node: StorageComponentNode
+    var storageComponent: StorageLayerComponent
     var canvasSize: CGSize
 
     init(_ layer: Layer) {
-        self.node = StorageComponentNode(layer.node)
+        self.storageComponent = StorageLayerComponent(layer.component)
         self.canvasSize = layer.canvasSize
     }
 
@@ -20,6 +20,6 @@ struct StorageLayer: Codable {
 
 extension StorageLayer {
     var layer: Layer {
-        Layer(node: node.componentNode, canvasSize: canvasSize)
+        Layer(component: storageComponent.component, canvasSize: canvasSize)
     }
 }

@@ -1,21 +1,21 @@
 //
-//  StorageComponentNode.swift
+//  StorageCompositeComponent.swift
 //  Storyteller
 //
 //  Created by TFang on 31/3/21.
 //
 
-struct StorageComponentNode: Codable {
+struct StorageLayerComponent: Codable {
     enum StorageNodeType {
-        case composite([StorageComponentNode])
+        case composite([StorageLayerComponent])
         case drawing(DrawingComponent)
     }
 
     var transformInfo = TransformInfo()
     var type: StorageNodeType
 
-    init(_ node: LayerComponentNode) {
-        self = StorageComponentNode.generateStorageNode(node)
+    init(_ node: LayerComponent) {
+        self = StorageLayerComponent.generateLayerComponent(node)
     }
 
     init(transformInfo: TransformInfo, type: StorageNodeType) {
@@ -23,16 +23,18 @@ struct StorageComponentNode: Codable {
         self.type = type
     }
 
-    static func generateStorageNode(_ node: LayerComponentNode) -> StorageComponentNode {
-        switch node.type {
-        case .composite(let children):
-            let storageChildren = children.map({ generateStorageNode($0) })
-            return StorageComponentNode(transformInfo: node.transformInfo,
-                                        type: .composite(storageChildren))
-        case .drawing(let drawingComponent):
-            return StorageComponentNode(transformInfo: node.transformInfo,
-                                        type: .drawing(drawingComponent))
+    static func generateLayerComponent(_ node: LayerComponent) -> StorageLayerComponent {
+        if let drawingComponent = node as? DrawingComponent {
+            return StorageLayerComponent(transformInfo: node.transformInfo,
+                                         type: .drawing(drawingComponent))
         }
+        if let composite = node as? CompositeComponent {
+            let storageChildren = composite.children.map({ generateLayerComponent($0) })
+            return StorageLayerComponent(transformInfo: node.transformInfo,
+                                         type: .composite(storageChildren))
+        }
+
+        fatalError("Failed to generate storage layer component")
     }
 
     enum CodingKeys: String, CodingKey {
@@ -65,7 +67,7 @@ struct StorageComponentNode: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         transformInfo = try container.decode(TransformInfo.self, forKey: .transformInfo)
 
-        if let children = try? container.decode([StorageComponentNode].self, forKey: .children) {
+        if let children = try? container.decode([StorageLayerComponent].self, forKey: .children) {
             self.type = .composite(children)
             return
         }
@@ -75,24 +77,23 @@ struct StorageComponentNode: Codable {
             return
         }
 
-        throw CodableError.decoding("Error while decoding LayerComponentNode")
+        throw CodableError.decoding("Error while decoding StorageLayerComponent")
     }
 }
 
-extension StorageComponentNode {
-    static func generateComponentNode(_ node: StorageComponentNode) -> LayerComponentNode {
-        switch node.type {
+extension StorageLayerComponent {
+    static func generateLayerComponent(_ component: StorageLayerComponent) -> LayerComponent {
+        switch component.type {
         case .composite(let storageChildren):
-            let children = storageChildren.map({ generateComponentNode($0) })
-            return LayerComponentNode(transformInfo: node.transformInfo,
-                                      type: .composite(children))
+            let children = storageChildren.map({ generateLayerComponent($0) })
+            return CompositeComponent(transformInfo: component.transformInfo,
+                                      children: children)
         case .drawing(let drawingComponent):
-            return LayerComponentNode(transformInfo: node.transformInfo,
-                                      type: .drawing(drawingComponent))
+            return drawingComponent
         }
     }
 
-    var componentNode: LayerComponentNode {
-        StorageComponentNode.generateComponentNode(self)
+    var component: LayerComponent {
+        StorageLayerComponent.generateLayerComponent(self)
     }
 }
