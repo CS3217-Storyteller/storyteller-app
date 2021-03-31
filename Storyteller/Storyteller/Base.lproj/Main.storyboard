@@ -134,15 +134,22 @@
                                     <action selector="zoomToFit" destination="mXm-tZ-pGV" id="mg7-4K-4bs"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem enabled="NO" title="Item" id="qzp-pG-u8W">
-                                <imageReference key="image" image="cursorarrow.and.square.on.square.dashed" catalog="system" renderingMode="original"/>
+                            <barButtonItem title="Item" image="cursorarrow.and.square.on.square.dashed" catalog="system" id="qzp-pG-u8W" userLabel="Toggle Transform Layer" customClass="TransformLayerButton" customModule="Storyteller" customModuleProvider="target">
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="toggleTransformLayer:" destination="mXm-tZ-pGV" id="8GH-TY-tMu"/>
+                                </connections>
                             </barButtonItem>
                             <barButtonItem style="plain" id="nJl-hs-fSb">
                                 <switch key="customView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="U5L-Y5-Pcv">
                                     <rect key="frame" x="125" y="9.5" width="51" height="31"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <connections>
-                                        <action selector="toggleTransformLayer:" destination="mXm-tZ-pGV" eventType="valueChanged" id="R40-5Z-oIg"/>
+                                        <action selector="toggleTransformLayer2:" destination="mXm-tZ-pGV" eventType="valueChanged" id="R40-5Z-oIg"/>
                                     </connections>
                                 </switch>
                             </barButtonItem>
@@ -153,7 +160,7 @@
                                     <action selector="duplicateShot:" destination="mXm-tZ-pGV" id="x4v-hJ-ZUv"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="Item" image="square.3.stack.3d.top.fill" catalog="system" id="udt-Zi-k10">
+                            <barButtonItem title="Item" image="square.3.stack.3d.top.fill" catalog="system" id="udt-Zi-k10" customClass="LayerTableButton" customModule="Storyteller" customModuleProvider="target">
                                 <connections>
                                     <segue destination="Q19-Vs-gRv" kind="popoverPresentation" popoverAnchorBarButtonItem="udt-Zi-k10" id="4lf-1c-ht5">
                                         <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
@@ -164,7 +171,9 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="layerTableButton" destination="udt-Zi-k10" id="OAe-tB-B2a"/>
                         <outlet property="shotView" destination="h3l-Ka-Bz4" id="Miq-Xl-utc"/>
+                        <outlet property="transformLayerButton" destination="qzp-pG-u8W" id="PWc-th-jEu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JMV-yF-8bm" sceneMemberID="firstResponder"/>

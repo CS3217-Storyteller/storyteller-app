@@ -10,7 +10,21 @@ import PencilKit
 class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
     @IBOutlet private var shotView: ShotView!
 
-    var editingMode = EditingMode.free
+    @IBOutlet private var transformLayerButton: TransformLayerButton!
+    @IBOutlet private var layerTableButton: LayerTableButton!
+
+    var editingMode = EditingMode.free {
+        didSet {
+            switch editingMode {
+            case .free:
+                transformLayerButton.unselect()
+                layerTableButton.unselect()
+            case .transformLayer:
+                transformLayerButton.select()
+                layerTableButton.unselect()
+            }
+        }
+    }
 
     var toolPicker = PKToolPicker()
     // should be intialized via segue
@@ -133,9 +147,17 @@ extension ShotDesignerViewController {
                              backgroundColor: shot.backgroundColor.uiColor)
     }
 
-    @IBAction private func toggleTransformLayer(_ sender: UISwitch) {
-        editingMode = sender.isOn ? .transformLayer : .free
+    @IBAction private func toggleTransformLayer(_ sender: TransformLayerButton) {
+        if editingMode == .transformLayer {
+            editingMode = .free
+        } else {
+            editingMode = .transformLayer
+        }
     }
+
+//    @IBAction private func toggleTransformLayer2(_ sender: UISwitch) {
+//        editingMode = sender.isOn ? .transformLayer : .free
+//    }
 }
 
 // MARK: - ModelManagerObserver
