@@ -12,10 +12,7 @@ class CompositeLayerView: UIView {
 
     var isLocked: Bool {
         didSet {
-            guard let canvasView = topCanvasView else {
-                return
-            }
-            toolPicker?.setVisible(!isLocked, forFirstResponder: canvasView)
+            showLockEffect()
         }
     }
 

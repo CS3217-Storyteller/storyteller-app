@@ -11,6 +11,22 @@ class ShotView: UIView {
     var layerViews = [LayerView]()
     var toolPicker: PKToolPicker?
 
+    var isInDrawingMode: Bool = false {
+        didSet {
+            updateEffectForSelectedLayer()
+        }
+    }
+
+    private func updateEffectForSelectedLayer() {
+        guard let canvasView = selectedLayerView.topCanvasView,
+              !selectedLayerView.isLocked, selectedLayerView.isVisible else {
+            return
+        }
+        isInDrawingMode ? selectedLayerView.castShadow()
+            : selectedLayerView.disableShadow()
+        toolPicker?.setVisible(isInDrawingMode, forFirstResponder: canvasView)
+    }
+
     var selectedLayerIndex = 0 {
         didSet {
             unselectLayer(at: oldValue)
@@ -29,11 +45,13 @@ class ShotView: UIView {
             return
         }
         layerViews[index].topCanvasView?.becomeFirstResponder()
+        updateEffectForSelectedLayer()
     }
     func unselectLayer(at index: Int) {
         guard layerViews.indices.contains(index) else {
             return
         }
+        layerViews[index].disableShadow()
     }
 
     func setUpLayerViews(_ layerViews: [LayerView], toolPicker: PKToolPicker,
@@ -77,8 +95,10 @@ extension ShotView {
 
     func toggleLayerLock() {
         selectedLayerView.isLocked.toggle()
+        updateEffectForSelectedLayer()
     }
     func toggleLayerVisibility() {
         selectedLayerView.isVisible.toggle()
+        updateEffectForSelectedLayer()
     }
 }

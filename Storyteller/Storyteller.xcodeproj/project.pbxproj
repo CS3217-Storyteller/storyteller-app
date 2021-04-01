@@ -63,6 +63,8 @@
 		B3D7AD612615A54C0082D591 /* CompositeLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D7AD602615A54C0082D591 /* CompositeLayerView.swift */; };
 		B3D7AD652615A8910082D591 /* TransformInfo+transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D7AD642615A8910082D591 /* TransformInfo+transform.swift */; };
 		B3D7AD6B2615B4C30082D591 /* UIView+castShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D7AD6A2615B4C30082D591 /* UIView+castShadow.swift */; };
+		B3E19000261620F0003C7AEF /* DrawingModeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E18FFF261620F0003C7AEF /* DrawingModeButton.swift */; };
+		B3E190042616219C003C7AEF /* ShotDesignerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E190032616219C003C7AEF /* ShotDesignerButton.swift */; };
 		B3E8C29D2613899700713B69 /* TransformInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E8C29C2613899700713B69 /* TransformInfo.swift */; };
 /* End PBXBuildFile section */
 
@@ -137,6 +139,8 @@
 		B3D7AD602615A54C0082D591 /* CompositeLayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeLayerView.swift; sourceTree = "<group>"; };
 		B3D7AD642615A8910082D591 /* TransformInfo+transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TransformInfo+transform.swift"; sourceTree = "<group>"; };
 		B3D7AD6A2615B4C30082D591 /* UIView+castShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+castShadow.swift"; sourceTree = "<group>"; };
+		B3E18FFF261620F0003C7AEF /* DrawingModeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingModeButton.swift; sourceTree = "<group>"; };
+		B3E190032616219C003C7AEF /* ShotDesignerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotDesignerButton.swift; sourceTree = "<group>"; };
 		B3E8C29C2613899700713B69 /* TransformInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -397,7 +401,9 @@
 		B3E18FFC26162034003C7AEF /* Button */ = {
 			isa = PBXGroup;
 			children = (
+				B3E190032616219C003C7AEF /* ShotDesignerButton.swift */,
 				B35FA2972614401C00D656E3 /* TransformLayerButton.swift */,
+				B3E18FFF261620F0003C7AEF /* DrawingModeButton.swift */,
 			);
 			path = Button;
 			sourceTree = "<group>";
@@ -540,6 +546,7 @@
 				B30AA8592610C3B5008B6714 /* StorageProject.swift in Sources */,
 				B35FA2B82614A84900D656E3 /* CompositeComponent.swift in Sources */,
 				A29A19552607242600710943 /* Layer.swift in Sources */,
+				B3E190042616219C003C7AEF /* ShotDesignerButton.swift in Sources */,
 				A209158926070553001A242E /* SceneHeaderView.swift in Sources */,
 				B35FA29426143FA400D656E3 /* SelectableView.swift in Sources */,
 				B3E8C29D2613899700713B69 /* TransformInfo.swift in Sources */,
@@ -574,6 +581,7 @@
 				A209157F2606FE3F001A242E /* ProjectViewController.swift in Sources */,
 				B3D7AD6B2615B4C30082D591 /* UIView+castShadow.swift in Sources */,
 				B30AA8812610C544008B6714 /* DrawingComponent.swift in Sources */,
+				B3E19000261620F0003C7AEF /* DrawingModeButton.swift in Sources */,
 				B3755AD626065C0700EC0F56 /* DrawingUtility.swift in Sources */,
 				B35830602615F5E200824C55 /* LayerVisibilityButton.swift in Sources */,
 			);

@@ -15,6 +15,6 @@ extension UIView {
         layer.shadowRadius = 10
     }
     func disableShadow() {
-        layer.shadowColor = .none
+        layer.shadowOpacity = 0
     }
 }

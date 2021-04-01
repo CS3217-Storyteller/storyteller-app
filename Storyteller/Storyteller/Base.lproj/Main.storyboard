@@ -127,26 +127,14 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="Q8o-sb-o8D">
-                        <leftBarButtonItems>
-                            <barButtonItem title="Zoom To Fit" id="nii-Lx-BvZ">
-                                <imageReference key="image" image="rectangle.center.inset.fill" catalog="system" symbolScale="large"/>
-                                <connections>
-                                    <action selector="zoomToFit" destination="mXm-tZ-pGV" id="mg7-4K-4bs"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem title="Item" image="cursorarrow.and.square.on.square.dashed" catalog="system" id="qzp-pG-u8W" userLabel="Toggle Transform Layer" customClass="TransformLayerButton" customModule="Storyteller" customModuleProvider="target">
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="5"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="toggleTransformLayer:" destination="mXm-tZ-pGV" id="8GH-TY-tMu"/>
-                                </connections>
-                            </barButtonItem>
-                        </leftBarButtonItems>
+                        <barButtonItem key="leftBarButtonItem" title="Zoom To Fit" id="nii-Lx-BvZ">
+                            <imageReference key="image" image="rectangle.center.inset.fill" catalog="system" symbolScale="large"/>
+                            <connections>
+                                <action selector="zoomToFit" destination="mXm-tZ-pGV" id="mg7-4K-4bs"/>
+                            </connections>
+                        </barButtonItem>
                         <rightBarButtonItems>
-                            <barButtonItem image="plus.rectangle.on.rectangle" catalog="system" id="KzC-k5-zaS">
+                            <barButtonItem image="plus.rectangle.on.rectangle" catalog="system" id="KzC-k5-zaS" userLabel="Duplicate Button">
                                 <connections>
                                     <action selector="duplicateShot:" destination="mXm-tZ-pGV" id="x4v-hJ-ZUv"/>
                                 </connections>
@@ -158,11 +146,21 @@
                                     </segue>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="Item" image="pencil.circle" catalog="system" id="ezw-DD-Ld7"/>
+                            <barButtonItem title="Item" image="pencil.tip.crop.circle" catalog="system" id="ezw-DD-Ld7" customClass="DrawingModeButton" customModule="Storyteller" customModuleProvider="target">
+                                <connections>
+                                    <action selector="toggleDrawingMode:" destination="mXm-tZ-pGV" id="gMi-BJ-JYR"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Item" image="cursorarrow.and.square.on.square.dashed" catalog="system" id="qzp-pG-u8W" userLabel="Toggle Transform Layer" customClass="TransformLayerButton" customModule="Storyteller" customModuleProvider="target">
+                                <connections>
+                                    <action selector="toggleTransformLayer:" destination="mXm-tZ-pGV" id="8GH-TY-tMu"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="drawingModeButton" destination="ezw-DD-Ld7" id="pNB-j3-FQm"/>
                         <outlet property="shotView" destination="h3l-Ka-Bz4" id="Miq-Xl-utc"/>
                         <outlet property="transformLayerButton" destination="qzp-pG-u8W" id="PWc-th-jEu"/>
                     </connections>
@@ -422,7 +420,7 @@
         <image name="checkmark.square" catalog="system" width="128" height="114"/>
         <image name="cursorarrow.and.square.on.square.dashed" catalog="system" width="128" height="119"/>
         <image name="lock.square" catalog="system" width="128" height="114"/>
-        <image name="pencil.circle" catalog="system" width="128" height="121"/>
+        <image name="pencil.tip.crop.circle" catalog="system" width="128" height="121"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="plus.rectangle.on.rectangle" catalog="system" width="128" height="96"/>
         <image name="rectangle.center.inset.fill" catalog="system" width="128" height="93"/>

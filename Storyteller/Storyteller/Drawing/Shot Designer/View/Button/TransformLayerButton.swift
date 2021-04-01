@@ -15,12 +15,5 @@ class TransformLayerButton: UIBarButtonItem {
     }
 }
 
-extension TransformLayerButton: SelectableView {
-    func refreshView() {
-        if isChosen {
-            tintColor = .orange
-        } else {
-            tintColor = .systemBlue
-        }
-    }
+extension TransformLayerButton: ShotDesignerButton {
 }

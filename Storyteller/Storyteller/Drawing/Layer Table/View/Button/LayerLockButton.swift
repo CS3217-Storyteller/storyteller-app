@@ -18,11 +18,9 @@ class LayerLockButton: UIButton {
 extension LayerLockButton: SelectableView {
     func refreshView() {
         if isChosen {
-            setImage(UIImage(systemName: "lock.square.fill"),
-                     for: .normal)
+            setImage(UIImage(systemName: "lock.square.fill"), for: .normal)
         } else {
-            setImage(UIImage(systemName: "lock.square"),
-                     for: .normal)
+            setImage(UIImage(systemName: "lock.square"), for: .normal)
         }
     }
 }

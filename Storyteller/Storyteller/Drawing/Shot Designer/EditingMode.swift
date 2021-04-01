@@ -8,4 +8,5 @@
 enum EditingMode {
     case free
     case transformLayer
+    case drawing
 }

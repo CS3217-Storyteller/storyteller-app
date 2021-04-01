@@ -11,14 +11,24 @@ class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
     @IBOutlet private var shotView: ShotView!
 
     @IBOutlet private var transformLayerButton: TransformLayerButton!
+    @IBOutlet private var drawingModeButton: DrawingModeButton!
 
     var editingMode = EditingMode.free {
         didSet {
             switch editingMode {
+            // TODO
             case .free:
                 transformLayerButton.unselect()
+                drawingModeButton.unselect()
+                shotView.isInDrawingMode = false
             case .transformLayer:
                 transformLayerButton.select()
+                drawingModeButton.unselect()
+                shotView.isInDrawingMode = false
+            case .drawing:
+                transformLayerButton.unselect()
+                drawingModeButton.select()
+                shotView.isInDrawingMode = true
             }
         }
     }
@@ -112,10 +122,10 @@ class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
 extension ShotDesignerViewController {
     @IBAction private func handlePan(_ sender: UIPanGestureRecognizer) {
         switch editingMode {
-        case .free:
-            moveCanvas(sender)
-        default:
+        case .transformLayer:
             moveLayer(sender)
+        case .free, .drawing:
+            moveCanvas(sender)
         }
     }
     private func moveCanvas(_ sender: UIPanGestureRecognizer) {
@@ -151,10 +161,10 @@ extension ShotDesignerViewController {
 
     @IBAction private func handlePinch(_ sender: UIPinchGestureRecognizer) {
         switch editingMode {
-        case .free:
-            scaleCanvas(sender)
-        default:
+        case .transformLayer:
             scaleLayer(sender)
+        case .free, .drawing:
+            scaleCanvas(sender)
         }
     }
     private func scaleCanvas(_ sender: UIPinchGestureRecognizer) {
@@ -170,10 +180,10 @@ extension ShotDesignerViewController {
 
     @IBAction private func handleRotation(_ sender: UIRotationGestureRecognizer) {
         switch editingMode {
-        case .free:
-            rotateCanvas(sender)
-        default:
+        case .transformLayer:
             rotateLayer(sender)
+        case .free, .drawing:
+            rotateCanvas(sender)
         }
     }
     private func rotateCanvas(_ sender: UIRotationGestureRecognizer) {
@@ -188,7 +198,7 @@ extension ShotDesignerViewController {
     }
 
     private func transformLayer(_ transform: (Layer) -> Layer) {
-        guard let layer = selectedLayer else {
+        guard let layer = selectedLayer, !layer.isLocked, layer.isVisible else {
             return
         }
         let newLayer = transform(layer)
@@ -201,11 +211,11 @@ extension ShotDesignerViewController {
 extension ShotDesignerViewController {
     @IBAction private func zoomToFit() {
         switch editingMode {
-        case .free:
-            canvasTransform = .identity
-            updateShotTransform()
         case .transformLayer:
             transformLayer({ $0.resetTransform() })
+        case .free, .drawing:
+            canvasTransform = .identity
+            updateShotTransform()
         }
     }
 
@@ -224,6 +234,14 @@ extension ShotDesignerViewController {
             editingMode = .free
         } else {
             editingMode = .transformLayer
+        }
+    }
+
+    @IBAction private func toggleDrawingMode(_ sender: DrawingModeButton) {
+        if editingMode == .drawing {
+            editingMode = .free
+        } else {
+            editingMode = .drawing
         }
     }
 
@@ -255,12 +273,6 @@ extension ShotDesignerViewController {
 
 // MARK: - Segues
 extension ShotDesignerViewController {
-    @IBAction private func layerTableDidDismiss(_ segue: UIStoryboardSegue) {
-        if let layerTable = segue.source as? LayerTableController {
-            selectedLayerIndex = layerTable.selectedLayerIndex
-        }
-    }
-
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let layerTable = segue.destination as? LayerTableController {
             layerTable.selectedLayerIndex = selectedLayerIndex
