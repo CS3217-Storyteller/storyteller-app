@@ -42,4 +42,8 @@ extension Layer {
     func translatedBy(x: CGFloat, y: CGFloat) -> Layer {
         Layer(component: component.translatedBy(x: x, y: y), canvasSize: canvasSize)
     }
+
+    func resetTransform() -> Layer {
+        Layer(component: component.resetTransform(), canvasSize: canvasSize)
+    }
 }

@@ -28,4 +28,8 @@ extension Transformable {
         let newInfo = transformInfo.translatedBy(x: x, y: y)
         return updateTransformInfo(info: newInfo)
     }
+
+    func resetTransform() -> Self {
+        updateTransformInfo(info: TransformInfo())
+    }
 }

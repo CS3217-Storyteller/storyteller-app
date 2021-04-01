@@ -44,8 +44,9 @@ class ProjectViewCell: UICollectionViewCell {
         self.setTitle(to: "Project \(index)")
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError()
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func layoutSubviews() {

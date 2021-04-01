@@ -24,8 +24,9 @@ class AddShotViewCell: UICollectionViewCell {
         self.contentView.addSubview(self.imageView)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError()
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func layoutSubviews() {

@@ -13,45 +13,57 @@ class ShotView: UIView {
     var selectedLayerIndex = 0 {
         didSet {
             selectLayer(at: selectedLayerIndex)
+            unselectLayer(at: oldValue)
         }
     }
 
     var currentCanvasView: PKCanvasView? {
-        layerViews[selectedLayerIndex].canvasView
+        layerViews[selectedLayerIndex].topCanvasView
     }
 
     func selectLayer(at index: Int) {
         guard layerViews.indices.contains(index) else {
             return
         }
-        layerViews[index].canvasView?.becomeFirstResponder()
+        layerViews[index].topCanvasView?.becomeFirstResponder()
+        layerViews[index].castShadow()
+    }
+    func unselectLayer(at index: Int) {
+        guard layerViews.indices.contains(index) else {
+            return
+        }
+        layerViews[index].disableShadow()
     }
 
-    // TODO: remove this
-    func indexOfLayer(containing canvasView: PKCanvasView) -> Int? {
-        layerViews.firstIndex(where: { $0.canvasView === canvasView })
-    }
     func setUpLayerViews(_ layerViews: [LayerView], toolPicker: PKToolPicker,
                          PKDelegate: PKCanvasViewDelegate) {
-        let oldViews = self.layerViews
+        reset()
         guard !layerViews.isEmpty else {
             return
         }
 
-        layerViews.forEach({ add(layerView: $0, toolPicker: toolPicker) })
-        layerViews.compactMap({ $0.canvasView }).forEach({ $0.delegate = PKDelegate })
+        layerViews.forEach({ add(layerView: $0, toolPicker: toolPicker,
+                                 PKDelegate: PKDelegate) })
+        selectedLayerIndex = layerViews.count - 1
 
-        self.layerViews.removeFirst(oldViews.count)
-        oldViews.forEach({ $0.removeFromSuperview() })
+        clipsToBounds = true
     }
 
-    func add(layerView: LayerView, toolPicker: PKToolPicker) {
+    func updateLayerTransform(_ newLayerView: LayerView) {
+        layerViews[selectedLayerIndex]
+            .updateTransform(anchorPoint: newLayerView.layer.anchorPoint,
+                             transform: newLayerView.transform)
+    }
+
+    private func add(layerView: LayerView, toolPicker: PKToolPicker,
+                     PKDelegate: PKCanvasViewDelegate) {
         layerViews.append(layerView)
         addSubview(layerView)
 
-        guard let canvasView = layerView.canvasView else {
+        guard let canvasView = layerView.topCanvasView else {
             return
         }
+        canvasView.delegate = PKDelegate
         toolPicker.setVisible(true, forFirstResponder: canvasView)
         toolPicker.addObserver(canvasView)
     }
@@ -64,4 +76,8 @@ class ShotView: UIView {
         layerViews = []
         subviews.forEach({ $0.removeFromSuperview() })
     }
+}
+
+extension ShotView {
+
 }

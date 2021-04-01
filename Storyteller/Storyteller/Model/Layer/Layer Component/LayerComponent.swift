@@ -29,8 +29,4 @@ extension LayerComponent {
         return CGPoint(x: frame.midX / canvasSize.width,
                        y: frame.midY / canvasSize.height)
     }
-    var containsDrawing: Bool {
-        false
-    }
-    mutating func setDrawing(to drawing: PKDrawing) {}
 }

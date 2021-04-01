@@ -15,7 +15,6 @@ class SceneShotViewCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.image = UIImage(named: "shot")
         return imageView
     }()
 
@@ -25,8 +24,9 @@ class SceneShotViewCell: UICollectionViewCell {
         self.contentView.addSubview(self.imageView)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError()
+        fatalError("init(coder:) has not been implemented")
     }
 
     func setImage(image: UIImage) {

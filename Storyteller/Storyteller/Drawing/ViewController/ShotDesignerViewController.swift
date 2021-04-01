@@ -74,9 +74,9 @@ class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
         shotView.frame.size = canvasSize
         shotView.bounds.size = canvasSize
 
-        updateShot()
+        setupShot()
 
-        navigationController?.setToolbarHidden(false, animated: false)
+//        navigationController?.setToolbarHidden(false, animated: false)
         navigationItem.leftItemsSupplementBackButton = true
     }
 
@@ -85,7 +85,7 @@ class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
         updateShotTransform()
     }
 
-    private func updateShot() {
+    private func setupShot() {
         shotView.backgroundColor = shot?.backgroundColor.uiColor
 
         guard let layers = modelManager.getLayers(of: shotLabel),
@@ -95,7 +95,6 @@ class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
 
         let layerViews = layers.map({ DrawingUtility.generateLayerView(for: $0) })
         shotView.setUpLayerViews(layerViews, toolPicker: toolPicker, PKDelegate: self)
-        shotView.currentCanvasView?.becomeFirstResponder()
 
         updateShotTransform()
     }
@@ -136,7 +135,19 @@ extension ShotDesignerViewController {
         }
     }
     private func moveLayer(_ sender: UIPanGestureRecognizer) {
+        switch sender.state {
+        case .began:
+            panPosition = sender.location(in: view)
+        case .changed:
+            let location = sender.location(in: view)
+            let offsetX = location.x - panPosition.x
+            let offsetY = location.y - panPosition.y
+            panPosition = location
 
+            transformLayer({ $0.translatedBy(x: offsetX, y: offsetY) })
+        default:
+            return
+        }
     }
 
     @IBAction private func handlePinch(_ sender: UIPinchGestureRecognizer) {
@@ -149,11 +160,13 @@ extension ShotDesignerViewController {
     }
     private func scaleCanvas(_ sender: UIPinchGestureRecognizer) {
         let scale = sender.scale
-        canvasTransform = canvasTransform.scaledBy(x: scale, y: scale)
         sender.scale = 1
+        canvasTransform = canvasTransform.scaledBy(x: scale, y: scale)
     }
     private func scaleLayer(_ sender: UIPinchGestureRecognizer) {
-
+        let scale = sender.scale
+        sender.scale = 1
+        transformLayer({ $0.scaled(by: scale) })
     }
 
     @IBAction private func handleRotation(_ sender: UIRotationGestureRecognizer) {
@@ -166,26 +179,35 @@ extension ShotDesignerViewController {
     }
     private func rotateCanvas(_ sender: UIRotationGestureRecognizer) {
         let rotation = sender.rotation
-        canvasTransform = canvasTransform.rotated(by: rotation)
         sender.rotation = .zero
+        canvasTransform = canvasTransform.rotated(by: rotation)
     }
     private func rotateLayer(_ sender: UIRotationGestureRecognizer) {
+        let rotation = sender.rotation
+        sender.rotation = .zero
+        transformLayer({ $0.rotated(by: rotation) })
+    }
+
+    private func transformLayer(_ transform: (Layer) -> Layer) {
         guard let layer = selectedLayer else {
             return
         }
-        let rotation = sender.rotation
-        // TODO: also change view
-        modelManager.update(layer: layer.rotated(by: rotation), at: selectedLayerIndex,
-                            ofShot: shotLabel)
+        let newLayer = transform(layer)
+        modelManager.update(layer: newLayer, at: selectedLayerIndex, ofShot: shotLabel)
+        shotView.updateLayerTransform(DrawingUtility.generateLayerView(for: newLayer))
     }
-
 }
 
 // MARK: - Actions
 extension ShotDesignerViewController {
     @IBAction private func zoomToFit() {
-        canvasTransform = .identity
-        updateShotTransform()
+        switch editingMode {
+        case .free:
+            canvasTransform = .identity
+            updateShotTransform()
+        case .transformLayer:
+            transformLayer({ $0.resetTransform() })
+        }
     }
 
     @IBAction private func duplicateShot(_ sender: UIBarButtonItem) {
@@ -212,7 +234,7 @@ extension ShotDesignerViewController {
 extension ShotDesignerViewController: ModelManagerObserver {
     func modelDidChanged() {
         // TODO: disable this since PKCanvasView will get refreshed every time
-        updateShot()
+//        updateShot()
     }
 }
 // MARK: - PKCanvasViewDelegate
