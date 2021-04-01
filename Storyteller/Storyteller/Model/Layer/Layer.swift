@@ -9,41 +9,52 @@ import PencilKit
 struct Layer {
     var canvasSize: CGSize
     var component: LayerComponent
+    var name: String
+    var isLocked = false
+    var isVisible = true
 
-    var image: UIImage {
+    var thumbnail: UIImage {
         component.image
     }
 
-    init(component: LayerComponent, canvasSize: CGSize) {
+    init(component: LayerComponent, canvasSize: CGSize, name: String, isLocked: Bool, isVisible: Bool) {
         self.component = component
         self.canvasSize = canvasSize
+        self.name = name
     }
 
-    init(layerWithDrawing: PKDrawing, canvasSize: CGSize) {
+    init(layerWithDrawing: PKDrawing, canvasSize: CGSize, name: String = "Layer") {
         self.canvasSize = canvasSize
         self.component = DrawingComponent(drawing: layerWithDrawing, canvasSize: canvasSize)
+        self.name = name
+    }
+
+    func updateComponent(_ component: LayerComponent) -> Layer {
+        var newLayer = self
+        newLayer.component = component
+        return newLayer
     }
 
     func setDrawing(to drawing: PKDrawing) -> Layer {
-        Layer(component: component.setDrawing(to: drawing), canvasSize: canvasSize)
+        updateComponent(component.setDrawing(to: drawing))
     }
 
 }
 
 extension Layer {
     func scaled(by scale: CGFloat) -> Layer {
-        Layer(component: component.scaled(by: scale), canvasSize: canvasSize)
+        updateComponent(component.scaled(by: scale))
     }
 
     func rotated(by angle: CGFloat) -> Layer {
-        Layer(component: component.rotated(by: angle), canvasSize: canvasSize)
+        updateComponent(component.rotated(by: angle))
     }
 
     func translatedBy(x: CGFloat, y: CGFloat) -> Layer {
-        Layer(component: component.translatedBy(x: x, y: y), canvasSize: canvasSize)
+        updateComponent(component.translatedBy(x: x, y: y))
     }
 
     func resetTransform() -> Layer {
-        Layer(component: component.resetTransform(), canvasSize: canvasSize)
+        updateComponent(component.resetTransform())
     }
 }

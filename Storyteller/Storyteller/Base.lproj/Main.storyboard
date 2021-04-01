@@ -151,13 +151,14 @@
                                     <action selector="duplicateShot:" destination="mXm-tZ-pGV" id="x4v-hJ-ZUv"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="Item" image="square.3.stack.3d.top.fill" catalog="system" id="udt-Zi-k10" customClass="LayerTableButton" customModule="Storyteller" customModuleProvider="target">
+                            <barButtonItem title="Layer Table Button" image="square.3.stack.3d.top.fill" catalog="system" id="udt-Zi-k10" customClass="LayerTableButton" customModule="Storyteller" customModuleProvider="target">
                                 <connections>
                                     <segue destination="Q19-Vs-gRv" kind="popoverPresentation" popoverAnchorBarButtonItem="udt-Zi-k10" id="4lf-1c-ht5">
                                         <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                                     </segue>
                                 </connections>
                             </barButtonItem>
+                            <barButtonItem title="Item" image="pencil.circle" catalog="system" id="ezw-DD-Ld7"/>
                         </rightBarButtonItems>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
@@ -197,13 +198,97 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="FRH-ws-8kQ">
-                                <rect key="frame" x="0.0" y="28" width="375" height="43.5"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LayerCell" rowHeight="103" id="FRH-ws-8kQ" customClass="LayerTableViewCell" customModule="Storyteller" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="103"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="FRH-ws-8kQ" id="Twf-UM-FCh">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="103"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YJQ-u9-aEj">
+                                            <rect key="frame" x="19" y="16" width="60" height="71"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="60" id="7Xi-nk-sG0"/>
+                                                <constraint firstAttribute="width" secondItem="YJQ-u9-aEj" secondAttribute="height" multiplier="1:1" id="i6e-cJ-4sA"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="5"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
+                                                    <real key="value" value="0.5"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOffset">
+                                                    <integer key="value" value="0"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
+                                                    <integer key="value" value="10"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Layer Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="onm-zQ-ioQ">
+                                            <rect key="frame" x="99" y="39.5" width="198" height="24"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="WYi-Di-h4R" userLabel="Layer Switches">
+                                            <rect key="frame" x="317" y="41.5" width="48" height="20"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2cG-28-I04" customClass="LayerLockButton" customModule="Storyteller" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="2cG-28-I04" secondAttribute="height" multiplier="1:1" id="wHH-Aw-DID"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <state key="normal" title="lock" image="lock.square" catalog="system"/>
+                                                    <connections>
+                                                        <action selector="toggleLayerLock" destination="FRH-ws-8kQ" eventType="touchUpInside" id="Euo-so-V0e"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LFh-1v-A8B" customClass="LayerVisibilityButton" customModule="Storyteller" customModuleProvider="target">
+                                                    <rect key="frame" x="28" y="0.0" width="20" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="LFh-1v-A8B" secondAttribute="height" multiplier="1:1" id="Ls9-oE-mDO"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                    <state key="normal" title="isShown" image="checkmark.square" catalog="system"/>
+                                                    <connections>
+                                                        <action selector="toggleLayerVisibility" destination="FRH-ws-8kQ" eventType="touchUpInside" id="cHJ-Ui-Vck"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="20" id="INW-4E-sn2"/>
+                                            </constraints>
+                                        </stackView>
+                                        <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="20" translatesAutoresizingMaskIntoConstraints="NO" id="ST5-Bc-Pyv" userLabel="Layer Name Text Field">
+                                            <rect key="frame" x="99" y="34.5" width="198" height="34"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="ST5-Bc-Pyv" firstAttribute="centerY" secondItem="onm-zQ-ioQ" secondAttribute="centerY" id="36o-CZ-PUC"/>
+                                        <constraint firstItem="YJQ-u9-aEj" firstAttribute="leading" secondItem="Twf-UM-FCh" secondAttribute="leadingMargin" constant="3" id="51a-0c-GkY"/>
+                                        <constraint firstItem="WYi-Di-h4R" firstAttribute="centerY" secondItem="Twf-UM-FCh" secondAttribute="centerY" id="EBZ-Hm-zgw"/>
+                                        <constraint firstItem="YJQ-u9-aEj" firstAttribute="centerY" secondItem="Twf-UM-FCh" secondAttribute="centerY" id="LZ6-FL-H6G"/>
+                                        <constraint firstAttribute="trailing" secondItem="WYi-Di-h4R" secondAttribute="trailing" constant="10" id="gzU-fp-CsC"/>
+                                        <constraint firstItem="WYi-Di-h4R" firstAttribute="leading" secondItem="onm-zQ-ioQ" secondAttribute="trailing" constant="20" id="iAF-k6-cdO"/>
+                                        <constraint firstItem="onm-zQ-ioQ" firstAttribute="centerY" secondItem="Twf-UM-FCh" secondAttribute="centerY" id="mLk-u4-qOm"/>
+                                        <constraint firstItem="onm-zQ-ioQ" firstAttribute="leading" secondItem="YJQ-u9-aEj" secondAttribute="trailing" constant="20" id="pWe-vo-qyb"/>
+                                        <constraint firstItem="YJQ-u9-aEj" firstAttribute="top" secondItem="Twf-UM-FCh" secondAttribute="topMargin" constant="5" id="qDV-Rr-ubx"/>
+                                        <constraint firstItem="ST5-Bc-Pyv" firstAttribute="leading" secondItem="onm-zQ-ioQ" secondAttribute="leading" id="rLd-XC-8t6"/>
+                                        <constraint firstItem="onm-zQ-ioQ" firstAttribute="trailing" secondItem="ST5-Bc-Pyv" secondAttribute="trailing" id="ydl-pi-blw"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="layerName" destination="onm-zQ-ioQ" id="Ffb-lu-qZ8"/>
+                                    <outlet property="layerNameTextField" destination="ST5-Bc-Pyv" id="lD6-Ui-fxF"/>
+                                    <outlet property="layerThumbnail" destination="YJQ-u9-aEj" id="VhV-Xy-ZLk"/>
+                                    <outlet property="lockButton" destination="2cG-28-I04" id="ytv-be-B24"/>
+                                    <outlet property="visibilityButton" destination="LFh-1v-A8B" id="2bv-yK-Epm"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -214,7 +299,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8IJ-mK-5pb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3342" y="77"/>
+            <point key="canvasLocation" x="3341.708542713568" y="76.978417266187051"/>
         </scene>
         <!--Scene View Controller-->
         <scene sceneID="c1k-Ex-fdQ">
@@ -334,7 +419,10 @@
     <resources>
         <image name="20x20px-grid" width="1920" height="1138"/>
         <image name="arrow.backward" catalog="system" width="128" height="98"/>
+        <image name="checkmark.square" catalog="system" width="128" height="114"/>
         <image name="cursorarrow.and.square.on.square.dashed" catalog="system" width="128" height="119"/>
+        <image name="lock.square" catalog="system" width="128" height="114"/>
+        <image name="pencil.circle" catalog="system" width="128" height="121"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="plus.rectangle.on.rectangle" catalog="system" width="128" height="96"/>
         <image name="rectangle.center.inset.fill" catalog="system" width="128" height="93"/>

@@ -9,6 +9,9 @@ import Foundation
 
 class DrawingUtility {
     static func generateLayerView(for layer: Layer) -> LayerView {
-        layer.component.merge(merger: NormalLayerMerger(canvasSize: layer.canvasSize))
+        let layerView = layer.component.merge(merger: NormalLayerMerger(canvasSize: layer.canvasSize))
+        layerView.isLocked = layer.isLocked
+        layerView.isVisible = layer.isVisible
+        return layerView
     }
 }

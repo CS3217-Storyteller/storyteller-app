@@ -74,9 +74,8 @@ class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
         shotView.frame.size = canvasSize
         shotView.bounds.size = canvasSize
 
-        setupShot()
+        setUpShot()
 
-//        navigationController?.setToolbarHidden(false, animated: false)
         navigationItem.leftItemsSupplementBackButton = true
     }
 
@@ -85,7 +84,7 @@ class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
         updateShotTransform()
     }
 
-    private func setupShot() {
+    private func setUpShot() {
         shotView.backgroundColor = shot?.backgroundColor.uiColor
 
         guard let layers = modelManager.getLayers(of: shotLabel),
@@ -244,7 +243,6 @@ extension ShotDesignerViewController: PKCanvasViewDelegate {
             return
         }
         modelManager.update(layer: newLayer, at: selectedLayerIndex, ofShot: shotLabel)
-//        modelManager.updateDrawing(ofShot: shotLabel, atLayer: index, withDrawing: canvasView.drawing)
     }
 }
 
@@ -266,6 +264,9 @@ extension ShotDesignerViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let layerTable = segue.destination as? LayerTableController {
             layerTable.selectedLayerIndex = selectedLayerIndex
+            layerTable.modelManager = modelManager
+            layerTable.shotLabel = shotLabel
+            layerTable.delegate = self
         }
     }
 }
@@ -331,5 +332,39 @@ extension ShotDesignerViewController: UIGestureRecognizerDelegate {
         gestureRecognizer is UIRotationGestureRecognizer
             || gestureRecognizer is UIPinchGestureRecognizer
             || gestureRecognizer is UIPanGestureRecognizer
+    }
+}
+
+extension ShotDesignerViewController: LayerTableDelegate {
+
+    func didSelectLayer(at index: Int) {
+        selectedLayerIndex = index
+    }
+
+    func didToggleLayerLock(at index: Int) {
+        toggleLayerLock()
+    }
+    func didToggleLayerVisibility(at index: Int) {
+        toggleLayerVisibility()
+    }
+    func didChangeLayerName(at index: Int, newName: String) {
+        // TODO
+    }
+
+    private func toggleLayerLock() {
+        guard var newLayer = selectedLayer else {
+            return
+        }
+        newLayer.isLocked.toggle()
+        modelManager.update(layer: newLayer, at: selectedLayerIndex, ofShot: shotLabel)
+        shotView.toggleLayerLock()
+    }
+    private func toggleLayerVisibility() {
+        guard var newLayer = selectedLayer else {
+            return
+        }
+        newLayer.isVisible.toggle()
+        modelManager.update(layer: newLayer, at: selectedLayerIndex, ofShot: shotLabel)
+        shotView.toggleLayerVisibility()
     }
 }

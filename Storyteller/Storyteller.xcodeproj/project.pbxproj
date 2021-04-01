@@ -45,6 +45,9 @@
 		B35115C0261341980056886C /* UIView+setAnchorPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35115BF261341980056886C /* UIView+setAnchorPoint.swift */; };
 		B35115D22613790F0056886C /* EditingMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35115D12613790F0056886C /* EditingMode.swift */; };
 		B35115D626137BE20056886C /* LayerTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35115D526137BE20056886C /* LayerTableController.swift */; };
+		B35830562615F0C000824C55 /* LayerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35830552615F0C000824C55 /* LayerTableViewCell.swift */; };
+		B358305C2615F57500824C55 /* LayerLockButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B358305B2615F57500824C55 /* LayerLockButton.swift */; };
+		B35830602615F5E200824C55 /* LayerVisibilityButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B358305F2615F5E200824C55 /* LayerVisibilityButton.swift */; };
 		B35FA28826143B7900D656E3 /* UIImage+clearImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35FA28726143B7900D656E3 /* UIImage+clearImage.swift */; };
 		B35FA29426143FA400D656E3 /* SelectableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35FA29326143FA400D656E3 /* SelectableView.swift */; };
 		B35FA2982614401C00D656E3 /* TransformLayerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35FA2972614401C00D656E3 /* TransformLayerButton.swift */; };
@@ -116,6 +119,9 @@
 		B35115BF261341980056886C /* UIView+setAnchorPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+setAnchorPoint.swift"; sourceTree = "<group>"; };
 		B35115D12613790F0056886C /* EditingMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditingMode.swift; sourceTree = "<group>"; };
 		B35115D526137BE20056886C /* LayerTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerTableController.swift; sourceTree = "<group>"; };
+		B35830552615F0C000824C55 /* LayerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerTableViewCell.swift; sourceTree = "<group>"; };
+		B358305B2615F57500824C55 /* LayerLockButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerLockButton.swift; sourceTree = "<group>"; };
+		B358305F2615F5E200824C55 /* LayerVisibilityButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerVisibilityButton.swift; sourceTree = "<group>"; };
 		B35FA28726143B7900D656E3 /* UIImage+clearImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+clearImage.swift"; sourceTree = "<group>"; };
 		B35FA29326143FA400D656E3 /* SelectableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableView.swift; sourceTree = "<group>"; };
 		B35FA2972614401C00D656E3 /* TransformLayerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformLayerButton.swift; sourceTree = "<group>"; };
@@ -294,6 +300,16 @@
 			path = StorageModel;
 			sourceTree = "<group>";
 		};
+		B35830542615F09400824C55 /* Layer Table */ = {
+			isa = PBXGroup;
+			children = (
+				B35830552615F0C000824C55 /* LayerTableViewCell.swift */,
+				B358305B2615F57500824C55 /* LayerLockButton.swift */,
+				B358305F2615F5E200824C55 /* LayerVisibilityButton.swift */,
+			);
+			path = "Layer Table";
+			sourceTree = "<group>";
+		};
 		B36F0C27261435C200BB697F /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -310,8 +326,9 @@
 		B3755AA02605F1E100EC0F56 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B35FA29326143FA400D656E3 /* SelectableView.swift */,
+				B35830542615F09400824C55 /* Layer Table */,
 				B3D7AD692615B3640082D591 /* Shot View */,
-				B3D7AD682615B35B0082D591 /* Button */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -357,15 +374,6 @@
 			path = "Layer Merger";
 			sourceTree = "<group>";
 		};
-		B3D7AD682615B35B0082D591 /* Button */ = {
-			isa = PBXGroup;
-			children = (
-				B35FA29326143FA400D656E3 /* SelectableView.swift */,
-				B35FA2972614401C00D656E3 /* TransformLayerButton.swift */,
-			);
-			path = Button;
-			sourceTree = "<group>";
-		};
 		B3D7AD692615B3640082D591 /* Shot View */ = {
 			isa = PBXGroup;
 			children = (
@@ -373,6 +381,7 @@
 				B3D7AD522615A1280082D591 /* DrawingLayerView.swift */,
 				B3D7AD602615A54C0082D591 /* CompositeLayerView.swift */,
 				B3755AB82606454900EC0F56 /* ShotView.swift */,
+				B35FA2972614401C00D656E3 /* TransformLayerButton.swift */,
 			);
 			path = "Shot View";
 			sourceTree = "<group>";
@@ -508,6 +517,7 @@
 				A29A19582607242800710943 /* Shot.swift in Sources */,
 				A29A19302607239E00710943 /* StorageManager.swift in Sources */,
 				A29A195E2607243500710943 /* LayerType.swift in Sources */,
+				B35830562615F0C000824C55 /* LayerTableViewCell.swift in Sources */,
 				B3D7AD532615A1280082D591 /* DrawingLayerView.swift in Sources */,
 				B35115C0261341980056886C /* UIView+setAnchorPoint.swift in Sources */,
 				B35115D22613790F0056886C /* EditingMode.swift in Sources */,
@@ -532,6 +542,7 @@
 				A2F2C89A260768E900FD4FF6 /* Color.swift in Sources */,
 				B30AA8662610C419008B6714 /* StorageLayer.swift in Sources */,
 				B35115BA26123B510056886C /* UIView+newPointInView.swift in Sources */,
+				B358305C2615F57500824C55 /* LayerLockButton.swift in Sources */,
 				A24F62F62600CC7300FC7CD4 /* AppDelegate.swift in Sources */,
 				A29A19672607244000710943 /* ProjectLabel.swift in Sources */,
 				2C36EC742607383700250ADE /* Color.swift in Sources */,
@@ -548,6 +559,7 @@
 				B3D7AD6B2615B4C30082D591 /* UIView+castShadow.swift in Sources */,
 				B30AA8812610C544008B6714 /* DrawingComponent.swift in Sources */,
 				B3755AD626065C0700EC0F56 /* DrawingUtility.swift in Sources */,
+				B35830602615F5E200824C55 /* LayerVisibilityButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

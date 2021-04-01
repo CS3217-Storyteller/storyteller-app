@@ -9,16 +9,19 @@ import PencilKit
 
 class ShotView: UIView {
     var layerViews = [LayerView]()
+    var toolPicker: PKToolPicker?
 
     var selectedLayerIndex = 0 {
         didSet {
-            selectLayer(at: selectedLayerIndex)
             unselectLayer(at: oldValue)
+            selectLayer(at: selectedLayerIndex)
         }
     }
-
+    var selectedLayerView: LayerView {
+        layerViews[selectedLayerIndex]
+    }
     var currentCanvasView: PKCanvasView? {
-        layerViews[selectedLayerIndex].topCanvasView
+        selectedLayerView.topCanvasView
     }
 
     func selectLayer(at index: Int) {
@@ -26,13 +29,11 @@ class ShotView: UIView {
             return
         }
         layerViews[index].topCanvasView?.becomeFirstResponder()
-        layerViews[index].castShadow()
     }
     func unselectLayer(at index: Int) {
         guard layerViews.indices.contains(index) else {
             return
         }
-        layerViews[index].disableShadow()
     }
 
     func setUpLayerViews(_ layerViews: [LayerView], toolPicker: PKToolPicker,
@@ -41,7 +42,7 @@ class ShotView: UIView {
         guard !layerViews.isEmpty else {
             return
         }
-
+        self.toolPicker = toolPicker
         layerViews.forEach({ add(layerView: $0, toolPicker: toolPicker,
                                  PKDelegate: PKDelegate) })
         selectedLayerIndex = layerViews.count - 1
@@ -49,23 +50,12 @@ class ShotView: UIView {
         clipsToBounds = true
     }
 
-    func updateLayerTransform(_ newLayerView: LayerView) {
-        layerViews[selectedLayerIndex]
-            .updateTransform(anchorPoint: newLayerView.layer.anchorPoint,
-                             transform: newLayerView.transform)
-    }
-
     private func add(layerView: LayerView, toolPicker: PKToolPicker,
                      PKDelegate: PKCanvasViewDelegate) {
         layerViews.append(layerView)
         addSubview(layerView)
 
-        guard let canvasView = layerView.topCanvasView else {
-            return
-        }
-        canvasView.delegate = PKDelegate
-        toolPicker.setVisible(true, forFirstResponder: canvasView)
-        toolPicker.addObserver(canvasView)
+        layerView.setUpPK(toolPicker: toolPicker, PKDelegate: PKDelegate)
     }
 
     func setUpBackgroundColor(color: UIColor) {
@@ -78,6 +68,17 @@ class ShotView: UIView {
     }
 }
 
+// MARK: - Update Layer View
 extension ShotView {
+    func updateLayerTransform(_ newLayerView: LayerView) {
+        selectedLayerView.updateTransform(anchorPoint: newLayerView.layer.anchorPoint,
+                                          transform: newLayerView.transform)
+    }
 
+    func toggleLayerLock() {
+        selectedLayerView.isLocked.toggle()
+    }
+    func toggleLayerVisibility() {
+        selectedLayerView.isVisible.toggle()
+    }
 }

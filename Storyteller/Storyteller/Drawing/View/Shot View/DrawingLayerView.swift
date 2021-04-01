@@ -9,16 +9,31 @@ import UIKit
 import PencilKit
 
 class DrawingLayerView: UIView {
+    var toolPicker: PKToolPicker?
+
+    var isLocked: Bool {
+        didSet {
+            toolPicker?.setVisible(!isLocked, forFirstResponder: canvasView)
+        }
+    }
+
+    var isVisible: Bool {
+        didSet {
+            isHidden = !isVisible
+        }
+    }
     private(set) var canvasView: PKCanvasView
-    
-    init(drawing: PKDrawing, canvasSize: CGSize) {
+
+    init(drawing: PKDrawing, canvasSize: CGSize,
+         isLocked: Bool = false, isVisible: Bool = true) {
         let frame = CGRect(origin: .zero, size: canvasSize)
         canvasView = PKCanvasView(frame: frame)
         canvasView.drawing = drawing
+        self.isLocked = isLocked
+        self.isVisible = isVisible
         super.init(frame: frame)
 
         addSubview(canvasView)
-
     }
 
     @available(*, unavailable)
@@ -28,6 +43,7 @@ class DrawingLayerView: UIView {
 }
 
 extension DrawingLayerView: LayerView {
+
     var topCanvasView: PKCanvasView? {
         canvasView
     }

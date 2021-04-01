@@ -8,10 +8,29 @@ import UIKit
 import PencilKit
 class CompositeLayerView: UIView {
     private(set) var children: [LayerView]
+    var toolPicker: PKToolPicker?
 
-    init(canvasSize: CGSize, children: [LayerView] = []) {
+    var isLocked: Bool {
+        didSet {
+            guard let canvasView = topCanvasView else {
+                return
+            }
+            toolPicker?.setVisible(!isLocked, forFirstResponder: canvasView)
+        }
+    }
+
+    var isVisible: Bool {
+        didSet {
+            isHidden = !isVisible
+        }
+    }
+
+    init(canvasSize: CGSize, children: [LayerView] = [],
+         isLocked: Bool = false, isVisible: Bool = true) {
         let frame = CGRect(origin: .zero, size: canvasSize)
         self.children = children
+        self.isLocked = isLocked
+        self.isVisible = isVisible
         super.init(frame: frame)
 
         children.forEach({ addSubview($0) })
