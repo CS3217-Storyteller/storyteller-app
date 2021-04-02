@@ -12,7 +12,7 @@ class Alert {
         presentAlert(controller: controller,
                      title: Constants.errorTitle, message: Constants.atLeastOneLayerMessage)
     }
-    
+
     private static func presentAlert(controller: UIViewController, title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: Constants.okTitle, style: .default, handler: nil))

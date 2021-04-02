@@ -56,6 +56,7 @@ class LayerTableController: UIViewController {
         let count = modelManager.getLayers(of: shotLabel)?.count ?? 0
         layerSelection = Array(repeating: false, count: count)
     }
+
 }
 
 // MARK: - UITableViewDataSource
@@ -140,6 +141,17 @@ extension LayerTableController {
             sender.setTitle("Done", for: .normal)
         }
     }
+
+    @IBAction private func changeBackgroundColor() {
+    }
+
+    @IBAction private func prevOnionSkin() {
+    }
+
+    @IBAction private func nextOnionSkin() {
+    }
+
+    // MARK: - Layers Actions
     @IBAction private func duplicateLayers(_ sender: Any) {
     }
 
@@ -155,6 +167,7 @@ extension LayerTableController {
         delegate?.didAddLayer()
         selectedLayerIndex = tableView.numberOfRows(inSection: 0) - 1
     }
+
 }
 // MARK: - ModelManagerObserver
 extension LayerTableController: ModelManagerObserver {
