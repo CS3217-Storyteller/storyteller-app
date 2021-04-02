@@ -44,11 +44,25 @@ struct Project {
         scenes[sceneIndex].addShot(shot)
     }
 
-    mutating func addLayer(_ layer: Layer, to shotLabel: ShotLabel) {
+    mutating func addLayer(_ layer: Layer, at index: Int?, to shotLabel: ShotLabel) {
         let sceneIndex = shotLabel.sceneIndex
         guard scenes.indices.contains(sceneIndex) else {
             return
         }
-        scenes[sceneIndex].addLayer(layer, to: shotLabel)
+        scenes[sceneIndex].addLayer(layer, at: index, to: shotLabel)
+    }
+    mutating func removeLayers(at indices: [Int], of shotLabel: ShotLabel) {
+        let sceneIndex = shotLabel.sceneIndex
+        guard scenes.indices.contains(sceneIndex) else {
+            return
+        }
+        scenes[sceneIndex].removeLayers(at: indices, of: shotLabel)
+    }
+    mutating func moveLayer(from oldIndex: Int, to newIndex: Int, of shotLabel: ShotLabel) {
+        let sceneIndex = shotLabel.sceneIndex
+        guard scenes.indices.contains(sceneIndex) else {
+            return
+        }
+        scenes[sceneIndex].moveLayer(from: oldIndex, to: newIndex, of: shotLabel)
     }
 }

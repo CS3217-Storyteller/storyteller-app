@@ -30,7 +30,7 @@ extension LayerView {
         toolPicker.setVisible(true, forFirstResponder: canvasView)
         toolPicker.addObserver(canvasView)
     }
-    func showLockEffect() {
+    func updateLockEffect() {
         guard let canvasView = topCanvasView else {
             return
         }

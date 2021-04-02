@@ -25,7 +25,6 @@
 		A29A19552607242600710943 /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19282607237100710943 /* Layer.swift */; };
 		A29A19582607242800710943 /* Shot.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19292607237100710943 /* Shot.swift */; };
 		A29A195B2607243300710943 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19202607237100710943 /* Scene.swift */; };
-		A29A195E2607243500710943 /* LayerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19212607237100710943 /* LayerType.swift */; };
 		A29A19612607243800710943 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19222607237100710943 /* Project.swift */; };
 		A29A19642607243E00710943 /* ShotLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19232607237100710943 /* ShotLabel.swift */; };
 		A29A19672607244000710943 /* ProjectLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19242607237100710943 /* ProjectLabel.swift */; };
@@ -96,7 +95,6 @@
 		A29A18EF26071A3700710943 /* StorytellerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorytellerTests.swift; sourceTree = "<group>"; };
 		A29A18F126071A3700710943 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A29A19202607237100710943 /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
-		A29A19212607237100710943 /* LayerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerType.swift; sourceTree = "<group>"; };
 		A29A19222607237100710943 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		A29A19232607237100710943 /* ShotLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotLabel.swift; sourceTree = "<group>"; };
 		A29A19242607237100710943 /* ProjectLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectLabel.swift; sourceTree = "<group>"; };
@@ -251,7 +249,6 @@
 			isa = PBXGroup;
 			children = (
 				A29A19262607237100710943 /* Index */,
-				A29A19212607237100710943 /* LayerType.swift */,
 				A29A19272607237100710943 /* ModelManager.swift */,
 				A29A19222607237100710943 /* Project.swift */,
 				A29A19202607237100710943 /* Scene.swift */,
@@ -538,7 +535,6 @@
 				B35FA2982614401C00D656E3 /* TransformLayerButton.swift in Sources */,
 				A29A19582607242800710943 /* Shot.swift in Sources */,
 				A29A19302607239E00710943 /* StorageManager.swift in Sources */,
-				A29A195E2607243500710943 /* LayerType.swift in Sources */,
 				B35830562615F0C000824C55 /* LayerTableViewCell.swift in Sources */,
 				B3D7AD532615A1280082D591 /* DrawingLayerView.swift in Sources */,
 				B35115C0261341980056886C /* UIView+setAnchorPoint.swift in Sources */,

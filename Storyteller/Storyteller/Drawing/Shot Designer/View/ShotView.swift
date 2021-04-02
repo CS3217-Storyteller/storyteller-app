@@ -68,14 +68,19 @@ class ShotView: UIView {
         clipsToBounds = true
     }
 
-    private func add(layerView: LayerView, toolPicker: PKToolPicker,
-                     PKDelegate: PKCanvasViewDelegate) {
+    func add(layerView: LayerView, toolPicker: PKToolPicker,
+             PKDelegate: PKCanvasViewDelegate) {
         layerViews.append(layerView)
         addSubview(layerView)
 
         layerView.setUpPK(toolPicker: toolPicker, PKDelegate: PKDelegate)
     }
+    func remove(at index: Int) {
+        let layer = layerViews.remove(at: index)
+        layer.removeFromSuperview()
 
+        selectedLayerIndex = max(0, index - 1)
+    }
     func setUpBackgroundColor(color: UIColor) {
         self.backgroundColor = color
     }
@@ -100,5 +105,14 @@ extension ShotView {
     func toggleLayerVisibility() {
         selectedLayerView.isVisible.toggle()
         updateEffectForSelectedLayer()
+    }
+
+    func removeLayers(at indices: [Int]) {
+        for index in indices.reversed() {
+            remove(at: index)
+        }
+    }
+    func moveLayer(from oldIndex: Int, to newIndex: Int) {
+        layerViews.insert(layerViews.remove(at: oldIndex), at: newIndex)
     }
 }

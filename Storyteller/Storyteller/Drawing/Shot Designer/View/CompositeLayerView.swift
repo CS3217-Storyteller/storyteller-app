@@ -12,7 +12,7 @@ class CompositeLayerView: UIView {
 
     var isLocked: Bool {
         didSet {
-            showLockEffect()
+            updateLockEffect()
         }
     }
 

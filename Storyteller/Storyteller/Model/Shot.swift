@@ -23,13 +23,25 @@ struct Shot {
         layers[layerIndex].setDrawing(to: drawing)
     }
 
-    mutating func update(layer: Layer, at layerIndex: Int) {
-        guard layers.indices.contains(layerIndex) else {
+    mutating func update(layer: Layer, at index: Int) {
+        layers[index] = layer
+    }
+    mutating func addLayer(_ layer: Layer, at index: Int?) {
+        guard let index = index else {
+            layers.append(layer)
             return
         }
-        layers[layerIndex] = layer
+        layers.insert(layer, at: index)
     }
-    mutating func addLayer(_ layer: Layer) {
-        layers.append(layer)
+    mutating func removeLayers(at indices: [Int]) {
+        for index in indices.reversed() {
+            layers.remove(at: index)
+        }
+    }
+    mutating func removeLayer(at index: Int) -> Layer {
+        layers.remove(at: index)
+    }
+    mutating func moveLayer(from oldIndex: Int, to newIndex: Int) {
+        layers.insert(layers.remove(at: oldIndex), at: newIndex)
     }
 }

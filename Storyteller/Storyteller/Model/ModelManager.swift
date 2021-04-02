@@ -141,25 +141,45 @@ class ModelManager {
         saveProject(projects[projectIndex])
     }
 
-    func addLayer(type: LayerType,
-                  to shotLabel: ShotLabel,
+    // MARK: - Layers CRUD
+
+    // TODO: allow different types of layers to be created
+    func addLayer(at index: Int? = nil, to shotLabel: ShotLabel,
                   withDrawing drawing: PKDrawing = PKDrawing()) {
         let projectIndex = shotLabel.projectIndex
         guard let shot = getShot(of: shotLabel) else {
             return
         }
         let layer = Layer(layerWithDrawing: drawing, canvasSize: shot.canvasSize)
-        projects[projectIndex].addLayer(layer, to: shotLabel)
+        projects[projectIndex].addLayer(layer, at: index, to: shotLabel)
         saveProject(projects[projectIndex])
     }
 
-    // MARK: - Layers
-    func update(layer: Layer, at layerIndex: Int, ofShot shotLabel: ShotLabel) {
+    func update(layer: Layer, at layerIndex: Int, of shotLabel: ShotLabel) {
         let projectIndex = shotLabel.projectIndex
         guard projects.indices.contains(projectIndex) else {
             return
         }
         projects[projectIndex].update(layer: layer, at: layerIndex, ofShot: shotLabel)
+
+        saveProject(projects[projectIndex])
+    }
+
+    func removeLayers(at layerIndices: [Int], of shotLabel: ShotLabel) {
+        let projectIndex = shotLabel.projectIndex
+        guard projects.indices.contains(projectIndex) else {
+            return
+        }
+        projects[projectIndex].removeLayers(at: layerIndices, of: shotLabel)
+
+        saveProject(projects[projectIndex])
+    }
+    func moveLayer(from oldIndex: Int, to newIndex: Int, of shotLabel: ShotLabel) {
+        let projectIndex = shotLabel.projectIndex
+        guard projects.indices.contains(projectIndex) else {
+            return
+        }
+        projects[projectIndex].moveLayer(from: oldIndex, to: newIndex, of: shotLabel)
 
         saveProject(projects[projectIndex])
     }

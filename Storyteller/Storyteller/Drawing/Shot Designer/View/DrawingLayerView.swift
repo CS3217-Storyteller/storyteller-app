@@ -13,7 +13,7 @@ class DrawingLayerView: UIView {
 
     var isLocked: Bool {
         didSet {
-            showLockEffect()
+            updateLockEffect()
         }
     }
 

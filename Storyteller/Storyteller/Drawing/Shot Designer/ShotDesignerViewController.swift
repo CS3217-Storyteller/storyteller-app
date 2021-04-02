@@ -202,7 +202,7 @@ extension ShotDesignerViewController {
             return
         }
         let newLayer = transform(layer)
-        modelManager.update(layer: newLayer, at: selectedLayerIndex, ofShot: shotLabel)
+        modelManager.update(layer: newLayer, at: selectedLayerIndex, of: shotLabel)
         shotView.updateLayerTransform(DrawingUtility.generateLayerView(for: newLayer))
     }
 }
@@ -260,7 +260,7 @@ extension ShotDesignerViewController: PKCanvasViewDelegate {
         guard let newLayer = selectedLayer?.setDrawing(to: canvasView.drawing) else {
             return
         }
-        modelManager.update(layer: newLayer, at: selectedLayerIndex, ofShot: shotLabel)
+        modelManager.update(layer: newLayer, at: selectedLayerIndex, of: shotLabel)
     }
 }
 
@@ -348,6 +348,16 @@ extension ShotDesignerViewController: UIGestureRecognizerDelegate {
 }
 
 extension ShotDesignerViewController: LayerTableDelegate {
+    func didMoveLayer(from oldIndex: Int, to newIndex: Int) {
+        shotView.moveLayer(from: oldIndex, to: newIndex)
+    }
+
+    func didAddLayer() {
+        shotView.add(layerView: DrawingUtility
+                        .generateLayerView(for: Layer.getEmptyLayer(canvasSize: canvasSize,
+                                                                    name: "New Layer")),
+                     toolPicker: toolPicker, PKDelegate: self)
+    }
 
     func didSelectLayer(at index: Int) {
         selectedLayerIndex = index
@@ -363,12 +373,16 @@ extension ShotDesignerViewController: LayerTableDelegate {
         // TODO
     }
 
+    func didRemoveLayers(at indices: [Int]) {
+        shotView.removeLayers(at: indices)
+    }
+
     private func toggleLayerLock() {
         guard var newLayer = selectedLayer else {
             return
         }
         newLayer.isLocked.toggle()
-        modelManager.update(layer: newLayer, at: selectedLayerIndex, ofShot: shotLabel)
+        modelManager.update(layer: newLayer, at: selectedLayerIndex, of: shotLabel)
         shotView.toggleLayerLock()
     }
     private func toggleLayerVisibility() {
@@ -376,7 +390,7 @@ extension ShotDesignerViewController: LayerTableDelegate {
             return
         }
         newLayer.isVisible.toggle()
-        modelManager.update(layer: newLayer, at: selectedLayerIndex, ofShot: shotLabel)
+        modelManager.update(layer: newLayer, at: selectedLayerIndex, of: shotLabel)
         shotView.toggleLayerVisibility()
     }
 }

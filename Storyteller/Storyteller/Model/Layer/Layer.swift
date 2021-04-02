@@ -58,3 +58,9 @@ extension Layer {
         updateComponent(component.resetTransform())
     }
 }
+
+extension Layer {
+    static func getEmptyLayer(canvasSize: CGSize, name: String) -> Layer {
+        Layer(layerWithDrawing: PKDrawing(), canvasSize: canvasSize, name: name)
+    }
+}
