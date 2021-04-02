@@ -29,6 +29,9 @@ class DrawingLayerView: UIView {
         let frame = CGRect(origin: .zero, size: canvasSize)
         canvasView = PKCanvasView(frame: frame)
         canvasView.drawing = drawing
+        canvasView.backgroundColor = .clear
+        canvasView.isOpaque = false
+
         self.isLocked = isLocked
         self.isVisible = isVisible
         super.init(frame: frame)
@@ -46,5 +49,11 @@ extension DrawingLayerView: LayerView {
 
     var topCanvasView: PKCanvasView? {
         canvasView
+    }
+}
+
+extension DrawingLayerView {
+    override var canBecomeFirstResponder: Bool {
+        true
     }
 }

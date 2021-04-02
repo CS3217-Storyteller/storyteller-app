@@ -18,18 +18,20 @@ class ShotView: UIView {
     }
 
     private func updateEffectForSelectedLayer() {
-        guard let canvasView = selectedLayerView.topCanvasView,
+        guard let canvasView = currentCanvasView,
               !selectedLayerView.isLocked, selectedLayerView.isVisible else {
+            selectedLayerView.becomeFirstResponder()
             return
         }
-        isInDrawingMode ? selectedLayerView.castShadow()
-            : selectedLayerView.disableShadow()
+        layerViews.forEach({ $0.hideBorder() })
+        isInDrawingMode ? selectedLayerView.showBorder()
+            : selectedLayerView.hideBorder()
+        canvasView.becomeFirstResponder()
         toolPicker?.setVisible(isInDrawingMode, forFirstResponder: canvasView)
     }
 
     var selectedLayerIndex = 0 {
         didSet {
-            unselectLayer(at: oldValue)
             selectLayer(at: selectedLayerIndex)
         }
     }
@@ -44,14 +46,12 @@ class ShotView: UIView {
         guard layerViews.indices.contains(index) else {
             return
         }
+        print("in shotview: \(index)")
+        print("count: \(layerViews.count)")
+        print(layerViews[index].topCanvasView!)
+        toolPicker?.setVisible(true, forFirstResponder: layerViews[index].topCanvasView!)
         layerViews[index].topCanvasView?.becomeFirstResponder()
         updateEffectForSelectedLayer()
-    }
-    func unselectLayer(at index: Int) {
-        guard layerViews.indices.contains(index) else {
-            return
-        }
-        layerViews[index].disableShadow()
     }
 
     func setUpLayerViews(_ layerViews: [LayerView], toolPicker: PKToolPicker,
@@ -98,12 +98,12 @@ extension ShotView {
                                           transform: newLayerView.transform)
     }
 
-    func toggleLayerLock() {
-        selectedLayerView.isLocked.toggle()
+    func toggleLayerLock(at index: Int) {
+        layerViews[index].isLocked.toggle()
         updateEffectForSelectedLayer()
     }
-    func toggleLayerVisibility() {
-        selectedLayerView.isVisible.toggle()
+    func toggleLayerVisibility(at index: Int) {
+        layerViews[index].isVisible.toggle()
         updateEffectForSelectedLayer()
     }
 

@@ -10,8 +10,16 @@ import UIKit
 class LayerTableController: UIViewController {
     var selectedLayerIndex = 0 {
         didSet {
+            print("inside table: \(selectedLayerIndex)")
+            guard tableView != nil else {
+                return
+            }
+            tableView.selectRow(at: selectedIndexPath, animated: true, scrollPosition: .none)
             delegate?.didSelectLayer(at: selectedLayerIndex)
         }
+    }
+    var selectedIndexPath: IndexPath {
+        IndexPath(row: selectedLayerIndex, section: 0)
     }
     weak var delegate: LayerTableDelegate?
 
@@ -31,8 +39,9 @@ class LayerTableController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.dataSource = self
         tableView.delegate = self
-//        tableView.allowsSelectionDuringEditing = true
+        tableView.allowsMultipleSelectionDuringEditing = true
 
         modelManager.observers.append(self)
         setUpLayerSelection()
@@ -60,36 +69,32 @@ extension LayerTableController: UITableViewDataSource {
         return layerCount
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            guard indexPath.section == 0 else {
-                // TODO: add background cell
-                return UITableViewCell()
-            }
-
-            guard let cell = tableView.dequeueReusableCell(
-                    withIdentifier: LayerTableViewCell.identifier,
-                    for: indexPath) as? LayerTableViewCell else {
-                fatalError("Cannot get reusable cell.")
-            }
-
-            guard let layer = modelManager.getLayer(at: indexPath.row, of: shotLabel) else {
-                fatalError("Failed to get the layer at \(indexPath.row)")
-            }
-
-            cell.setUp(thumbnail: layer.thumbnail, name: layer.name,
-                       isLocked: layer.isLocked, isVisible: layer.isVisible)
-            cell.delegate = self
-            return cell
+        guard indexPath.section == 0 else {
+            // TODO: add background cell
+            return UITableViewCell()
         }
+
+        guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: LayerTableViewCell.identifier,
+                for: indexPath) as? LayerTableViewCell else {
+            fatalError("Cannot get reusable cell.")
+        }
+
+        guard let layer = modelManager.getLayer(at: indexPath.row, of: shotLabel) else {
+            fatalError("Failed to get the layer at \(indexPath.row)")
+        }
+
+        cell.setUp(thumbnail: layer.thumbnail, name: layer.name,
+                   isLocked: layer.isLocked, isVisible: layer.isVisible)
+        cell.delegate = self
+        return cell
+    }
 }
 
 // MARK: - UITableViewDelegate
 extension LayerTableController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard indexPath.section == 0 else {
-            // TODO: add changing background
-            return
-        }
         guard selectedLayerIndex != indexPath.row else {
             // TODO: rename layer name process
             return
@@ -100,28 +105,28 @@ extension LayerTableController: UITableViewDelegate {
     func tableView(_ tableView: UITableView,
                    commit editingStyle: UITableViewCell.EditingStyle,
                    forRowAt indexPath: IndexPath) {
-        guard indexPath.section == 0 else {
-            return
-        }
         // TODO: remove this
         if editingStyle == .delete {
+            guard tableView.numberOfRows(inSection: 0) > 1 else {
+                Alert.presentAtLeastOneLayerAlert(controller: self)
+                selectedLayerIndex = 0
+                return
+            }
             modelManager.removeLayers(at: [indexPath.row], of: shotLabel)
             delegate?.didRemoveLayers(at: [indexPath.row])
-        } else if editingStyle == .insert {
-            modelManager.addLayer(to: shotLabel)
-            delegate?.didAddLayer()
         }
     }
 
     func tableView(_ tableView: UITableView,
                    moveRowAt sourceIndexPath: IndexPath,
                    to destinationIndexPath: IndexPath) {
-        guard sourceIndexPath.section == 0 else {
-            return
-        }
         modelManager.moveLayer(from: sourceIndexPath.row,
                                to: destinationIndexPath.row, of: shotLabel)
         delegate?.didMoveLayer(from: sourceIndexPath.row, to: destinationIndexPath.row)
+    }
+    func tableView(_ tableView: UITableView,
+                   editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        .none
     }
 }
 // MARK: - Actions
@@ -149,6 +154,8 @@ extension LayerTableController {
     @IBAction private func addLayer(_ sender: Any) {
         modelManager.addLayer(to: shotLabel)
         delegate?.didAddLayer()
+        selectedLayerIndex = tableView.numberOfRows(inSection: 0) - 1
+        print("!!!\(selectedLayerIndex)")
     }
 }
 // MARK: - ModelManagerObserver
@@ -177,6 +184,7 @@ extension LayerTableController: LayerCellDelegate {
         guard let index = tableView.indexPath(for: cell)?.row else {
             return
         }
+        print(index)
         delegate?.didToggleLayerVisibility(at: index)
     }
 

@@ -24,6 +24,7 @@ class NormalLayerMerger: LayerMerger {
                                                 canvasSize: canvasSize)
         drawingLayerView.updateTransform(anchorPoint: component.anchorPoint,
                                          transform: component.transformInfo.transform)
+
         return drawingLayerView
     }
 

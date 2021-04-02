@@ -61,10 +61,11 @@
 		B3D7AD532615A1280082D591 /* DrawingLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D7AD522615A1280082D591 /* DrawingLayerView.swift */; };
 		B3D7AD612615A54C0082D591 /* CompositeLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D7AD602615A54C0082D591 /* CompositeLayerView.swift */; };
 		B3D7AD652615A8910082D591 /* TransformInfo+transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D7AD642615A8910082D591 /* TransformInfo+transform.swift */; };
-		B3D7AD6B2615B4C30082D591 /* UIView+castShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D7AD6A2615B4C30082D591 /* UIView+castShadow.swift */; };
+		B3D7AD6B2615B4C30082D591 /* UIView+showBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D7AD6A2615B4C30082D591 /* UIView+showBorder.swift */; };
 		B3E19000261620F0003C7AEF /* DrawingModeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E18FFF261620F0003C7AEF /* DrawingModeButton.swift */; };
 		B3E190042616219C003C7AEF /* ShotDesignerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E190032616219C003C7AEF /* ShotDesignerButton.swift */; };
 		B3E8C29D2613899700713B69 /* TransformInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E8C29C2613899700713B69 /* TransformInfo.swift */; };
+		B3FB29062617680100DC4BEE /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FB29052617680100DC4BEE /* Alert.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,10 +137,11 @@
 		B3D7AD522615A1280082D591 /* DrawingLayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingLayerView.swift; sourceTree = "<group>"; };
 		B3D7AD602615A54C0082D591 /* CompositeLayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeLayerView.swift; sourceTree = "<group>"; };
 		B3D7AD642615A8910082D591 /* TransformInfo+transform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TransformInfo+transform.swift"; sourceTree = "<group>"; };
-		B3D7AD6A2615B4C30082D591 /* UIView+castShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+castShadow.swift"; sourceTree = "<group>"; };
+		B3D7AD6A2615B4C30082D591 /* UIView+showBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+showBorder.swift"; sourceTree = "<group>"; };
 		B3E18FFF261620F0003C7AEF /* DrawingModeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingModeButton.swift; sourceTree = "<group>"; };
 		B3E190032616219C003C7AEF /* ShotDesignerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotDesignerButton.swift; sourceTree = "<group>"; };
 		B3E8C29C2613899700713B69 /* TransformInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformInfo.swift; sourceTree = "<group>"; };
+		B3FB29052617680100DC4BEE /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,6 +223,7 @@
 		A24F630C2600CC8D00FC7CD4 /* Constants and Utility */ = {
 			isa = PBXGroup;
 			children = (
+				B3FB29052617680100DC4BEE /* Alert.swift */,
 				B3755AB2260643C000EC0F56 /* Constants.swift */,
 			);
 			path = "Constants and Utility";
@@ -308,7 +311,7 @@
 				B35FA28726143B7900D656E3 /* UIImage+clearImage.swift */,
 				B35115BF261341980056886C /* UIView+setAnchorPoint.swift */,
 				B35115B926123B510056886C /* UIView+newPointInView.swift */,
-				B3D7AD6A2615B4C30082D591 /* UIView+castShadow.swift */,
+				B3D7AD6A2615B4C30082D591 /* UIView+showBorder.swift */,
 				B3D7AD642615A8910082D591 /* TransformInfo+transform.swift */,
 			);
 			path = Extensions;
@@ -534,6 +537,7 @@
 				B3755AAB26062B9700EC0F56 /* ShotDesignerViewController.swift in Sources */,
 				B35FA2982614401C00D656E3 /* TransformLayerButton.swift in Sources */,
 				A29A19582607242800710943 /* Shot.swift in Sources */,
+				B3FB29062617680100DC4BEE /* Alert.swift in Sources */,
 				A29A19302607239E00710943 /* StorageManager.swift in Sources */,
 				B35830562615F0C000824C55 /* LayerTableViewCell.swift in Sources */,
 				B3D7AD532615A1280082D591 /* DrawingLayerView.swift in Sources */,
@@ -575,7 +579,7 @@
 				B3755AB3260643C000EC0F56 /* Constants.swift in Sources */,
 				B3320D62260F92330063558A /* LayerComponent.swift in Sources */,
 				A209157F2606FE3F001A242E /* ProjectViewController.swift in Sources */,
-				B3D7AD6B2615B4C30082D591 /* UIView+castShadow.swift in Sources */,
+				B3D7AD6B2615B4C30082D591 /* UIView+showBorder.swift in Sources */,
 				B30AA8812610C544008B6714 /* DrawingComponent.swift in Sources */,
 				B3E19000261620F0003C7AEF /* DrawingModeButton.swift in Sources */,
 				B3755AD626065C0700EC0F56 /* DrawingUtility.swift in Sources */,

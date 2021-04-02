@@ -8,7 +8,12 @@
 import UIKit
 
 class Constants {
+    // MARK: - Alert title
+    static let okTitle = "OK"
+    static let errorTitle = "Error"
 
+    // MARK: - Alert message
+    static let atLeastOneLayerMessage = "There must be at least one layer"
     static let horizontalCanvasMargin = CGFloat(20)
     static let verticalCanvasMargin = CGFloat(20)
 
@@ -16,5 +21,7 @@ class Constants {
 
     static let maxLayerZoomScale = CGFloat(3)
     static let minLayerZoomScale = CGFloat(0.2)
+
+    static let layerBorderWidth = CGFloat(0.5)
 
 }

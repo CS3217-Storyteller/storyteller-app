@@ -86,6 +86,7 @@ class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
 
         setUpShot()
 
+        editingMode = .drawing
         navigationItem.leftItemsSupplementBackButton = true
     }
 
@@ -251,12 +252,13 @@ extension ShotDesignerViewController {
 extension ShotDesignerViewController: ModelManagerObserver {
     func modelDidChanged() {
         // TODO: disable this since PKCanvasView will get refreshed every time
-//        updateShot()
+//        setUpShot()
     }
 }
 // MARK: - PKCanvasViewDelegate
 extension ShotDesignerViewController: PKCanvasViewDelegate {
     func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
+        print("inside shotdesigner:\(canvasView)")
         guard let newLayer = selectedLayer?.setDrawing(to: canvasView.drawing) else {
             return
         }
@@ -364,10 +366,10 @@ extension ShotDesignerViewController: LayerTableDelegate {
     }
 
     func didToggleLayerLock(at index: Int) {
-        toggleLayerLock()
+        toggleLayerLock(at: index)
     }
     func didToggleLayerVisibility(at index: Int) {
-        toggleLayerVisibility()
+        toggleLayerVisibility(at: index)
     }
     func didChangeLayerName(at index: Int, newName: String) {
         // TODO
@@ -377,20 +379,20 @@ extension ShotDesignerViewController: LayerTableDelegate {
         shotView.removeLayers(at: indices)
     }
 
-    private func toggleLayerLock() {
-        guard var newLayer = selectedLayer else {
+    private func toggleLayerLock(at index: Int) {
+        guard var newLayer = modelManager.getLayer(at: index, of: shotLabel) else {
             return
         }
         newLayer.isLocked.toggle()
-        modelManager.update(layer: newLayer, at: selectedLayerIndex, of: shotLabel)
-        shotView.toggleLayerLock()
+        modelManager.update(layer: newLayer, at: index, of: shotLabel)
+        shotView.toggleLayerLock(at: index)
     }
-    private func toggleLayerVisibility() {
-        guard var newLayer = selectedLayer else {
+    private func toggleLayerVisibility(at index: Int) {
+        guard var newLayer = modelManager.getLayer(at: index, of: shotLabel) else {
             return
         }
         newLayer.isVisible.toggle()
-        modelManager.update(layer: newLayer, at: selectedLayerIndex, of: shotLabel)
-        shotView.toggleLayerVisibility()
+        modelManager.update(layer: newLayer, at: index, of: shotLabel)
+        shotView.toggleLayerVisibility(at: index)
     }
 }

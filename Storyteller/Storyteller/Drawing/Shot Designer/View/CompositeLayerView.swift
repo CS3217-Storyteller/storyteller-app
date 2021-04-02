@@ -44,3 +44,9 @@ extension CompositeLayerView: LayerView {
         children.compactMap({ $0.topCanvasView }).last
     }
 }
+
+extension CompositeLayerView {
+    override var canBecomeFirstResponder: Bool {
+        true
+    }
+}

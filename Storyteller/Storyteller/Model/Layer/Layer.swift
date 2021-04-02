@@ -23,7 +23,7 @@ struct Layer {
         self.name = name
     }
 
-    init(layerWithDrawing: PKDrawing, canvasSize: CGSize, name: String = "Layer") {
+    init(layerWithDrawing: PKDrawing, canvasSize: CGSize, name: String = "New Layer") {
         self.canvasSize = canvasSize
         self.component = DrawingComponent(drawing: layerWithDrawing, canvasSize: canvasSize)
         self.name = name

@@ -18,8 +18,8 @@ protocol LayerView: UIView {
 
 extension LayerView {
     func updateTransform(anchorPoint: CGPoint, transform: CGAffineTransform) {
-        setAnchorPoint(anchorPoint)
         self.transform = transform
+        setAnchorPoint(anchorPoint)
     }
     func setUpPK(toolPicker: PKToolPicker, PKDelegate: PKCanvasViewDelegate) {
         self.toolPicker = toolPicker
@@ -36,7 +36,7 @@ extension LayerView {
         }
         if isLocked {
             toolPicker?.setVisible(false, forFirstResponder: canvasView)
-            disableShadow()
+            hideBorder()
         }
     }
 }

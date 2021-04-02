@@ -127,12 +127,19 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="Q8o-sb-o8D">
-                        <barButtonItem key="leftBarButtonItem" title="Zoom To Fit" id="nii-Lx-BvZ">
-                            <imageReference key="image" image="rectangle.center.inset.fill" catalog="system" symbolScale="large"/>
-                            <connections>
-                                <action selector="zoomToFit" destination="mXm-tZ-pGV" id="mg7-4K-4bs"/>
-                            </connections>
-                        </barButtonItem>
+                        <leftBarButtonItems>
+                            <barButtonItem title="Zoom To Fit" id="nii-Lx-BvZ">
+                                <imageReference key="image" image="rectangle.center.inset.fill" catalog="system" symbolScale="large"/>
+                                <connections>
+                                    <action selector="zoomToFit" destination="mXm-tZ-pGV" id="mg7-4K-4bs"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Item" image="cursorarrow.and.square.on.square.dashed" catalog="system" id="qzp-pG-u8W" userLabel="Toggle Transform Layer" customClass="TransformLayerButton" customModule="Storyteller" customModuleProvider="target">
+                                <connections>
+                                    <action selector="toggleTransformLayer:" destination="mXm-tZ-pGV" id="8GH-TY-tMu"/>
+                                </connections>
+                            </barButtonItem>
+                        </leftBarButtonItems>
                         <rightBarButtonItems>
                             <barButtonItem image="plus.rectangle.on.rectangle" catalog="system" id="KzC-k5-zaS" userLabel="Duplicate Button">
                                 <connections>
@@ -149,11 +156,6 @@
                             <barButtonItem title="Item" image="pencil.tip.crop.circle" catalog="system" id="ezw-DD-Ld7" customClass="DrawingModeButton" customModule="Storyteller" customModuleProvider="target">
                                 <connections>
                                     <action selector="toggleDrawingMode:" destination="mXm-tZ-pGV" id="gMi-BJ-JYR"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem title="Item" image="cursorarrow.and.square.on.square.dashed" catalog="system" id="qzp-pG-u8W" userLabel="Toggle Transform Layer" customClass="TransformLayerButton" customModule="Storyteller" customModuleProvider="target">
-                                <connections>
-                                    <action selector="toggleTransformLayer:" destination="mXm-tZ-pGV" id="8GH-TY-tMu"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
@@ -294,11 +296,12 @@
                                 </prototypes>
                             </tableView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="f2w-Me-8Zv" userLabel="Button Stack View">
-                                <rect key="frame" x="20" y="28" width="145" height="20"/>
+                                <rect key="frame" x="20" y="28" width="155" height="20"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x5i-iv-H7N">
-                                        <rect key="frame" x="0.0" y="0.0" width="30" height="20"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="40" height="20"/>
                                         <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="7h0-Ld-7We"/>
                                             <constraint firstAttribute="height" constant="20" id="cas-i3-qlL"/>
                                         </constraints>
                                         <state key="normal" title="Edit"/>
@@ -307,7 +310,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1un-Ws-WW0">
-                                        <rect key="frame" x="40" y="0.0" width="20" height="20"/>
+                                        <rect key="frame" x="50" y="0.0" width="20" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="1un-Ws-WW0" secondAttribute="height" multiplier="1:1" id="mcx-OB-MjT"/>
                                         </constraints>
@@ -317,7 +320,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9wD-Rz-zMq">
-                                        <rect key="frame" x="70" y="0.0" width="20" height="20"/>
+                                        <rect key="frame" x="80" y="0.0" width="20" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="9wD-Rz-zMq" secondAttribute="height" multiplier="1:1" id="jMJ-gz-tAX"/>
                                         </constraints>
@@ -327,7 +330,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qfT-sz-LSW">
-                                        <rect key="frame" x="100" y="0.0" width="45" height="20"/>
+                                        <rect key="frame" x="110" y="0.0" width="45" height="20"/>
                                         <state key="normal" title="Delete">
                                             <color key="titleColor" systemColor="systemRedColor"/>
                                         </state>
