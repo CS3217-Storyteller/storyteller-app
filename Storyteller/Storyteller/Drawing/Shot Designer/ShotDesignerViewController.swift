@@ -258,7 +258,6 @@ extension ShotDesignerViewController: ModelManagerObserver {
 // MARK: - PKCanvasViewDelegate
 extension ShotDesignerViewController: PKCanvasViewDelegate {
     func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
-        print("inside shotdesigner:\(canvasView)")
         guard let newLayer = selectedLayer?.setDrawing(to: canvasView.drawing) else {
             return
         }
@@ -355,9 +354,9 @@ extension ShotDesignerViewController: LayerTableDelegate {
     }
 
     func didAddLayer() {
-        shotView.add(layerView: DrawingUtility
-                        .generateLayerView(for: Layer.getEmptyLayer(canvasSize: canvasSize,
-                                                                    name: "New Layer")),
+        shotView.add(layerView: DrawingUtility.generateLayerView(for: Layer
+                                            .getEmptyLayer(canvasSize: canvasSize,
+                                                           name: Constants.defaultLayerName)),
                      toolPicker: toolPicker, PKDelegate: self)
     }
 

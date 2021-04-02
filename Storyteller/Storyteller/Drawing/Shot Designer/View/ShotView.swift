@@ -23,16 +23,18 @@ class ShotView: UIView {
             selectedLayerView.becomeFirstResponder()
             return
         }
-        layerViews.forEach({ $0.hideBorder() })
-        isInDrawingMode ? selectedLayerView.showBorder()
-            : selectedLayerView.hideBorder()
+        layerViews.forEach({ $0.isUserInteractionEnabled = false; $0.hideBorder() })
+        selectedLayerView.isUserInteractionEnabled = true
+
+        isInDrawingMode ? selectedLayerView.showBorder(): selectedLayerView.hideBorder()
+
         canvasView.becomeFirstResponder()
         toolPicker?.setVisible(isInDrawingMode, forFirstResponder: canvasView)
     }
 
     var selectedLayerIndex = 0 {
         didSet {
-            selectLayer(at: selectedLayerIndex)
+            updateEffectForSelectedLayer()
         }
     }
     var selectedLayerView: LayerView {
@@ -40,18 +42,6 @@ class ShotView: UIView {
     }
     var currentCanvasView: PKCanvasView? {
         selectedLayerView.topCanvasView
-    }
-
-    func selectLayer(at index: Int) {
-        guard layerViews.indices.contains(index) else {
-            return
-        }
-        print("in shotview: \(index)")
-        print("count: \(layerViews.count)")
-        print(layerViews[index].topCanvasView!)
-        toolPicker?.setVisible(true, forFirstResponder: layerViews[index].topCanvasView!)
-        layerViews[index].topCanvasView?.becomeFirstResponder()
-        updateEffectForSelectedLayer()
     }
 
     func setUpLayerViews(_ layerViews: [LayerView], toolPicker: PKToolPicker,

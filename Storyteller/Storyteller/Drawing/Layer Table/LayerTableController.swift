@@ -10,7 +10,6 @@ import UIKit
 class LayerTableController: UIViewController {
     var selectedLayerIndex = 0 {
         didSet {
-            print("inside table: \(selectedLayerIndex)")
             guard tableView != nil else {
                 return
             }
@@ -155,7 +154,6 @@ extension LayerTableController {
         modelManager.addLayer(to: shotLabel)
         delegate?.didAddLayer()
         selectedLayerIndex = tableView.numberOfRows(inSection: 0) - 1
-        print("!!!\(selectedLayerIndex)")
     }
 }
 // MARK: - ModelManagerObserver
@@ -184,7 +182,6 @@ extension LayerTableController: LayerCellDelegate {
         guard let index = tableView.indexPath(for: cell)?.row else {
             return
         }
-        print(index)
         delegate?.didToggleLayerVisibility(at: index)
     }
 
