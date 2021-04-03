@@ -13,14 +13,9 @@ protocol LayerView: UIView {
     var isLocked: Bool { get set }
     var isVisible: Bool { get set }
     var topCanvasView: PKCanvasView? { get }
-    func updateTransform(anchorPoint: CGPoint, transform: CGAffineTransform)
 }
 
 extension LayerView {
-    func updateTransform(anchorPoint: CGPoint, transform: CGAffineTransform) {
-        self.transform = transform
-        setAnchorPoint(anchorPoint)
-    }
     func setUpPK(toolPicker: PKToolPicker, PKDelegate: PKCanvasViewDelegate) {
         self.toolPicker = toolPicker
         guard let canvasView = topCanvasView else {

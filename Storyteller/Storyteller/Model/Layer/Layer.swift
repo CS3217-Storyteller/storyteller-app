@@ -15,6 +15,7 @@ struct Layer {
 
     var thumbnail: UIImage {
         component.image
+//        DrawingUtility.generateLayerView(for: self).asImage()
     }
 
     init(component: LayerComponent, canvasSize: CGSize, name: String, isLocked: Bool, isVisible: Bool) {
@@ -62,5 +63,29 @@ extension Layer {
 extension Layer {
     static func getEmptyLayer(canvasSize: CGSize, name: String) -> Layer {
         Layer(layerWithDrawing: PKDrawing(), canvasSize: canvasSize, name: name)
+    }
+}
+
+extension Layer: Transformable {
+    var frame: CGRect {
+        component.frame
+    }
+
+    var anchorPoint: CGPoint {
+        component.anchorPoint
+    }
+
+    var transformInfo: TransformInfo {
+        component.transformInfo
+    }
+
+    func updateTransformInfo(info: TransformInfo) -> Layer {
+        var newLayer = self
+        newLayer.component = component.updateTransformInfo(info: info)
+        return newLayer
+    }
+
+    var transform: CGAffineTransform {
+        component.transform
     }
 }

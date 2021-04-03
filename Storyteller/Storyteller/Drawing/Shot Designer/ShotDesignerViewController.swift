@@ -133,7 +133,7 @@ extension ShotDesignerViewController {
         switch sender.state {
         case .began:
             panPosition = sender.location(in: view)
-        case .changed:
+        case .changed, .ended:
             let location = sender.location(in: view)
             let offsetX = location.x - panPosition.x
             let offsetY = location.y - panPosition.y
@@ -148,7 +148,7 @@ extension ShotDesignerViewController {
         switch sender.state {
         case .began:
             panPosition = sender.location(in: view)
-        case .changed:
+        case .changed, .ended:
             let location = sender.location(in: view)
             let offsetX = location.x - panPosition.x
             let offsetY = location.y - panPosition.y
@@ -204,7 +204,6 @@ extension ShotDesignerViewController {
         }
         let newLayer = transform(layer)
         modelManager.update(layer: newLayer, at: selectedLayerIndex, of: shotLabel)
-        shotView.updateLayerTransform(DrawingUtility.generateLayerView(for: newLayer))
     }
 }
 
@@ -250,9 +249,15 @@ extension ShotDesignerViewController {
 
 // MARK: - ModelManagerObserver
 extension ShotDesignerViewController: ModelManagerObserver {
-    func modelDidChanged() {
+    func modelDidChange() {
         // TODO: disable this since PKCanvasView will get refreshed every time
 //        setUpShot()
+    }
+    func layerDidUpdate() {
+        guard let shot = shot else {
+            return
+        }
+        shotView.updateLayerViews(newLayerViews: DrawingUtility.generateLayerViews(for: shot))
     }
 }
 // MARK: - PKCanvasViewDelegate
@@ -384,7 +389,6 @@ extension ShotDesignerViewController: LayerTableDelegate {
         }
         newLayer.isLocked.toggle()
         modelManager.update(layer: newLayer, at: index, of: shotLabel)
-        shotView.toggleLayerLock(at: index)
     }
     private func toggleLayerVisibility(at index: Int) {
         guard var newLayer = modelManager.getLayer(at: index, of: shotLabel) else {
@@ -392,6 +396,5 @@ extension ShotDesignerViewController: LayerTableDelegate {
         }
         newLayer.isVisible.toggle()
         modelManager.update(layer: newLayer, at: index, of: shotLabel)
-        shotView.toggleLayerVisibility(at: index)
     }
 }

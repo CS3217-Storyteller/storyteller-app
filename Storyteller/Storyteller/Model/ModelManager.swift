@@ -78,7 +78,7 @@ class ModelManager {
 
     private func saveProject(_ project: Project) {
         storageManager.saveProject(project: project)
-        observers.forEach({ $0.modelDidChanged() })
+        observers.forEach({ $0.modelDidChange() })
     }
 
     // TODO: remove all updateDrawing since we are using update(layer) now
@@ -162,7 +162,9 @@ class ModelManager {
         }
         projects[projectIndex].update(layer: layer, at: layerIndex, ofShot: shotLabel)
 
+//        print("inside model: \(layer.component.transformInfo.transform)")
         saveProject(projects[projectIndex])
+        observers.forEach({ $0.layerDidUpdate() })
     }
 
     func removeLayers(at layerIndices: [Int], of shotLabel: ShotLabel) {
@@ -187,5 +189,10 @@ class ModelManager {
 
 protocol ModelManagerObserver {
     /// Invoked when the model changes.
-    func modelDidChanged()
+    func modelDidChange()
+    func layerDidUpdate()
+}
+
+extension ModelManagerObserver {
+    func layerDidUpdate() { }
 }

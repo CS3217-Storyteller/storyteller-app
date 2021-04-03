@@ -9,7 +9,7 @@ import CoreGraphics
 protocol Transformable {
     var frame: CGRect { get }
     var anchorPoint: CGPoint { get }
-    var transformInfo: TransformInfo { get set }
+    var transformInfo: TransformInfo { get }
     func updateTransformInfo(info: TransformInfo) -> Self
 }
 

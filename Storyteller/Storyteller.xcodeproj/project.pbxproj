@@ -37,9 +37,12 @@
 		B30AA8662610C419008B6714 /* StorageLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30AA8652610C419008B6714 /* StorageLayer.swift */; };
 		B30AA8812610C544008B6714 /* DrawingComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30AA8802610C544008B6714 /* DrawingComponent.swift */; };
 		B30AA8902610D384008B6714 /* UIImage+mergeWith.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30AA88F2610D384008B6714 /* UIImage+mergeWith.swift */; };
+		B31A650E2618201900F532AF /* CGAffineTransform+rotatedAround.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31A650D2618201900F532AF /* CGAffineTransform+rotatedAround.swift */; };
 		B3320D1E260F6AB20063558A /* LayerMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3320D1D260F6AB20063558A /* LayerMerger.swift */; };
 		B3320D22260F6BA10063558A /* NormalLayerMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3320D21260F6BA10063558A /* NormalLayerMerger.swift */; };
 		B3320D62260F92330063558A /* LayerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3320D61260F92330063558A /* LayerComponent.swift */; };
+		B34A84522617AC0000A3185A /* UIView+asImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34A84512617AC0000A3185A /* UIView+asImage.swift */; };
+		B34A84562617AC6D00A3185A /* NormalImageMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34A84552617AC6D00A3185A /* NormalImageMerger.swift */; };
 		B35115BA26123B510056886C /* UIView+newPointInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35115B926123B510056886C /* UIView+newPointInView.swift */; };
 		B35115C0261341980056886C /* UIView+setAnchorPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35115BF261341980056886C /* UIView+setAnchorPoint.swift */; };
 		B35115D22613790F0056886C /* EditingMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35115D12613790F0056886C /* EditingMode.swift */; };
@@ -113,9 +116,12 @@
 		B30AA8652610C419008B6714 /* StorageLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageLayer.swift; sourceTree = "<group>"; };
 		B30AA8802610C544008B6714 /* DrawingComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingComponent.swift; sourceTree = "<group>"; };
 		B30AA88F2610D384008B6714 /* UIImage+mergeWith.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+mergeWith.swift"; sourceTree = "<group>"; };
+		B31A650D2618201900F532AF /* CGAffineTransform+rotatedAround.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGAffineTransform+rotatedAround.swift"; sourceTree = "<group>"; };
 		B3320D1D260F6AB20063558A /* LayerMerger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerMerger.swift; sourceTree = "<group>"; };
 		B3320D21260F6BA10063558A /* NormalLayerMerger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalLayerMerger.swift; sourceTree = "<group>"; };
 		B3320D61260F92330063558A /* LayerComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerComponent.swift; sourceTree = "<group>"; };
+		B34A84512617AC0000A3185A /* UIView+asImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+asImage.swift"; sourceTree = "<group>"; };
+		B34A84552617AC6D00A3185A /* NormalImageMerger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalImageMerger.swift; sourceTree = "<group>"; };
 		B35115B926123B510056886C /* UIView+newPointInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+newPointInView.swift"; sourceTree = "<group>"; };
 		B35115BF261341980056886C /* UIView+setAnchorPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+setAnchorPoint.swift"; sourceTree = "<group>"; };
 		B35115D12613790F0056886C /* EditingMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditingMode.swift; sourceTree = "<group>"; };
@@ -312,7 +318,9 @@
 				B35115BF261341980056886C /* UIView+setAnchorPoint.swift */,
 				B35115B926123B510056886C /* UIView+newPointInView.swift */,
 				B3D7AD6A2615B4C30082D591 /* UIView+showBorder.swift */,
+				B34A84512617AC0000A3185A /* UIView+asImage.swift */,
 				B3D7AD642615A8910082D591 /* TransformInfo+transform.swift */,
+				B31A650D2618201900F532AF /* CGAffineTransform+rotatedAround.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -345,6 +353,7 @@
 			children = (
 				B3320D1D260F6AB20063558A /* LayerMerger.swift */,
 				B3320D21260F6BA10063558A /* NormalLayerMerger.swift */,
+				B34A84552617AC6D00A3185A /* NormalImageMerger.swift */,
 			);
 			path = "Layer Merger";
 			sourceTree = "<group>";
@@ -532,6 +541,7 @@
 				B3D7AD612615A54C0082D591 /* CompositeLayerView.swift in Sources */,
 				B30AA85D2610C3D7008B6714 /* StorageScene.swift in Sources */,
 				A29A19642607243E00710943 /* ShotLabel.swift in Sources */,
+				B34A84562617AC6D00A3185A /* NormalImageMerger.swift in Sources */,
 				A209158C26070595001A242E /* SceneShotViewCell.swift in Sources */,
 				A2091585260703D1001A242E /* SceneViewController.swift in Sources */,
 				B3755AAB26062B9700EC0F56 /* ShotDesignerViewController.swift in Sources */,
@@ -546,6 +556,7 @@
 				B30AA8592610C3B5008B6714 /* StorageProject.swift in Sources */,
 				B35FA2B82614A84900D656E3 /* CompositeComponent.swift in Sources */,
 				A29A19552607242600710943 /* Layer.swift in Sources */,
+				B31A650E2618201900F532AF /* CGAffineTransform+rotatedAround.swift in Sources */,
 				B3E190042616219C003C7AEF /* ShotDesignerButton.swift in Sources */,
 				A209158926070553001A242E /* SceneHeaderView.swift in Sources */,
 				B35FA29426143FA400D656E3 /* SelectableView.swift in Sources */,
@@ -563,6 +574,7 @@
 				A29A19612607243800710943 /* Project.swift in Sources */,
 				B3320D22260F6BA10063558A /* NormalLayerMerger.swift in Sources */,
 				A2F2C89A260768E900FD4FF6 /* Color.swift in Sources */,
+				B34A84522617AC0000A3185A /* UIView+asImage.swift in Sources */,
 				B30AA8662610C419008B6714 /* StorageLayer.swift in Sources */,
 				B35115BA26123B510056886C /* UIView+newPointInView.swift in Sources */,
 				B358305C2615F57500824C55 /* LayerLockButton.swift in Sources */,

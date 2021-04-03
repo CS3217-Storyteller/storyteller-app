@@ -12,4 +12,7 @@ class DrawingUtility {
         layerView.isVisible = layer.isVisible
         return layerView
     }
+    static func generateLayerViews(for shot: Shot) -> [LayerView] {
+        shot.layers.map({ generateLayerView(for: $0) })
+    }
 }

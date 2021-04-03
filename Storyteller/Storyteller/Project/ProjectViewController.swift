@@ -108,7 +108,7 @@ extension ProjectViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: - ModelManagerObserver
 extension ProjectViewController: ModelManagerObserver {
-    func modelDidChanged() {
+    func modelDidChange() {
         collectionView.reloadData()
     }
 }

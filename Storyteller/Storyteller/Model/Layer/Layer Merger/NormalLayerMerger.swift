@@ -22,8 +22,7 @@ class NormalLayerMerger: LayerMerger {
     func mergeDrawing(component: DrawingComponent) -> LayerView {
         let drawingLayerView = DrawingLayerView(drawing: component.drawing,
                                                 canvasSize: canvasSize)
-        drawingLayerView.updateTransform(anchorPoint: component.anchorPoint,
-                                         transform: component.transformInfo.transform)
+        drawingLayerView.transform = component.transform
 
         return drawingLayerView
     }
@@ -31,8 +30,7 @@ class NormalLayerMerger: LayerMerger {
     func merge(results: [LayerView], composite: CompositeComponent) -> LayerView {
         let mergedLayerView = CompositeLayerView(canvasSize: canvasSize, children: results)
 
-        mergedLayerView.updateTransform(anchorPoint: composite.anchorPoint,
-                                        transform: composite.transformInfo.transform)
+        mergedLayerView.transform = composite.transform
         return mergedLayerView
     }
 }

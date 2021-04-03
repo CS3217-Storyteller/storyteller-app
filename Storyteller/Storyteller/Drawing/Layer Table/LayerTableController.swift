@@ -171,7 +171,7 @@ extension LayerTableController {
 }
 // MARK: - ModelManagerObserver
 extension LayerTableController: ModelManagerObserver {
-    func modelDidChanged() {
+    func modelDidChange() {
         tableView.reloadData()
 
         setUpLayerSelection()

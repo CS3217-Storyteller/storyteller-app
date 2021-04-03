@@ -21,12 +21,19 @@ protocol LayerComponent: Transformable {
 }
 
 extension LayerComponent {
-    // TODO: the anchor point for Image Layer should be just the center point
     var anchorPoint: CGPoint {
         guard !(frame.isEmpty || frame.isInfinite) else {
             return CGPoint(x: 0.5, y: 0.5)
         }
         return CGPoint(x: frame.midX / canvasSize.width,
                        y: frame.midY / canvasSize.height)
+    }
+    var transform: CGAffineTransform {
+        CGAffineTransform(translationX: transformInfo.xTranslation,
+                          y: transformInfo.yTranslation)
+            .rotatedAround(anchorPoint, by: transformInfo.rotation,
+                           boundsSize: canvasSize)
+            .scaledAround(anchorPoint, by: transformInfo.scale,
+                          boundsSize: canvasSize)
     }
 }

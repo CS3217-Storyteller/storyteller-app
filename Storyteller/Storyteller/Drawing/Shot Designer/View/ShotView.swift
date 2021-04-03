@@ -83,18 +83,14 @@ class ShotView: UIView {
 
 // MARK: - Update Layer View
 extension ShotView {
-    func updateLayerTransform(_ newLayerView: LayerView) {
-        selectedLayerView.updateTransform(anchorPoint: newLayerView.layer.anchorPoint,
-                                          transform: newLayerView.transform)
-    }
+    func updateLayerViews(newLayerViews: [LayerView]) {
+        for i in newLayerViews.indices {
+            layerViews[i].transform = newLayerViews[i].transform
+            layerViews[i].isLocked = newLayerViews[i].isLocked
+            layerViews[i].isVisible = newLayerViews[i].isVisible
 
-    func toggleLayerLock(at index: Int) {
-        layerViews[index].isLocked.toggle()
-        updateEffectForSelectedLayer()
-    }
-    func toggleLayerVisibility(at index: Int) {
-        layerViews[index].isVisible.toggle()
-        updateEffectForSelectedLayer()
+            updateEffectForSelectedLayer()
+        }
     }
 
     func removeLayers(at indices: [Int]) {

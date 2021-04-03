@@ -211,7 +211,7 @@ extension SceneViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: - ModelManagerObserver
 extension SceneViewController: ModelManagerObserver {
-    func modelDidChanged() {
+    func modelDidChange() {
         collectionView.reloadData()
     }
 }
