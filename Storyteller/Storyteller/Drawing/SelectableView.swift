@@ -19,7 +19,7 @@ extension SelectableView {
         refreshView()
     }
 
-    mutating func unselect() {
+    mutating func deselect() {
         isChosen = false
         refreshView()
     }

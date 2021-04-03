@@ -16,6 +16,17 @@ class ShotView: UIView {
             updateEffectForSelectedLayer()
         }
     }
+    var selectedLayerIndex = 0 {
+        didSet {
+            updateEffectForSelectedLayer()
+        }
+    }
+    var selectedLayerView: LayerView {
+        layerViews[selectedLayerIndex]
+    }
+    var currentCanvasView: PKCanvasView? {
+        selectedLayerView.topCanvasView
+    }
 
     private func updateEffectForSelectedLayer() {
         guard let canvasView = currentCanvasView,
@@ -32,18 +43,6 @@ class ShotView: UIView {
         toolPicker?.setVisible(isInDrawingMode, forFirstResponder: canvasView)
     }
 
-    var selectedLayerIndex = 0 {
-        didSet {
-            updateEffectForSelectedLayer()
-        }
-    }
-    var selectedLayerView: LayerView {
-        layerViews[selectedLayerIndex]
-    }
-    var currentCanvasView: PKCanvasView? {
-        selectedLayerView.topCanvasView
-    }
-
     func setUpLayerViews(_ layerViews: [LayerView], toolPicker: PKToolPicker,
                          PKDelegate: PKCanvasViewDelegate) {
         reset()
@@ -53,7 +52,7 @@ class ShotView: UIView {
         self.toolPicker = toolPicker
         layerViews.forEach({ add(layerView: $0, toolPicker: toolPicker,
                                  PKDelegate: PKDelegate) })
-        selectedLayerIndex = layerViews.count - 1
+        selectedLayerIndex = 0
 
         clipsToBounds = true
     }
@@ -62,7 +61,7 @@ class ShotView: UIView {
              PKDelegate: PKCanvasViewDelegate) {
         layerViews.append(layerView)
         addSubview(layerView)
-
+        print("called")
         layerView.setUpPK(toolPicker: toolPicker, PKDelegate: PKDelegate)
     }
     func remove(at index: Int) {

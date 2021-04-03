@@ -41,7 +41,7 @@ class CompositeLayerView: UIView {
 
 extension CompositeLayerView: LayerView {
     func transform(using transform: CGAffineTransform) {
-        children.forEach({ $0.transform(using: transform)})
+        children.forEach({ $0.transform(using: transform) })
     }
 
     var topCanvasView: PKCanvasView? {

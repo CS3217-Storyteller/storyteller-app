@@ -21,30 +21,16 @@ struct DrawingComponent {
 }
 
 extension DrawingComponent: LayerComponent {
-    // MARK: - Transformable
-    var originalFrame: CGRect {
-        drawing.transformed(using: transform.inverted()).bounds
-    }
-    var transformedFrame: CGRect {
-        // TODO: remove
-//        drawing.bounds.intersection(CGRect(origin: .zero, size: canvasSize))
-        drawing.bounds
-    }
-    func transformed(using transform: CGAffineTransform) -> DrawingComponent {
-        let newDrawing = drawing.transformed(using: transform)
-        return DrawingComponent(drawing: newDrawing, canvasSize: canvasSize,
-                                transform: transform.concatenating(self.transform))
-    }
-    func resetTransform() -> DrawingComponent {
-        DrawingComponent(drawing: drawing.transformed(using: transform.inverted()),
-                         canvasSize: canvasSize, transform: .identity)
+    func updateTransform(_ transform: CGAffineTransform) -> DrawingComponent {
+        DrawingComponent(drawing: drawing, canvasSize: canvasSize,
+                         transform: transform)
     }
 
     var image: UIImage {
-        guard !(transformedFrame.isEmpty || transformedFrame.isInfinite) else {
+        guard !(drawing.bounds.isEmpty || drawing.bounds.isInfinite) else {
             return UIImage.clearImage(ofSize: canvasSize)
         }
-        return drawing.image(from: CGRect(origin: .zero, size: canvasSize), scale: 1)
+        return drawing.image(from: CGRect(origin: .zero, size: canvasSize), scale: 0.5)
     }
 
     var containsDrawing: Bool {

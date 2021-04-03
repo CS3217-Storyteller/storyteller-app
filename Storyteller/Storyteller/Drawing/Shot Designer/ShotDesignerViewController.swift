@@ -8,7 +8,7 @@ import UIKit
 import PencilKit
 
 class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
-    @IBOutlet private var shotView: ShotView!
+    @IBOutlet var shotView: ShotView!
 
     @IBOutlet private var transformLayerButton: TransformLayerButton!
     @IBOutlet private var drawingModeButton: DrawingModeButton!
@@ -16,17 +16,16 @@ class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
     var editingMode = EditingMode.free {
         didSet {
             switch editingMode {
-            // TODO
             case .free:
-                transformLayerButton.unselect()
-                drawingModeButton.unselect()
+                transformLayerButton.deselect()
+                drawingModeButton.deselect()
                 shotView.isInDrawingMode = false
             case .transformLayer:
                 transformLayerButton.select()
-                drawingModeButton.unselect()
+                drawingModeButton.deselect()
                 shotView.isInDrawingMode = false
             case .drawing:
-                transformLayerButton.unselect()
+                transformLayerButton.deselect()
                 drawingModeButton.select()
                 shotView.isInDrawingMode = true
             }
@@ -122,39 +121,22 @@ class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
 // MARK: - Gestures
 extension ShotDesignerViewController {
     @IBAction private func handlePan(_ sender: UIPanGestureRecognizer) {
-        switch editingMode {
-        case .transformLayer:
-            moveLayer(sender)
-        case .free, .drawing:
-            moveCanvas(sender)
-        }
-    }
-    private func moveCanvas(_ sender: UIPanGestureRecognizer) {
         switch sender.state {
         case .began:
             panPosition = sender.location(in: view)
-        case .changed, .ended:
-            let location = sender.location(in: view)
-            let offsetX = location.x - panPosition.x
-            let offsetY = location.y - panPosition.y
-            canvasTransform = canvasTransform
-                .concatenating(CGAffineTransform(translationX: offsetX, y: offsetY))
-            panPosition = location
-        default:
-            return
-        }
-    }
-    private func moveLayer(_ sender: UIPanGestureRecognizer) {
-        switch sender.state {
-        case .began:
-            panPosition = sender.location(in: view)
-        case .changed, .ended:
+        case .changed:
             let location = sender.location(in: view)
             let offsetX = location.x - panPosition.x
             let offsetY = location.y - panPosition.y
             panPosition = location
 
-            transformLayer({ $0.translatedBy(x: offsetX, y: offsetY) })
+            switch editingMode {
+            case .transformLayer:
+                transformLayer({ $0.translatedBy(x: offsetX, y: offsetY) })
+            case .free, .drawing:
+                canvasTransform = canvasTransform
+                    .concatenating(CGAffineTransform(translationX: offsetX, y: offsetY))
+            }
         default:
             return
         }
@@ -259,6 +241,12 @@ extension ShotDesignerViewController: ModelManagerObserver {
         }
         shotView.updateLayerViews(newLayerViews: DrawingUtility.generateLayerViews(for: shot))
     }
+    func willAddLayer() {
+        shotView.add(layerView: DrawingUtility.generateLayerView(for: Layer
+                                                                    .getEmptyLayer(canvasSize: canvasSize,
+                                                                                   name: Constants.defaultLayerName)),
+                     toolPicker: toolPicker, PKDelegate: self)
+    }
 }
 // MARK: - PKCanvasViewDelegate
 extension ShotDesignerViewController: PKCanvasViewDelegate {
@@ -356,13 +344,6 @@ extension ShotDesignerViewController: UIGestureRecognizerDelegate {
 extension ShotDesignerViewController: LayerTableDelegate {
     func didMoveLayer(from oldIndex: Int, to newIndex: Int) {
         shotView.moveLayer(from: oldIndex, to: newIndex)
-    }
-
-    func didAddLayer() {
-        shotView.add(layerView: DrawingUtility.generateLayerView(for: Layer
-                                            .getEmptyLayer(canvasSize: canvasSize,
-                                                           name: Constants.defaultLayerName)),
-                     toolPicker: toolPicker, PKDelegate: self)
     }
 
     func didSelectLayer(at index: Int) {

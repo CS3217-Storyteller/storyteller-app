@@ -33,7 +33,11 @@ struct Layer {
     func setDrawing(to drawing: PKDrawing) -> Layer {
         updateComponent(component.setDrawing(to: drawing))
     }
-
+    func updateComponent(_ component: LayerComponent) -> Layer {
+        var newLayer = self
+        newLayer.component = component
+        return newLayer
+    }
 }
 
 extension Layer {
@@ -42,35 +46,11 @@ extension Layer {
     }
 }
 
-extension Layer {
-    func updateComponent(_ component: LayerComponent) -> Layer {
-        var newLayer = self
-        newLayer.component = component
-        return newLayer
+extension Layer: Transformable {
+    var transform: CGAffineTransform {
+        component.transform
     }
-
-    func scaled(by scale: CGFloat) -> Layer {
-        updateComponent(component.scaled(by: scale))
-    }
-
-    func rotated(by angle: CGFloat) -> Layer {
-        updateComponent(component.rotated(by: angle))
-    }
-
-    func translatedBy(x: CGFloat, y: CGFloat) -> Layer {
-        updateComponent(component.translatedBy(x: x, y: y))
-    }
-
-    func resetTransform() -> Layer {
-        updateComponent(component.resetTransform())
-    }
-
-    func transformed(using transform: CGAffineTransform) -> Layer {
-        component.transformed(using: transform)
-    }
-
-    var anchorPoint: CGPoint {
-        CGPoint(x: component.transformedFrame.midX / canvasSize.width,
-                y: component.transformedFrame.midY / canvasSize.height)
+    func updateTransform(_ transform: CGAffineTransform) -> Layer {
+        updateComponent(component.updateTransform(transform))
     }
 }

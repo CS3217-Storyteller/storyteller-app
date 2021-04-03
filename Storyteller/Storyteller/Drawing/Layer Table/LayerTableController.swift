@@ -8,9 +8,16 @@
 import UIKit
 
 class LayerTableController: UIViewController {
+    var numOfRows: Int {
+        tableView.numberOfRows(inSection: 0)
+    }
     var selectedLayerIndex = 0 {
         didSet {
             guard tableView != nil else {
+                return
+            }
+            guard selectedLayerIndex < numOfRows else {
+                selectedLayerIndex = numOfRows - 1
                 return
             }
             tableView.selectRow(at: selectedIndexPath, animated: true, scrollPosition: .none)
@@ -29,6 +36,9 @@ class LayerTableController: UIViewController {
     var shotLabel: ShotLabel!
 
     var layerSelection = [Bool]()
+    var multipleSelectionIndices: [Int] {
+        layerSelection.indices.filter({ layerSelection[$0] })
+    }
 
     @IBOutlet private var editButton: UIButton!
     @IBOutlet private var duplicateLayerButton: UIButton!
@@ -43,14 +53,17 @@ class LayerTableController: UIViewController {
         tableView.allowsMultipleSelectionDuringEditing = true
 
         modelManager.observers.append(self)
-        setUpLayerSelection()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        let indexPath = IndexPath(row: selectedLayerIndex, section: 0)
-        tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
+        setUpLayerSelection()
+        reselect()
+    }
+    private func reselect() {
+        let selected = selectedLayerIndex
+        selectedLayerIndex = selected
     }
     func setUpLayerSelection() {
         let count = modelManager.getLayers(of: shotLabel)?.count ?? 0
@@ -69,11 +82,6 @@ extension LayerTableController: UITableViewDataSource {
         return layerCount
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard indexPath.section == 0 else {
-            // TODO: add background cell
-            return UITableViewCell()
-        }
-
         guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: LayerTableViewCell.identifier,
                 for: indexPath) as? LayerTableViewCell else {
@@ -95,34 +103,37 @@ extension LayerTableController: UITableViewDataSource {
 extension LayerTableController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard tableView.isEditing else {
+            selectSingleLayer(at: indexPath)
+            return
+        }
+        selectLayerDuringEditing(at: indexPath)
+    }
+    private func selectSingleLayer(at indexPath: IndexPath) {
         guard selectedLayerIndex != indexPath.row else {
             // TODO: rename layer name process
             return
         }
         selectedLayerIndex = indexPath.row
     }
-
-    func tableView(_ tableView: UITableView,
-                   commit editingStyle: UITableViewCell.EditingStyle,
-                   forRowAt indexPath: IndexPath) {
-        // TODO: remove this
-        if editingStyle == .delete {
-            guard tableView.numberOfRows(inSection: 0) > 1 else {
-                Alert.presentAtLeastOneLayerAlert(controller: self)
-                selectedLayerIndex = 0
-                return
-            }
-            modelManager.removeLayers(at: [indexPath.row], of: shotLabel)
-            delegate?.didRemoveLayers(at: [indexPath.row])
-        }
+    private func selectLayerDuringEditing(at indexPath: IndexPath) {
+        layerSelection[indexPath.row] = true
+        selectedLayerIndex = indexPath.row
     }
 
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        guard tableView.isEditing else {
+            return
+        }
+        layerSelection[indexPath.row] = false
+    }
     func tableView(_ tableView: UITableView,
                    moveRowAt sourceIndexPath: IndexPath,
                    to destinationIndexPath: IndexPath) {
+        delegate?.didMoveLayer(from: sourceIndexPath.row, to: destinationIndexPath.row)
         modelManager.moveLayer(from: sourceIndexPath.row,
                                to: destinationIndexPath.row, of: shotLabel)
-        delegate?.didMoveLayer(from: sourceIndexPath.row, to: destinationIndexPath.row)
+        selectedLayerIndex = destinationIndexPath.row
     }
     func tableView(_ tableView: UITableView,
                    editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
@@ -131,17 +142,27 @@ extension LayerTableController: UITableViewDelegate {
 }
 // MARK: - Actions
 extension LayerTableController {
-    @IBAction private func toggleEditMode(_ sender: UIButton) {
+    @IBAction private func toggleEditMode(_ sender: Any) {
         let isEditing = tableView.isEditing
         if isEditing {
-            tableView.setEditing(false, animated: true)
-            sender.setTitle("Edit", for: .normal)
+            exitEditingMode()
         } else {
-            tableView.setEditing(true, animated: true)
-            sender.setTitle("Done", for: .normal)
+            enterEditingMode()
         }
     }
+    private func enterEditingMode() {
+        tableView.setEditing(true, animated: true)
+        editButton.setTitle("Done", for: .normal)
+        addButton.isHidden = true
+    }
+    private func exitEditingMode() {
+        tableView.setEditing(false, animated: true)
+        editButton.setTitle("Edit", for: .normal)
+        addButton.isHidden = false
 
+        reselect()
+        setUpLayerSelection()
+    }
     @IBAction private func changeBackgroundColor() {
     }
 
@@ -159,13 +180,32 @@ extension LayerTableController {
     }
 
     @IBAction private func deleteLayers(_ sender: Any) {
-
+        guard tableView.isEditing else {
+            deleteSingleLayer()
+            return
+        }
+        deleteMultipleLayer()
     }
-
+    private func deleteSingleLayer() {
+        guard numOfRows > 1 else {
+            Alert.presentAtLeastOneLayerAlert(controller: self)
+            selectedLayerIndex = 0
+            return
+        }
+        delegate?.didRemoveLayers(at: [selectedLayerIndex])
+        modelManager.removeLayers(at: [selectedLayerIndex], of: shotLabel)
+    }
+    private func deleteMultipleLayer() {
+        guard numOfRows > multipleSelectionIndices.count else {
+            Alert.presentAtLeastOneLayerAlert(controller: self)
+            return
+        }
+        delegate?.didRemoveLayers(at: multipleSelectionIndices)
+        modelManager.removeLayers(at: multipleSelectionIndices, of: shotLabel)
+    }
     @IBAction private func addLayer(_ sender: Any) {
         modelManager.addLayer(to: shotLabel)
-        delegate?.didAddLayer()
-        selectedLayerIndex = tableView.numberOfRows(inSection: 0) - 1
+        selectedLayerIndex = numOfRows - 1
     }
 
 }
@@ -176,8 +216,10 @@ extension LayerTableController: ModelManagerObserver {
 
         setUpLayerSelection()
 
-        let indexPath = IndexPath(row: selectedLayerIndex, section: 0)
-        tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
+        guard !tableView.isEditing else {
+            return
+        }
+        reselect()
     }
 }
 
@@ -212,6 +254,5 @@ protocol LayerTableDelegate: AnyObject {
     func didToggleLayerVisibility(at index: Int)
     func didChangeLayerName(at index: Int, newName: String)
     func didRemoveLayers(at indices: [Int])
-    func didAddLayer()
     func didMoveLayer(from oldIndex: Int, to newIndex: Int)
 }

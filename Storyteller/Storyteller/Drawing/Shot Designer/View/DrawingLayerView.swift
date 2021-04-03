@@ -49,13 +49,10 @@ extension DrawingLayerView: LayerView {
     func transform(using transform: CGAffineTransform) {
         canvasView.drawing.transform(using: transform)
     }
-
-
     var topCanvasView: PKCanvasView? {
         canvasView
     }
 }
-
 extension DrawingLayerView {
     override var canBecomeFirstResponder: Bool {
         true

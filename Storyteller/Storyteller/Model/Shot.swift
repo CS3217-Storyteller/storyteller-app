@@ -28,6 +28,7 @@ struct Shot {
     }
     mutating func addLayer(_ layer: Layer, at index: Int?) {
         guard let index = index else {
+            
             layers.append(layer)
             return
         }

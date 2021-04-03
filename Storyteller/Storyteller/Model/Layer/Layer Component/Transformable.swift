@@ -7,9 +7,21 @@
 import CoreGraphics
 
 protocol Transformable {
-    var transformedFrame: CGRect { get }
-    var originalFrame: CGRect { get }
     var transform: CGAffineTransform { get }
-    func transformed(using transform: CGAffineTransform) -> Self
-    func resetTransform() -> Self
+    func updateTransform(_ transform: CGAffineTransform) -> Self
+}
+
+extension Transformable {
+    func scaled(by scale: CGFloat) -> Self {
+        updateTransform(transform.scaledBy(x: scale, y: scale))
+    }
+    func rotated(by rotation: CGFloat) -> Self {
+        updateTransform(transform.rotated(by: rotation))
+    }
+    func translatedBy(x: CGFloat, y: CGFloat) -> Self {
+        updateTransform(transform.concatenating(CGAffineTransform(translationX: x, y: y)))
+    }
+    func resetTransform() -> Self {
+        updateTransform(.identity)
+    }
 }

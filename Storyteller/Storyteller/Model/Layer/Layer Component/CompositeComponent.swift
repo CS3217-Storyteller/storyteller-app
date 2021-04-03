@@ -14,27 +14,13 @@ struct CompositeComponent {
         self.transform = transform
         self.children = children
     }
-
 }
 
 extension CompositeComponent: LayerComponent {
-    // MARK: - Transformable
-    var originalFrame: CGRect {
-        reduce(CGRect.zero, { $0.union($1.originalFrame) })
+    func updateTransform(_ transform: CGAffineTransform) -> CompositeComponent {
+        CompositeComponent(transform: transform, children: children)
     }
-    var transformedFrame: CGRect {
-        reduce(CGRect.zero, { $0.union($1.transformedFrame) })
-    }
-    func transformed(using transform: CGAffineTransform) -> CompositeComponent {
-        let newChildren = children.map({ $0.transformed(using: transform) })
-        return CompositeComponent(transform: transform.concatenating(self.transform),
-                                  children: newChildren)
-    }
-    func resetTransform() -> CompositeComponent {
-        let newChildren = children.map({ $0.resetTransform() })
-        return CompositeComponent(children: newChildren)
-    }
-    
+
     var canvasSize: CGSize {
         children.first?.canvasSize ?? .zero
     }

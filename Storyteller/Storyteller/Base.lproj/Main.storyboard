@@ -354,7 +354,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="ZWn-OS-aXY" userLabel="Background Color Stack View">
-                                <rect key="frame" x="20" y="630" width="335" height="30"/>
+                                <rect key="frame" x="17" y="630" width="341" height="30"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="C1n-CE-PNc" userLabel="Background Color and Onion Skin Stack View">
                                         <rect key="frame" x="0.0" y="0.0" width="150.5" height="30"/>
@@ -383,8 +383,8 @@
                                             </button>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="2eP-b7-ZLy" userLabel="Onion Skin Stack View">
-                                        <rect key="frame" x="165.5" y="0.0" width="169.5" height="30"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="2eP-b7-ZLy" userLabel="Onion Skin Stack View">
+                                        <rect key="frame" x="165.5" y="0.0" width="175.5" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Onion Skin:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xVt-Bu-UOp">
                                                 <rect key="frame" x="0.0" y="0.0" width="99.5" height="30"/>
@@ -393,7 +393,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Bs-Yt-Usq">
-                                                <rect key="frame" x="104.5" y="0.0" width="30" height="30"/>
+                                                <rect key="frame" x="107.5" y="0.0" width="30" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="9Bs-Yt-Usq" secondAttribute="height" multiplier="1:1" id="hrA-uQ-9Yu"/>
                                                 </constraints>
@@ -404,7 +404,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2kK-tE-V2M">
-                                                <rect key="frame" x="139.5" y="0.0" width="30" height="30"/>
+                                                <rect key="frame" x="145.5" y="0.0" width="30" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="2kK-tE-V2M" secondAttribute="height" multiplier="1:1" id="Zfh-6o-Na6"/>
                                                 </constraints>

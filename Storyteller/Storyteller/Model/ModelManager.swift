@@ -152,6 +152,8 @@ class ModelManager {
         }
         let layer = Layer(layerWithDrawing: drawing, canvasSize: shot.canvasSize)
         projects[projectIndex].addLayer(layer, at: index, to: shotLabel)
+
+        observers.forEach({ $0.willAddLayer() })
         saveProject(projects[projectIndex])
     }
 
@@ -190,8 +192,10 @@ protocol ModelManagerObserver {
     /// Invoked when the model changes.
     func modelDidChange()
     func layerDidUpdate()
+    func willAddLayer()
 }
 
 extension ModelManagerObserver {
     func layerDidUpdate() { }
+    func willAddLayer() { }
 }

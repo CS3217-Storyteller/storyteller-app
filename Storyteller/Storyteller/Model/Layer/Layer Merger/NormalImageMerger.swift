@@ -6,7 +6,7 @@
 //
 
 import PencilKit
-//// TODO
-//class NormalImageMerger: LayerMerger {
+// // TODO
+// class NormalImageMerger: LayerMerger {
 //
-//}
+// }
