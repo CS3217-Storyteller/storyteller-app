@@ -4,6 +4,7 @@
 //
 //  Created by TFang on 31/3/21.
 //
+import CoreGraphics
 
 struct StorageLayerComponent: Codable {
     enum StorageNodeType {
@@ -11,26 +12,26 @@ struct StorageLayerComponent: Codable {
         case drawing(DrawingComponent)
     }
 
-    var transformInfo = TransformInfo()
+    var transform: CGAffineTransform
     var type: StorageNodeType
 
     init(_ node: LayerComponent) {
         self = StorageLayerComponent.generateStorageComponent(node)
     }
 
-    init(transformInfo: TransformInfo, type: StorageNodeType) {
-        self.transformInfo = transformInfo
+    init(transform: CGAffineTransform, type: StorageNodeType) {
+        self.transform = transform
         self.type = type
     }
 
     static func generateStorageComponent(_ layerComponent: LayerComponent) -> StorageLayerComponent {
         if let drawingComponent = layerComponent as? DrawingComponent {
-            return StorageLayerComponent(transformInfo: layerComponent.transformInfo,
+            return StorageLayerComponent(transform: layerComponent.transform,
                                          type: .drawing(drawingComponent))
         }
         if let composite = layerComponent as? CompositeComponent {
             let storageChildren = composite.children.map({ generateStorageComponent($0) })
-            return StorageLayerComponent(transformInfo: layerComponent.transformInfo,
+            return StorageLayerComponent(transform: layerComponent.transform,
                                          type: .composite(storageChildren))
         }
 
@@ -41,7 +42,7 @@ struct StorageLayerComponent: Codable {
         case children
         case drawing
 
-        case transformInfo
+        case transform
     }
 
     enum CodableError: Error {
@@ -52,7 +53,7 @@ struct StorageLayerComponent: Codable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
 
-        try container.encode(transformInfo, forKey: .transformInfo)
+        try container.encode(transform, forKey: .transform)
 
         switch type {
         case .composite(let children):
@@ -65,7 +66,7 @@ struct StorageLayerComponent: Codable {
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        transformInfo = try container.decode(TransformInfo.self, forKey: .transformInfo)
+        transform = try container.decode(CGAffineTransform.self, forKey: .transform)
 
         if let children = try? container.decode([StorageLayerComponent].self, forKey: .children) {
             self.type = .composite(children)
@@ -86,7 +87,7 @@ extension StorageLayerComponent {
         switch storageComponent.type {
         case .composite(let storageChildren):
             let children = storageChildren.map({ generateLayerComponent($0) })
-            return CompositeComponent(transformInfo: storageComponent.transformInfo,
+            return CompositeComponent(transform: storageComponent.transform,
                                       children: children)
         case .drawing(let drawingComponent):
             return drawingComponent

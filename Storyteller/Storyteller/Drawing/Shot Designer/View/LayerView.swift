@@ -13,6 +13,7 @@ protocol LayerView: UIView {
     var isLocked: Bool { get set }
     var isVisible: Bool { get set }
     var topCanvasView: PKCanvasView? { get }
+    func transform(using transform: CGAffineTransform)
 }
 
 extension LayerView {

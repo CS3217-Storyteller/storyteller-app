@@ -40,6 +40,10 @@ class CompositeLayerView: UIView {
 }
 
 extension CompositeLayerView: LayerView {
+    func transform(using transform: CGAffineTransform) {
+        children.forEach({ $0.transform(using: transform)})
+    }
+
     var topCanvasView: PKCanvasView? {
         children.compactMap({ $0.topCanvasView }).last
     }

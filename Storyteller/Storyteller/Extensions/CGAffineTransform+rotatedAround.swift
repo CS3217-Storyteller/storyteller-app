@@ -8,18 +8,16 @@
 import CoreGraphics
 
 extension CGAffineTransform {
-    func rotatedAround(_ relativeAnchorPoint: CGPoint, by angle: CGFloat, boundsSize: CGSize) -> CGAffineTransform {
-        let anchorPoint = CGPoint(x: boundsSize.width * (relativeAnchorPoint.x - 0.5),
-                                  y: boundsSize.height * (relativeAnchorPoint.y - 0.5))
-        return translatedBy(x: anchorPoint.x, y: anchorPoint.y)
+    static func rotatedAround(_ pointRelativeToAnchor: CGPoint, by angle: CGFloat, boundsSize: CGSize) -> CGAffineTransform {
+        CGAffineTransform.identity
+            .translatedBy(x: pointRelativeToAnchor.x, y: pointRelativeToAnchor.y)
             .rotated(by: angle)
-            .translatedBy(x: -anchorPoint.x, y: -anchorPoint.y)
+            .translatedBy(x: -pointRelativeToAnchor.x, y: -pointRelativeToAnchor.y)
     }
-    func scaledAround(_ relativeAnchorPoint: CGPoint, by scale: CGFloat, boundsSize: CGSize) -> CGAffineTransform {
-        let anchorPoint = CGPoint(x: boundsSize.width * (relativeAnchorPoint.x - 0.5),
-                                  y: boundsSize.height * (relativeAnchorPoint.y - 0.5))
-        return translatedBy(x: anchorPoint.x, y: anchorPoint.y)
+    static func scaledAround(_ pointRelativeToAnchor: CGPoint, by scale: CGFloat) -> CGAffineTransform {
+        CGAffineTransform.identity
+            .translatedBy(x: pointRelativeToAnchor.x, y: pointRelativeToAnchor.y)
             .scaledBy(x: scale, y: scale)
-            .translatedBy(x: -anchorPoint.x, y: -anchorPoint.y)
+            .translatedBy(x: -pointRelativeToAnchor.x, y: -pointRelativeToAnchor.y)
     }
 }

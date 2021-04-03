@@ -162,7 +162,6 @@ class ModelManager {
         }
         projects[projectIndex].update(layer: layer, at: layerIndex, ofShot: shotLabel)
 
-//        print("inside model: \(layer.component.transformInfo.transform)")
         saveProject(projects[projectIndex])
         observers.forEach({ $0.layerDidUpdate() })
     }

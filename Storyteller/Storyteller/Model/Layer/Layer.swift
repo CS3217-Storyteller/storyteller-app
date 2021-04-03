@@ -30,12 +30,6 @@ struct Layer {
         self.name = name
     }
 
-    func updateComponent(_ component: LayerComponent) -> Layer {
-        var newLayer = self
-        newLayer.component = component
-        return newLayer
-    }
-
     func setDrawing(to drawing: PKDrawing) -> Layer {
         updateComponent(component.setDrawing(to: drawing))
     }
@@ -43,6 +37,18 @@ struct Layer {
 }
 
 extension Layer {
+    static func getEmptyLayer(canvasSize: CGSize, name: String) -> Layer {
+        Layer(layerWithDrawing: PKDrawing(), canvasSize: canvasSize, name: name)
+    }
+}
+
+extension Layer {
+    func updateComponent(_ component: LayerComponent) -> Layer {
+        var newLayer = self
+        newLayer.component = component
+        return newLayer
+    }
+
     func scaled(by scale: CGFloat) -> Layer {
         updateComponent(component.scaled(by: scale))
     }
@@ -58,34 +64,13 @@ extension Layer {
     func resetTransform() -> Layer {
         updateComponent(component.resetTransform())
     }
-}
 
-extension Layer {
-    static func getEmptyLayer(canvasSize: CGSize, name: String) -> Layer {
-        Layer(layerWithDrawing: PKDrawing(), canvasSize: canvasSize, name: name)
-    }
-}
-
-extension Layer: Transformable {
-    var frame: CGRect {
-        component.frame
+    func transformed(using transform: CGAffineTransform) -> Layer {
+        component.transformed(using: transform)
     }
 
     var anchorPoint: CGPoint {
-        component.anchorPoint
-    }
-
-    var transformInfo: TransformInfo {
-        component.transformInfo
-    }
-
-    func updateTransformInfo(info: TransformInfo) -> Layer {
-        var newLayer = self
-        newLayer.component = component.updateTransformInfo(info: info)
-        return newLayer
-    }
-
-    var transform: CGAffineTransform {
-        component.transform
+        CGPoint(x: component.transformedFrame.midX / canvasSize.width,
+                y: component.transformedFrame.midY / canvasSize.height)
     }
 }

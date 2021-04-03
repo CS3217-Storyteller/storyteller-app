@@ -46,6 +46,10 @@ class DrawingLayerView: UIView {
 }
 
 extension DrawingLayerView: LayerView {
+    func transform(using transform: CGAffineTransform) {
+        canvasView.drawing.transform(using: transform)
+    }
+
 
     var topCanvasView: PKCanvasView? {
         canvasView

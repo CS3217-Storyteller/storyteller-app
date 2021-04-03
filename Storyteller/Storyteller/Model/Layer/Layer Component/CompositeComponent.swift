@@ -8,26 +8,35 @@
 import PencilKit
 
 struct CompositeComponent {
-    var transformInfo: TransformInfo
     var children: [LayerComponent]
-
-    init(transformInfo: TransformInfo, children: [LayerComponent]) {
-        self.transformInfo = transformInfo
+    var transform: CGAffineTransform
+    init(transform: CGAffineTransform, children: [LayerComponent]) {
+        self.transform = transform
         self.children = children
     }
 
 }
 
 extension CompositeComponent: LayerComponent {
+    // MARK: - Transformable
+    var originalFrame: CGRect {
+        reduce(CGRect.zero, { $0.union($1.originalFrame) })
+    }
+    var transformedFrame: CGRect {
+        reduce(CGRect.zero, { $0.union($1.transformedFrame) })
+    }
+    func transformed(using transform: CGAffineTransform) -> CompositeComponent {
+        let newChildren = children.map({ $0.transformed(using: transform) })
+        return CompositeComponent(transform: transform.concatenating(self.transform),
+                                  children: newChildren)
+    }
+    func resetTransform() -> CompositeComponent {
+        let newChildren = children.map({ $0.resetTransform() })
+        return CompositeComponent(children: newChildren)
+    }
+    
     var canvasSize: CGSize {
         children.first?.canvasSize ?? .zero
-    }
-
-    var frame: CGRect {
-        reduce(CGRect.zero, { $0.union($1.frame) })
-    }
-    func updateTransformInfo(info: TransformInfo) -> CompositeComponent {
-        CompositeComponent(transformInfo: info, children: children)
     }
 
     var image: UIImage {

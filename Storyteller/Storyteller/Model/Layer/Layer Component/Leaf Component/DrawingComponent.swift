@@ -8,29 +8,40 @@
 import PencilKit
 
 struct DrawingComponent {
-    var transformInfo: TransformInfo
     let canvasSize: CGSize
-
+    var transform: CGAffineTransform
     private(set) var drawing: PKDrawing
 
     init(drawing: PKDrawing, canvasSize: CGSize,
-         transformInfo: TransformInfo = TransformInfo()) {
-        self.transformInfo = transformInfo
+         transform: CGAffineTransform = .identity) {
+        self.transform = transform
         self.drawing = drawing
         self.canvasSize = canvasSize
     }
 }
 
 extension DrawingComponent: LayerComponent {
-    var frame: CGRect {
-        drawing.bounds.intersection(CGRect(origin: .zero, size: canvasSize))
+    // MARK: - Transformable
+    var originalFrame: CGRect {
+        drawing.transformed(using: transform.inverted()).bounds
     }
-    func updateTransformInfo(info: TransformInfo) -> DrawingComponent {
-        DrawingComponent(drawing: drawing, canvasSize: canvasSize, transformInfo: info)
+    var transformedFrame: CGRect {
+        // TODO: remove
+//        drawing.bounds.intersection(CGRect(origin: .zero, size: canvasSize))
+        drawing.bounds
+    }
+    func transformed(using transform: CGAffineTransform) -> DrawingComponent {
+        let newDrawing = drawing.transformed(using: transform)
+        return DrawingComponent(drawing: newDrawing, canvasSize: canvasSize,
+                                transform: transform.concatenating(self.transform))
+    }
+    func resetTransform() -> DrawingComponent {
+        DrawingComponent(drawing: drawing.transformed(using: transform.inverted()),
+                         canvasSize: canvasSize, transform: .identity)
     }
 
     var image: UIImage {
-        guard !(frame.isEmpty || frame.isInfinite) else {
+        guard !(transformedFrame.isEmpty || transformedFrame.isInfinite) else {
             return UIImage.clearImage(ofSize: canvasSize)
         }
         return drawing.image(from: CGRect(origin: .zero, size: canvasSize), scale: 1)
