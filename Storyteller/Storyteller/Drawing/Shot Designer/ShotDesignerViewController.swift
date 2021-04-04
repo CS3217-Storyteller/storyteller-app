@@ -129,7 +129,7 @@ class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
         guard let idx = scene.shotOrder.firstIndex(of: currentShotId) else {
             return
         }
-        if idx <= 1 {
+        if idx <= 0 {
             return
         }
         let nextShotId = scene.shotOrder[idx - 1]
