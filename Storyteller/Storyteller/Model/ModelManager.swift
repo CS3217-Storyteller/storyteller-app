@@ -246,15 +246,17 @@ class ModelManager {
         saveProject(projects[projectId])
     }
 
-    func moveShot(_ shotLabel: ShotLabel, toScene sceneLabel: SceneLabel) {
+    func moveShot(_ shotLabel: ShotLabel, to newIndex: Int? = nil, atScene sceneLabel: SceneLabel) {
         let projectId = sceneLabel.projectId
-        let sceneId = sceneLabel.sceneId
         guard var shot = getShot(of: shotLabel)?.duplicate() else {
             return
         }
-        let label = ShotLabel(projectId: projectId, sceneId: sceneId, shotId: UUID())
+        let label = sceneLabel.generateShotLabel(withId: UUID())
         shot.label = label
         projects[projectId]?.addShot(shot, to: sceneLabel)
+        if let index = newIndex {
+            moveShot(label, to: index)
+        }
         saveProject(getProject(of: sceneLabel.projectLabel))
     }
 }
