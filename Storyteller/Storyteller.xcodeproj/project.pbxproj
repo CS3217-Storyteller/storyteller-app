@@ -57,7 +57,7 @@
 		B35FA2BC2614AB7100D656E3 /* StorageLayerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35FA2BB2614AB7100D656E3 /* StorageLayerComponent.swift */; };
 		B35FA2C42614C22A00D656E3 /* Transformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35FA2C32614C22A00D656E3 /* Transformable.swift */; };
 		B3755AA22605F21400EC0F56 /* LayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AA12605F21400EC0F56 /* LayerView.swift */; };
-		B3755AAB26062B9700EC0F56 /* ShotDesignerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AAA26062B9700EC0F56 /* ShotDesignerViewController.swift */; };
+		B3755AAB26062B9700EC0F56 /* ShotDesignerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AAA26062B9700EC0F56 /* ShotDesignerController.swift */; };
 		B3755AB3260643C000EC0F56 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AB2260643C000EC0F56 /* Constants.swift */; };
 		B3755AB92606454900EC0F56 /* ShotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AB82606454900EC0F56 /* ShotView.swift */; };
 		B3755AD626065C0700EC0F56 /* DrawingUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AD526065C0700EC0F56 /* DrawingUtility.swift */; };
@@ -134,7 +134,7 @@
 		B35FA2BB2614AB7100D656E3 /* StorageLayerComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageLayerComponent.swift; sourceTree = "<group>"; };
 		B35FA2C32614C22A00D656E3 /* Transformable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transformable.swift; sourceTree = "<group>"; };
 		B3755AA12605F21400EC0F56 /* LayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerView.swift; sourceTree = "<group>"; };
-		B3755AAA26062B9700EC0F56 /* ShotDesignerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotDesignerViewController.swift; sourceTree = "<group>"; };
+		B3755AAA26062B9700EC0F56 /* ShotDesignerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotDesignerController.swift; sourceTree = "<group>"; };
 		B3755AB2260643C000EC0F56 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B3755AB82606454900EC0F56 /* ShotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotView.swift; sourceTree = "<group>"; };
 		B3755AD526065C0700EC0F56 /* DrawingUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingUtility.swift; sourceTree = "<group>"; };
@@ -395,7 +395,7 @@
 			isa = PBXGroup;
 			children = (
 				B35115D12613790F0056886C /* EditingMode.swift */,
-				B3755AAA26062B9700EC0F56 /* ShotDesignerViewController.swift */,
+				B3755AAA26062B9700EC0F56 /* ShotDesignerController.swift */,
 				B3D7AD692615B3640082D591 /* View */,
 			);
 			path = "Shot Designer";
@@ -538,7 +538,7 @@
 				B34A84562617AC6D00A3185A /* NormalImageMerger.swift in Sources */,
 				A209158C26070595001A242E /* SceneShotViewCell.swift in Sources */,
 				A2091585260703D1001A242E /* SceneViewController.swift in Sources */,
-				B3755AAB26062B9700EC0F56 /* ShotDesignerViewController.swift in Sources */,
+				B3755AAB26062B9700EC0F56 /* ShotDesignerController.swift in Sources */,
 				B35FA2982614401C00D656E3 /* TransformLayerButton.swift in Sources */,
 				A29A19582607242800710943 /* Shot.swift in Sources */,
 				B3FB29062617680100DC4BEE /* Alert.swift in Sources */,

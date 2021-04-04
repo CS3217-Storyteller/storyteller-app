@@ -174,7 +174,7 @@ extension SceneViewController: UICollectionViewDelegateFlowLayout {
 
         guard let shotDesignerController = self.storyboard?
                 .instantiateViewController(identifier: "ShotDesignerViewController")
-                as? ShotDesignerViewController else {
+                as? ShotDesignerController else {
             return
         }
         shotDesignerController.modalPresentationStyle = .fullScreen

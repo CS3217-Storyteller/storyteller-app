@@ -7,8 +7,8 @@
 import UIKit
 import PencilKit
 
-class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
-    @IBOutlet var shotView: ShotView!
+class ShotDesignerController: UIViewController, PKToolPickerObserver {
+    @IBOutlet private var shotView: ShotView!
 
     @IBOutlet private var transformLayerButton: TransformLayerButton!
     @IBOutlet private var drawingModeButton: DrawingModeButton!
@@ -119,7 +119,7 @@ class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
 }
 
 // MARK: - Gestures
-extension ShotDesignerViewController {
+extension ShotDesignerController {
     @IBAction private func handlePan(_ sender: UIPanGestureRecognizer) {
         switch sender.state {
         case .began:
@@ -190,7 +190,7 @@ extension ShotDesignerViewController {
 }
 
 // MARK: - Actions
-extension ShotDesignerViewController {
+extension ShotDesignerController {
     @IBAction private func zoomToFit() {
         switch editingMode {
         case .transformLayer:
@@ -230,7 +230,7 @@ extension ShotDesignerViewController {
 }
 
 // MARK: - ModelManagerObserver
-extension ShotDesignerViewController: ModelManagerObserver {
+extension ShotDesignerController: ModelManagerObserver {
     func modelDidChange() {
         // TODO: disable this since PKCanvasView will get refreshed every time
 //        setUpShot()
@@ -249,7 +249,7 @@ extension ShotDesignerViewController: ModelManagerObserver {
     }
 }
 // MARK: - PKCanvasViewDelegate
-extension ShotDesignerViewController: PKCanvasViewDelegate {
+extension ShotDesignerController: PKCanvasViewDelegate {
     func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
         guard let newLayer = selectedLayer?.setDrawing(to: canvasView.drawing) else {
             return
@@ -259,14 +259,14 @@ extension ShotDesignerViewController: PKCanvasViewDelegate {
 }
 
 // MARK: - PKToolPickerObserver {
-extension ShotDesignerViewController {
+extension ShotDesignerController {
     func toolPickerFramesObscuredDidChange(_ toolPicker: PKToolPicker) {
         updateShotTransform()
     }
 }
 
 // MARK: - Segues
-extension ShotDesignerViewController {
+extension ShotDesignerController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let layerTable = segue.destination as? LayerTableController {
             layerTable.selectedLayerIndex = selectedLayerIndex
@@ -277,7 +277,7 @@ extension ShotDesignerViewController {
     }
 }
 // MARK: - Zoom To Fit Resize
-extension ShotDesignerViewController {
+extension ShotDesignerController {
     var windowSize: CGSize {
         view.frame.size
     }
@@ -332,7 +332,7 @@ extension ShotDesignerViewController {
 }
 
 // MARK: UIGestureRecognizerDelegate
-extension ShotDesignerViewController: UIGestureRecognizerDelegate {
+extension ShotDesignerController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
                            shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         gestureRecognizer is UIRotationGestureRecognizer
@@ -341,7 +341,7 @@ extension ShotDesignerViewController: UIGestureRecognizerDelegate {
     }
 }
 
-extension ShotDesignerViewController: LayerTableDelegate {
+extension ShotDesignerController: LayerTableDelegate {
     func didMoveLayer(from oldIndex: Int, to newIndex: Int) {
         shotView.moveLayer(from: oldIndex, to: newIndex)
     }
