@@ -55,6 +55,16 @@ struct Scene {
         shots[shotId]?.moveLayer(layerLabel, to: newIndex)
     }
 
+    mutating func moveShot(_ shotLabel: ShotLabel, to newIndex: Int) {
+        let shotId = shotLabel.shotId
+        guard let oldIndex = shotOrder.firstIndex(of: shotId) else {
+            return
+        }
+
+        shotOrder.remove(at: oldIndex)
+        shotOrder.insert(shotId, at: newIndex)
+    }
+
     func duplicate(withId newSceneId: UUID = UUID()) -> Self {
         let newLabel = SceneLabel(projectId: label.projectId,
                                   sceneId: newSceneId)

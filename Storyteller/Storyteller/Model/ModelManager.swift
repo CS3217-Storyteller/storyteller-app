@@ -180,22 +180,6 @@ class ModelManager {
     func addShot(ofShot shotLabel: ShotLabel,
                  shot: Shot? = nil,
                  backgroundColor: UIColor = .white) {
-        /*let id = UUID()
-        guard let scene = getScene(of: shotLabel.sceneLabel) else {
-            return
-        }
-        let projectId = projectLabel.projectId
-        var newShot: Shot
-        if let unwrappedShot = shot {
-            newShot = unwrappedShot.duplicate(withId: id)
-        } else {
-            let label = ShotLabel(projectId: projectId, sceneId: id)
-            newShot = Shot(label: label, canvasSize: project.canvasSize, id: id)
-        }
-        projects[projectId]?.addScene(newScene)
-        if let project = getProject(of: projectLabel) {
-            saveProject(project)
-        }*/
         let sceneLabel = shotLabel.sceneLabel
         guard let scene = getScene(of: sceneLabel) else {
             return
@@ -222,24 +206,6 @@ class ModelManager {
         
         projects[projectId]?.addShot(newShot, to: sceneLabel)
         saveProject(projects[projectId])
-        /*
-        guard let scene = getScene(of: shotLabel.sceneLabel) else {
-            return
-        }
-        var layersInNewShot = layers
-        if layers.isEmpty {
-            layersInNewShot = [Layer(layerWithDrawing: PKDrawing(),
-                                     canvasSize: scene.canvasSize)]
-        }
-
-        let projectIndex = shotLabel.projectIndex
-        let sceneLabel = shotLabel.sceneLabel
-        let shot = Shot(layers: layersInNewShot,
-                        label: shotLabel,
-                        backgroundColor: Color(uiColor: backgroundColor),
-                        canvasSize: scene.canvasSize)
-        projects[projectIndex].addShot(shot, to: sceneLabel)
-        saveProject(projects[projectIndex])*/
     }
 
     // MARK: - Layers CRUD
@@ -272,6 +238,12 @@ class ModelManager {
     func moveLayer(_ layerLabel: LayerLabel, to newIndex: Int) {
         let projectId = layerLabel.projectId
         projects[projectId]?.moveLayer(layerLabel, to: newIndex)
+    }
+
+    func moveShot(_ shotLabel: ShotLabel, to newIndex: Int) {
+        let projectId = shotLabel.projectId
+        projects[projectId]?.moveShot(shotLabel, to: newIndex)
+        saveProject(projects[projectId])
     }
 }
 
