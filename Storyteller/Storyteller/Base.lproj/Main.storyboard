@@ -3,7 +3,6 @@
     <device id="ipad11_0rounded" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -106,51 +105,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="1194" height="834"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e93-Xi-wXS">
-                                <rect key="frame" x="0.0" y="50" width="1194" height="100"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y7O-Rf-5oH">
-                                        <rect key="frame" x="1124" y="25" width="50" height="50"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="cbd-XF-xZg"/>
-                                            <constraint firstAttribute="width" constant="50" id="gZk-xq-U67"/>
-                                        </constraints>
-                                        <state key="normal" image="plus" catalog="system"/>
-                                        <connections>
-                                            <action selector="addScene:" destination="mcS-65-Qo3" eventType="touchUpInside" id="1Eg-tN-cPN"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Project Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0DZ-Wa-Rsz">
-                                        <rect key="frame" x="447" y="20" width="300" height="60"/>
-                                        <fontDescription key="fontDescription" type="system" weight="black" pointSize="50"/>
-                                        <color key="textColor" name="AccentColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JCH-Sf-ffD">
-                                        <rect key="frame" x="20" y="25" width="70" height="50"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="tJm-3q-SXP"/>
-                                            <constraint firstAttribute="width" constant="70" id="uWN-c3-8jG"/>
-                                        </constraints>
-                                        <state key="normal" image="arrow.backward" catalog="system"/>
-                                        <connections>
-                                            <action selector="backButton:" destination="mcS-65-Qo3" eventType="touchUpInside" id="Wus-UM-jPk"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="0xn-aL-7X5"/>
-                                    <constraint firstItem="0DZ-Wa-Rsz" firstAttribute="centerY" secondItem="e93-Xi-wXS" secondAttribute="centerY" id="QY3-SY-fhe"/>
-                                    <constraint firstItem="JCH-Sf-ffD" firstAttribute="leading" secondItem="e93-Xi-wXS" secondAttribute="leading" constant="20" id="WSy-TU-cgg"/>
-                                    <constraint firstAttribute="trailing" secondItem="y7O-Rf-5oH" secondAttribute="trailing" constant="20" id="b47-nO-0RL"/>
-                                    <constraint firstItem="y7O-Rf-5oH" firstAttribute="centerY" secondItem="e93-Xi-wXS" secondAttribute="centerY" id="eFj-2A-SFu"/>
-                                    <constraint firstItem="JCH-Sf-ffD" firstAttribute="centerY" secondItem="e93-Xi-wXS" secondAttribute="centerY" id="fFM-Gf-ujs"/>
-                                    <constraint firstItem="0DZ-Wa-Rsz" firstAttribute="centerX" secondItem="e93-Xi-wXS" secondAttribute="centerX" id="fpC-Xo-a35"/>
-                                </constraints>
-                            </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="LAJ-1h-XVO">
-                                <rect key="frame" x="0.0" y="170" width="1194" height="644"/>
+                                <rect key="frame" x="0.0" y="50" width="1194" height="764"/>
                                 <color key="backgroundColor" systemColor="quaternaryLabelColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="N7K-Yo-zH4">
                                     <size key="itemSize" width="128" height="128"/>
@@ -173,19 +129,15 @@
                         <viewLayoutGuide key="safeArea" id="sa1-7i-Q7L"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="LAJ-1h-XVO" firstAttribute="top" secondItem="e93-Xi-wXS" secondAttribute="bottom" constant="20" id="JB2-rm-h6E"/>
-                            <constraint firstItem="e93-Xi-wXS" firstAttribute="top" secondItem="sa1-7i-Q7L" secondAttribute="top" id="PsG-IP-VNm"/>
-                            <constraint firstItem="LAJ-1h-XVO" firstAttribute="trailing" secondItem="sa1-7i-Q7L" secondAttribute="trailing" id="X4H-yB-sVF"/>
-                            <constraint firstItem="LAJ-1h-XVO" firstAttribute="bottom" secondItem="sa1-7i-Q7L" secondAttribute="bottom" id="chS-gL-dkx"/>
-                            <constraint firstItem="e93-Xi-wXS" firstAttribute="trailing" secondItem="sa1-7i-Q7L" secondAttribute="trailing" id="dmJ-Ps-gxd"/>
-                            <constraint firstItem="LAJ-1h-XVO" firstAttribute="leading" secondItem="sa1-7i-Q7L" secondAttribute="leading" id="eYM-RT-Uuj"/>
-                            <constraint firstItem="e93-Xi-wXS" firstAttribute="leading" secondItem="sa1-7i-Q7L" secondAttribute="leading" id="oM9-3N-5no"/>
+                            <constraint firstItem="LAJ-1h-XVO" firstAttribute="bottom" secondItem="sa1-7i-Q7L" secondAttribute="bottom" id="E7l-mf-Vbe"/>
+                            <constraint firstItem="LAJ-1h-XVO" firstAttribute="leading" secondItem="sa1-7i-Q7L" secondAttribute="leading" id="QME-P5-Ynl"/>
+                            <constraint firstItem="LAJ-1h-XVO" firstAttribute="trailing" secondItem="sa1-7i-Q7L" secondAttribute="trailing" id="WJ7-MM-6V2"/>
+                            <constraint firstItem="LAJ-1h-XVO" firstAttribute="top" secondItem="sa1-7i-Q7L" secondAttribute="top" id="gxp-LY-SFS"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Tkj-gm-md6"/>
                     <connections>
                         <outlet property="collectionView" destination="LAJ-1h-XVO" id="m6Q-kN-l5K"/>
-                        <outlet property="projectTitle" destination="0DZ-Wa-Rsz" id="tpX-sI-A7i"/>
                         <outletCollection property="collectionView" destination="5EB-ZE-Y4q" id="Y2L-oV-EOK"/>
                         <segue destination="mXm-tZ-pGV" kind="show" id="rxQ-Lh-nOo"/>
                     </connections>
@@ -214,14 +166,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="arrow.backward" catalog="system" width="128" height="98"/>
-        <image name="plus" catalog="system" width="128" height="113"/>
-        <namedColor name="AccentColor">
-            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <systemColor name="opaqueSeparatorColor">
-            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="quaternaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.17999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

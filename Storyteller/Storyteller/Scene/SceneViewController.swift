@@ -10,11 +10,20 @@ import UIKit
 class SceneViewController: UIViewController {
 
     @IBOutlet private var collectionView: UICollectionView!
-    @IBOutlet private var projectTitle: UILabel!
 
     var projectLabel: ProjectLabel?
     var modelManager: ModelManager?
 
+    lazy var addSceneBarButton: UIBarButtonItem = {
+        let barButtonItem = UIBarButtonItem(
+            title: "Add Scene",
+            style: .plain,
+            target: self,
+            action: #selector(didAddSceneButtonClicked(_:))
+        )
+        return barButtonItem
+    }()
+    
     func setProjectLabel(to projectLabel: ProjectLabel) {
         self.projectLabel = projectLabel
     }
@@ -25,7 +34,7 @@ class SceneViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         self.collectionView.collectionViewLayout = layout
@@ -33,22 +42,26 @@ class SceneViewController: UIViewController {
         self.collectionView.register(SceneShotViewCell.self, forCellWithReuseIdentifier: SceneShotViewCell.identifier)
         self.collectionView.register(AddShotViewCell.self, forCellWithReuseIdentifier: AddShotViewCell.identifier)
         self.collectionView.register(
-            SceneHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            SceneHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: SceneHeaderView.identifier
         )
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.view.addSubview(collectionView)
 
-        if let modelManager = self.modelManager,
-           let projectLabel = self.projectLabel,
-           let project = modelManager.getProject(of: projectLabel) {
-            self.projectTitle.text = project.title
-            modelManager.observers.append(self)
+        guard let modelManager = self.modelManager,
+              let projectLabel = self.projectLabel,
+              let project = modelManager.getProject(of: projectLabel) else {
+            return
         }
+        
+        modelManager.observers.append(self)
+        self.navigationItem.title = project.title
+        self.navigationItem.rightBarButtonItem = self.addSceneBarButton
     }
 
-    @IBAction private func addScene(_ sender: Any) {
+    @objc func didAddSceneButtonClicked(_ sender: Any) {
         guard let projectLabel = self.projectLabel,
               let modelManager = self.modelManager else {
             return
@@ -56,15 +69,13 @@ class SceneViewController: UIViewController {
         modelManager.addScene(projectLabel: projectLabel)
         self.collectionView.reloadData()
     }
-
-    @IBAction private func backButton(_ sender: UIButton) {
-        self.navigationController?.popViewController(animated: true)
-    }
 }
 
 extension SceneViewController: UICollectionViewDelegate {
+    
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         guard let sceneCell = self.collectionView
                 .dequeueReusableCell(withReuseIdentifier: SceneShotViewCell.identifier,
                                      for: indexPath) as? SceneShotViewCell,
@@ -78,6 +89,7 @@ extension SceneViewController: UICollectionViewDelegate {
         else {
             return UICollectionViewCell()
         }
+        
         let sceneLabel = projectLabel.generateSceneLabel(withId: UUID()) // TODO: pass proper id!
         // let sceneLabel = SceneLabel(projectLabel: projectLabel, sceneIndex: indexPath.section)
         guard let scene = modelManager.getScene(of: sceneLabel) else {
@@ -106,6 +118,7 @@ extension SceneViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView,
                         viewForSupplementaryElementOfKind kind: String,
                         at indexPath: IndexPath) -> UICollectionReusableView {
+        
         guard let sceneHeader = self.collectionView.dequeueReusableSupplementaryView(
                 ofKind: UICollectionView.elementKindSectionHeader,
                 withReuseIdentifier: SceneHeaderView.identifier, for: indexPath) as? SceneHeaderView else {
@@ -115,60 +128,7 @@ extension SceneViewController: UICollectionViewDelegate {
         return sceneHeader
 
     }
-}
-
-extension SceneViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let modelManager = self.modelManager,
-              let projectLabel = self.projectLabel
-        else {
-            return 0
-        }
-        let sceneLabel = projectLabel.generateSceneLabel(withId: UUID()) // TODO: pass in correct ID
-        // let sceneLabel = SceneLabel(projectLabel: projectLabel, sceneIndex: section)
-        guard let scene = modelManager.getScene(of: sceneLabel) else {
-            return 0
-        }
-        return scene.shots.count + 1
-    }
-
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        guard let projectLabel = self.projectLabel,
-              let modelManager = self.modelManager else {
-            return 0
-        }
-        guard let project = modelManager.getProject(of: projectLabel) else {
-            return 0
-        }
-        return project.scenes.count
-    }
-}
-
-extension SceneViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let itemWidth = (self.view.frame.width / 7) - 7
-        let itemHeight = (self.view.frame.width / 7) - 7
-        return CGSize(width: itemWidth, height: itemHeight)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
-                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        3
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
-                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        3
-    }
-
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        insetForSectionAt section: Int) -> UIEdgeInsets {
-        UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
-    }
-
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.collectionView.deselectItem(at: indexPath, animated: true)
 
@@ -203,6 +163,61 @@ extension SceneViewController: UICollectionViewDelegateFlowLayout {
             self.collectionView.reloadData()
         }
     }
+}
+
+extension SceneViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard let modelManager = self.modelManager,
+              let projectLabel = self.projectLabel
+        else {
+            return 0
+        }
+        let sceneLabel = projectLabel.generateSceneLabel(withId: UUID()) // TODO: pass in correct ID
+        // let sceneLabel = SceneLabel(projectLabel: projectLabel, sceneIndex: section)
+        guard let scene = modelManager.getScene(of: sceneLabel) else {
+            return 0
+        }
+        return scene.shots.count + 1
+    }
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        guard let projectLabel = self.projectLabel,
+              let modelManager = self.modelManager else {
+            return 0
+        }
+        guard let project = modelManager.getProject(of: projectLabel) else {
+            return 0
+        }
+        return project.scenes.count
+    }
+}
+
+extension SceneViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let itemWidth = (self.view.frame.width / 10) - 8
+        let itemHeight = (self.view.frame.width / 10) - 8
+        return CGSize(width: itemWidth, height: itemHeight)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        3
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        3
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets {
+        UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
+    }
+
+    
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize {
