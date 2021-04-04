@@ -91,7 +91,7 @@ extension LayerTableController: UITableViewDataSource {
         guard let layerOrder = modelManager.getLayers(of: shotLabel) else {
             fatalError("Failed to get the layer at \(indexPath.row)")
         }
-        
+
         let layer = layerOrder[indexPath.row]
         cell.setUp(thumbnail: layer.thumbnail, name: layer.name,
                    isLocked: layer.isLocked, isVisible: layer.isVisible)
@@ -132,8 +132,8 @@ extension LayerTableController: UITableViewDelegate {
                    moveRowAt sourceIndexPath: IndexPath,
                    to destinationIndexPath: IndexPath) {
         delegate?.didMoveLayer(from: sourceIndexPath.row, to: destinationIndexPath.row)
-        
-        
+
+
         guard let layers = modelManager.getLayers(of: shotLabel) else {
             return
         }
@@ -199,7 +199,7 @@ extension LayerTableController {
             return
         }
         delegate?.didRemoveLayers(at: [selectedLayerIndex])
-        
+
         guard let layers = modelManager.getLayers(of: shotLabel) else {
             return
         }
@@ -212,17 +212,17 @@ extension LayerTableController {
             return
         }
         delegate?.didRemoveLayers(at: multipleSelectionIndices)
-        
+
         guard let layers = modelManager.getLayers(of: shotLabel) else {
             return
         }
-        
+
         var layerIds = [UUID]()
         for index in multipleSelectionIndices {
             let layer = layers[index]
             layerIds.append(layer.id)
         }
-        
+
         modelManager.removeLayers(withIds: layerIds, of: shotLabel)
     }
     @IBAction private func addLayer(_ sender: Any) {
