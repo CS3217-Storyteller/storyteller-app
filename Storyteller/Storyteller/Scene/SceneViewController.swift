@@ -225,9 +225,15 @@ extension SceneViewController: UICollectionViewDelegate {
             return
         }
         let sourceIndex = sourceIndexPath.row
+        let sourceShotId = scene.shotOrder[sourceIndex]
+        guard let sourceShot = scene.shots[sourceShotId] else {
+            return
+        }
+        let sourceShotLabel = sourceShot.label
+        
         let destinationIndex = destinationIndexPath.row
         
-        self.modelManager?.moveShot(sourceIndex, destinationIndex, of: scene.label)
+        modelManager.moveShot(sourceShotLabel, to: destinationIndex)
     }
 }
 
