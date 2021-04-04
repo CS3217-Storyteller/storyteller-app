@@ -13,6 +13,6 @@ class DrawingUtility {
         return layerView
     }
     static func generateLayerViews(for shot: Shot) -> [LayerView] {
-        shot.layers.map({ generateLayerView(for: $0) })
+        shot.orderedLayers.map({ generateLayerView(for: $0) })
     }
 }

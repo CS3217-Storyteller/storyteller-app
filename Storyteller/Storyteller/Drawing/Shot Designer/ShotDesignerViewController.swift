@@ -59,7 +59,11 @@ class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
     }
 
     var selectedLayer: Layer? {
-        modelManager.getLayer(at: selectedLayerIndex, of: shotLabel)
+        guard let layers = modelManager.getLayers(of: shotLabel) else {
+            return nil
+        }
+        let layer = layers[selectedLayerIndex]
+        return layer
     }
 
     func setModelManager(to modelManager: ModelManager) {
@@ -243,10 +247,16 @@ extension ShotDesignerViewController: ModelManagerObserver {
         shotView.updateLayerViews(newLayerViews: DrawingUtility.generateLayerViews(for: shot))
     }
     func willAddLayer() {
-        shotView.add(layerView: DrawingUtility.generateLayerView(for: Layer
-                                                                    .getEmptyLayer(canvasSize: canvasSize,
-                                                                                   name: Constants.defaultLayerName)),
-                     toolPicker: toolPicker, PKDelegate: self)
+        shotView.add(
+            layerView: DrawingUtility.generateLayerView(
+                for: Layer.getEmptyLayer(
+                    canvasSize: canvasSize,
+                    name: Constants.defaultLayerName,
+                    forShot: shotLabel
+                )
+            ),
+            toolPicker: toolPicker, PKDelegate: self
+        )
     }
 }
 // MARK: - PKCanvasViewDelegate
@@ -255,7 +265,7 @@ extension ShotDesignerViewController: PKCanvasViewDelegate {
         guard let newLayer = selectedLayer?.setDrawing(to: canvasView.drawing) else {
             return
         }
-        modelManager.update(layer: newLayer, at: selectedLayerIndex, of: shotLabel)
+        modelManager.updateLayer(layerLabel: newLayer.label, withLayer: newLayer)
     }
 }
 
@@ -366,17 +376,22 @@ extension ShotDesignerViewController: LayerTableDelegate {
     }
 
     private func toggleLayerLock(at index: Int) {
-        guard var newLayer = modelManager.getLayer(at: index, of: shotLabel) else {
+        
+        guard let layers = modelManager.getLayers(of: shotLabel) else {
             return
         }
+        var newLayer = layers[index]
         newLayer.isLocked.toggle()
-        modelManager.update(layer: newLayer, at: index, of: shotLabel)
+        modelManager.updateLayer(layerLabel: newLayer.label, withLayer: newLayer)
     }
+    
     private func toggleLayerVisibility(at index: Int) {
-        guard var newLayer = modelManager.getLayer(at: index, of: shotLabel) else {
+        
+        guard let layers = modelManager.getLayers(of: shotLabel) else {
             return
         }
+        var newLayer = layers[index]
         newLayer.isVisible.toggle()
-        modelManager.update(layer: newLayer, at: index, of: shotLabel)
+        modelManager.updateLayer(layerLabel: newLayer.label, withLayer: newLayer)
     }
 }

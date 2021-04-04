@@ -141,14 +141,13 @@ extension SceneViewController: UICollectionViewDelegate {
                 return UICollectionViewCell()
             }
             if !shot.layers.isEmpty {
-/* // TODO: conflict
                 sceneCell.setImage(image: shot.thumbnail)
-*/
-                let thumbnail = shot.orderedLayers[0].drawing
-                    .image(from: CGRect(x: 0, y: 0,
-                                        width: Constants.screenWidth,
-                                        height: Constants.screenHeight), scale: 1.0)
-                sceneCell.setImage(image: thumbnail)
+//
+//                let thumbnail = shot.orderedLayers[0].drawing
+//                    .image(from: CGRect(x: 0, y: 0,
+//                                        width: Constants.screenWidth,
+//                                        height: Constants.screenHeight), scale: 1.0)
+//                sceneCell.setImage(image: thumbnail)
             }
             return sceneCell
         } else {
