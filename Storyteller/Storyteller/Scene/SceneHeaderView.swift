@@ -13,13 +13,15 @@ class SceneHeaderView: UICollectionReusableView {
     private let label: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 30)
-        label.textAlignment = .center
-        label.textColor = .white
+        label.textAlignment = .left
+        label.textColor = .black
         return label
     }()
+    
+    
     func configure(sceneIndex: Int) {
-        self.backgroundColor = .black
-        self.label.text = "Scene \(sceneIndex)"
+        self.backgroundColor = .gray
+        self.label.text = "  Scene \(sceneIndex)"
         self.addSubview(self.label)
     }
 

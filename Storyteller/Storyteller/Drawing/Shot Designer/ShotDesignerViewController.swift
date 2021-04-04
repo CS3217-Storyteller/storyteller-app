@@ -185,7 +185,8 @@ extension ShotDesignerViewController {
             return
         }
         let newLayer = transform(layer)
-        modelManager.update(layer: newLayer, at: selectedLayerIndex, of: shotLabel)
+        modelManager.updateLayer(layerLabel: layer.label, withLayer: newLayer)
+        // modelManager.update(layer: newLayer, at: selectedLayerIndex, of: shotLabel)
     }
 }
 
@@ -207,7 +208,7 @@ extension ShotDesignerViewController {
         }
 
         modelManager.addShot(ofShot: shotLabel.nextLabel,
-                             layers: shot.layers,
+                             shot: shot,
                              backgroundColor: shot.backgroundColor.uiColor)
     }
 
