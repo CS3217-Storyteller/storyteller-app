@@ -7,121 +7,214 @@
 import PencilKit
 
 class ModelManager {
-    var projects: [Project]
+    
     private let storageManager = StorageManager()
-
     var observers = [ModelManagerObserver]()
-
-    init() {
-        self.projects = storageManager.getAllProjects()
+    
+    var projects: [UUID: Project]
+    var projectOrder: [UUID]
+    
+    var orderedProjects: [Project] {
+        self.projectOrder.map { id in self.projects[id] }.compactMap { $0 }
     }
-
-    func getBackgroundColor(of shotLabel: ShotLabel) -> UIColor? {
-        getShot(of: shotLabel)?.backgroundColor.uiColor
+    
+    init() {
+        var dict = [UUID: Project]()
+        var list = [UUID]()
+        for project in storageManager.getAllProjects() {
+            dict[project.id] = project
+            list.append(project.id)
+        }
+        self.projects = dict
+        self.projectOrder = list
     }
 
     func getProject(of projectLabel: ProjectLabel) -> Project? {
-        let projectIndex = projectLabel.projectIndex
-        guard projects.indices.contains(projectIndex) else {
-            return nil
+        let projectId = projectLabel.projectId
+        return projects[projectId]
+    }
+    
+    func addProject(canvasSize: CGSize, title: String, project: Project? = nil) {
+        var newProject: Project
+        let newProjectId = UUID()
+        if let unwrappedProject = project {
+            newProject = unwrappedProject.duplicate(withId: newProjectId)
+        } else {
+            let label = ProjectLabel(projectId: newProjectId)
+            newProject = Project(
+                id: newProjectId,
+                label: label,
+                title: title,
+                canvasSize: canvasSize
+            )
         }
-        return projects[projectIndex]
+        self.projects[newProjectId] = newProject
+        self.projectOrder.append(newProjectId)
+        self.saveProject(newProject)
+    }
+    
+    func removeProject(of projectLabel: ProjectLabel) {
+        let projectId = projectLabel.projectId
+        if let project = projects[projectId] {
+            self.deleteProject(project)
+        }
+        self.projects.removeValue(forKey: projectId)
+        if let idx = self.projectOrder.firstIndex(of: projectId) {
+            self.projectOrder.remove(at: idx)
+        }
+    }
+    
+    func renameProject(of projectLabel: ProjectLabel, to name: String) {
+        let projectId = projectLabel.projectId
+        guard var project = projects[projectId] else {
+            return
+        }
+        self.removeProject(of: projectLabel)
+        project.setTitle(to: name)
+        self.addProject(canvasSize: project.canvasSize, title: project.title, project: project)
+    }
+    
+    func getBackgroundColor(of shotLabel: ShotLabel) -> UIColor? {
+        self.getShot(of: shotLabel)?.backgroundColor.uiColor
     }
 
     func getScene(of sceneLabel: SceneLabel) -> Scene? {
-        let projectLabel = sceneLabel.projectLabel
-        guard let project = getProject(of: projectLabel) else {
-            return nil
-        }
-        let scenes = project.scenes
-        let sceneIndex = sceneLabel.sceneIndex
-        guard scenes.indices.contains(sceneIndex) else {
-            return nil
-        }
-        let scene = scenes[sceneIndex]
-        return scene
+        let projectId = sceneLabel.projectId
+        let sceneId = sceneLabel.sceneId
+        return projects[projectId]?
+            .scenes[sceneId]
     }
 
     func getShot(of shotLabel: ShotLabel) -> Shot? {
-        let sceneLabel = shotLabel.sceneLabel
-        guard let scene = getScene(of: sceneLabel) else {
-            return nil
-        }
-        let shots = scene.shots
-        let shotIndex = shotLabel.shotIndex
-        guard shots.indices.contains(shotIndex) else {
-            return nil
-        }
-        let shot = shots[shotIndex]
-        return shot
+        let projectId = shotLabel.projectId
+        let sceneId = shotLabel.sceneId
+        let shotId = shotLabel.shotId
+        return projects[projectId]?
+            .scenes[sceneId]?
+            .shots[shotId]
     }
 
+    // TODO: Return optional, or empty array if shot is nil?
     func getLayers(of shotLabel: ShotLabel) -> [Layer]? {
-        guard let shot = getShot(of: shotLabel) else {
-            return nil
+        getShot(of: shotLabel)?.orderedLayers
+    }
+
+    // old signature: func getLayer(at layerIndex: Int, of shotLabel: ShotLabel) -> Layer?
+    func getLayer(label: LayerLabel) -> Layer? {
+        let shotLabel = label.shotLabel
+        let layerId = label.layerId
+        let shot = getShot(of: shotLabel)
+        return shot?.layers[layerId]
+    }
+
+    func getCanvasSize(of shotLabel: ShotLabel) -> CGSize? {
+        let projectId = shotLabel.projectId
+        return projects[projectId]?.canvasSize
+    }
+
+    private func saveProject(_ project: Project?) {
+        if let project = project {
+            self.storageManager.saveProject(project: project)
+            self.observers.forEach({ $0.modelDidChange() })
         }
-        return shot.layers
+    }
+    
+    private func deleteProject(_ project: Project) {
+        self.storageManager.deleteProject(projectTitle: project.title)
+        self.observers.forEach({ $0.modelDidChange() })
     }
 
-    func getLayer(at layerIndex: Int, of shotLabel: ShotLabel) -> Layer? {
-        guard let layers = getLayers(of: shotLabel),
-              layers.indices.contains(layerIndex) else {
-            return nil
-        }
-        return layers[layerIndex]
-    }
-
-    func getCanvasSize(of shotLabel: ShotLabel) -> CGSize {
-        let projectIndex = shotLabel.projectIndex
-        return projects[projectIndex].canvasSize
-    }
-
-    private func saveProject(_ project: Project) {
-        storageManager.saveProject(project: project)
-        observers.forEach({ $0.modelDidChange() })
-    }
-
-    // TODO: remove all updateDrawing since we are using update(layer) now
+    @available(*, deprecated, message: "Deprecated. Use updateLayer function instead.")
     func updateDrawing(ofShot shotLabel: ShotLabel,
                        atLayer layer: Int,
                        withDrawing drawing: PKDrawing) {
-        let projectIndex = shotLabel.projectIndex
+        return
+        /* let projectIndex = shotLabel.projectIndex
         guard projects.indices.contains(projectIndex) else {
             return
         }
         projects[projectIndex].updateShot(ofShot: shotLabel,
                                           atLayer: layer,
                                           withDrawing: drawing)
-        saveProject(projects[projectIndex])
+        saveProject(projects[projectIndex]) */
     }
 
-    func addProject(canvasSize: CGSize, title: String, scenes: [Scene] = [Scene]()) {
-        let index = projects.count
-        let label = ProjectLabel(projectIndex: index)
-        let project = Project(scenes: scenes,
-                              label: label,
-                              canvasSize: canvasSize,
-                              title: title
-        )
-        projects.append(project)
-        saveProject(project)
+    // TODO: Use this method to update drawing
+    func updateLayer(layerLabel: LayerLabel, withDrawing drawing: PKDrawing = PKDrawing()) {
+        let projectId = layerLabel.projectId
+        self.projects[projectId]?.updateLayer(layerLabel, withDrawing: drawing)
+        self.saveProject(projects[projectId])
+        self.observers.forEach({ $0.layerDidUpdate() })
     }
 
-    func addScene(projectLabel: ProjectLabel, shots: [Shot] = [Shot]()) {
-        let projectIndex = projectLabel.projectIndex
+    // TODO: Use this method to update drawing
+    func updateLayer(layerLabel: LayerLabel, withLayer newLayer: Layer) {
+        let projectId = layerLabel.projectId
+        self.projects[projectId]?.updateLayer(layerLabel, withLayer: newLayer)
+        self.saveProject(projects[projectId])
+        self.observers.forEach({ $0.layerDidUpdate() })
+    }
+
+    func addScene(projectLabel: ProjectLabel, scene: Scene? = nil) {
+        let id = UUID()
         guard let project = getProject(of: projectLabel) else {
+            print("RETURNED")
             return
         }
-        let index = projects[projectIndex].scenes.count
-        let label = SceneLabel(projectLabel: projectLabel, sceneIndex: index)
-        let scene = Scene(shots: shots, label: label, canvasSize: project.canvasSize)
-        projects[projectIndex].addScene(scene)
-        saveProject(projects[projectIndex])
+        let projectId = projectLabel.projectId
+        var newScene: Scene
+        if let unwrappedScene = scene {
+            print("IF ADDSCENE")
+            newScene = unwrappedScene.duplicate(withId: id)
+        } else {
+            print("ELSE ADDSCENE")
+            let label = SceneLabel(projectId: projectId, sceneId: id)
+            newScene = Scene(label: label, canvasSize: project.canvasSize, id: id)
+        }
+        print("project:", projects[projectId]?.title ?? "NIL")
+        projects[projectId]?.addScene(newScene)
+        saveProject(projects[projectId])
     }
 
     func addShot(ofShot shotLabel: ShotLabel,
-                 layers: [Layer] = [],
+                 shot: Shot? = nil,
                  backgroundColor: UIColor = .white) {
+        /*let id = UUID()
+        guard let scene = getScene(of: shotLabel.sceneLabel) else {
+            return
+        }
+        let projectId = projectLabel.projectId
+        var newShot: Shot
+        if let unwrappedShot = shot {
+            newShot = unwrappedShot.duplicate(withId: id)
+        } else {
+            let label = ShotLabel(projectId: projectId, sceneId: id)
+            newShot = Shot(label: label, canvasSize: project.canvasSize, id: id)
+        }
+        projects[projectId]?.addScene(newScene)
+        if let project = getProject(of: projectLabel) {
+            saveProject(project)
+        }*/
+        let sceneLabel = shotLabel.sceneLabel
+        guard let scene = getScene(of: sceneLabel) else {
+            return
+        }
+        let id = UUID()
+        let projectId = shotLabel.projectId
+        let sceneId = shotLabel.sceneId
+        var newShot: Shot
+        if let unwrappedShot = shot {
+            newShot = unwrappedShot.duplicate(withId: id)
+        } else {
+            let label = ShotLabel(projectId: projectId, sceneId: sceneId, shotId: id)
+            newShot = Shot(id: id,
+                           label: label,
+                           backgroundColor: Color(uiColor: backgroundColor),
+                           canvasSize: scene.canvasSize)
+        }
+        projects[projectId]?.addShot(newShot, to: sceneLabel)
+        saveProject(projects[projectId])
+        /*
         guard let scene = getScene(of: shotLabel.sceneLabel) else {
             return
         }
@@ -138,53 +231,39 @@ class ModelManager {
                         backgroundColor: Color(uiColor: backgroundColor),
                         canvasSize: scene.canvasSize)
         projects[projectIndex].addShot(shot, to: sceneLabel)
-        saveProject(projects[projectIndex])
+        saveProject(projects[projectIndex])*/
     }
 
     // MARK: - Layers CRUD
 
+    func removeLayers(withIds ids: [UUID], of shotLabel: ShotLabel) {
+        let projectId = shotLabel.projectId
+        projects[projectId]?.removeLayers(withIds: Set(ids), of: shotLabel)
+    }
+
     // TODO: allow different types of layers to be created
     func addLayer(at index: Int? = nil, to shotLabel: ShotLabel,
                   withDrawing drawing: PKDrawing = PKDrawing()) {
-        let projectIndex = shotLabel.projectIndex
+        let projectId = shotLabel.projectId
         guard let shot = getShot(of: shotLabel) else {
             return
         }
-        let layer = Layer(layerWithDrawing: drawing, canvasSize: shot.canvasSize)
-        projects[projectIndex].addLayer(layer, at: index, to: shotLabel)
-
+        let newId = UUID()
+        let sceneId = shotLabel.sceneId
+        let shotId = shotLabel.shotId
+        let label = LayerLabel(projectId: projectId, sceneId: sceneId, shotId: shotId, layerId: newId)
+        let layer = Layer(layerWithDrawing: drawing,
+                          canvasSize: shot.canvasSize,
+                          name: "Give me a Name",
+                          label: label)
+        projects[projectId]?.addLayer(layer, at: index, to: shotLabel)
         observers.forEach({ $0.willAddLayer() })
-        saveProject(projects[projectIndex])
+        saveProject(projects[projectId])
     }
 
-    func update(layer: Layer, at layerIndex: Int, of shotLabel: ShotLabel) {
-        let projectIndex = shotLabel.projectIndex
-        guard projects.indices.contains(projectIndex) else {
-            return
-        }
-        projects[projectIndex].update(layer: layer, at: layerIndex, ofShot: shotLabel)
-
-        saveProject(projects[projectIndex])
-        observers.forEach({ $0.layerDidUpdate() })
-    }
-
-    func removeLayers(at layerIndices: [Int], of shotLabel: ShotLabel) {
-        let projectIndex = shotLabel.projectIndex
-        guard projects.indices.contains(projectIndex) else {
-            return
-        }
-        projects[projectIndex].removeLayers(at: layerIndices, of: shotLabel)
-
-        saveProject(projects[projectIndex])
-    }
-    func moveLayer(from oldIndex: Int, to newIndex: Int, of shotLabel: ShotLabel) {
-        let projectIndex = shotLabel.projectIndex
-        guard projects.indices.contains(projectIndex) else {
-            return
-        }
-        projects[projectIndex].moveLayer(from: oldIndex, to: newIndex, of: shotLabel)
-
-        saveProject(projects[projectIndex])
+    func moveLayer(_ layerLabel: LayerLabel, to newIndex: Int) {
+        let projectId = layerLabel.projectId
+        projects[projectId]?.moveLayer(layerLabel, to: newIndex)
     }
 }
 

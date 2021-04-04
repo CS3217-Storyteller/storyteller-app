@@ -8,14 +8,13 @@
 import Foundation
 
 struct ProjectLabel: Codable {
-    var projectIndex: Int
+    var projectId: UUID
 
-    init(projectIndex: Int) {
-        self.projectIndex = projectIndex
+    func generateSceneLabel(withId sceneId: UUID) -> SceneLabel {
+        SceneLabel(projectId: projectId, sceneId: sceneId)
     }
 
-    // TODO: Delete this after fully implement labelling
-    init() {
-        self.projectIndex = 0
+    func withProjectId(_ newProjectId: UUID) -> Self {
+        Self(projectId: newProjectId)
     }
 }
