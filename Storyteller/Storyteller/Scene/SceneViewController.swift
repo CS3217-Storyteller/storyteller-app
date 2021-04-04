@@ -227,7 +227,7 @@ extension SceneViewController: UICollectionViewDelegate {
         let sourceIndex = sourceIndexPath.row
         let destinationIndex = destinationIndexPath.row
         
-        self.modelManager?.swapShots(sourceIndex, destinationIndex, of: scene.label)
+        self.modelManager?.moveShot(sourceIndex, destinationIndex, of: scene.label)
     }
 }
 

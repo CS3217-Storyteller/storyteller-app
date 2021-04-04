@@ -40,8 +40,9 @@ struct Shot {
         guard let oldIndex = layerOrder.firstIndex(of: layerId) else {
             return
         }
-        layerOrder.insert(layerId, at: newIndex)
+
         layerOrder.remove(at: oldIndex)
+        layerOrder.insert(layerId, at: newIndex)
     }
         
     var orderedLayers: [Layer] {
