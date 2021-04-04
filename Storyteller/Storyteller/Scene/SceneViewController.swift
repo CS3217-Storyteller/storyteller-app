@@ -24,7 +24,7 @@ class SceneViewController: UIViewController {
         )
         return barButtonItem
     }()
-    
+
     func setProjectLabel(to projectLabel: ProjectLabel) {
         self.projectLabel = projectLabel
     }
@@ -69,18 +69,17 @@ class SceneViewController: UIViewController {
               let project = modelManager.getProject(of: projectLabel) else {
             return
         }
-        
+
         modelManager.observers.append(self)
         self.navigationItem.title = project.title
         self.navigationItem.rightBarButtonItem = self.addSceneBarButton
-        
+
         let gesture = UILongPressGestureRecognizer(
             target: self, action: #selector(self.handleLongPressGesture(_:))
         )
         self.collectionView.addGestureRecognizer(gesture)
-        
     }
-    
+
     @objc func handleLongPressGesture(_ gesture: UILongPressGestureRecognizer) {
         switch gesture.state {
         case .began:
@@ -110,7 +109,7 @@ class SceneViewController: UIViewController {
 }
 
 extension SceneViewController: UICollectionViewDelegate {
-    
+
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
@@ -135,7 +134,7 @@ extension SceneViewController: UICollectionViewDelegate {
         }
 
         if indexPath.row < scene.shots.count {
-            
+
             let shotId = scene.shotOrder[indexPath.row]
             guard let shot = scene.shots[shotId] else {
                 return UICollectionViewCell()
@@ -154,14 +153,10 @@ extension SceneViewController: UICollectionViewDelegate {
             return addCell
         }
     }
-    
-
 
     func collectionView(_ collectionView: UICollectionView,
                         viewForSupplementaryElementOfKind kind: String,
                         at indexPath: IndexPath) -> UICollectionReusableView {
-        print("HERE")
-        print(indexPath)
         guard let sceneHeader = self.collectionView.dequeueReusableSupplementaryView(
                 ofKind: UICollectionView.elementKindSectionHeader,
                 withReuseIdentifier: SceneHeaderView.identifier, for: indexPath) as? SceneHeaderView else {
@@ -170,8 +165,7 @@ extension SceneViewController: UICollectionViewDelegate {
         sceneHeader.configure(sceneIndex: indexPath.section)
         return sceneHeader
     }
-    
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.collectionView.deselectItem(at: indexPath, animated: true)
 
@@ -208,16 +202,17 @@ extension SceneViewController: UICollectionViewDelegate {
             self.collectionView.reloadData()
         }
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
-        return true
+        true
     }
-    
-    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+
+    func collectionView(_ collectionView: UICollectionView,
+                        moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         if sourceIndexPath.section != destinationIndexPath.section {
             return
         }
-        
+
         guard let modelManager = self.modelManager,
               let projectLabel = self.projectLabel,
               let project = modelManager.getProject(of: projectLabel)
@@ -232,7 +227,7 @@ extension SceneViewController: UICollectionViewDelegate {
         let sourceIndex = sourceIndexPath.row
         let destinationIndex = destinationIndexPath.row
         scene.shotOrder.swapAt(sourceIndex, destinationIndex)
-        
+
     }
 }
 

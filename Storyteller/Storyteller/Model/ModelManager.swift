@@ -119,7 +119,7 @@ class ModelManager {
             self.observers.forEach({ $0.modelDidChange() })
         }
     }
-    
+
     private func deleteProject(_ project: Project) {
         self.storageManager.deleteProject(projectTitle: project.title)
         self.observers.forEach({ $0.modelDidChange() })
@@ -129,7 +129,7 @@ class ModelManager {
     func updateDrawing(ofShot shotLabel: ShotLabel,
                        atLayer layer: Int,
                        withDrawing drawing: PKDrawing) {
-        return
+
         /* let projectIndex = shotLabel.projectIndex
         guard projects.indices.contains(projectIndex) else {
             return
@@ -213,13 +213,13 @@ class ModelManager {
                            backgroundColor: Color(uiColor: backgroundColor),
                            canvasSize: scene.canvasSize)
         }
-        
+
         if newShot.layers.isEmpty {
             let layerLabel = newShot.label.generateLayerLabel(withId: id)
             let layer = Layer(layerWithDrawing: PKDrawing(), canvasSize: scene.canvasSize, label: layerLabel)
             newShot.addLayer(layer)
         }
-        
+
         projects[projectId]?.addShot(newShot, to: sceneLabel)
         saveProject(projects[projectId])
         /*

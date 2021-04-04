@@ -105,8 +105,16 @@
                                     <action selector="toggleTransformLayer:" destination="mXm-tZ-pGV" id="8GH-TY-tMu"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="Item" image="arrow.backward" catalog="system" id="hba-lq-xHu"/>
-                            <barButtonItem title="Item" image="arrow.right" catalog="system" id="c60-JY-szr"/>
+                            <barButtonItem title="Item" image="arrow.backward" catalog="system" id="hba-lq-xHu">
+                                <connections>
+                                    <action selector="previousShot:" destination="mXm-tZ-pGV" id="IX5-wY-V0t"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Item" image="arrow.right" catalog="system" id="c60-JY-szr">
+                                <connections>
+                                    <action selector="nextShot:" destination="mXm-tZ-pGV" id="cRe-aC-fQe"/>
+                                </connections>
+                            </barButtonItem>
                         </leftBarButtonItems>
                         <rightBarButtonItems>
                             <barButtonItem image="plus.rectangle.on.rectangle" catalog="system" id="KzC-k5-zaS" userLabel="Duplicate Button">

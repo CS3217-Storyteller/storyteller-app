@@ -8,7 +8,7 @@ import UIKit
 import PencilKit
 
 class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
-    @IBOutlet var shotView: ShotView!
+    @IBOutlet private var shotView: ShotView!
 
     @IBOutlet private var transformLayerButton: TransformLayerButton!
     @IBOutlet private var drawingModeButton: DrawingModeButton!
@@ -96,6 +96,48 @@ class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updateShotTransform()
+    }
+
+    @IBAction private func nextShot(_ sender: Any) {
+        let sceneLabel = self.shotLabel.sceneLabel
+        guard let scene = self.modelManager.getScene(of: sceneLabel) else {
+            return
+        }
+        let currentShotId = self.shotLabel.shotId
+        guard let idx = scene.shotOrder.firstIndex(of: currentShotId) else {
+            return
+        }
+        if idx + 1 >= scene.shotOrder.count {
+            return
+        }
+        let nextShotId = scene.shotOrder[idx + 1]
+        guard let nextShot = scene.shots[nextShotId] else {
+            return
+        }
+        self.setShotLabel(to: nextShot.label)
+        self.setUpShot()
+
+    }
+
+
+    @IBAction func previousShot(_ sender: Any) {
+        let sceneLabel = self.shotLabel.sceneLabel
+        guard let scene = self.modelManager.getScene(of: sceneLabel) else {
+            return
+        }
+        let currentShotId = self.shotLabel.shotId
+        guard let idx = scene.shotOrder.firstIndex(of: currentShotId) else {
+            return
+        }
+        if idx <= 1 {
+            return
+        }
+        let nextShotId = scene.shotOrder[idx - 1]
+        guard let nextShot = scene.shots[nextShotId] else {
+            return
+        }
+        self.setShotLabel(to: nextShot.label)
+        self.setUpShot()
     }
 
     private func setUpShot() {
