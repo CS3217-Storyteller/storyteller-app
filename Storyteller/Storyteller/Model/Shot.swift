@@ -63,10 +63,12 @@ struct Shot {
     }
 
     // TODO: What if layer already exist? Just update?
-    mutating func addLayer(_ layer: Layer, at index: Int?) {
+    mutating func addLayer(_ layer: Layer, at index: Int? = nil) {
         let layerId = layer.id
         if let index = index, layers[layerId] == nil {
             layerOrder.insert(layerId, at: index)
+        } else {
+            layerOrder.append(layer.id)
         }
         layers[layerId] = layer
     }

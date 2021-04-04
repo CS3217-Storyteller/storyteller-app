@@ -96,7 +96,8 @@ class ModelManager {
 
     // TODO: Return optional, or empty array if shot is nil?
     func getLayers(of shotLabel: ShotLabel) -> [Layer]? {
-        getShot(of: shotLabel)?.orderedLayers
+        let layers = getShot(of: shotLabel)?.orderedLayers
+        return layers
     }
 
     // old signature: func getLayer(at layerIndex: Int, of shotLabel: ShotLabel) -> Layer?
@@ -212,6 +213,13 @@ class ModelManager {
                            backgroundColor: Color(uiColor: backgroundColor),
                            canvasSize: scene.canvasSize)
         }
+        
+        if newShot.layers.isEmpty {
+            let layerLabel = newShot.label.generateLayerLabel(withId: id)
+            let layer = Layer(layerWithDrawing: PKDrawing(), canvasSize: scene.canvasSize, label: layerLabel)
+            newShot.addLayer(layer)
+        }
+        
         projects[projectId]?.addShot(newShot, to: sceneLabel)
         saveProject(projects[projectId])
         /*

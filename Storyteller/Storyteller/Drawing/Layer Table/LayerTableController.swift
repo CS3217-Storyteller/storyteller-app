@@ -88,10 +88,11 @@ extension LayerTableController: UITableViewDataSource {
             fatalError("Cannot get reusable cell.")
         }
 
-        guard let layer = modelManager.getLayer(at: indexPath.row, of: shotLabel) else {
+        guard let layerOrder = modelManager.getLayers(of: shotLabel) else {
             fatalError("Failed to get the layer at \(indexPath.row)")
         }
-
+        
+        let layer = layerOrder[indexPath.row]
         cell.setUp(thumbnail: layer.thumbnail, name: layer.name,
                    isLocked: layer.isLocked, isVisible: layer.isVisible)
         cell.delegate = self
@@ -131,8 +132,13 @@ extension LayerTableController: UITableViewDelegate {
                    moveRowAt sourceIndexPath: IndexPath,
                    to destinationIndexPath: IndexPath) {
         delegate?.didMoveLayer(from: sourceIndexPath.row, to: destinationIndexPath.row)
-        modelManager.moveLayer(from: sourceIndexPath.row,
-                               to: destinationIndexPath.row, of: shotLabel)
+        
+        
+        guard let layers = modelManager.getLayers(of: shotLabel) else {
+            return
+        }
+        let layer = layers[sourceIndexPath.row]
+        modelManager.moveLayer(layer.label, to: destinationIndexPath.row)
         selectedLayerIndex = destinationIndexPath.row
     }
     func tableView(_ tableView: UITableView,
@@ -193,7 +199,12 @@ extension LayerTableController {
             return
         }
         delegate?.didRemoveLayers(at: [selectedLayerIndex])
-        modelManager.removeLayers(at: [selectedLayerIndex], of: shotLabel)
+        
+        guard let layers = modelManager.getLayers(of: shotLabel) else {
+            return
+        }
+        let layer = layers[selectedLayerIndex]
+        modelManager.removeLayers(withIds: [layer.id], of: shotLabel)
     }
     private func deleteMultipleLayer() {
         guard numOfRows > multipleSelectionIndices.count else {
@@ -201,7 +212,18 @@ extension LayerTableController {
             return
         }
         delegate?.didRemoveLayers(at: multipleSelectionIndices)
-        modelManager.removeLayers(at: multipleSelectionIndices, of: shotLabel)
+        
+        guard let layers = modelManager.getLayers(of: shotLabel) else {
+            return
+        }
+        
+        var layerIds = [UUID]()
+        for index in multipleSelectionIndices {
+            let layer = layers[index]
+            layerIds.append(layer.id)
+        }
+        
+        modelManager.removeLayers(withIds: layerIds, of: shotLabel)
     }
     @IBAction private func addLayer(_ sender: Any) {
         modelManager.addLayer(to: shotLabel)
