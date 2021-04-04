@@ -24,7 +24,7 @@ struct Shot: Codable {
 
     mutating func updateLayer(_ layerLabel: LayerLabel, withDrawing drawing: PKDrawing) {
         let layerId = layerLabel.layerId
-        layers[layerId]?.setDrawingTo(drawing)
+        layers[layerId]?.setDrawing(to: drawing)
     }
 
     // TODO: What if layer already exist? Just update?

@@ -13,16 +13,18 @@ struct Layer: Codable, Identifiable {
     var label: LayerLabel
     var id: UUID
 
-    mutating func setDrawingTo(_ updatedDrawing: PKDrawing) {
-        drawing = updatedDrawing
+    mutating func setDrawing(to updatedDrawing: PKDrawing) {
+        self.drawing = updatedDrawing
     }
 
     func duplicate(withId newId: UUID = UUID()) -> Self {
-        let newLabel = label.withLayerId(newId)
-        return Self(layerType: layerType,
-                    drawing: drawing,
-                    canvasSize: canvasSize,
-                    label: newLabel,
-                    id: newId)
+        let newLabel = self.label.withLayerId(newId)
+        return Self(
+            layerType: self.layerType,
+            drawing: self.drawing,
+            canvasSize: self.canvasSize,
+            label: newLabel,
+            id: newId
+        )
     }
 }

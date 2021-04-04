@@ -8,26 +8,75 @@ import PencilKit
 
 // TODO
 class ModelManager {
-    var projects: [UUID: Project]
+    
     private let storageManager = StorageManager()
-
     var observers = [ModelManagerObserver]()
-
+    
+    var projects: [UUID: Project]
+    var projectOrder: [UUID]
+    
+    var orderedProjects: [Project] {
+        self.projectOrder.map { id in self.projects[id] }.compactMap { $0 }
+    }
+    
     init() {
         var dict = [UUID: Project]()
+        var list = [UUID]()
         for project in storageManager.getAllProjects() {
             dict[project.id] = project
+            list.append(project.id)
         }
         self.projects = dict
-    }
-
-    func getBackgroundColor(of shotLabel: ShotLabel) -> UIColor? {
-        getShot(of: shotLabel)?.backgroundColor.uiColor
+        self.projectOrder = list
     }
 
     func getProject(of projectLabel: ProjectLabel) -> Project? {
         let projectId = projectLabel.projectId
         return projects[projectId]
+    }
+    
+    func addProject(canvasSize: CGSize, title: String, project: Project? = nil) {
+        var newProject: Project
+        let newProjectId = UUID()
+        if let unwrappedProject = project {
+            newProject = unwrappedProject.duplicate(withId: newProjectId)
+        } else {
+            let label = ProjectLabel(projectId: newProjectId)
+            newProject = Project(
+                id: newProjectId,
+                label: label,
+                title: title,
+                canvasSize: canvasSize
+            )
+        }
+        self.projects[newProjectId] = newProject
+        self.projectOrder.append(newProjectId)
+        self.saveProject(newProject)
+    }
+    
+    func removeProject(of projectLabel: ProjectLabel) {
+        let projectId = projectLabel.projectId
+        if let project = projects[projectId] {
+            self.deleteProject(project)
+        }
+        self.projects.removeValue(forKey: projectId)
+        if let idx = self.projectOrder.firstIndex(of: projectId) {
+            self.projectOrder.remove(at: idx)
+        }
+    }
+    
+    func renameProject(of projectLabel: ProjectLabel, to name: String) {
+        let projectId = projectLabel.projectId
+        guard var project = projects[projectId] else {
+            return
+        }
+        self.removeProject(of: projectLabel)
+        project.setTitle(to: name)
+        self.addProject(canvasSize: project.canvasSize, title: project.title, project: project)
+    }
+    
+    func getBackgroundColor(of shotLabel: ShotLabel) -> UIColor? {
+        self.getShot(of: shotLabel)?.backgroundColor.uiColor
     }
 
     func getScene(of sceneLabel: SceneLabel) -> Scene? {
@@ -58,9 +107,14 @@ class ModelManager {
 
     private func saveProject(_ project: Project?) {
         if let project = project {
-            storageManager.saveProject(project: project)
-            observers.forEach({ $0.modelDidChanged() })
+            self.storageManager.saveProject(project: project)
+            self.observers.forEach({ $0.modelDidChanged() })
         }
+    }
+    
+    private func deleteProject(_ project: Project) {
+        self.storageManager.deleteProject(projectTitle: project.title)
+        self.observers.forEach({ $0.modelDidChanged() })
     }
 
     @available(*, deprecated, message: "Deprecated. Use updateLayer function instead.")
@@ -81,25 +135,11 @@ class ModelManager {
     // TODO: Use this method to update drawing
     func updateLayer(layerLabel: LayerLabel, withDrawing drawing: PKDrawing = PKDrawing()) {
         let projectId = layerLabel.projectId
-        projects[projectId]?.updateLayer(layerLabel, withDrawing: drawing)
-        saveProject(projects[projectId])
+        self.projects[projectId]?.updateLayer(layerLabel, withDrawing: drawing)
+        self.saveProject(projects[projectId])
     }
 
-    func addProject(canvasSize: CGSize, title: String, project: Project? = nil) {
-        let id = UUID()
-        var newProject: Project
-        if let unwrappedProject = project {
-            newProject = unwrappedProject.duplicate(withId: id)
-        } else {
-            let label = ProjectLabel(projectId: id)
-            newProject = Project(label: label,
-                                 canvasSize: canvasSize,
-                                 title: title,
-                                 id: id)
-        }
-        projects[id] = newProject
-        saveProject(newProject)
-    }
+
 
     func addScene(projectLabel: ProjectLabel, scene: Scene? = nil) {
         let id = UUID()
