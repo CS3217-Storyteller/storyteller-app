@@ -273,7 +273,18 @@ class ModelManager {
         let projectId = layerLabel.projectId
         projects[projectId]?.moveLayer(layerLabel, to: newIndex)
     }
+    
+    func swapShots(_ index1: Int, _ index2: Int, of sceneLabel: SceneLabel) {
+        guard var scene = self.getScene(of: sceneLabel) else {
+            return
+        }
+        scene.swapShots(index1, index2)
+        let projectLabel = sceneLabel.projectLabel
+        let project = self.getProject(of: projectLabel)
+        self.saveProject(project)
+    }
 }
+
 
 protocol ModelManagerObserver {
     /// Invoked when the model changes.

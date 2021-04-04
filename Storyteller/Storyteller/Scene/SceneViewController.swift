@@ -226,8 +226,8 @@ extension SceneViewController: UICollectionViewDelegate {
         }
         let sourceIndex = sourceIndexPath.row
         let destinationIndex = destinationIndexPath.row
-        scene.shotOrder.swapAt(sourceIndex, destinationIndex)
-
+        
+        self.modelManager?.swapShots(sourceIndex, destinationIndex, of: scene.label)
     }
 }
 
