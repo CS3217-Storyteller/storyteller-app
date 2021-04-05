@@ -7,17 +7,17 @@
 import PencilKit
 
 class ModelManager {
-    
+
     private let storageManager = StorageManager()
     var observers = [ModelManagerObserver]()
-    
+
     var projects: [UUID: Project]
     var projectOrder: [UUID]
-    
+
     var orderedProjects: [Project] {
         self.projectOrder.map { id in self.projects[id] }.compactMap { $0 }
     }
-    
+
     init() {
         var dict = [UUID: Project]()
         var list = [UUID]()
@@ -33,7 +33,7 @@ class ModelManager {
         let projectId = projectLabel.projectId
         return projects[projectId]
     }
-    
+
     func addProject(canvasSize: CGSize, title: String, project: Project? = nil) {
         var newProject: Project
         let newProjectId = UUID()
@@ -52,7 +52,7 @@ class ModelManager {
         self.projectOrder.append(newProjectId)
         self.saveProject(newProject)
     }
-    
+
     func removeProject(of projectLabel: ProjectLabel) {
         let projectId = projectLabel.projectId
         if let project = projects[projectId] {
@@ -63,7 +63,7 @@ class ModelManager {
             self.projectOrder.remove(at: idx)
         }
     }
-    
+
     func renameProject(of projectLabel: ProjectLabel, to name: String) {
         let projectId = projectLabel.projectId
         guard var project = projects[projectId] else {
@@ -73,7 +73,7 @@ class ModelManager {
         project.setTitle(to: name)
         self.addProject(canvasSize: project.canvasSize, title: project.title, project: project)
     }
-    
+
     func getBackgroundColor(of shotLabel: ShotLabel) -> UIColor? {
         self.getShot(of: shotLabel)?.backgroundColor.uiColor
     }
@@ -260,7 +260,6 @@ class ModelManager {
         saveProject(getProject(of: sceneLabel.projectLabel))
     }
 }
-
 
 protocol ModelManagerObserver {
     /// Invoked when the model changes.

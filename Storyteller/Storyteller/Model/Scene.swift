@@ -20,7 +20,7 @@ struct Scene {
             }
             .compactMap { $0 }
     }
-    
+
     mutating func swapShots(_ index1: Int, _ index2: Int) {
         self.shotOrder.swapAt(index1, index2)
     }

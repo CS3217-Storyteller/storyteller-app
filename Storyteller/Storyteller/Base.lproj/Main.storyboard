@@ -52,7 +52,7 @@
                     <connections>
                         <outlet property="collectionView" destination="wfm-g6-ORl" id="tjc-5U-Xvu"/>
                         <outletCollection property="collectionView" destination="nu9-GC-VIB" id="yQP-fg-G30"/>
-                        <segue destination="mcS-65-Qo3" kind="show" id="Arh-Q2-rHW"/>
+                        <segue destination="mcS-65-Qo3" kind="show" identifier="ProjectViewToSceneView" id="Arh-Q2-rHW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7u3-mr-1iH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -467,7 +467,7 @@
                     <connections>
                         <outlet property="collectionView" destination="LAJ-1h-XVO" id="m6Q-kN-l5K"/>
                         <outletCollection property="collectionView" destination="5EB-ZE-Y4q" id="Y2L-oV-EOK"/>
-                        <segue destination="mXm-tZ-pGV" kind="show" id="rxQ-Lh-nOo"/>
+                        <segue destination="mXm-tZ-pGV" kind="show" identifier="SceneViewToShotDesigner" id="rxQ-Lh-nOo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tkQ-SI-LQP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

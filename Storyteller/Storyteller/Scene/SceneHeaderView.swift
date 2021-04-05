@@ -17,8 +17,7 @@ class SceneHeaderView: UICollectionReusableView {
         label.textColor = .black
         return label
     }()
-    
-    
+
     func configure(sceneIndex: Int) {
         self.backgroundColor = .gray
         self.label.text = "  Scene \(sceneIndex)"

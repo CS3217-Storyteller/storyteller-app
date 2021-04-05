@@ -9,7 +9,7 @@ import PencilKit
 
 class ShotDesignerViewController: UIViewController {
     @IBOutlet private var shotView: ShotView!
-    
+
     var toolPicker = PKToolPicker()
     // should be intialized via segue
     // TODO enable the following line after implementing ModelManager
@@ -79,7 +79,7 @@ class ShotDesignerViewController: UIViewController {
         }
     }
 
-    @IBAction func duplicateShot(_ sender: UIBarButtonItem) {
+    @IBAction private func duplicateShot(_ sender: UIBarButtonItem) {
         guard let shot = self.modelManager.getShot(of: self.shotLabel) else {
             return
         }

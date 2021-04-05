@@ -9,13 +9,13 @@ import PencilKit
 struct Project {
     var id: UUID
     var label: ProjectLabel
-    
+
     var title: String
     let canvasSize: CGSize
-    
+
     var scenes: [UUID: Scene] = [UUID: Scene]()
     var sceneOrder: [UUID] = [UUID]()
-    
+
     var orderedScenes: [Scene] {
         self.sceneOrder.map { id in scenes[id] }.compactMap { $0 }
     }
@@ -24,7 +24,6 @@ struct Project {
         let sceneId = layerLabel.sceneId
         self.scenes[sceneId]?.updateLayer(layerLabel, withDrawing: drawing)
     }
-
 
     mutating func updateLayer(_ layerLabel: LayerLabel, withLayer newLayer: Layer) {
         let sceneId = layerLabel.sceneId
@@ -59,7 +58,7 @@ struct Project {
         let sceneId = shotLabel.sceneId
         scenes[sceneId]?.removeLayers(withIds: ids, of: shotLabel)
     }
-    
+
     mutating func setTitle(to title: String) {
         self.title = title
     }

@@ -221,7 +221,7 @@ extension SceneViewController: UICollectionViewDelegate {
         }
 
         let sceneId = project.sceneOrder[sourceIndexPath.section]
-        guard var scene = project.scenes[sceneId] else {
+        guard let scene = project.scenes[sceneId] else {
             return
         }
         let sourceIndex = sourceIndexPath.row
@@ -230,9 +230,9 @@ extension SceneViewController: UICollectionViewDelegate {
             return
         }
         let sourceShotLabel = sourceShot.label
-        
+
         let destinationIndex = destinationIndexPath.row
-        
+
         modelManager.moveShot(sourceShotLabel, to: destinationIndex)
     }
 }

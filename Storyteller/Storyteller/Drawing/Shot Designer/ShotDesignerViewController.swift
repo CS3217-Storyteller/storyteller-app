@@ -81,6 +81,7 @@ class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+
         toolPicker.addObserver(self)
         modelManager.observers.append(self)
 
@@ -119,8 +120,7 @@ class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
 
     }
 
-
-    @IBAction func previousShot(_ sender: Any) {
+    @IBAction private func previousShot(_ sender: Any) {
         let sceneLabel = self.shotLabel.sceneLabel
         guard let scene = self.modelManager.getScene(of: sceneLabel) else {
             return
@@ -418,7 +418,7 @@ extension ShotDesignerViewController: LayerTableDelegate {
     }
 
     private func toggleLayerLock(at index: Int) {
-        
+
         guard let layers = modelManager.getLayers(of: shotLabel) else {
             return
         }
@@ -426,9 +426,9 @@ extension ShotDesignerViewController: LayerTableDelegate {
         newLayer.isLocked.toggle()
         modelManager.updateLayer(layerLabel: newLayer.label, withLayer: newLayer)
     }
-    
+
     private func toggleLayerVisibility(at index: Int) {
-        
+
         guard let layers = modelManager.getLayers(of: shotLabel) else {
             return
         }

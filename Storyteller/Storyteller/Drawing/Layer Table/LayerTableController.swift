@@ -133,7 +133,6 @@ extension LayerTableController: UITableViewDelegate {
                    to destinationIndexPath: IndexPath) {
         delegate?.didMoveLayer(from: sourceIndexPath.row, to: destinationIndexPath.row)
 
-
         guard let layers = modelManager.getLayers(of: shotLabel) else {
             return
         }

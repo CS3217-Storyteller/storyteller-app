@@ -44,7 +44,7 @@ struct Shot {
         layerOrder.remove(at: oldIndex)
         layerOrder.insert(layerId, at: newIndex)
     }
-        
+
     var orderedLayers: [Layer] {
         layerOrder
             .map { id in

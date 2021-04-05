@@ -11,11 +11,11 @@ class ProjectViewCell: UICollectionViewCell {
 
     static let identifier = "ProjectViewCell"
 
-    let imageView: UIImageView = UIImageView()
-    
-    let label: UILabel = UILabel()
-    
-    let highlightView: UIView = UIView()
+    let imageView = UIImageView()
+
+    let label = UILabel()
+
+    let highlightView = UIView()
 
     override var isSelected: Bool {
         didSet {
@@ -29,20 +29,20 @@ class ProjectViewCell: UICollectionViewCell {
             }
         }
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.imageView.contentMode = .scaleAspectFill
         self.imageView.clipsToBounds = true
-        self.imageView.image = UIImage(named: "project")
-        
+        self.imageView.image = #imageLiteral(resourceName: "project")
+
         self.label.font = UIFont.systemFont(ofSize: 30)
         self.label.textAlignment = .center
         self.label.textColor = .black
         self.label.alpha = 1
         self.label.frame = CGRect(x: 0, y: 20, width: self.bounds.size.width,
                                   height: self.bounds.size.height)
-        
+
         self.contentView.addSubview(self.label)
         self.contentView.addSubview(self.imageView)
     }
@@ -65,7 +65,7 @@ class ProjectViewCell: UICollectionViewCell {
         super.layoutSubviews()
         self.imageView.frame = self.contentView.bounds
     }
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
     }

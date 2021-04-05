@@ -20,7 +20,8 @@ struct Layer {
 //        DrawingUtility.generateLayerView(for: self).asImage()
     }
 
-    init(component: LayerComponent, canvasSize: CGSize, name: String, isLocked: Bool, isVisible: Bool, label: LayerLabel) {
+    init(component: LayerComponent, canvasSize: CGSize, name: String,
+         isLocked: Bool, isVisible: Bool, label: LayerLabel) {
         self.component = component
         self.canvasSize = canvasSize
         self.name = name
@@ -28,7 +29,8 @@ struct Layer {
         self.id = label.layerId
     }
 
-    init(layerWithDrawing: PKDrawing, canvasSize: CGSize, name: String = Constants.defaultLayerName, label: LayerLabel) {
+    init(layerWithDrawing: PKDrawing, canvasSize: CGSize,
+         name: String = Constants.defaultLayerName, label: LayerLabel) {
         self.canvasSize = canvasSize
         self.component = DrawingComponent(drawing: layerWithDrawing, canvasSize: canvasSize)
         self.name = name

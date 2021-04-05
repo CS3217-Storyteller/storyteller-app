@@ -13,12 +13,12 @@ class ProjectViewController: UIViewController {
         case view
         case select
     }
-    
+
     @IBOutlet private var collectionView: UICollectionView!
-    
+
     private var modelManager = ModelManager()
     private var NumOfProjects: Int = 0
-    
+
     lazy var addBarButton: UIBarButtonItem = {
         let barButtonItem = UIBarButtonItem(
             title: "Add",
@@ -28,7 +28,7 @@ class ProjectViewController: UIViewController {
         )
         return barButtonItem
     }()
-    
+
     lazy var renameBarButton: UIBarButtonItem = {
         let barButtonItem = UIBarButtonItem(
             title: "Rename",
@@ -38,7 +38,7 @@ class ProjectViewController: UIViewController {
         )
         return barButtonItem
     }()
-    
+
     lazy var selectBarButton: UIBarButtonItem = {
         let barButtonItem = UIBarButtonItem(
             title: "Select",
@@ -48,7 +48,7 @@ class ProjectViewController: UIViewController {
         )
         return barButtonItem
     }()
-    
+
     lazy var deleteBarButton: UIBarButtonItem = {
         let barButtonItem = UIBarButtonItem(
             barButtonSystemItem: .trash,
@@ -58,19 +58,16 @@ class ProjectViewController: UIViewController {
         return barButtonItem
     }()
 
-/* // TODO: CONFLICT
     override var prefersStatusBarHidden: Bool {
         true
     }
-*/
+
     private var mode: Mode = .view {
         didSet {
             switch self.mode {
             case .view:
-                for (key, value) in self.selectedIndexPath {
-                    if value == true {
-                        self.collectionView.deselectItem(at: key, animated: true)
-                    }
+                for (key, value) in self.selectedIndexPath where value {
+                    self.collectionView.deselectItem(at: key, animated: true)
                 }
                 self.selectedIndexPath.removeAll()
                 self.selectBarButton.title = "Select"
@@ -84,9 +81,9 @@ class ProjectViewController: UIViewController {
             }
         }
     }
-    
+
     private var selectedIndexPath: [IndexPath: Bool] = [:]
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.modelManager.observers.append(self)
@@ -102,9 +99,9 @@ class ProjectViewController: UIViewController {
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.view.addSubview(collectionView)
-        
+
         self.NumOfProjects = self.modelManager.projects.count
-        
+
         self.navigationItem.title = "My Projects"
         self.navigationItem.rightBarButtonItems = [
             self.selectBarButton, self.addBarButton
@@ -125,16 +122,14 @@ class ProjectViewController: UIViewController {
     @objc func didSelectButtonClicked(_ sender: UIBarButtonItem) {
         self.mode = self.mode == .view ? .select : .view
     }
-    
+
     @objc func didDeleteButtonClicked(_ sender: UIBarButtonItem) {
         var toDeleteIndexPath: [IndexPath] = []
-        for (key, value) in self.selectedIndexPath {
-            if value == true {
-                toDeleteIndexPath.append(key)
-            }
+        for (key, value) in self.selectedIndexPath where value {
+            toDeleteIndexPath.append(key)
         }
         for indexPath in toDeleteIndexPath {
-            let index = min(indexPath.row,  self.modelManager.projectOrder.count - 1)
+            let index = min(indexPath.row, self.modelManager.projectOrder.count - 1)
             let projectId = self.modelManager.projectOrder[index]
             if let project = self.modelManager.projects[projectId] {
                 self.modelManager.removeProject(of: project.label)
@@ -143,7 +138,7 @@ class ProjectViewController: UIViewController {
         self.selectedIndexPath.removeAll()
         self.mode = .view
     }
-    
+
     @objc func didAddButtonClicked(_ sender: UIButton) {
         let canvasSize = Constants.defaultCanvasSize
         let projectTitle = "Project \(self.NumOfProjects)"
@@ -151,20 +146,18 @@ class ProjectViewController: UIViewController {
         self.NumOfProjects += 1
         self.collectionView.reloadData()
     }
-    
+
     @objc func didRenameButtonClicked(_ sender: UIButton) {
-        
+
 //        for projectId in self.modelManager.projectOrder {
 //            let project = self.modelManager.projects[projectId]!
 //            let projectLabel = project.label
 //            self.modelManager.removeProject(of: projectLabel)
 //        }
-        
+
         var index = 0
-        for (key, value) in self.selectedIndexPath {
-            if value == true {
-                index = key.row
-            }
+        for (key, value) in self.selectedIndexPath where value {
+            index = key.row
         }
         let projectId = self.modelManager.projectOrder[index]
         guard let project = self.modelManager.projects[projectId] else {
@@ -177,8 +170,8 @@ class ProjectViewController: UIViewController {
             message: "",
             preferredStyle: .alert
         )
-        alertController.addTextField { (textField)
-            in textField.text = projectName
+        alertController.addTextField { textField in
+            textField.text = projectName
         }
 
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -197,10 +190,10 @@ class ProjectViewController: UIViewController {
 }
 
 extension ProjectViewController: UICollectionViewDelegate {
-    
+
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    
+
         let projectId = self.modelManager.projectOrder[indexPath.row]
         guard let project = self.modelManager.projects[projectId] else {
             return UICollectionViewCell()
@@ -214,7 +207,7 @@ extension ProjectViewController: UICollectionViewDelegate {
         projectViewCell.setTitle(to: project.title)
         return projectViewCell
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch self.mode {
         case .view:
@@ -240,7 +233,7 @@ extension ProjectViewController: UICollectionViewDelegate {
             }
          }
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         if self.mode == .select {
             self.selectedIndexPath[indexPath] = false
@@ -251,20 +244,18 @@ extension ProjectViewController: UICollectionViewDelegate {
             }
         }
     }
-    
+
     func numberOfSelectedItems() -> Int {
         var count = 0
-        for (_, value) in self.selectedIndexPath {
-            if value == true {
-                count += 1
-            }
+        for (_, value) in self.selectedIndexPath where value {
+            count += 1
         }
         return count
     }
 }
 
 extension ProjectViewController: UICollectionViewDataSource {
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         self.modelManager.projects.count
     }
