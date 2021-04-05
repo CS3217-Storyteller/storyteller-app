@@ -22,7 +22,9 @@ class ShotView: UIView {
         }
     }
     var selectedLayerView: LayerView {
-        layerViews[selectedLayerIndex]
+        print(layerViews)
+        print(selectedLayerIndex)
+        return layerViews[selectedLayerIndex]
     }
     var currentCanvasView: PKCanvasView? {
         selectedLayerView.topCanvasView

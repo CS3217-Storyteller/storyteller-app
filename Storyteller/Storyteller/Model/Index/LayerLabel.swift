@@ -1,15 +1,17 @@
 //
-//  ShotLabel.swift
+//  LayerLabel.swift
 //  Storyteller
 //
-//  Created by TFang on 20/3/21.
+//  Created by mmarcus on 27/3/21.
 //
+
 import Foundation
 
-struct ShotLabel: Codable {
+struct LayerLabel: Codable {
     var projectId: UUID
     var sceneId: UUID
     var shotId: UUID
+    var layerId: UUID
 
     var sceneLabel: SceneLabel {
         SceneLabel(projectId: projectId, sceneId: sceneId)
@@ -19,31 +21,35 @@ struct ShotLabel: Codable {
         ProjectLabel(projectId: projectId)
     }
 
-    func generateLayerLabel(withId layerId: UUID) -> LayerLabel {
-        LayerLabel(projectId: projectId, sceneId: sceneId, shotId: shotId, layerId: layerId)
+    var shotLabel: ShotLabel {
+        ShotLabel(projectId: projectId, sceneId: sceneId, shotId: shotId)
     }
 
     func withProjectId(_ newProjectId: UUID) -> Self {
         Self(projectId: newProjectId,
              sceneId: sceneId,
-             shotId: shotId)
+             shotId: shotId,
+             layerId: layerId)
     }
 
     func withSceneId(_ newSceneId: UUID) -> Self {
         Self(projectId: projectId,
              sceneId: newSceneId,
-             shotId: shotId)
+             shotId: shotId,
+             layerId: layerId)
     }
 
     func withShotId(_ newShotId: UUID) -> Self {
         Self(projectId: projectId,
              sceneId: sceneId,
-             shotId: newShotId)
+             shotId: newShotId,
+             layerId: layerId)
     }
-}
 
-extension ShotLabel {
-    var nextLabel: ShotLabel {
-        ShotLabel(projectId: projectId, sceneId: sceneId, shotId: UUID())
+    func withLayerId(_ newLayerId: UUID) -> Self {
+        Self(projectId: projectId,
+             sceneId: sceneId,
+             shotId: shotId,
+             layerId: newLayerId)
     }
 }

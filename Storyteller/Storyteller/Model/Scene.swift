@@ -7,50 +7,83 @@
 import PencilKit
 
 struct Scene {
-    var shots: [Shot]
     var label: SceneLabel
     let canvasSize: CGSize
+    var id: UUID
+    var shots: [UUID: Shot] = [UUID: Shot]()
+    var shotOrder: [UUID] = [UUID]()
 
-    mutating func updateShot(ofShot shotLabel: ShotLabel,
-                             atLayer layer: Int,
-                             withDrawing drawing: PKDrawing) {
-        let shotIndex = shotLabel.shotIndex
-        guard shots.indices.contains(shotIndex) else {
-            return
-        }
-        shots[shotIndex].updateLayer(layer, withDrawing: drawing)
+    var orderedShots: [Shot] {
+        shotOrder
+            .map { id in
+                shots[id]
+            }
+            .compactMap { $0 }
     }
-    mutating func update(layer: Layer, at layerIndex: Int,
-                         ofShot shotLabel: ShotLabel) {
-        let shotIndex = shotLabel.shotIndex
-        guard shots.indices.contains(shotIndex) else {
-            return
-        }
-        shots[shotIndex].update(layer: layer, at: layerIndex)
+    
+    mutating func swapShots(_ index1: Int, _ index2: Int) {
+        self.shotOrder.swapAt(index1, index2)
     }
+
+    mutating func updateLayer(_ layerLabel: LayerLabel,
+                              withDrawing drawing: PKDrawing) {
+        let shotId = layerLabel.shotId
+        shots[shotId]?.updateLayer(layerLabel, withDrawing: drawing)
+    }
+
+    mutating func updateLayer(_ layerLabel: LayerLabel,
+                              withLayer newLayer: Layer) {
+        let shotId = layerLabel.shotId
+        shots[shotId]?.updateLayer(layerLabel, withLayer: newLayer)
+    }
+
     mutating func addShot(_ shot: Shot) {
-        shots.append(shot)
+        let shotId = shot.id
+        if shots[shotId] == nil {
+            shotOrder.append(shotId)
+        }
+        shots[shotId] = shot
     }
 
     mutating func addLayer(_ layer: Layer, at index: Int?, to shotLabel: ShotLabel) {
-        let shotIndex = shotLabel.shotIndex
-        guard shots.indices.contains(shotIndex) else {
-            return
-        }
-        shots[shotIndex].addLayer(layer, at: index)
+        let shotId = shotLabel.shotId
+        shots[shotId]?.addLayer(layer, at: index)
     }
-    mutating func removeLayers(at indices: [Int], of shotLabel: ShotLabel) {
-        let shotIndex = shotLabel.shotIndex
-        guard shots.indices.contains(shotIndex) else {
-            return
-        }
-        shots[shotIndex].removeLayers(at: indices)
+
+    mutating func removeLayers(withIds ids: Set<UUID>, of shotLabel: ShotLabel) {
+        shots[shotLabel.shotId]?.removeLayers(withIds: ids)
     }
-    mutating func moveLayer(from oldIndex: Int, to newIndex: Int, of shotLabel: ShotLabel) {
-        let shotIndex = shotLabel.shotIndex
-        guard shots.indices.contains(shotIndex) else {
+
+    mutating func moveLayer(_ layerLabel: LayerLabel, to newIndex: Int) {
+        let shotId = layerLabel.shotId
+        shots[shotId]?.moveLayer(layerLabel, to: newIndex)
+    }
+
+    mutating func moveShot(_ shotLabel: ShotLabel, to newIndex: Int) {
+        let shotId = shotLabel.shotId
+        guard let oldIndex = shotOrder.firstIndex(of: shotId) else {
             return
         }
-        shots[shotIndex].moveLayer(from: oldIndex, to: newIndex)
+
+        shotOrder.remove(at: oldIndex)
+        shotOrder.insert(shotId, at: newIndex)
+    }
+
+    func duplicate(withId newSceneId: UUID = UUID()) -> Self {
+        let newLabel = SceneLabel(projectId: label.projectId,
+                                  sceneId: newSceneId)
+        var dict = [UUID: Shot]()
+        var order = [UUID]()
+        for (_, var shot) in shots {
+            shot.label = shot.label.withSceneId(newSceneId)
+            let newShotId = UUID()
+            dict[newShotId] = shot.duplicate(withId: newShotId)
+            order.append(newShotId)
+        }
+        return Self(label: newLabel,
+                    canvasSize: canvasSize,
+                    id: newSceneId,
+                    shots: dict,
+                    shotOrder: order)
     }
 }
