@@ -83,20 +83,7 @@ extension ShotView {
         selectedLayerView.transform = selectedLayerView.transform
             .concatenating(transform)
     }
-    func scaledSelectedLayer(by scale: CGFloat) {
-        selectedLayerView.transform = selectedLayerView.transform
-            .scaledBy(x: scale, y: scale)
-    }
 
-    func rotatedSelectedLayer(by rotation: CGFloat) {
-        selectedLayerView.transform = selectedLayerView.transform
-            .rotated(by: rotation)
-    }
-    func translatedSelectedLayerBy(x: CGFloat, y: CGFloat) {
-        selectedLayerView.transform = selectedLayerView.transform
-            .concatenating(CGAffineTransform(translationX: x, y: y))
-    }
-    
     func updateLayerViews(newLayerViews: [LayerView]) {
         for i in newLayerViews.indices {
             layerViews[i].isLocked = newLayerViews[i].isLocked

@@ -24,20 +24,7 @@ extension DrawingComponent: LayerComponent {
         CGPoint(x: canvasSize.width / 2, y: canvasSize.height / 2)
     }
     func transformed(using transform: CGAffineTransform) -> DrawingComponent {
-        DrawingComponent(drawing: drawing.transformed(using: transform.transformAround(anchor)), canvasSize: canvasSize)
-    }
-
-    func scaled(by scale: CGFloat) -> DrawingComponent {
-        DrawingComponent(drawing: drawing.transformed(using: CGAffineTransform.scaledAround(anchor, by: scale)),
-                         canvasSize: canvasSize)
-    }
-    func rotated(by rotation: CGFloat) -> DrawingComponent {
-        DrawingComponent(drawing: drawing.transformed(using: CGAffineTransform.rotatedAround(anchor, by: rotation)),
-                         canvasSize: canvasSize)
-    }
-    func translatedBy(x: CGFloat, y: CGFloat) -> DrawingComponent {
-        DrawingComponent(drawing: drawing.transformed(using: CGAffineTransform(translationX: x, y: y)),
-                         canvasSize: canvasSize)
+        DrawingComponent(drawing: drawing.transformed(using: transform.transformedAround(anchor)), canvasSize: canvasSize)
     }
 
     // MARK: - LayerComponent

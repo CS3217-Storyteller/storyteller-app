@@ -140,20 +140,6 @@ class ModelManager {
         saveProject(projects[projectIndex]) */
     }
 
-    // Use this method to update drawing
-    func updateDrawingOf(layerLabel: LayerLabel, withDrawing drawing: PKDrawing = PKDrawing()) {
-        let projectId = layerLabel.projectId
-        self.projects[projectId]?.updateLayer(layerLabel, withDrawing: drawing)
-        self.saveProject(projects[projectId])
-    }
-
-    // Use this method to update other attributes of layer
-    func updateLayer(layerLabel: LayerLabel, withLayer newLayer: Layer) {
-        let projectId = layerLabel.projectId
-        self.projects[projectId]?.updateLayer(layerLabel, withLayer: newLayer)
-        self.saveProject(projects[projectId])
-        self.observers.forEach({ $0.layerDidUpdate() })
-    }
 
     func addScene(projectLabel: ProjectLabel, scene: Scene? = nil) {
         let id = UUID()
@@ -209,11 +195,6 @@ class ModelManager {
 
     // MARK: - Layers CRUD
 
-    func removeLayers(withIds ids: [UUID], of shotLabel: ShotLabel) {
-        let projectId = shotLabel.projectId
-        projects[projectId]?.removeLayers(withIds: Set(ids), of: shotLabel)
-    }
-
     // TODO: allow different types of layers to be created
     func addLayer(at index: Int? = nil, to shotLabel: ShotLabel,
                   withDrawing drawing: PKDrawing = PKDrawing()) {
@@ -227,13 +208,24 @@ class ModelManager {
         let label = LayerLabel(projectId: projectId, sceneId: sceneId, shotId: shotId, layerId: newId)
         let layer = Layer(layerWithDrawing: drawing,
                           canvasSize: shot.canvasSize,
-                          name: "Give me a Name",
+                          name: "New Drawing Layer",
                           label: label)
         projects[projectId]?.addLayer(layer, at: index, to: shotLabel)
         observers.forEach({ $0.willAddLayer() })
         saveProject(projects[projectId])
     }
 
+    func updateLayer(layerLabel: LayerLabel, withLayer newLayer: Layer) {
+        let projectId = layerLabel.projectId
+        self.projects[projectId]?.updateLayer(layerLabel, withLayer: newLayer)
+        self.saveProject(projects[projectId])
+        self.observers.forEach({ $0.layerDidUpdate() })
+    }
+    func removeLayers(withIds ids: [UUID], of shotLabel: ShotLabel) {
+        let projectId = shotLabel.projectId
+        projects[projectId]?.removeLayers(withIds: Set(ids), of: shotLabel)
+    }
+    
     func moveLayer(_ layerLabel: LayerLabel, to newIndex: Int) {
         let projectId = layerLabel.projectId
         projects[projectId]?.moveLayer(layerLabel, to: newIndex)
