@@ -140,15 +140,14 @@ class ModelManager {
         saveProject(projects[projectIndex]) */
     }
 
-    // TODO: Use this method to update drawing
-    func updateLayer(layerLabel: LayerLabel, withDrawing drawing: PKDrawing = PKDrawing()) {
+    // Use this method to update drawing
+    func updateDrawingOf(layerLabel: LayerLabel, withDrawing drawing: PKDrawing = PKDrawing()) {
         let projectId = layerLabel.projectId
         self.projects[projectId]?.updateLayer(layerLabel, withDrawing: drawing)
         self.saveProject(projects[projectId])
-        self.observers.forEach({ $0.layerDidUpdate() })
     }
 
-    // TODO: Use this method to update drawing
+    // Use this method to update other attributes of layer
     func updateLayer(layerLabel: LayerLabel, withLayer newLayer: Layer) {
         let projectId = layerLabel.projectId
         self.projects[projectId]?.updateLayer(layerLabel, withLayer: newLayer)

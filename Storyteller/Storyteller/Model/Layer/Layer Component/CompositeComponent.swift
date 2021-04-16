@@ -12,6 +12,10 @@ struct CompositeComponent {
 }
 
 extension CompositeComponent: LayerComponent {
+    func transformed(using transform: CGAffineTransform) -> CompositeComponent {
+        CompositeComponent(children: children.map({ $0.transformed(using: transform) }))
+    }
+
     func scaled(by scale: CGFloat) -> CompositeComponent {
         CompositeComponent(children: children.map({ $0.scaled(by: scale) }))
     }

@@ -178,10 +178,18 @@ extension ShotDesignerViewController {
 
             switch editingMode {
             case .transformLayer:
-                transformLayer({ $0.translatedBy(x: offsetX, y: offsetY) })
+                transformLayer(using: CGAffineTransform(translationX: offsetX,
+                                                        y: offsetY))
             case .free, .drawing:
                 canvasTransform = canvasTransform
                     .concatenating(CGAffineTransform(translationX: offsetX, y: offsetY))
+            }
+        case .ended:
+            switch editingMode {
+            case .transformLayer:
+                setUpShot()
+            case .free, .drawing:
+                return
             }
         default:
             return
@@ -204,7 +212,10 @@ extension ShotDesignerViewController {
     private func scaleLayer(_ sender: UIPinchGestureRecognizer) {
         let scale = sender.scale
         sender.scale = 1
-        transformLayer({ $0.scaled(by: scale) })
+        transformLayer(using: CGAffineTransform(scaleX: scale, y: scale))
+        if sender.state == .ended {
+            setUpShot()
+        }
     }
 
     @IBAction private func handleRotation(_ sender: UIRotationGestureRecognizer) {
@@ -223,16 +234,19 @@ extension ShotDesignerViewController {
     private func rotateLayer(_ sender: UIRotationGestureRecognizer) {
         let rotation = sender.rotation
         sender.rotation = .zero
-        transformLayer({ $0.rotated(by: rotation) })
+        transformLayer(using: CGAffineTransform(rotationAngle: rotation))
+        if sender.state == .ended {
+            setUpShot()
+        }
     }
 
-    private func transformLayer(_ transform: (Layer) -> Layer) {
+    private func transformLayer(using transform: CGAffineTransform) {
         guard let layer = selectedLayer, !layer.isLocked, layer.isVisible else {
             return
         }
-        let newLayer = transform(layer)
+        let newLayer = layer.transformed(using: transform)
+        shotView.transformedSelectedLayer(using: transform)
         modelManager.updateLayer(layerLabel: layer.label, withLayer: newLayer)
-        // modelManager.update(layer: newLayer, at: selectedLayerIndex, of: shotLabel)
     }
 }
 
@@ -278,12 +292,10 @@ extension ShotDesignerViewController: ModelManagerObserver {
 //        setUpShot()
     }
     func layerDidUpdate() {
-        // TODO: change to refresh the shotview
-//        guard let shot = shot else {
-//            return
-//        }
-//        shotView.updateLayerViews(newLayerViews: DrawingUtility.generateLayerViews(for: shot))
-        setUpShot()
+        guard let shot = shot else {
+            return
+        }
+        shotView.updateLayerViews(newLayerViews: DrawingUtility.generateLayerViews(for: shot))
     }
     func willAddLayer() {
         shotView.add(

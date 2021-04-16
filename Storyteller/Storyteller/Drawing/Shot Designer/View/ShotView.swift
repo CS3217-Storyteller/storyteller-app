@@ -22,9 +22,7 @@ class ShotView: UIView {
         }
     }
     var selectedLayerView: LayerView {
-        print(layerViews)
-        print(selectedLayerIndex)
-        return layerViews[selectedLayerIndex]
+        layerViews[selectedLayerIndex]
     }
     var currentCanvasView: PKCanvasView? {
         selectedLayerView.topCanvasView
@@ -63,7 +61,6 @@ class ShotView: UIView {
              PKDelegate: PKCanvasViewDelegate) {
         layerViews.append(layerView)
         addSubview(layerView)
-        print("called")
         layerView.setUpPK(toolPicker: toolPicker, PKDelegate: PKDelegate)
     }
     func remove(at index: Int) {
@@ -84,9 +81,26 @@ class ShotView: UIView {
 
 // MARK: - Update Layer View
 extension ShotView {
+    func transformedSelectedLayer(using transform: CGAffineTransform) {
+        selectedLayerView.transform = selectedLayerView.transform
+            .concatenating(transform)
+    }
+    func scaledSelectedLayer(by scale: CGFloat) {
+        selectedLayerView.transform = selectedLayerView.transform
+            .scaledBy(x: scale, y: scale)
+    }
+
+    func rotatedSelectedLayer(by rotation: CGFloat) {
+        selectedLayerView.transform = selectedLayerView.transform
+            .rotated(by: rotation)
+    }
+    func translatedSelectedLayerBy(x: CGFloat, y: CGFloat) {
+        selectedLayerView.transform = selectedLayerView.transform
+            .concatenating(CGAffineTransform(translationX: x, y: y))
+    }
+    
     func updateLayerViews(newLayerViews: [LayerView]) {
         for i in newLayerViews.indices {
-            layerViews[i].transform = newLayerViews[i].transform
             layerViews[i].isLocked = newLayerViews[i].isLocked
             layerViews[i].isVisible = newLayerViews[i].isVisible
 

@@ -12,27 +12,23 @@ struct StorageLayerComponent: Codable {
         case drawing(DrawingComponent)
     }
 
-    var transform: CGAffineTransform
     var type: StorageNodeType
 
     init(_ node: LayerComponent) {
         self = StorageLayerComponent.generateStorageComponent(node)
     }
 
-    init(transform: CGAffineTransform, type: StorageNodeType) {
-        self.transform = transform
+    init(type: StorageNodeType) {
         self.type = type
     }
 
     static func generateStorageComponent(_ layerComponent: LayerComponent) -> StorageLayerComponent {
         if let drawingComponent = layerComponent as? DrawingComponent {
-            return StorageLayerComponent(transform: drawingComponent.transform,
-                                         type: .drawing(drawingComponent))
+            return StorageLayerComponent(type: .drawing(drawingComponent))
         }
         if let composite = layerComponent as? CompositeComponent {
             let storageChildren = composite.children.map({ generateStorageComponent($0) })
-            return StorageLayerComponent(transform: .identity,
-                                         type: .composite(storageChildren))
+            return StorageLayerComponent(type: .composite(storageChildren))
         }
 
         fatalError("Failed to generate storage layer component")
@@ -42,7 +38,6 @@ struct StorageLayerComponent: Codable {
         case children
         case drawing
 
-        case transform
     }
 
     enum CodableError: Error {
@@ -52,8 +47,6 @@ struct StorageLayerComponent: Codable {
 
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-
-        try container.encode(transform, forKey: .transform)
 
         switch type {
         case .composite(let children):
@@ -66,7 +59,6 @@ struct StorageLayerComponent: Codable {
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        transform = try container.decode(CGAffineTransform.self, forKey: .transform)
 
         if let children = try? container.decode([StorageLayerComponent].self, forKey: .children) {
             self.type = .composite(children)

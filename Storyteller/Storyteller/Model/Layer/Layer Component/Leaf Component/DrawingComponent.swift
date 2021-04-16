@@ -9,37 +9,35 @@ import PencilKit
 
 struct DrawingComponent {
     let canvasSize: CGSize
-    var transform: CGAffineTransform
     private(set) var drawing: PKDrawing
 
-    init(drawing: PKDrawing, canvasSize: CGSize,
-         transform: CGAffineTransform = .identity) {
-        self.transform = transform
+    init(drawing: PKDrawing, canvasSize: CGSize) {
         self.drawing = drawing
         self.canvasSize = canvasSize
     }
 }
 
 extension DrawingComponent: LayerComponent {
+
     // MARK: - Transformable
     var anchor: CGPoint {
         CGPoint(x: canvasSize.width / 2, y: canvasSize.height / 2)
     }
+    func transformed(using transform: CGAffineTransform) -> DrawingComponent {
+        DrawingComponent(drawing: drawing.transformed(using: transform.transformAround(anchor)), canvasSize: canvasSize)
+    }
+
     func scaled(by scale: CGFloat) -> DrawingComponent {
         DrawingComponent(drawing: drawing.transformed(using: CGAffineTransform.scaledAround(anchor, by: scale)),
-                         canvasSize: canvasSize,
-                         transform: transform.scaledBy(x: scale, y: scale))
+                         canvasSize: canvasSize)
     }
     func rotated(by rotation: CGFloat) -> DrawingComponent {
         DrawingComponent(drawing: drawing.transformed(using: CGAffineTransform.rotatedAround(anchor, by: rotation)),
-                         canvasSize: canvasSize,
-                         transform: transform.rotated(by: rotation))
+                         canvasSize: canvasSize)
     }
     func translatedBy(x: CGFloat, y: CGFloat) -> DrawingComponent {
         DrawingComponent(drawing: drawing.transformed(using: CGAffineTransform(translationX: x, y: y)),
-                         canvasSize: canvasSize,
-                         transform: transform
-                            .concatenating(CGAffineTransform(translationX: x, y: y)))
+                         canvasSize: canvasSize)
     }
 
     // MARK: - LayerComponent
