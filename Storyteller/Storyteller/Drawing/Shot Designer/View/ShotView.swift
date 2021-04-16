@@ -34,10 +34,8 @@ class ShotView: UIView {
             selectedLayerView.becomeFirstResponder()
             return
         }
-        layerViews.forEach({ $0.isUserInteractionEnabled = false; $0.hideBorder() })
+        layerViews.forEach({ $0.isUserInteractionEnabled = false })
         selectedLayerView.isUserInteractionEnabled = true
-
-        isInDrawingMode ? selectedLayerView.showBorder(): selectedLayerView.hideBorder()
 
         canvasView.becomeFirstResponder()
         toolPicker?.setVisible(isInDrawingMode, forFirstResponder: canvasView)
