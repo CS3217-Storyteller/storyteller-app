@@ -9,16 +9,19 @@ import PencilKit
 
 struct CompositeComponent {
     var children: [LayerComponent]
-    var transform: CGAffineTransform
-    init(transform: CGAffineTransform, children: [LayerComponent]) {
-        self.transform = transform
-        self.children = children
-    }
 }
 
 extension CompositeComponent: LayerComponent {
-    func updateTransform(_ transform: CGAffineTransform) -> CompositeComponent {
-        CompositeComponent(transform: transform, children: children)
+    func scaled(by scale: CGFloat) -> CompositeComponent {
+        CompositeComponent(children: children.map({ $0.scaled(by: scale) }))
+    }
+
+    func rotated(by rotation: CGFloat) -> CompositeComponent {
+        CompositeComponent(children: children.map({ $0.rotated(by: rotation) }))
+    }
+
+    func translatedBy(x: CGFloat, y: CGFloat) -> CompositeComponent {
+        CompositeComponent(children: children.map({ $0.translatedBy(x: x, y: y) }))
     }
 
     var canvasSize: CGSize {

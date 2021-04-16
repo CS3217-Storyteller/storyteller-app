@@ -239,13 +239,8 @@ extension ShotDesignerViewController {
 // MARK: - Actions
 extension ShotDesignerViewController {
     @IBAction private func zoomToFit() {
-        switch editingMode {
-        case .transformLayer:
-            transformLayer({ $0.resetTransform() })
-        case .free, .drawing:
-            canvasTransform = .identity
-            updateShotTransform()
-        }
+        canvasTransform = .identity
+        updateShotTransform()
     }
 
     @IBAction private func duplicateShot(_ sender: UIBarButtonItem) {
@@ -283,10 +278,12 @@ extension ShotDesignerViewController: ModelManagerObserver {
 //        setUpShot()
     }
     func layerDidUpdate() {
-        guard let shot = shot else {
-            return
-        }
-        shotView.updateLayerViews(newLayerViews: DrawingUtility.generateLayerViews(for: shot))
+        // TODO: change to refresh the shotview
+//        guard let shot = shot else {
+//            return
+//        }
+//        shotView.updateLayerViews(newLayerViews: DrawingUtility.generateLayerViews(for: shot))
+        setUpShot()
     }
     func willAddLayer() {
         shotView.add(

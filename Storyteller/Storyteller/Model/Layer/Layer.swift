@@ -73,10 +73,16 @@ extension Layer {
 }
 
 extension Layer: Transformable {
-    var transform: CGAffineTransform {
-        component.transform
+    func scaled(by scale: CGFloat) -> Layer {
+        updateComponent(component.scaled(by: scale))
     }
-    func updateTransform(_ transform: CGAffineTransform) -> Layer {
-        updateComponent(component.updateTransform(transform))
+
+    func rotated(by rotation: CGFloat) -> Layer {
+        updateComponent(component.rotated(by: rotation))
     }
+
+    func translatedBy(x: CGFloat, y: CGFloat) -> Layer {
+        updateComponent(component.translatedBy(x: x, y: y))
+    }
+
 }

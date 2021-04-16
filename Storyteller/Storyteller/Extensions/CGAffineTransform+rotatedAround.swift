@@ -8,8 +8,7 @@
 import CoreGraphics
 
 extension CGAffineTransform {
-    static func rotatedAround(_ pointRelativeToAnchor: CGPoint, by angle: CGFloat,
-                              boundsSize: CGSize) -> CGAffineTransform {
+    static func rotatedAround(_ pointRelativeToAnchor: CGPoint, by angle: CGFloat) -> CGAffineTransform {
         CGAffineTransform.identity
             .translatedBy(x: pointRelativeToAnchor.x, y: pointRelativeToAnchor.y)
             .rotated(by: angle)

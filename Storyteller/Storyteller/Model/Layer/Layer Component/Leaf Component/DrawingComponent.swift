@@ -21,11 +21,28 @@ struct DrawingComponent {
 }
 
 extension DrawingComponent: LayerComponent {
-    func updateTransform(_ transform: CGAffineTransform) -> DrawingComponent {
-        DrawingComponent(drawing: drawing, canvasSize: canvasSize,
-                         transform: transform)
+    // MARK: - Transformable
+    var anchor: CGPoint {
+        CGPoint(x: canvasSize.width / 2, y: canvasSize.height / 2)
+    }
+    func scaled(by scale: CGFloat) -> DrawingComponent {
+        DrawingComponent(drawing: drawing.transformed(using: CGAffineTransform.scaledAround(anchor, by: scale)),
+                         canvasSize: canvasSize,
+                         transform: transform.scaledBy(x: scale, y: scale))
+    }
+    func rotated(by rotation: CGFloat) -> DrawingComponent {
+        DrawingComponent(drawing: drawing.transformed(using: CGAffineTransform.rotatedAround(anchor, by: rotation)),
+                         canvasSize: canvasSize,
+                         transform: transform.rotated(by: rotation))
+    }
+    func translatedBy(x: CGFloat, y: CGFloat) -> DrawingComponent {
+        DrawingComponent(drawing: drawing.transformed(using: CGAffineTransform(translationX: x, y: y)),
+                         canvasSize: canvasSize,
+                         transform: transform
+                            .concatenating(CGAffineTransform(translationX: x, y: y)))
     }
 
+    // MARK: - LayerComponent
     var image: UIImage {
         guard !(drawing.bounds.isEmpty || drawing.bounds.isInfinite) else {
             return UIImage.clearImage(ofSize: canvasSize)

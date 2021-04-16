@@ -26,12 +26,12 @@ struct StorageLayerComponent: Codable {
 
     static func generateStorageComponent(_ layerComponent: LayerComponent) -> StorageLayerComponent {
         if let drawingComponent = layerComponent as? DrawingComponent {
-            return StorageLayerComponent(transform: layerComponent.transform,
+            return StorageLayerComponent(transform: drawingComponent.transform,
                                          type: .drawing(drawingComponent))
         }
         if let composite = layerComponent as? CompositeComponent {
             let storageChildren = composite.children.map({ generateStorageComponent($0) })
-            return StorageLayerComponent(transform: layerComponent.transform,
+            return StorageLayerComponent(transform: .identity,
                                          type: .composite(storageChildren))
         }
 
@@ -87,8 +87,7 @@ extension StorageLayerComponent {
         switch storageComponent.type {
         case .composite(let storageChildren):
             let children = storageChildren.map({ generateLayerComponent($0) })
-            return CompositeComponent(transform: storageComponent.transform,
-                                      children: children)
+            return CompositeComponent(children: children)
         case .drawing(let drawingComponent):
             return drawingComponent
         }
