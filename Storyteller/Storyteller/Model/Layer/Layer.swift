@@ -16,8 +16,7 @@ struct Layer {
     var isVisible = true
 
     var thumbnail: UIImage {
-//        component.thumbnail
-        component.merge(merger: NormalImageMerger())
+        component.merge(merger: NormalImageMerger(canvasSize: canvasSize))
     }
 
     init(component: LayerComponent, canvasSize: CGSize, name: String,

@@ -9,9 +9,6 @@ import PencilKit
 
 protocol LayerComponent: Transformable {
     var canvasSize: CGSize { get }
-
-    var thumbnail: UIImage { get }
-
     var containsDrawing: Bool { get }
     func setDrawing(to drawing: PKDrawing) -> Self
 

@@ -68,7 +68,9 @@ struct Scene {
         shotOrder.remove(at: oldIndex)
         shotOrder.insert(shotId, at: newIndex)
     }
-
+    mutating func updateThumbnail(of shotLabel: ShotLabel, using thumbnail: UIImage) {
+        shots[shotLabel.shotId]?.updateThumbnail(thumbnail)
+    }
     func duplicate(withId newSceneId: UUID = UUID()) -> Self {
         let newLabel = SceneLabel(projectId: label.projectId,
                                   sceneId: newSceneId)

@@ -14,11 +14,12 @@ struct Shot {
     var backgroundColor: Color
     let canvasSize: CGSize
 
-    var thumbnail: UIImage {
-        orderedLayers.reduce(UIImage.clearImage(ofSize: canvasSize), { $0.mergeWith($1.thumbnail) })
-//        DrawingUtility.generateShotThumbnail(for: self)
-    }
+    var thumbnail = UIImage.solidImage(ofColor: .clear,
+                                       ofSize: Constants.defaultCanvasSize)
 
+    mutating func updateThumbnail(_ thumbnail: UIImage) {
+        self.thumbnail = thumbnail
+    }
     mutating func removeLayers(withIds ids: Set<UUID>) {
         layers = layers.filter { id, _ in
             !ids.contains(id)
@@ -90,6 +91,7 @@ struct Shot {
                     id: newShotId,
                     label: newLabel,
                     backgroundColor: backgroundColor,
-                    canvasSize: canvasSize)
+                    canvasSize: canvasSize,
+                    thumbnail: thumbnail)
     }
 }

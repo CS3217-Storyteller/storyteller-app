@@ -67,7 +67,10 @@ struct Project {
         let sceneId = shotLabel.sceneId
         scenes[sceneId]?.moveShot(shotLabel, to: newIndex)
     }
-
+    mutating func updateThumbnail(of shotLabel: ShotLabel, using thumbnail: UIImage) {
+        let sceneId = shotLabel.sceneId
+        scenes[sceneId]?.updateThumbnail(of: shotLabel, using: thumbnail)
+    }
     func duplicate(withId newProjectId: UUID = UUID()) -> Self {
         let newLabel = ProjectLabel(projectId: newProjectId)
         var dict = [UUID: Scene]()

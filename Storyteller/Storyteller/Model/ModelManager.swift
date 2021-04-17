@@ -7,6 +7,7 @@
 import PencilKit
 
 class ModelManager {
+    private let thumbnailQueue = DispatchQueue(label: "ThumbnailQueue", qos: .userInitiated)
 
     private let storageManager = StorageManager()
     var observers = [ModelManagerObserver]()
@@ -74,12 +75,6 @@ class ModelManager {
         self.addProject(canvasSize: project.canvasSize, title: project.title, project: project)
     }
 
-    func getBackgroundColor(of shotLabel: ShotLabel) -> UIColor? {
-        self.getShot(of: shotLabel)?.backgroundColor.uiColor
-    }
-    func setBackgroundColor(of shotLabel: ShotLabel, using uiColor: UIColor) {
-        // TODO
-    }
     func getScene(of sceneLabel: SceneLabel) -> Scene? {
         let projectId = sceneLabel.projectId
         let sceneId = sceneLabel.sceneId
@@ -150,7 +145,7 @@ class ModelManager {
 
     func addShot(ofShot shotLabel: ShotLabel,
                  shot: Shot? = nil,
-                 backgroundColor: UIColor = .white) {
+                 backgroundColor: UIColor = .clear) {
         let sceneLabel = shotLabel.sceneLabel
         guard let scene = getScene(of: sceneLabel) else {
             return
@@ -179,6 +174,57 @@ class ModelManager {
         saveProject(projects[projectId])
     }
 
+    func moveShot(_ shotLabel: ShotLabel, to newIndex: Int) {
+        let projectId = shotLabel.projectId
+        projects[projectId]?.moveShot(shotLabel, to: newIndex)
+        saveProject(projects[projectId])
+    }
+
+    func moveShot(_ shotLabel: ShotLabel, to newIndex: Int? = nil, atScene sceneLabel: SceneLabel) {
+        let projectId = sceneLabel.projectId
+        guard var shot = getShot(of: shotLabel)?.duplicate() else {
+            return
+        }
+        let label = sceneLabel.generateShotLabel(withId: UUID())
+        shot.label = label
+        projects[projectId]?.addShot(shot, to: sceneLabel)
+        if let index = newIndex {
+            moveShot(label, to: index)
+        }
+        saveProject(getProject(of: sceneLabel.projectLabel))
+    }
+}
+
+// MARK: - Specific Shot Methods
+extension ModelManager {
+    func getBackgroundColor(of shotLabel: ShotLabel) -> UIColor? {
+        self.getShot(of: shotLabel)?.backgroundColor.uiColor
+    }
+    func setBackgroundColor(of shotLabel: ShotLabel, using uiColor: UIColor) {
+        // TODO
+        generateThumbnailAndSave(shotLabel: shotLabel)
+    }
+    private func generateThumbnailAndSave(shotLabel: ShotLabel) {
+        let projectId = shotLabel.projectId
+        guard let shot = getShot(of: shotLabel) else {
+            return
+        }
+        thumbnailQueue.async {
+            let thumbnail = shot.orderedLayers
+                .reduce(UIImage.solidImage(ofColor: shot.backgroundColor.uiColor,
+                                           ofSize: shot.canvasSize)) {
+                    $0.mergeWith($1.thumbnail)
+                }
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                self.projects[projectId]?.updateThumbnail(of: shotLabel, using: thumbnail)
+                self.saveProject(self.projects[projectId])
+            }
+        }
+    }
+
     // MARK: - Layers CRUD
     func addLayer(at index: Int? = nil, to shotLabel: ShotLabel,
                   withDrawing drawing: PKDrawing = PKDrawing()) {
@@ -194,7 +240,7 @@ class ModelManager {
                           canvasSize: shot.canvasSize,
                           label: label)
         projects[projectId]?.addLayer(layer, at: index, to: shotLabel)
-        saveProject(projects[projectId])
+        generateThumbnailAndSave(shotLabel: shotLabel)
         observers.forEach({ $0.DidAddLayer(layer: layer) })
     }
     func addLayer(at index: Int? = nil, to shotLabel: ShotLabel,
@@ -217,60 +263,39 @@ class ModelManager {
     func updateLayer(layerLabel: LayerLabel, withLayer newLayer: Layer) {
         let projectId = layerLabel.projectId
         projects[projectId]?.updateLayer(layerLabel, withLayer: newLayer)
-        saveProject(projects[projectId])
+        generateThumbnailAndSave(shotLabel: layerLabel.shotLabel)
         observers.forEach({ $0.DidUpdateLayer() })
     }
     func removeLayers(withIds ids: [UUID], of shotLabel: ShotLabel) {
         let projectId = shotLabel.projectId
         projects[projectId]?.removeLayers(withIds: Set(ids), of: shotLabel)
-        saveProject(projects[projectId])
+        generateThumbnailAndSave(shotLabel: shotLabel)
     }
     func duplicateLayers(withIds ids: [UUID], of shotLabel: ShotLabel) {
-        let projectId = shotLabel.projectId
+//        let projectId = shotLabel.projectId
         // TODO: Duplicate Layers: duplicate selected layers, and put each copy right after the duplicated layer
-        saveProject(projects[projectId])
+        generateThumbnailAndSave(shotLabel: shotLabel)
     }
     func groupLayers(withIds ids: [UUID], of shotLabel: ShotLabel) {
-        let projectId = shotLabel.projectId
+//        let projectId = shotLabel.projectId
         // TODO: Group Layers: create a composite component using selected layers
         // and put the grouped layer at the position of the toppest layer selected
         // Note that selected layers's visibility and lock should be reset before grouping
-        saveProject(projects[projectId])
+        generateThumbnailAndSave(shotLabel: shotLabel)
     }
     func ungroupLayer(withId id: UUID, of shotLabel: ShotLabel) {
-        let projectId = shotLabel.projectId
+//        let projectId = shotLabel.projectId
         // TODO: Ungroup Layers: get children of the composite component
         // and put them at the index of the the composite component
-        saveProject(projects[projectId])
+        generateThumbnailAndSave(shotLabel: shotLabel)
     }
     // MARK: - Rearrange elements
     func moveLayer(_ layerLabel: LayerLabel, to newIndex: Int) {
         let projectId = layerLabel.projectId
         projects[projectId]?.moveLayer(layerLabel, to: newIndex)
-        saveProject(projects[projectId])
-    }
-
-    func moveShot(_ shotLabel: ShotLabel, to newIndex: Int) {
-        let projectId = shotLabel.projectId
-        projects[projectId]?.moveShot(shotLabel, to: newIndex)
-        saveProject(projects[projectId])
-    }
-
-    func moveShot(_ shotLabel: ShotLabel, to newIndex: Int? = nil, atScene sceneLabel: SceneLabel) {
-        let projectId = sceneLabel.projectId
-        guard var shot = getShot(of: shotLabel)?.duplicate() else {
-            return
-        }
-        let label = sceneLabel.generateShotLabel(withId: UUID())
-        shot.label = label
-        projects[projectId]?.addShot(shot, to: sceneLabel)
-        if let index = newIndex {
-            moveShot(label, to: index)
-        }
-        saveProject(getProject(of: sceneLabel.projectLabel))
+        generateThumbnailAndSave(shotLabel: layerLabel.shotLabel)
     }
 }
-
 protocol ModelManagerObserver {
     /// Invoked when the model changes.
     func modelDidChange()

@@ -24,13 +24,6 @@ extension DrawingComponent: LayerComponent {
     }
 
     // MARK: - LayerComponent
-    var thumbnail: UIImage {
-        guard !(drawing.bounds.isEmpty || drawing.bounds.isInfinite) else {
-            return UIImage.clearImage(ofSize: canvasSize)
-        }
-        return drawing.image(from: canvasSize.rectAtOrigin, scale: 0.5)
-    }
-
     var containsDrawing: Bool {
         true
     }

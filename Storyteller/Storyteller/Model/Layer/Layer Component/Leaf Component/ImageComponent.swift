@@ -17,11 +17,6 @@ struct ImageComponent {
 }
 
 extension ImageComponent: LayerComponent {
-    var thumbnail: UIImage {
-        // TODO: Change to the image with transform applied
-        UIImage(data: imageData)!
-    }
-
     func transformed(using transform: CGAffineTransform) -> ImageComponent {
         ImageComponent(canvasSize: canvasSize, imageData: imageData,
                        transform: self.transform.concatenating(transform))

@@ -20,10 +20,6 @@ extension CompositeComponent: LayerComponent {
         children.first?.canvasSize ?? .zero
     }
 
-    var thumbnail: UIImage {
-        reduce(UIImage.clearImage(ofSize: canvasSize), { $0.mergeWith($1.thumbnail) })
-    }
-
     var containsDrawing: Bool {
         children.contains(where: { $0.containsDrawing })
     }
