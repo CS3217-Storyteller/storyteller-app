@@ -6,8 +6,12 @@
 //
 import PencilKit
 
-class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
-    @IBOutlet private var shotView: ShotView!
+class ShotDesignerViewController: UIViewController {
+    @IBOutlet private var shotView: ShotView! {
+        didSet {
+            shotView.addInteraction(UIDropInteraction(delegate: self))
+        }
+    }
 
     @IBOutlet private var transformLayerButton: TransformLayerButton!
     @IBOutlet private var drawingModeButton: DrawingModeButton!
@@ -296,17 +300,10 @@ extension ShotDesignerViewController: ModelManagerObserver {
         }
         shotView.updateLayerViews(newLayerViews: DrawingUtility.generateLayerViews(for: shot))
     }
-    func willAddLayer() {
-        shotView.add(
-            layerView: DrawingUtility.generateLayerView(
-                for: Layer.getEmptyLayer(
-                    canvasSize: canvasSize,
-                    name: Constants.defaultLayerName,
-                    forShot: shotLabel
-                )
-            ),
-            toolPicker: toolPicker, PKDelegate: self
-        )
+    func DidAddLayer(layer: Layer) {
+        shotView.add(layerView: DrawingUtility.generateLayerView(for: layer),
+                     toolPicker: toolPicker, PKDelegate: self)
+        selectedLayerIndex = (modelManager.getLayers(of: shotLabel)?.count ?? 1) - 1
     }
 }
 // MARK: - PKCanvasViewDelegate
@@ -320,7 +317,7 @@ extension ShotDesignerViewController: PKCanvasViewDelegate {
 }
 
 // MARK: - PKToolPickerObserver {
-extension ShotDesignerViewController {
+extension ShotDesignerViewController: PKToolPickerObserver {
     func toolPickerFramesObscuredDidChange(_ toolPicker: PKToolPicker) {
         updateShotTransform()
     }
@@ -392,7 +389,7 @@ extension ShotDesignerViewController {
 
 }
 
-// MARK: UIGestureRecognizerDelegate
+// MARK: - UIGestureRecognizerDelegate
 extension ShotDesignerViewController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
                            shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -443,5 +440,26 @@ extension ShotDesignerViewController: LayerTableDelegate {
         var newLayer = layers[index]
         newLayer.isVisible.toggle()
         modelManager.updateLayer(layerLabel: newLayer.label, withLayer: newLayer)
+    }
+}
+// MARK: - UIDropInteractionDelegate
+extension ShotDesignerViewController: UIDropInteractionDelegate {
+    func dropInteraction(_ interaction: UIDropInteraction,
+                         canHandle session: UIDropSession) -> Bool {
+        session.canLoadObjects(ofClass: UIImage.self)
+    }
+    func dropInteraction(_ interaction: UIDropInteraction,
+                         sessionDidUpdate session: UIDropSession) -> UIDropProposal {
+        UIDropProposal(operation: .copy)
+    }
+    func dropInteraction(_ interaction: UIDropInteraction,
+                         performDrop session: UIDropSession) {
+        session.loadObjects(ofClass: UIImage.self) { [weak self] imageItems in
+            guard let image = imageItems.first as? UIImage,
+                  let self = self else {
+                return
+            }
+            self.modelManager?.addLayer(to: self.shotLabel, withImage: image)
+        }
     }
 }

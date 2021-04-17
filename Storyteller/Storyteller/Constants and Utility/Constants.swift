@@ -15,7 +15,8 @@ class Constants {
     // MARK: - Alert message
     static let atLeastOneLayerMessage = "There must be at least one layer"
 
-    static let defaultLayerName = "New Layer"
+    static let defaultDrawingLayerName = "New Drawing"
+    static let defaultImageLayerName = "New Image"
     // MARK: - Numbers
     static let horizontalCanvasMargin = CGFloat(20)
     static let verticalCanvasMargin = CGFloat(20)
@@ -26,5 +27,4 @@ class Constants {
     static let minLayerZoomScale = CGFloat(0.2)
 
     static let layerBorderWidth = CGFloat(0.5)
-
 }

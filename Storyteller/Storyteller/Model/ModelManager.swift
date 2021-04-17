@@ -125,22 +125,6 @@ class ModelManager {
         self.observers.forEach({ $0.modelDidChange() })
     }
 
-    @available(*, deprecated, message: "Deprecated. Use updateLayer function instead.")
-    func updateDrawing(ofShot shotLabel: ShotLabel,
-                       atLayer layer: Int,
-                       withDrawing drawing: PKDrawing) {
-
-        /* let projectIndex = shotLabel.projectIndex
-        guard projects.indices.contains(projectIndex) else {
-            return
-        }
-        projects[projectIndex].updateShot(ofShot: shotLabel,
-                                          atLayer: layer,
-                                          withDrawing: drawing)
-        saveProject(projects[projectIndex]) */
-    }
-
-
     func addScene(projectLabel: ProjectLabel, scene: Scene? = nil) {
         let id = UUID()
         guard let project = getProject(of: projectLabel) else {
@@ -185,7 +169,7 @@ class ModelManager {
 
         if newShot.layers.isEmpty {
             let layerLabel = newShot.label.generateLayerLabel(withId: id)
-            let layer = Layer(layerWithDrawing: PKDrawing(), canvasSize: scene.canvasSize, label: layerLabel)
+            let layer = Layer(withDrawing: PKDrawing(), canvasSize: scene.canvasSize, label: layerLabel)
             newShot.addLayer(layer)
         }
 
@@ -194,8 +178,6 @@ class ModelManager {
     }
 
     // MARK: - Layers CRUD
-
-    // TODO: allow different types of layers to be created
     func addLayer(at index: Int? = nil, to shotLabel: ShotLabel,
                   withDrawing drawing: PKDrawing = PKDrawing()) {
         let projectId = shotLabel.projectId
@@ -206,15 +188,30 @@ class ModelManager {
         let sceneId = shotLabel.sceneId
         let shotId = shotLabel.shotId
         let label = LayerLabel(projectId: projectId, sceneId: sceneId, shotId: shotId, layerId: newId)
-        let layer = Layer(layerWithDrawing: drawing,
+        let layer = Layer(withDrawing: drawing,
                           canvasSize: shot.canvasSize,
-                          name: "New Drawing Layer",
                           label: label)
         projects[projectId]?.addLayer(layer, at: index, to: shotLabel)
-        observers.forEach({ $0.willAddLayer() })
         saveProject(projects[projectId])
+        observers.forEach({ $0.DidAddLayer(layer: layer) })
     }
-
+    func addLayer(at index: Int? = nil, to shotLabel: ShotLabel,
+                  withImage image: UIImage) {
+        let projectId = shotLabel.projectId
+        guard let shot = getShot(of: shotLabel) else {
+            return
+        }
+        let newId = UUID()
+        let sceneId = shotLabel.sceneId
+        let shotId = shotLabel.shotId
+        let label = LayerLabel(projectId: projectId, sceneId: sceneId, shotId: shotId, layerId: newId)
+        let layer = Layer(withImage: image,
+                          canvasSize: shot.canvasSize,
+                          label: label)
+        projects[projectId]?.addLayer(layer, at: index, to: shotLabel)
+        saveProject(projects[projectId])
+        observers.forEach({ $0.DidAddLayer(layer: layer) })
+    }
     func updateLayer(layerLabel: LayerLabel, withLayer newLayer: Layer) {
         let projectId = layerLabel.projectId
         self.projects[projectId]?.updateLayer(layerLabel, withLayer: newLayer)
@@ -225,7 +222,8 @@ class ModelManager {
         let projectId = shotLabel.projectId
         projects[projectId]?.removeLayers(withIds: Set(ids), of: shotLabel)
     }
-    
+
+    // MARK: - Rearrange elements
     func moveLayer(_ layerLabel: LayerLabel, to newIndex: Int) {
         let projectId = layerLabel.projectId
         projects[projectId]?.moveLayer(layerLabel, to: newIndex)
@@ -256,10 +254,10 @@ protocol ModelManagerObserver {
     /// Invoked when the model changes.
     func modelDidChange()
     func layerDidUpdate()
-    func willAddLayer()
+    func DidAddLayer(layer: Layer)
 }
 
 extension ModelManagerObserver {
     func layerDidUpdate() { }
-    func willAddLayer() { }
+    func DidAddLayer(layer: Layer) { }
 }

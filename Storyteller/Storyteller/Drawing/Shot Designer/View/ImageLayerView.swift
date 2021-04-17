@@ -24,6 +24,7 @@ class ImageLayerView: UIImageView {
 
         super.init(image: image)
         self.frame = CGRect(origin: .zero, size: canvasSize)
+        contentMode = .scaleAspectFit
     }
 
     @available(*, unavailable)

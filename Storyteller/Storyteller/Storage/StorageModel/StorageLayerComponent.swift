@@ -4,8 +4,6 @@
 //
 //  Created by TFang on 31/3/21.
 //
-import CoreGraphics
-
 struct StorageLayerComponent: Codable {
     enum StorageNodeType {
         case drawing(DrawingComponent)

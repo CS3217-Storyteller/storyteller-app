@@ -29,10 +29,19 @@ struct Layer {
         self.id = label.layerId
     }
 
-    init(layerWithDrawing: PKDrawing, canvasSize: CGSize,
-         name: String = Constants.defaultLayerName, label: LayerLabel) {
+    init(withDrawing drawing: PKDrawing, canvasSize: CGSize,
+         name: String = Constants.defaultDrawingLayerName, label: LayerLabel) {
         self.canvasSize = canvasSize
-        self.component = DrawingComponent(canvasSize: canvasSize, drawing: layerWithDrawing)
+        self.component = DrawingComponent(canvasSize: canvasSize, drawing: drawing)
+        self.name = name
+        self.label = label
+        self.id = label.layerId
+    }
+    init(withImage image: UIImage, canvasSize: CGSize,
+         name: String = Constants.defaultImageLayerName, label: LayerLabel) {
+        self.canvasSize = canvasSize
+        self.component = ImageComponent(canvasSize: canvasSize,
+                                        imageData: image.pngData()!)
         self.name = name
         self.label = label
         self.id = label.layerId
@@ -58,16 +67,6 @@ struct Layer {
             isLocked: false,
             isVisible: true, // TODO: verify these values
             label: newLabel
-        )
-    }
-}
-
-extension Layer {
-    static func getEmptyLayer(canvasSize: CGSize, name: String, forShot shotLabel: ShotLabel) -> Layer {
-        Layer(layerWithDrawing: PKDrawing(),
-              canvasSize: canvasSize,
-              name: name,
-              label: shotLabel.generateLayerLabel(withId: UUID())
         )
     }
 }
