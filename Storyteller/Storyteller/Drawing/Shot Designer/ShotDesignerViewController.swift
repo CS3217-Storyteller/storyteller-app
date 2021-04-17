@@ -301,7 +301,7 @@ extension ShotDesignerViewController: ModelManagerObserver {
         // TODO: disable this since PKCanvasView will get refreshed every time
 //        setUpShot()
     }
-    func layerDidUpdate() {
+    func DidUpdateLayer() {
         guard let shot = shot else {
             return
         }

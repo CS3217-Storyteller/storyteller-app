@@ -119,7 +119,6 @@ extension LayerTableController: UITableViewDelegate {
     }
     private func selectLayerDuringEditing(at indexPath: IndexPath) {
         layerSelection[indexPath.row] = true
-        selectedLayerIndex = indexPath.row
     }
 
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {

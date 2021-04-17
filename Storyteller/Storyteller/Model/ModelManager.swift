@@ -214,19 +214,21 @@ class ModelManager {
     }
     func updateLayer(layerLabel: LayerLabel, withLayer newLayer: Layer) {
         let projectId = layerLabel.projectId
-        self.projects[projectId]?.updateLayer(layerLabel, withLayer: newLayer)
-        self.saveProject(projects[projectId])
-        self.observers.forEach({ $0.layerDidUpdate() })
+        projects[projectId]?.updateLayer(layerLabel, withLayer: newLayer)
+        saveProject(projects[projectId])
+        observers.forEach({ $0.DidUpdateLayer() })
     }
     func removeLayers(withIds ids: [UUID], of shotLabel: ShotLabel) {
         let projectId = shotLabel.projectId
         projects[projectId]?.removeLayers(withIds: Set(ids), of: shotLabel)
+        saveProject(projects[projectId])
     }
 
     // MARK: - Rearrange elements
     func moveLayer(_ layerLabel: LayerLabel, to newIndex: Int) {
         let projectId = layerLabel.projectId
         projects[projectId]?.moveLayer(layerLabel, to: newIndex)
+        saveProject(projects[projectId])
     }
 
     func moveShot(_ shotLabel: ShotLabel, to newIndex: Int) {
@@ -253,11 +255,11 @@ class ModelManager {
 protocol ModelManagerObserver {
     /// Invoked when the model changes.
     func modelDidChange()
-    func layerDidUpdate()
+    func DidUpdateLayer()
     func DidAddLayer(layer: Layer)
 }
 
 extension ModelManagerObserver {
-    func layerDidUpdate() { }
+    func DidUpdateLayer() { }
     func DidAddLayer(layer: Layer) { }
 }
