@@ -223,7 +223,11 @@ class ModelManager {
         projects[projectId]?.removeLayers(withIds: Set(ids), of: shotLabel)
         saveProject(projects[projectId])
     }
-
+    func groupLayers(withIds ids: [UUID], of shotLabel: ShotLabel) {
+        let projectId = shotLabel.projectId
+        // TODO: Group Layers
+        saveProject(projects[projectId])
+    }
     // MARK: - Rearrange elements
     func moveLayer(_ layerLabel: LayerLabel, to newIndex: Int) {
         let projectId = layerLabel.projectId

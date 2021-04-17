@@ -59,13 +59,13 @@ struct Layer {
     }
 
     func duplicate(withId newId: UUID = UUID()) -> Self {
-        let newLabel = self.label.withLayerId(newId)
-        return Self(
-            component: self.component,
-            canvasSize: self.canvasSize,
-            name: self.name,
-            isLocked: false,
-            isVisible: true, // TODO: verify these values
+        let newLabel = label.withLayerId(newId)
+        return Layer(
+            component: component,
+            canvasSize: canvasSize,
+            name: name,
+            isLocked: isLocked,
+            isVisible: isVisible, // TODO: verify these values
             label: newLabel
         )
     }

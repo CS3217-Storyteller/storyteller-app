@@ -70,12 +70,23 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="20x20px-grid" translatesAutoresizingMaskIntoConstraints="NO" id="mNZ-3l-gCc">
                                 <rect key="frame" x="0.0" y="0.0" width="1194" height="834"/>
                             </imageView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3l-Ka-Bz4" customClass="ShotView" customModule="Storyteller" customModuleProvider="target">
+                            <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3l-Ka-Bz4" customClass="ShotView" customModule="Storyteller" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="1194" height="834"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6nA-cZ-ct4">
+                                        <rect key="frame" x="0.0" y="0.0" width="1194" height="834"/>
+                                    </imageView>
+                                </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="6nA-cZ-ct4" secondAttribute="bottom" id="HkD-tw-M57"/>
+                                    <constraint firstItem="6nA-cZ-ct4" firstAttribute="leading" secondItem="h3l-Ka-Bz4" secondAttribute="leading" id="LF7-et-LT0"/>
+                                    <constraint firstAttribute="trailing" secondItem="6nA-cZ-ct4" secondAttribute="trailing" id="bg4-sM-1CG"/>
+                                    <constraint firstItem="6nA-cZ-ct4" firstAttribute="top" secondItem="h3l-Ka-Bz4" secondAttribute="top" id="ijI-sw-X0l"/>
+                                </constraints>
                                 <connections>
+                                    <outlet property="onionSkins" destination="6nA-cZ-ct4" id="Cjd-Co-4yw"/>
                                     <outletCollection property="gestureRecognizers" destination="Qsm-mj-MM0" appends="YES" id="Xlj-OC-18T"/>
                                     <outletCollection property="gestureRecognizers" destination="gG1-Rm-Yjc" appends="YES" id="csW-wU-LZQ"/>
                                     <outletCollection property="gestureRecognizers" destination="3se-UB-g1d" appends="YES" id="eIf-vG-hzQ"/>
@@ -85,10 +96,14 @@
                         <viewLayoutGuide key="safeArea" id="nX2-Db-Tvg"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="h3l-Ka-Bz4" firstAttribute="leading" secondItem="nX2-Db-Tvg" secondAttribute="leading" id="9rv-9e-YQW"/>
                             <constraint firstAttribute="trailing" secondItem="mNZ-3l-gCc" secondAttribute="trailing" id="NRE-BO-YE3"/>
                             <constraint firstItem="mNZ-3l-gCc" firstAttribute="top" secondItem="LS0-sP-w2o" secondAttribute="top" id="QxN-f7-xnJ"/>
                             <constraint firstAttribute="bottom" secondItem="mNZ-3l-gCc" secondAttribute="bottom" id="UDB-t3-wNL"/>
                             <constraint firstItem="mNZ-3l-gCc" firstAttribute="leading" secondItem="LS0-sP-w2o" secondAttribute="leading" id="hT5-83-MUI"/>
+                            <constraint firstItem="h3l-Ka-Bz4" firstAttribute="top" secondItem="nX2-Db-Tvg" secondAttribute="top" constant="-50" id="if6-T6-PZ7"/>
+                            <constraint firstItem="nX2-Db-Tvg" firstAttribute="bottom" secondItem="h3l-Ka-Bz4" secondAttribute="bottom" constant="-20" id="jhT-yH-McK"/>
+                            <constraint firstItem="h3l-Ka-Bz4" firstAttribute="trailing" secondItem="nX2-Db-Tvg" secondAttribute="trailing" id="wTm-S6-6cL"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -174,7 +189,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="b3o-vO-6mA">
-                                <rect key="frame" x="16" y="63" width="343" height="547"/>
+                                <rect key="frame" x="16" y="63" width="343" height="522"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LayerCell" rowHeight="103" id="LfY-6o-Jhf" customClass="LayerTableViewCell" customModule="Storyteller" customModuleProvider="target">
@@ -292,17 +307,17 @@
                                         </constraints>
                                         <state key="normal" title="Button" image="plus.square.on.square" catalog="system"/>
                                         <connections>
-                                            <action selector="duplicateLayers:" destination="z2Q-eW-qmk" eventType="touchUpInside" id="nuv-fU-vqL"/>
+                                            <action selector="duplicateLayers" destination="z2Q-eW-qmk" eventType="touchUpInside" id="kM3-Ck-rj4"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9wD-Rz-zMq">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9wD-Rz-zMq" userLabel="Group Button">
                                         <rect key="frame" x="80" y="0.0" width="20" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="9wD-Rz-zMq" secondAttribute="height" multiplier="1:1" id="jMJ-gz-tAX"/>
                                         </constraints>
                                         <state key="normal" title="Button" image="square.stack" catalog="system"/>
                                         <connections>
-                                            <action selector="mergeLayers:" destination="z2Q-eW-qmk" eventType="touchUpInside" id="UAU-Ig-4Rz"/>
+                                            <action selector="groupLayers" destination="z2Q-eW-qmk" eventType="touchUpInside" id="V7F-oa-IHF"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qfT-sz-LSW">
@@ -311,7 +326,7 @@
                                             <color key="titleColor" systemColor="systemRedColor"/>
                                         </state>
                                         <connections>
-                                            <action selector="deleteLayers:" destination="z2Q-eW-qmk" eventType="touchUpInside" id="CsF-Xo-NmI"/>
+                                            <action selector="deleteLayers" destination="z2Q-eW-qmk" eventType="touchUpInside" id="egI-NJ-zki"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -327,8 +342,8 @@
                                     <action selector="addLayer:" destination="z2Q-eW-qmk" eventType="touchUpInside" id="4OA-Nx-b70"/>
                                 </connections>
                             </button>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="ZWn-OS-aXY" userLabel="Background Color Stack View">
-                                <rect key="frame" x="17" y="630" width="341" height="30"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ZWn-OS-aXY" userLabel="Background Color and Onion Skin Stack View">
+                                <rect key="frame" x="20" y="600" width="318" height="60"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="C1n-CE-PNc" userLabel="Background Color and Onion Skin Stack View">
                                         <rect key="frame" x="0.0" y="0.0" width="150.5" height="30"/>
@@ -356,41 +371,84 @@
                                                 </connections>
                                             </button>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstItem="fpP-DU-3qA" firstAttribute="leading" secondItem="CHs-YV-7do" secondAttribute="trailing" constant="10" id="l3H-Y5-gNH"/>
+                                        </constraints>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="2eP-b7-ZLy" userLabel="Onion Skin Stack View">
-                                        <rect key="frame" x="165.5" y="0.0" width="175.5" height="30"/>
+                                        <rect key="frame" x="0.0" y="40" width="318" height="20"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Onion Skin:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xVt-Bu-UOp">
-                                                <rect key="frame" x="0.0" y="0.0" width="99.5" height="30"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Onion Skins:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xVt-Bu-UOp">
+                                                <rect key="frame" x="0.0" y="0.0" width="109.5" height="20"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="20" id="dMo-Po-jDX"/>
+                                                </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Bs-Yt-Usq">
-                                                <rect key="frame" x="107.5" y="0.0" width="30" height="30"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Bs-Yt-Usq" userLabel="Increase Prev Onion Skin Button">
+                                                <rect key="frame" x="117.5" y="0.0" width="20" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="9Bs-Yt-Usq" secondAttribute="height" multiplier="1:1" id="hrA-uQ-9Yu"/>
                                                 </constraints>
                                                 <color key="tintColor" systemColor="systemRedColor"/>
                                                 <state key="normal" title="Button" image="chevron.left.circle" catalog="system"/>
                                                 <connections>
-                                                    <action selector="prevOnionSkin" destination="z2Q-eW-qmk" eventType="touchUpInside" id="kBj-VW-37p"/>
+                                                    <action selector="increasePrevOnionSkin" destination="z2Q-eW-qmk" eventType="touchUpInside" id="QqV-iT-TMA"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2kK-tE-V2M">
-                                                <rect key="frame" x="145.5" y="0.0" width="30" height="30"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Prev" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XxK-PI-OVx">
+                                                <rect key="frame" x="145.5" y="0.0" width="39.5" height="20"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cd2-rC-wvh" userLabel="Decrease Prev Onion Skin Button">
+                                                <rect key="frame" x="193" y="0.0" width="20" height="20"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="cd2-rC-wvh" secondAttribute="height" multiplier="1:1" id="C0F-Ju-Co6"/>
+                                                </constraints>
+                                                <color key="tintColor" systemColor="systemRedColor"/>
+                                                <state key="normal" title="Button" image="chevron.right.circle" catalog="system"/>
+                                                <connections>
+                                                    <action selector="decreasePrevOnionSkin" destination="z2Q-eW-qmk" eventType="touchUpInside" id="jub-Ir-lfn"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2kK-tE-V2M" userLabel="Increase Next Onion Skin Button">
+                                                <rect key="frame" x="221" y="0.0" width="20" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="2kK-tE-V2M" secondAttribute="height" multiplier="1:1" id="Zfh-6o-Na6"/>
                                                 </constraints>
                                                 <color key="tintColor" systemColor="systemGreenColor"/>
+                                                <state key="normal" title="Button" image="chevron.left.circle" catalog="system"/>
+                                                <connections>
+                                                    <action selector="increaseNextOnionSkin" destination="z2Q-eW-qmk" eventType="touchUpInside" id="j9N-oe-Wmg"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Next" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NMe-Lq-c1j">
+                                                <rect key="frame" x="249" y="0.0" width="41" height="20"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1ST-GP-mFR" userLabel="Decrease Next Onion Skin Button">
+                                                <rect key="frame" x="298" y="0.0" width="20" height="20"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="1ST-GP-mFR" secondAttribute="height" multiplier="1:1" id="ScD-Sj-5eg"/>
+                                                </constraints>
+                                                <color key="tintColor" systemColor="systemGreenColor"/>
                                                 <state key="normal" title="Button" image="chevron.right.circle" catalog="system"/>
                                                 <connections>
-                                                    <action selector="nextOnionSkin" destination="z2Q-eW-qmk" eventType="touchUpInside" id="UdQ-cw-uVh"/>
+                                                    <action selector="decreaseNextOnionSkin" destination="z2Q-eW-qmk" eventType="touchUpInside" id="ZOj-6h-vf4"/>
                                                 </connections>
                                             </button>
                                         </subviews>
                                         <constraints>
+                                            <constraint firstItem="1ST-GP-mFR" firstAttribute="width" secondItem="1ST-GP-mFR" secondAttribute="height" multiplier="1:1" id="PbA-M1-QqO"/>
                                             <constraint firstItem="2kK-tE-V2M" firstAttribute="width" secondItem="2kK-tE-V2M" secondAttribute="height" multiplier="1:1" id="hG8-Ed-aox"/>
+                                            <constraint firstItem="1ST-GP-mFR" firstAttribute="width" secondItem="1ST-GP-mFR" secondAttribute="height" multiplier="1:1" id="jMM-iU-YvK"/>
+                                            <constraint firstItem="cd2-rC-wvh" firstAttribute="width" secondItem="cd2-rC-wvh" secondAttribute="height" multiplier="1:1" id="peI-VX-Zi0"/>
                                         </constraints>
                                     </stackView>
                                 </subviews>
@@ -400,10 +458,10 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="b3o-vO-6mA" firstAttribute="leading" secondItem="HCg-0b-eWa" secondAttribute="leadingMargin" id="9jm-Yh-VA1"/>
-                            <constraint firstItem="ZWn-OS-aXY" firstAttribute="centerX" secondItem="HCg-0b-eWa" secondAttribute="centerX" id="AfS-6u-i44"/>
+                            <constraint firstItem="ZWn-OS-aXY" firstAttribute="leading" secondItem="HCg-0b-eWa" secondAttribute="leading" constant="20" id="AfS-6u-i44"/>
                             <constraint firstItem="Bry-6K-efe" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="f2w-Me-8Zv" secondAttribute="trailing" constant="8" symbolic="YES" id="BsA-Hk-Xbm"/>
                             <constraint firstItem="b3o-vO-6mA" firstAttribute="top" secondItem="h0x-Cq-ciF" secondAttribute="top" constant="50" id="FrF-Wz-RJI"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="b3o-vO-6mA" secondAttribute="bottom" constant="70" id="GE7-Da-fp4"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="b3o-vO-6mA" secondAttribute="bottom" constant="95" id="GE7-Da-fp4"/>
                             <constraint firstItem="f2w-Me-8Zv" firstAttribute="top" secondItem="h0x-Cq-ciF" secondAttribute="top" constant="15" id="N1Y-gp-ySI"/>
                             <constraint firstItem="h0x-Cq-ciF" firstAttribute="trailing" secondItem="Bry-6K-efe" secondAttribute="trailing" constant="20" id="Zug-nq-hJH"/>
                             <constraint firstAttribute="trailingMargin" secondItem="b3o-vO-6mA" secondAttribute="trailing" id="cBp-Fr-M09"/>

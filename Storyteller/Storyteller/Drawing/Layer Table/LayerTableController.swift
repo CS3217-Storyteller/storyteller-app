@@ -169,20 +169,26 @@ extension LayerTableController {
     @IBAction private func changeBackgroundColor() {
     }
 
-    @IBAction private func prevOnionSkin() {
+    @IBAction private func increasePrevOnionSkin() {
     }
 
-    @IBAction private func nextOnionSkin() {
+    @IBAction private func decreasePrevOnionSkin() {
+    }
+    
+    @IBAction private func increaseNextOnionSkin() {
+    }
+
+    @IBAction private func decreaseNextOnionSkin() {
     }
 
     // MARK: - Layers Actions
-    @IBAction private func duplicateLayers(_ sender: Any) {
+    @IBAction private func duplicateLayers() {
     }
 
-    @IBAction private func mergeLayers(_ sender: Any) {
+    @IBAction private func groupLayers() {
     }
 
-    @IBAction private func deleteLayers(_ sender: Any) {
+    @IBAction private func deleteLayers() {
         guard tableView.isEditing else {
             deleteSingleLayer()
             return

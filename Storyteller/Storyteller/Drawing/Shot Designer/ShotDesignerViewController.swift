@@ -89,9 +89,7 @@ class ShotDesignerViewController: UIViewController {
         toolPicker.addObserver(self)
         modelManager.observers.append(self)
 
-        shotView.frame.size = canvasSize
-        shotView.bounds.size = canvasSize
-
+        shotView.setSize(canvasSize: canvasSize)
         setUpShot()
 
         editingMode = .drawing

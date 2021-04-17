@@ -7,6 +7,8 @@
 import PencilKit
 
 class ShotView: UIView {
+    @IBOutlet private var onionSkins: UIImageView!
+    
     var layerViews = [LayerView]()
     var toolPicker: PKToolPicker?
 
@@ -39,7 +41,9 @@ class ShotView: UIView {
         canvasView.becomeFirstResponder()
         toolPicker?.setVisible(isInDrawingMode, forFirstResponder: canvasView)
     }
-
+    func setSize(canvasSize: CGSize) {
+        bounds.size = canvasSize
+    }
     func setUpLayerViews(_ layerViews: [LayerView], toolPicker: PKToolPicker,
                          PKDelegate: PKCanvasViewDelegate) {
         let originalLayerCount = layerViews.count
