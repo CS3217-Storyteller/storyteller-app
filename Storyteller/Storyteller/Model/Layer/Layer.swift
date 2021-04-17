@@ -58,7 +58,7 @@ struct Layer {
         return newLayer
     }
 
-    func duplicate(withId newId: UUID = UUID()) -> Self {
+    func duplicate(withId newId: UUID = UUID()) -> Layer {
         let newLabel = label.withLayerId(newId)
         return Layer(
             component: component,
@@ -68,6 +68,16 @@ struct Layer {
             isVisible: isVisible, // TODO: verify these values
             label: newLabel
         )
+    }
+    func ungroup() -> [Layer] {
+        guard let children = (component as? CompositeComponent)?.children else {
+            return [self]
+        }
+        return children.map({ Layer(component: $0, canvasSize: canvasSize,
+                                    name: Constants.defaultUngroupedLayerName,
+                                    isLocked: isLocked,
+                                    isVisible: isVisible,
+                                    label: label.withLayerId(UUID()))})
     }
 }
 

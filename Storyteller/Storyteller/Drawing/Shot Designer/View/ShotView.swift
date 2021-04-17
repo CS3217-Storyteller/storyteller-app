@@ -69,12 +69,6 @@ class ShotView: UIView {
         addSubview(layerView)
         layerView.setUpPK(toolPicker: toolPicker, PKDelegate: PKDelegate)
     }
-    func remove(at index: Int) {
-        let layer = layerViews.remove(at: index)
-        layer.removeFromSuperview()
-
-        selectedLayerIndex = max(0, index - 1)
-    }
     func setUpBackgroundColor(color: UIColor) {
         self.backgroundColor = color
     }
@@ -106,19 +100,53 @@ extension ShotView {
             remove(at: index)
         }
     }
+    func remove(at index: Int) {
+        let layer = layerViews.remove(at: index)
+        layer.removeFromSuperview()
+
+        selectedLayerIndex = max(0, index - 1)
+    }
     func duplicateLayers(at indices: [Int]) {
-        
+        for index in indices.reversed() {
+            duplicate(at: index)
+        }
+    }
+    func duplicate(at index: Int) {
+        let duplicatedlayer = layerViews[index].duplicate()
+        insert(duplicatedlayer, at: index + 1)
+        selectedLayerIndex = index + 1
     }
     func groupLayers(at indices: [Int]) {
-    }
-    func ungroupLayer(at index: Int) {
-    }
-    func moveLayer(from oldIndex: Int, to newIndex: Int) {
-        layerViews.insert(layerViews.remove(at: oldIndex), at: newIndex)
-        guard newIndex - 1 >= 0 else {
-            sendSubviewToBack(layerViews[newIndex])
+        guard let lastIndex = indices.last else {
             return
         }
-        insertSubview(layerViews[newIndex], aboveSubview: layerViews[newIndex - 1])
+        let newIndex = lastIndex - (indices.count - 1)
+
+        var selectedLayerViews = [LayerView]()
+        for index in indices {
+            selectedLayerViews.append(layerViews[index])
+        }
+        let groupedLayerView = CompositeLayerView(canvasSize: bounds.size,
+                                                  children: selectedLayerViews)
+        removeLayers(at: indices)
+        insert(groupedLayerView, at: newIndex)
+    }
+    func ungroupLayer(at index: Int) {
+        guard let children = (layerViews[index] as? CompositeLayerView)?.children else {
+            return
+        }
+        children.reversed().forEach({ insert($0, at: index) })
+    }
+    func moveLayer(from oldIndex: Int, to newIndex: Int) {
+        insert(layerViews.remove(at: oldIndex), at: newIndex)
+
+    }
+    func insert(_ layerView: LayerView, at index: Int) {
+        layerViews.insert(layerView, at: index)
+        guard index > 0 else {
+            sendSubviewToBack(layerViews[index])
+            return
+        }
+        insertSubview(layerViews[index], aboveSubview: layerViews[index - 1])
     }
 }

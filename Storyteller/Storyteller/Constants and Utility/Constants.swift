@@ -17,6 +17,8 @@ class Constants {
 
     static let defaultDrawingLayerName = "New Drawing"
     static let defaultImageLayerName = "New Image"
+    static let defaultGroupedLayerName = "Grouped Layer"
+    static let defaultUngroupedLayerName = "Ungrouped Layer"
     // MARK: - Numbers
     static let horizontalCanvasMargin = CGFloat(20)
     static let verticalCanvasMargin = CGFloat(20)

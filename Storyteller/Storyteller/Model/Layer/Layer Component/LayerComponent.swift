@@ -19,6 +19,3 @@ protocol LayerComponent: Transformable {
                         _ nextPartialResult: (Result, LayerComponent) throws -> Result) rethrows -> Result
     func merge<Result, Merger>(merger: Merger) -> Result where Merger.T == Result, Merger: LayerMerger
 }
-
-extension LayerComponent {
-}

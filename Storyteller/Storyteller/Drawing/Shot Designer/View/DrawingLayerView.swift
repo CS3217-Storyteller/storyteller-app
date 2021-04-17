@@ -52,8 +52,13 @@ extension DrawingLayerView: LayerView {
         canvasView
     }
     func duplicate() -> LayerView {
-        DrawingLayerView(drawing: canvasView.drawing, canvasSize: bounds.size,
-                         isLocked: isLocked, isVisible: isVisible)
+        let copy = DrawingLayerView(drawing: canvasView.drawing, canvasSize: bounds.size,
+                                    isLocked: isLocked, isVisible: isVisible)
+        guard let toolPicker = toolPicker, let delegate = canvasView.delegate else {
+            return copy
+        }
+        copy.setUpPK(toolPicker: toolPicker, PKDelegate: delegate)
+        return copy
     }
 }
 extension DrawingLayerView {

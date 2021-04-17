@@ -232,6 +232,7 @@ class ModelManager {
         let projectId = shotLabel.projectId
         // TODO: Group Layers: create a composite component using selected layers
         // and put the grouped layer at the position of the toppest layer selected
+        // Note that selected layers's visibility and lock should be reset before grouping
         saveProject(projects[projectId])
     }
     func ungroupLayer(withId id: UUID, of shotLabel: ShotLabel) {
