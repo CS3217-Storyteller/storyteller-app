@@ -42,6 +42,7 @@ class ShotView: UIView {
 
     func setUpLayerViews(_ layerViews: [LayerView], toolPicker: PKToolPicker,
                          PKDelegate: PKCanvasViewDelegate) {
+        let originalLayerCount = layerViews.count
         reset()
         guard !layerViews.isEmpty else {
             return
@@ -49,9 +50,13 @@ class ShotView: UIView {
         self.toolPicker = toolPicker
         layerViews.forEach({ add(layerView: $0, toolPicker: toolPicker,
                                  PKDelegate: PKDelegate) })
-        selectedLayerIndex = 0
 
-        clipsToBounds = true
+        guard layerViews.count == originalLayerCount else {
+            selectedLayerIndex = layerViews.count - 1
+            return
+        }
+        let selected = selectedLayerIndex
+        selectedLayerIndex = selected
     }
 
     func add(layerView: LayerView, toolPicker: PKToolPicker,

@@ -9,6 +9,7 @@ import PencilKit
 class ShotDesignerViewController: UIViewController {
     @IBOutlet private var shotView: ShotView! {
         didSet {
+            shotView.clipsToBounds = true
             shotView.addInteraction(UIDropInteraction(delegate: self))
         }
     }
@@ -103,39 +104,36 @@ class ShotDesignerViewController: UIViewController {
     }
 
     @IBAction private func nextShot(_ sender: Any) {
-        let sceneLabel = self.shotLabel.sceneLabel
-        guard let scene = self.modelManager.getScene(of: sceneLabel) else {
+        guard let scene = modelManager.getScene(of: shotLabel.sceneLabel) else {
             return
         }
         let currentShotId = self.shotLabel.shotId
-        guard let idx = scene.shotOrder.firstIndex(of: currentShotId) else {
+        guard let index = scene.shotOrder.firstIndex(of: currentShotId) else {
             return
         }
-        if idx + 1 >= scene.shotOrder.count {
+        if index + 1 >= scene.shotOrder.count {
             return
         }
-        let nextShotId = scene.shotOrder[idx + 1]
+        let nextShotId = scene.shotOrder[index + 1]
         guard let nextShot = scene.shots[nextShotId] else {
             return
         }
         self.setShotLabel(to: nextShot.label)
         self.setUpShot()
-
     }
 
     @IBAction private func previousShot(_ sender: Any) {
-        let sceneLabel = self.shotLabel.sceneLabel
-        guard let scene = self.modelManager.getScene(of: sceneLabel) else {
+        guard let scene = modelManager.getScene(of: shotLabel.sceneLabel) else {
             return
         }
         let currentShotId = self.shotLabel.shotId
-        guard let idx = scene.shotOrder.firstIndex(of: currentShotId) else {
+        guard let index = scene.shotOrder.firstIndex(of: currentShotId) else {
             return
         }
-        if idx <= 0 {
+        if index <= 0 {
             return
         }
-        let nextShotId = scene.shotOrder[idx - 1]
+        let nextShotId = scene.shotOrder[index - 1]
         guard let nextShot = scene.shots[nextShotId] else {
             return
         }
@@ -190,6 +188,9 @@ extension ShotDesignerViewController {
         case .ended:
             switch editingMode {
             case .transformLayer:
+                guard selectedLayer?.canTransform == true else {
+                    return
+                }
                 setUpShot()
             case .free, .drawing:
                 return
@@ -213,6 +214,9 @@ extension ShotDesignerViewController {
         canvasTransform = canvasTransform.scaledBy(x: scale, y: scale)
     }
     private func scaleLayer(_ sender: UIPinchGestureRecognizer) {
+        guard selectedLayer?.canTransform == true else {
+            return
+        }
         let scale = sender.scale
         sender.scale = 1
         transformLayer(using: CGAffineTransform(scaleX: scale, y: scale))
@@ -235,6 +239,9 @@ extension ShotDesignerViewController {
         canvasTransform = canvasTransform.rotated(by: rotation)
     }
     private func rotateLayer(_ sender: UIRotationGestureRecognizer) {
+        guard selectedLayer?.canTransform == true else {
+            return
+        }
         let rotation = sender.rotation
         sender.rotation = .zero
         transformLayer(using: CGAffineTransform(rotationAngle: rotation))
@@ -244,7 +251,7 @@ extension ShotDesignerViewController {
     }
 
     private func transformLayer(using transform: CGAffineTransform) {
-        guard let layer = selectedLayer, !layer.isLocked, layer.isVisible else {
+        guard let layer = selectedLayer, layer.canTransform else {
             return
         }
         let newLayer = layer.transformed(using: transform)

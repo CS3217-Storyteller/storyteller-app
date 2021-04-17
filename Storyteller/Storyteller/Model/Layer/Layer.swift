@@ -75,4 +75,8 @@ extension Layer: Transformable {
     func transformed(using transform: CGAffineTransform) -> Layer {
         updateComponent(component.transformed(using: transform))
     }
+
+    var canTransform: Bool {
+        !isLocked && isVisible
+    }
 }

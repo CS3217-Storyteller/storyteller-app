@@ -34,6 +34,7 @@ class StorageManager {
         }
 
         let url = dataURLs[index]
+        print(loadProject(from: url) == nil)
         return loadProject(from: url)
     }
 

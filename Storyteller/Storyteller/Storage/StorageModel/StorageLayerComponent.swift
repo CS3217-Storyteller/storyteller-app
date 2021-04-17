@@ -54,7 +54,7 @@ struct StorageLayerComponent: Codable {
         case .drawing(let drawingComponent):
             try container.encode(drawingComponent, forKey: .drawing)
         case .image(let imageComponent):
-            try container.encode(imageComponent, forKey: .drawing)
+            try container.encode(imageComponent, forKey: .image)
         case .composite(let children):
             var childrenContainer = container.nestedUnkeyedContainer(forKey: .children)
             try childrenContainer.encode(contentsOf: children)
