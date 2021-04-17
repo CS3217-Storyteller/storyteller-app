@@ -25,7 +25,7 @@ class DrawingLayerView: UIView {
 
     init(drawing: PKDrawing, canvasSize: CGSize,
          isLocked: Bool = false, isVisible: Bool = true) {
-        let frame = CGRect(origin: .zero, size: canvasSize)
+        let frame = canvasSize.rectAtOrigin
         canvasView = PKCanvasView(frame: frame)
         canvasView.drawing = drawing
         canvasView.backgroundColor = .clear

@@ -28,7 +28,7 @@ extension DrawingComponent: LayerComponent {
         guard !(drawing.bounds.isEmpty || drawing.bounds.isInfinite) else {
             return UIImage.clearImage(ofSize: canvasSize)
         }
-        return drawing.image(from: CGRect(origin: .zero, size: canvasSize), scale: 0.5)
+        return drawing.image(from: canvasSize.rectAtOrigin, scale: 0.5)
     }
 
     var containsDrawing: Bool {

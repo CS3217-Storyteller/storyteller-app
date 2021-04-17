@@ -26,6 +26,7 @@ class LayerTableViewCell: UITableViewCell {
 
     func setUp(thumbnail: UIImage, name: String, isLocked: Bool, isVisible: Bool) {
         layerThumbnail.image = thumbnail
+        layerThumbnail.contentMode = .scaleAspectFit
         layerName.text = name
         layerNameTextField.text = name
         lockButton.isChosen = isLocked

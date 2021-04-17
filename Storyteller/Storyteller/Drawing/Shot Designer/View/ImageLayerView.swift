@@ -23,7 +23,7 @@ class ImageLayerView: UIImageView {
         self.isVisible = isVisible
 
         super.init(image: image)
-        self.frame = CGRect(origin: .zero, size: canvasSize)
+        self.frame = canvasSize.rectAtOrigin
         contentMode = .scaleAspectFit
     }
 

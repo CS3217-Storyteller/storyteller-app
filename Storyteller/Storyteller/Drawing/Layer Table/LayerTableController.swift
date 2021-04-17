@@ -92,7 +92,7 @@ extension LayerTableController: UITableViewDataSource {
         }
 
         let layer = layerOrder[indexPath.row]
-        cell.setUp(thumbnail: layer.thumbnail, name: layer.name,
+        cell.setUp(thumbnail: DrawingUtility.generateLayerView(for: layer).asImage(), name: layer.name,
                    isLocked: layer.isLocked, isVisible: layer.isVisible)
         cell.delegate = self
         return cell
@@ -297,15 +297,6 @@ extension LayerTableController: ModelManagerObserver {
             return
         }
         reselect()
-    }
-}
-
-// MARK: - PKToolPickerObserver {
-extension LayerTableController: PKToolPickerObserver {
-    func toolPickerFramesObscuredDidChange(_ toolPicker: PKToolPicker) {
-        let obscuredFrame = toolPicker.frameObscured(in: view)
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0,
-                                              bottom: obscuredFrame.height, right: 0)
     }
 }
 

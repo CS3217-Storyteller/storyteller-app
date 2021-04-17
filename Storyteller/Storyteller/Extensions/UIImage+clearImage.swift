@@ -8,10 +8,10 @@
 import UIKit
 
 extension UIImage {
-    static func clearImage(ofSize: CGSize) -> UIImage {
-        let rect = CGRect(origin: .zero, size: ofSize)
+    static func clearImage(ofSize size: CGSize) -> UIImage {
+        let rect = size.rectAtOrigin
 
-        UIGraphicsBeginImageContextWithOptions(ofSize, false, 0)
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
 
         UIColor.clear.set()
         UIRectFill(rect)

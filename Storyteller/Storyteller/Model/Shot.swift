@@ -16,6 +16,7 @@ struct Shot {
 
     var thumbnail: UIImage {
         orderedLayers.reduce(UIImage.clearImage(ofSize: canvasSize), { $0.mergeWith($1.thumbnail) })
+//        DrawingUtility.generateShotThumbnail(for: self)
     }
 
     mutating func removeLayers(withIds ids: Set<UUID>) {

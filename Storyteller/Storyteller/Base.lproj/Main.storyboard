@@ -74,9 +74,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="1194" height="834"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="project" translatesAutoresizingMaskIntoConstraints="NO" id="6nA-cZ-ct4">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6nA-cZ-ct4">
                                         <rect key="frame" x="0.0" y="0.0" width="1194" height="834"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -181,7 +182,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="b3o-vO-6mA">
-                                <rect key="frame" x="16" y="63" width="343" height="522"/>
+                                <rect key="frame" x="16" y="63" width="343" height="527"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LayerCell" rowHeight="103" id="LfY-6o-Jhf" customClass="LayerTableViewCell" customModule="Storyteller" customModuleProvider="target">
@@ -348,7 +349,7 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ZWn-OS-aXY" userLabel="Background Color and Onion Skin Stack View">
-                                <rect key="frame" x="20" y="600" width="318" height="60"/>
+                                <rect key="frame" x="20" y="600" width="294" height="60"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="C1n-CE-PNc" userLabel="Background Color and Onion Skin Stack View">
                                         <rect key="frame" x="0.0" y="0.0" width="150.5" height="30"/>
@@ -380,8 +381,8 @@
                                             <constraint firstItem="fpP-DU-3qA" firstAttribute="leading" secondItem="CHs-YV-7do" secondAttribute="trailing" constant="10" id="l3H-Y5-gNH"/>
                                         </constraints>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="2eP-b7-ZLy" userLabel="Onion Skin Stack View">
-                                        <rect key="frame" x="0.0" y="40" width="318" height="20"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="2eP-b7-ZLy" userLabel="Onion Skin Stack View">
+                                        <rect key="frame" x="0.0" y="40" width="294" height="20"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Onion Skins:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xVt-Bu-UOp">
                                                 <rect key="frame" x="0.0" y="0.0" width="109.5" height="20"/>
@@ -393,59 +394,59 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Bs-Yt-Usq" userLabel="Increase Prev Onion Skin Button">
-                                                <rect key="frame" x="117.5" y="0.0" width="20" height="20"/>
+                                                <rect key="frame" x="113.5" y="0.0" width="20" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="9Bs-Yt-Usq" secondAttribute="height" multiplier="1:1" id="hrA-uQ-9Yu"/>
                                                 </constraints>
                                                 <color key="tintColor" systemColor="systemRedColor"/>
-                                                <state key="normal" title="Button" image="chevron.left.circle" catalog="system"/>
+                                                <state key="normal" title="Button" image="plus.app" catalog="system"/>
                                                 <connections>
                                                     <action selector="increasePrevOnionSkin" destination="z2Q-eW-qmk" eventType="touchUpInside" id="QqV-iT-TMA"/>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Prev" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XxK-PI-OVx">
-                                                <rect key="frame" x="145.5" y="0.0" width="39.5" height="20"/>
+                                                <rect key="frame" x="137.5" y="0.0" width="39.5" height="20"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cd2-rC-wvh" userLabel="Decrease Prev Onion Skin Button">
-                                                <rect key="frame" x="193" y="0.0" width="20" height="20"/>
+                                                <rect key="frame" x="181" y="0.0" width="20" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="cd2-rC-wvh" secondAttribute="height" multiplier="1:1" id="C0F-Ju-Co6"/>
                                                 </constraints>
                                                 <color key="tintColor" systemColor="systemRedColor"/>
-                                                <state key="normal" title="Button" image="chevron.right.circle" catalog="system"/>
+                                                <state key="normal" title="Button" image="minus.square" catalog="system"/>
                                                 <connections>
                                                     <action selector="decreasePrevOnionSkin" destination="z2Q-eW-qmk" eventType="touchUpInside" id="jub-Ir-lfn"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2kK-tE-V2M" userLabel="Increase Next Onion Skin Button">
-                                                <rect key="frame" x="221" y="0.0" width="20" height="20"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" secondItem="2kK-tE-V2M" secondAttribute="height" multiplier="1:1" id="Zfh-6o-Na6"/>
-                                                </constraints>
-                                                <color key="tintColor" systemColor="systemGreenColor"/>
-                                                <state key="normal" title="Button" image="chevron.left.circle" catalog="system"/>
-                                                <connections>
-                                                    <action selector="increaseNextOnionSkin" destination="z2Q-eW-qmk" eventType="touchUpInside" id="j9N-oe-Wmg"/>
-                                                </connections>
-                                            </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Next" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NMe-Lq-c1j">
-                                                <rect key="frame" x="249" y="0.0" width="41" height="20"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1ST-GP-mFR" userLabel="Decrease Next Onion Skin Button">
-                                                <rect key="frame" x="298" y="0.0" width="20" height="20"/>
+                                                <rect key="frame" x="205" y="0.0" width="20" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="1ST-GP-mFR" secondAttribute="height" multiplier="1:1" id="ScD-Sj-5eg"/>
                                                 </constraints>
                                                 <color key="tintColor" systemColor="systemGreenColor"/>
-                                                <state key="normal" title="Button" image="chevron.right.circle" catalog="system"/>
+                                                <state key="normal" title="Button" image="minus.square" catalog="system"/>
                                                 <connections>
                                                     <action selector="decreaseNextOnionSkin" destination="z2Q-eW-qmk" eventType="touchUpInside" id="ZOj-6h-vf4"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Next" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NMe-Lq-c1j">
+                                                <rect key="frame" x="229" y="0.0" width="41" height="20"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2kK-tE-V2M" userLabel="Increase Next Onion Skin Button">
+                                                <rect key="frame" x="274" y="0.0" width="20" height="20"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="2kK-tE-V2M" secondAttribute="height" multiplier="1:1" id="Zfh-6o-Na6"/>
+                                                </constraints>
+                                                <color key="tintColor" systemColor="systemGreenColor"/>
+                                                <state key="normal" title="Button" image="plus.app" catalog="system"/>
+                                                <connections>
+                                                    <action selector="increaseNextOnionSkin" destination="z2Q-eW-qmk" eventType="touchUpInside" id="j9N-oe-Wmg"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -466,11 +467,11 @@
                             <constraint firstItem="ZWn-OS-aXY" firstAttribute="leading" secondItem="HCg-0b-eWa" secondAttribute="leading" constant="20" id="AfS-6u-i44"/>
                             <constraint firstItem="Bry-6K-efe" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="f2w-Me-8Zv" secondAttribute="trailing" constant="8" symbolic="YES" id="BsA-Hk-Xbm"/>
                             <constraint firstItem="b3o-vO-6mA" firstAttribute="top" secondItem="h0x-Cq-ciF" secondAttribute="top" constant="50" id="FrF-Wz-RJI"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="b3o-vO-6mA" secondAttribute="bottom" constant="95" id="GE7-Da-fp4"/>
+                            <constraint firstItem="ZWn-OS-aXY" firstAttribute="topMargin" secondItem="b3o-vO-6mA" secondAttribute="bottom" constant="10" id="GE7-Da-fp4"/>
                             <constraint firstItem="f2w-Me-8Zv" firstAttribute="top" secondItem="h0x-Cq-ciF" secondAttribute="top" constant="15" id="N1Y-gp-ySI"/>
                             <constraint firstItem="h0x-Cq-ciF" firstAttribute="trailing" secondItem="Bry-6K-efe" secondAttribute="trailing" constant="20" id="Zug-nq-hJH"/>
                             <constraint firstAttribute="trailingMargin" secondItem="b3o-vO-6mA" secondAttribute="trailing" id="cBp-Fr-M09"/>
-                            <constraint firstItem="h0x-Cq-ciF" firstAttribute="bottom" secondItem="ZWn-OS-aXY" secondAttribute="bottom" constant="20" id="cJC-2M-0xv"/>
+                            <constraint firstAttribute="bottom" secondItem="ZWn-OS-aXY" secondAttribute="bottom" constant="20" id="cJC-2M-0xv"/>
                             <constraint firstItem="f2w-Me-8Zv" firstAttribute="leading" secondItem="h0x-Cq-ciF" secondAttribute="leading" constant="20" id="hDG-Oc-yRl"/>
                             <constraint firstItem="Bry-6K-efe" firstAttribute="top" secondItem="h0x-Cq-ciF" secondAttribute="top" constant="15" id="uEK-iO-mHE"/>
                         </constraints>
@@ -563,15 +564,14 @@
         <image name="arrow.backward" catalog="system" width="128" height="98"/>
         <image name="arrow.right" catalog="system" width="128" height="98"/>
         <image name="checkmark.square" catalog="system" width="128" height="114"/>
-        <image name="chevron.left.circle" catalog="system" width="128" height="121"/>
-        <image name="chevron.right.circle" catalog="system" width="128" height="121"/>
         <image name="cursorarrow.and.square.on.square.dashed" catalog="system" width="128" height="119"/>
         <image name="lock.square" catalog="system" width="128" height="114"/>
+        <image name="minus.square" catalog="system" width="128" height="114"/>
         <image name="pencil.tip.crop.circle" catalog="system" width="128" height="121"/>
         <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="plus.app" catalog="system" width="128" height="114"/>
         <image name="plus.rectangle.on.rectangle" catalog="system" width="128" height="96"/>
         <image name="plus.square.on.square" catalog="system" width="128" height="113"/>
-        <image name="project" width="1200" height="1200"/>
         <image name="rectangle.center.inset.fill" catalog="system" width="128" height="93"/>
         <image name="square.3.stack.3d.top.fill" catalog="system" width="128" height="124"/>
         <image name="square.on.square.squareshape.controlhandles" catalog="system" width="128" height="116"/>

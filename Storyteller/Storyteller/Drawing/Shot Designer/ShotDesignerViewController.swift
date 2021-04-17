@@ -332,10 +332,11 @@ extension ShotDesignerViewController: PKToolPickerObserver {
 extension ShotDesignerViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let layerTable = segue.destination as? LayerTableController {
+            editingMode = .free
+
             layerTable.selectedLayerIndex = selectedLayerIndex
             layerTable.modelManager = modelManager
             layerTable.shotLabel = shotLabel
-            toolPicker.addObserver(layerTable)
             layerTable.delegate = self
         }
     }

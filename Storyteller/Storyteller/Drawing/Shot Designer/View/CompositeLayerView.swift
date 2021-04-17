@@ -24,7 +24,7 @@ class CompositeLayerView: UIView {
 
     init(canvasSize: CGSize, children: [LayerView] = [],
          isLocked: Bool = false, isVisible: Bool = true) {
-        let frame = CGRect(origin: .zero, size: canvasSize)
+        let frame = canvasSize.rectAtOrigin
         self.children = children
         self.isLocked = isLocked
         self.isVisible = isVisible

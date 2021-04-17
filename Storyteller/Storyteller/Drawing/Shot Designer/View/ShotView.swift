@@ -152,5 +152,6 @@ extension ShotView {
             return
         }
         insertSubview(layerViews[index], aboveSubview: layerViews[index - 1])
+        selectedLayerIndex = index
     }
 }
