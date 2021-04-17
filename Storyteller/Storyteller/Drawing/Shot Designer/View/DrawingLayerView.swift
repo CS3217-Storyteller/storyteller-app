@@ -5,7 +5,6 @@
 //  Created by TFang on 1/4/21.
 //
 
-import UIKit
 import PencilKit
 
 class DrawingLayerView: UIView {

@@ -4,7 +4,7 @@
 //
 //  Created by TFang on 1/4/21.
 //
-import UIKit
+
 import PencilKit
 class CompositeLayerView: UIView {
     private(set) var children: [LayerView]

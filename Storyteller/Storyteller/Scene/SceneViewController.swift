@@ -5,7 +5,6 @@
 //  Created by John Pan on 21/3/21.
 //
 
-import UIKit
 import PencilKit
 
 class SceneViewController: UIViewController {

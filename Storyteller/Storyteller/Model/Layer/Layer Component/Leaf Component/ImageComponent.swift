@@ -4,23 +4,47 @@
 //
 //  Created by TFang on 16/4/21.
 //
-import CoreGraphics
+import PencilKit
 
-//struct ImageComponent {
-//    var transform: CGAffineTransform
-//    func updateTransform(_ transform: CGAffineTransform) -> ImageComponent {
-//        // TODO
-//    }
-//}
-//
-//extension ImageComponent: LayerComponent {
-//    func scaled(by scale: CGFloat) -> Self {
-//        updateTransform(transform.scaledBy(x: scale, y: scale))
-//    }
-//    func rotated(by rotation: CGFloat) -> Self {
-//        updateTransform(transform.rotated(by: rotation))
-//    }
-//    func translatedBy(x: CGFloat, y: CGFloat) -> Self {
-//        updateTransform(transform.concatenating(CGAffineTransform(translationX: x, y: y)))
-//    }
-//}
+struct ImageComponent {
+    let canvasSize: CGSize
+    private(set) var imageData: Data
+    var transform = CGAffineTransform.identity
+
+    var image: UIImage {
+        UIImage(data: imageData)!
+    }
+}
+
+extension ImageComponent: LayerComponent {
+    var thumbnail: UIImage {
+        // TODO: Change to the image with transform applied
+        UIImage(data: imageData)!
+    }
+
+    func transformed(using transform: CGAffineTransform) -> ImageComponent {
+        ImageComponent(canvasSize: canvasSize, imageData: imageData,
+                       transform: self.transform.concatenating(transform))
+    }
+
+    var containsDrawing: Bool {
+        false
+    }
+
+    func setDrawing(to drawing: PKDrawing) -> ImageComponent {
+        self
+    }
+
+    func reduce<Result>(_ initialResult: Result,
+                        _ nextPartialResult: (Result, LayerComponent) throws -> Result) rethrows -> Result {
+        try nextPartialResult(initialResult, self)
+    }
+
+    func merge<Result, Merger>(merger: Merger) -> Result where
+        Result == Merger.T, Merger: LayerMerger {
+        merger.mergeImage(component: self)
+    }
+
+}
+extension ImageComponent: Codable {
+}

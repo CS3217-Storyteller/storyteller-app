@@ -16,7 +16,7 @@ struct Layer {
     var isVisible = true
 
     var thumbnail: UIImage {
-        component.image
+        component.thumbnail
 //        DrawingUtility.generateLayerView(for: self).asImage()
     }
 
@@ -32,7 +32,7 @@ struct Layer {
     init(layerWithDrawing: PKDrawing, canvasSize: CGSize,
          name: String = Constants.defaultLayerName, label: LayerLabel) {
         self.canvasSize = canvasSize
-        self.component = DrawingComponent(drawing: layerWithDrawing, canvasSize: canvasSize)
+        self.component = DrawingComponent(canvasSize: canvasSize, drawing: layerWithDrawing)
         self.name = name
         self.label = label
         self.id = label.layerId

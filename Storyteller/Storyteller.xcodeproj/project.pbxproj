@@ -42,6 +42,7 @@
 		B3320D1E260F6AB20063558A /* LayerMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3320D1D260F6AB20063558A /* LayerMerger.swift */; };
 		B3320D22260F6BA10063558A /* NormalLayerMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3320D21260F6BA10063558A /* NormalLayerMerger.swift */; };
 		B3320D62260F92330063558A /* LayerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3320D61260F92330063558A /* LayerComponent.swift */; };
+		B3440873262B0076009F3CC0 /* ImageLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3440872262B0076009F3CC0 /* ImageLayerView.swift */; };
 		B34A84522617AC0000A3185A /* UIView+asImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34A84512617AC0000A3185A /* UIView+asImage.swift */; };
 		B34A84562617AC6D00A3185A /* NormalImageMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34A84552617AC6D00A3185A /* NormalImageMerger.swift */; };
 		B35115BA26123B510056886C /* UIView+newPointInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35115B926123B510056886C /* UIView+newPointInView.swift */; };
@@ -121,6 +122,7 @@
 		B3320D1D260F6AB20063558A /* LayerMerger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerMerger.swift; sourceTree = "<group>"; };
 		B3320D21260F6BA10063558A /* NormalLayerMerger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalLayerMerger.swift; sourceTree = "<group>"; };
 		B3320D61260F92330063558A /* LayerComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerComponent.swift; sourceTree = "<group>"; };
+		B3440872262B0076009F3CC0 /* ImageLayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLayerView.swift; sourceTree = "<group>"; };
 		B34A84512617AC0000A3185A /* UIView+asImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+asImage.swift"; sourceTree = "<group>"; };
 		B34A84552617AC6D00A3185A /* NormalImageMerger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalImageMerger.swift; sourceTree = "<group>"; };
 		B35115B926123B510056886C /* UIView+newPointInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+newPointInView.swift"; sourceTree = "<group>"; };
@@ -364,6 +366,7 @@
 				B3755AB82606454900EC0F56 /* ShotView.swift */,
 				B3755AA12605F21400EC0F56 /* LayerView.swift */,
 				B3D7AD522615A1280082D591 /* DrawingLayerView.swift */,
+				B3440872262B0076009F3CC0 /* ImageLayerView.swift */,
 				B3D7AD602615A54C0082D591 /* CompositeLayerView.swift */,
 				B3E18FFC26162034003C7AEF /* Button */,
 			);
@@ -540,6 +543,7 @@
 			files = (
 				B3D7AD612615A54C0082D591 /* CompositeLayerView.swift in Sources */,
 				B30AA85D2610C3D7008B6714 /* StorageScene.swift in Sources */,
+				B3440873262B0076009F3CC0 /* ImageLayerView.swift in Sources */,
 				A29A19642607243E00710943 /* ShotLabel.swift in Sources */,
 				B34A84562617AC6D00A3185A /* NormalImageMerger.swift in Sources */,
 				A209158C26070595001A242E /* SceneShotViewCell.swift in Sources */,

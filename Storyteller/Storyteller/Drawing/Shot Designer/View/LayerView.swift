@@ -5,7 +5,6 @@
 //  Created by TFang on 20/3/21.
 //
 
-import UIKit
 import PencilKit
 
 protocol LayerView: UIView {
@@ -32,7 +31,6 @@ extension LayerView {
         }
         if isLocked {
             toolPicker?.setVisible(false, forFirstResponder: canvasView)
-            hideBorder()
         }
     }
 }

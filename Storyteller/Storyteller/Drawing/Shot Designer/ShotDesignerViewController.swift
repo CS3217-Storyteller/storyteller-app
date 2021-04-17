@@ -4,7 +4,6 @@
 //
 //  Created by TFang on 20/3/21.
 //
-import UIKit
 import PencilKit
 
 class ShotDesignerViewController: UIViewController, PKToolPickerObserver {

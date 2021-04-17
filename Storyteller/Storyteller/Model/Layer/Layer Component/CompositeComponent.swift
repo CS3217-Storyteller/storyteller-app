@@ -20,8 +20,8 @@ extension CompositeComponent: LayerComponent {
         children.first?.canvasSize ?? .zero
     }
 
-    var image: UIImage {
-        reduce(UIImage.clearImage(ofSize: canvasSize), { $0.mergeWith($1.image) })
+    var thumbnail: UIImage {
+        reduce(UIImage.clearImage(ofSize: canvasSize), { $0.mergeWith($1.thumbnail) })
     }
 
     var containsDrawing: Bool {

@@ -10,11 +10,6 @@ import PencilKit
 struct DrawingComponent {
     let canvasSize: CGSize
     private(set) var drawing: PKDrawing
-
-    init(drawing: PKDrawing, canvasSize: CGSize) {
-        self.drawing = drawing
-        self.canvasSize = canvasSize
-    }
 }
 
 extension DrawingComponent: LayerComponent {
@@ -24,11 +19,12 @@ extension DrawingComponent: LayerComponent {
         CGPoint(x: canvasSize.width / 2, y: canvasSize.height / 2)
     }
     func transformed(using transform: CGAffineTransform) -> DrawingComponent {
-        DrawingComponent(drawing: drawing.transformed(using: transform.transformedAround(anchor)), canvasSize: canvasSize)
+        DrawingComponent(canvasSize: canvasSize,
+                         drawing: drawing.transformed(using: transform.transformedAround(anchor)))
     }
 
     // MARK: - LayerComponent
-    var image: UIImage {
+    var thumbnail: UIImage {
         guard !(drawing.bounds.isEmpty || drawing.bounds.isInfinite) else {
             return UIImage.clearImage(ofSize: canvasSize)
         }
@@ -44,13 +40,13 @@ extension DrawingComponent: LayerComponent {
         return newComponent
     }
 
-    func merge<Result, Merger>(merger: Merger) -> Result where
-        Result == Merger.T, Merger: LayerMerger {
-        merger.mergeDrawing(component: self)
-    }
     func reduce<Result>(_ initialResult: Result,
                         _ nextPartialResult: (Result, LayerComponent) throws -> Result) rethrows -> Result {
         try nextPartialResult(initialResult, self)
+    }
+    func merge<Result, Merger>(merger: Merger) -> Result where
+        Result == Merger.T, Merger: LayerMerger {
+        merger.mergeDrawing(component: self)
     }
 }
 

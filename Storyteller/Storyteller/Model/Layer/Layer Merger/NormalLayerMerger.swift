@@ -8,7 +8,6 @@
 import PencilKit
 
 class NormalLayerMerger: LayerMerger {
-
     let canvasSize: CGSize
 
     init(canvasSize: CGSize) {
@@ -20,13 +19,16 @@ class NormalLayerMerger: LayerMerger {
     }
 
     func mergeDrawing(component: DrawingComponent) -> LayerView {
-        let drawingLayerView = DrawingLayerView(drawing: component.drawing,
-                                                canvasSize: canvasSize)
-        return drawingLayerView
+        DrawingLayerView(drawing: component.drawing, canvasSize: canvasSize)
+    }
+    func mergeImage(component: ImageComponent) -> LayerView {
+        let imageLayerView = ImageLayerView(canvasSize: canvasSize,
+                                            image: component.image)
+        imageLayerView.transform = component.transform
+        return imageLayerView
+    }
+    func merge(results: [LayerView], composite: CompositeComponent) -> LayerView {
+        CompositeLayerView(canvasSize: canvasSize, children: results)
     }
 
-    func merge(results: [LayerView], composite: CompositeComponent) -> LayerView {
-        let mergedLayerView = CompositeLayerView(canvasSize: canvasSize, children: results)
-        return mergedLayerView
-    }
 }
