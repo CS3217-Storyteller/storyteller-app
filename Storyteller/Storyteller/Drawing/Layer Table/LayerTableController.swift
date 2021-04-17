@@ -138,7 +138,6 @@ extension LayerTableController: UITableViewDelegate {
         }
         let layer = layers[sourceIndexPath.row]
         modelManager.moveLayer(layer.label, to: destinationIndexPath.row)
-        selectedLayerIndex = destinationIndexPath.row
     }
     func tableView(_ tableView: UITableView,
                    editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {

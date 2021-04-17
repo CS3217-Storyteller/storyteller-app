@@ -104,5 +104,10 @@ extension ShotView {
     }
     func moveLayer(from oldIndex: Int, to newIndex: Int) {
         layerViews.insert(layerViews.remove(at: oldIndex), at: newIndex)
+        guard newIndex - 1 >= 0 else {
+            sendSubviewToBack(layerViews[newIndex])
+            return
+        }
+        insertSubview(layerViews[newIndex], aboveSubview: layerViews[newIndex - 1])
     }
 }
