@@ -41,9 +41,8 @@ class LayerTableController: UIViewController {
     }
 
     @IBOutlet private var editButton: UIButton!
-    @IBOutlet private var duplicateLayerButton: UIButton!
-    @IBOutlet private var mergeButton: UIButton!
-    @IBOutlet private var deleteButton: UIButton!
+    @IBOutlet private var groupButton: UIButton!
+    @IBOutlet private var ungroupButton: UIButton!
     @IBOutlet private var addButton: UIButton!
 
     override func viewDidLoad() {
@@ -157,11 +156,15 @@ extension LayerTableController {
         tableView.setEditing(true, animated: true)
         editButton.setTitle("Done", for: .normal)
         addButton.isHidden = true
+        groupButton.isEnabled = true
+        ungroupButton.isEnabled = false
     }
     private func exitEditingMode() {
         tableView.setEditing(false, animated: true)
         editButton.setTitle("Edit", for: .normal)
         addButton.isHidden = false
+        groupButton.isEnabled = false
+        ungroupButton.isEnabled = true
 
         reselect()
         setUpLayerSelection()
@@ -174,7 +177,7 @@ extension LayerTableController {
 
     @IBAction private func decreasePrevOnionSkin() {
     }
-    
+
     @IBAction private func increaseNextOnionSkin() {
     }
 
@@ -186,8 +189,11 @@ extension LayerTableController {
     }
 
     @IBAction private func groupLayers() {
-    }
 
+    }
+    @IBAction private func ungroupLayers() {
+
+    }
     @IBAction private func deleteLayers() {
         guard tableView.isEditing else {
             deleteSingleLayer()

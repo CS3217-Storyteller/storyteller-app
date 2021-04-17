@@ -47,6 +47,11 @@ extension CompositeLayerView: LayerView {
     var topCanvasView: PKCanvasView? {
         children.compactMap({ $0.topCanvasView }).last
     }
+    func duplicate() -> LayerView {
+        CompositeLayerView(canvasSize: bounds.size,
+                           children: children.map({ $0.duplicate() }),
+                           isLocked: isLocked, isVisible: isVisible)
+    }
 }
 
 extension CompositeLayerView {

@@ -8,7 +8,7 @@ import PencilKit
 
 class ShotView: UIView {
     @IBOutlet private var onionSkins: UIImageView!
-    
+
     var layerViews = [LayerView]()
     var toolPicker: PKToolPicker?
 
@@ -105,6 +105,13 @@ extension ShotView {
         for index in indices.reversed() {
             remove(at: index)
         }
+    }
+    func duplicateLayers(at indices: [Int]) {
+        
+    }
+    func groupLayers(at indices: [Int]) {
+    }
+    func ungroupLayer(at index: Int) {
     }
     func moveLayer(from oldIndex: Int, to newIndex: Int) {
         layerViews.insert(layerViews.remove(at: oldIndex), at: newIndex)

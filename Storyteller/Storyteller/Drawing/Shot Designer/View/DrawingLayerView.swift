@@ -51,6 +51,10 @@ extension DrawingLayerView: LayerView {
     var topCanvasView: PKCanvasView? {
         canvasView
     }
+    func duplicate() -> LayerView {
+        DrawingLayerView(drawing: canvasView.drawing, canvasSize: bounds.size,
+                         isLocked: isLocked, isVisible: isVisible)
+    }
 }
 extension DrawingLayerView {
     override var canBecomeFirstResponder: Bool {

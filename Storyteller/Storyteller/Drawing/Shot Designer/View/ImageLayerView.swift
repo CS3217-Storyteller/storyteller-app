@@ -40,6 +40,10 @@ extension ImageLayerView: LayerView {
     var topCanvasView: PKCanvasView? {
         nil
     }
+    func duplicate() -> LayerView {
+        ImageLayerView(canvasSize: bounds.size, image: image ?? UIImage(),
+                       isLocked: isLocked, isVisible: isVisible)
+    }
 }
 extension ImageLayerView {
     override var canBecomeFirstResponder: Bool {

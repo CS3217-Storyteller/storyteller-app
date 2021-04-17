@@ -287,7 +287,7 @@
                                 </prototypes>
                             </tableView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="f2w-Me-8Zv" userLabel="Button Stack View">
-                                <rect key="frame" x="20" y="28" width="155" height="20"/>
+                                <rect key="frame" x="20" y="28" width="185" height="20"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x5i-iv-H7N">
                                         <rect key="frame" x="0.0" y="0.0" width="40" height="20"/>
@@ -300,7 +300,7 @@
                                             <action selector="toggleEditMode:" destination="z2Q-eW-qmk" eventType="touchUpInside" id="mgS-jX-Zr9"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1un-Ws-WW0">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1un-Ws-WW0" userLabel="Duplicate Button">
                                         <rect key="frame" x="50" y="0.0" width="20" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="1un-Ws-WW0" secondAttribute="height" multiplier="1:1" id="mcx-OB-MjT"/>
@@ -310,18 +310,28 @@
                                             <action selector="duplicateLayers" destination="z2Q-eW-qmk" eventType="touchUpInside" id="kM3-Ck-rj4"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9wD-Rz-zMq" userLabel="Group Button">
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9wD-Rz-zMq" userLabel="Group Button">
                                         <rect key="frame" x="80" y="0.0" width="20" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="9wD-Rz-zMq" secondAttribute="height" multiplier="1:1" id="jMJ-gz-tAX"/>
                                         </constraints>
-                                        <state key="normal" title="Button" image="square.stack" catalog="system"/>
+                                        <state key="normal" title="Button" image="square.on.square.squareshape.controlhandles" catalog="system"/>
                                         <connections>
                                             <action selector="groupLayers" destination="z2Q-eW-qmk" eventType="touchUpInside" id="V7F-oa-IHF"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qfT-sz-LSW">
-                                        <rect key="frame" x="110" y="0.0" width="45" height="20"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dCb-Jo-lGD" userLabel="Ungroup Button">
+                                        <rect key="frame" x="110" y="0.0" width="20" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="dCb-Jo-lGD" secondAttribute="height" multiplier="1:1" id="Ebk-Y9-uz2"/>
+                                        </constraints>
+                                        <state key="normal" title="Button" image="square.stack" catalog="system"/>
+                                        <connections>
+                                            <action selector="ungroupLayers" destination="z2Q-eW-qmk" eventType="touchUpInside" id="c6H-0k-kOZ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qfT-sz-LSW" userLabel="Delete Button">
+                                        <rect key="frame" x="140" y="0.0" width="45" height="20"/>
                                         <state key="normal" title="Delete">
                                             <color key="titleColor" systemColor="systemRedColor"/>
                                         </state>
@@ -330,6 +340,9 @@
                                         </connections>
                                     </button>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="dCb-Jo-lGD" firstAttribute="width" secondItem="dCb-Jo-lGD" secondAttribute="height" multiplier="1:1" id="sL9-IP-Lcz"/>
+                                </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bry-6K-efe">
                                 <rect key="frame" x="335" y="28" width="20" height="20"/>
@@ -472,11 +485,10 @@
                     </view>
                     <connections>
                         <outlet property="addButton" destination="Bry-6K-efe" id="WTS-jt-KdM"/>
-                        <outlet property="deleteButton" destination="qfT-sz-LSW" id="d8k-81-VjT"/>
-                        <outlet property="duplicateLayerButton" destination="1un-Ws-WW0" id="AiB-5s-37Y"/>
                         <outlet property="editButton" destination="x5i-iv-H7N" id="FMY-0A-vz8"/>
-                        <outlet property="mergeButton" destination="9wD-Rz-zMq" id="TlF-yC-QFS"/>
+                        <outlet property="groupButton" destination="9wD-Rz-zMq" id="TlF-yC-QFS"/>
                         <outlet property="tableView" destination="b3o-vO-6mA" id="3Vq-k4-9Lj"/>
+                        <outlet property="ungroupButton" destination="dCb-Jo-lGD" id="ypw-Ua-Zke"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l7w-ws-oTp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -569,6 +581,7 @@
         <image name="plus.square.on.square" catalog="system" width="128" height="113"/>
         <image name="rectangle.center.inset.fill" catalog="system" width="128" height="93"/>
         <image name="square.3.stack.3d.top.fill" catalog="system" width="128" height="124"/>
+        <image name="square.on.square.squareshape.controlhandles" catalog="system" width="128" height="116"/>
         <image name="square.stack" catalog="system" width="113" height="128"/>
         <systemColor name="quaternaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.17999999999999999" colorSpace="custom" customColorSpace="sRGB"/>

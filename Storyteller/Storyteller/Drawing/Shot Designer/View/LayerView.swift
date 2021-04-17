@@ -13,6 +13,7 @@ protocol LayerView: UIView {
     var isVisible: Bool { get set }
     var topCanvasView: PKCanvasView? { get }
     func transform(using transform: CGAffineTransform)
+    func duplicate() -> LayerView
 }
 
 extension LayerView {

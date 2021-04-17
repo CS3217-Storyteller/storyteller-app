@@ -223,9 +223,21 @@ class ModelManager {
         projects[projectId]?.removeLayers(withIds: Set(ids), of: shotLabel)
         saveProject(projects[projectId])
     }
+    func duplicateLayers(withIds ids: [UUID], of shotLabel: ShotLabel) {
+        let projectId = shotLabel.projectId
+        // TODO: Duplicate Layers: duplicate selected layers, and put each copy right after the duplicated layer
+        saveProject(projects[projectId])
+    }
     func groupLayers(withIds ids: [UUID], of shotLabel: ShotLabel) {
         let projectId = shotLabel.projectId
-        // TODO: Group Layers
+        // TODO: Group Layers: create a composite component using selected layers
+        // and put the grouped layer at the position of the toppest layer selected
+        saveProject(projects[projectId])
+    }
+    func ungroupLayer(withId id: UUID, of shotLabel: ShotLabel) {
+        let projectId = shotLabel.projectId
+        // TODO: Ungroup Layers: get children of the composite component
+        // and put them at the index of the the composite component
         saveProject(projects[projectId])
     }
     // MARK: - Rearrange elements
