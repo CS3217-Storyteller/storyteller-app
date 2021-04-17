@@ -8,8 +8,9 @@ import CoreGraphics
 
 struct StorageLayerComponent: Codable {
     enum StorageNodeType {
-        case composite([StorageLayerComponent])
         case drawing(DrawingComponent)
+        case image(ImageComponent)
+        case composite([StorageLayerComponent])
     }
 
     var type: StorageNodeType
@@ -26,6 +27,9 @@ struct StorageLayerComponent: Codable {
         if let drawingComponent = layerComponent as? DrawingComponent {
             return StorageLayerComponent(type: .drawing(drawingComponent))
         }
+        if let imageComponent = layerComponent as? ImageComponent {
+            return StorageLayerComponent(type: .image(imageComponent))
+        }
         if let composite = layerComponent as? CompositeComponent {
             let storageChildren = composite.children.map({ generateStorageComponent($0) })
             return StorageLayerComponent(type: .composite(storageChildren))
@@ -37,7 +41,7 @@ struct StorageLayerComponent: Codable {
     enum CodingKeys: String, CodingKey {
         case children
         case drawing
-
+        case image
     }
 
     enum CodableError: Error {
@@ -49,24 +53,29 @@ struct StorageLayerComponent: Codable {
         var container = encoder.container(keyedBy: CodingKeys.self)
 
         switch type {
+        case .drawing(let drawingComponent):
+            try container.encode(drawingComponent, forKey: .drawing)
+        case .image(let imageComponent):
+            try container.encode(imageComponent, forKey: .drawing)
         case .composite(let children):
             var childrenContainer = container.nestedUnkeyedContainer(forKey: .children)
             try childrenContainer.encode(contentsOf: children)
-        case .drawing(let drawingComponent):
-            try container.encode(drawingComponent, forKey: .drawing)
         }
     }
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        if let children = try? container.decode([StorageLayerComponent].self, forKey: .children) {
-            self.type = .composite(children)
-            return
-        }
-
         if let drawingComponent = try? container.decode(DrawingComponent.self, forKey: .drawing) {
             self.type = .drawing(drawingComponent)
+            return
+        }
+        if let imageComponent = try? container.decode(ImageComponent.self, forKey: .image) {
+            self.type = .image(imageComponent)
+            return
+        }
+        if let children = try? container.decode([StorageLayerComponent].self, forKey: .children) {
+            self.type = .composite(children)
             return
         }
 
@@ -77,11 +86,13 @@ struct StorageLayerComponent: Codable {
 extension StorageLayerComponent {
     static func generateLayerComponent(_ storageComponent: StorageLayerComponent) -> LayerComponent {
         switch storageComponent.type {
+        case .drawing(let drawingComponent):
+            return drawingComponent
+        case .image(let imageComponent):
+            return imageComponent
         case .composite(let storageChildren):
             let children = storageChildren.map({ generateLayerComponent($0) })
             return CompositeComponent(children: children)
-        case .drawing(let drawingComponent):
-            return drawingComponent
         }
     }
 
