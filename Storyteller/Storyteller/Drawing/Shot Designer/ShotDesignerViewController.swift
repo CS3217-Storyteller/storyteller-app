@@ -335,6 +335,7 @@ extension ShotDesignerViewController {
             layerTable.selectedLayerIndex = selectedLayerIndex
             layerTable.modelManager = modelManager
             layerTable.shotLabel = shotLabel
+            toolPicker.addObserver(layerTable)
             layerTable.delegate = self
         }
     }

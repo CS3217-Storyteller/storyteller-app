@@ -5,7 +5,7 @@
 //  Created by TFang on 30/3/21.
 //
 
-import UIKit
+import PencilKit
 
 class LayerTableController: UIViewController {
     var numOfRows: Int {
@@ -297,6 +297,15 @@ extension LayerTableController: ModelManagerObserver {
             return
         }
         reselect()
+    }
+}
+
+// MARK: - PKToolPickerObserver {
+extension LayerTableController: PKToolPickerObserver {
+    func toolPickerFramesObscuredDidChange(_ toolPicker: PKToolPicker) {
+        let obscuredFrame = toolPicker.frameObscured(in: view)
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0,
+                                              bottom: obscuredFrame.height, right: 0)
     }
 }
 

@@ -43,6 +43,7 @@ class ShotView: UIView {
     }
     func setSize(canvasSize: CGSize) {
         bounds.size = canvasSize
+        onionSkins.bounds.size = canvasSize
     }
     func setUpLayerViews(_ layerViews: [LayerView], toolPicker: PKToolPicker,
                          PKDelegate: PKCanvasViewDelegate) {
@@ -66,7 +67,7 @@ class ShotView: UIView {
     func add(layerView: LayerView, toolPicker: PKToolPicker,
              PKDelegate: PKCanvasViewDelegate) {
         layerViews.append(layerView)
-        addSubview(layerView)
+        insertSubview(layerView, belowSubview: onionSkins)
         layerView.setUpPK(toolPicker: toolPicker, PKDelegate: PKDelegate)
     }
     func setUpBackgroundColor(color: UIColor) {
@@ -74,8 +75,8 @@ class ShotView: UIView {
     }
 
     func reset() {
+        layerViews.forEach({ $0.removeFromSuperview() })
         layerViews = []
-        subviews.forEach({ $0.removeFromSuperview() })
     }
 }
 
@@ -101,8 +102,8 @@ extension ShotView {
         }
     }
     func remove(at index: Int) {
-        let layer = layerViews.remove(at: index)
-        layer.removeFromSuperview()
+        let layerView = layerViews.remove(at: index)
+        layerView.removeFromSuperview()
 
         selectedLayerIndex = max(0, index - 1)
     }

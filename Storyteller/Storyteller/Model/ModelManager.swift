@@ -77,7 +77,9 @@ class ModelManager {
     func getBackgroundColor(of shotLabel: ShotLabel) -> UIColor? {
         self.getShot(of: shotLabel)?.backgroundColor.uiColor
     }
-
+    func setBackgroundColor(of shotLabel: ShotLabel, using uiColor: UIColor) {
+        // TODO
+    }
     func getScene(of sceneLabel: SceneLabel) -> Scene? {
         let projectId = sceneLabel.projectId
         let sceneId = sceneLabel.sceneId
