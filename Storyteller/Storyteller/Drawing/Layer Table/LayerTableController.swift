@@ -186,13 +186,59 @@ extension LayerTableController {
 
     // MARK: - Layers Actions
     @IBAction private func duplicateLayers() {
+        guard tableView.isEditing else {
+            duplicateSingleLayer()
+            return
+        }
+        duplicateMultipleLayer()
     }
+    private func duplicateSingleLayer() {
+        delegate?.willDuplicateLayers(at: [selectedLayerIndex])
 
+        guard let layers = modelManager.getLayers(of: shotLabel) else {
+            return
+        }
+        let layer = layers[selectedLayerIndex]
+        modelManager.duplicateLayers(withIds: [layer.id], of: shotLabel)
+    }
+    private func duplicateMultipleLayer() {
+        delegate?.willDuplicateLayers(at: multipleSelectionIndices)
+
+        guard let layers = modelManager.getLayers(of: shotLabel) else {
+            return
+        }
+
+        var layerIds = [UUID]()
+        for index in multipleSelectionIndices {
+            let layer = layers[index]
+            layerIds.append(layer.id)
+        }
+
+        modelManager.duplicateLayers(withIds: layerIds, of: shotLabel)
+    }
     @IBAction private func groupLayers() {
+        delegate?.willGroupLayers(at: multipleSelectionIndices)
 
+        guard let layers = modelManager.getLayers(of: shotLabel) else {
+            return
+        }
+
+        var layerIds = [UUID]()
+        for index in multipleSelectionIndices {
+            let layer = layers[index]
+            layerIds.append(layer.id)
+        }
+
+        modelManager.groupLayers(withIds: layerIds, of: shotLabel)
     }
     @IBAction private func ungroupLayers() {
+        delegate?.willUngroupLayer(at: selectedLayerIndex)
 
+        guard let layers = modelManager.getLayers(of: shotLabel) else {
+            return
+        }
+        let layer = layers[selectedLayerIndex]
+        modelManager.ungroupLayer(withId: layer.id, of: shotLabel)
     }
     @IBAction private func deleteLayers() {
         guard tableView.isEditing else {
@@ -207,7 +253,7 @@ extension LayerTableController {
             selectedLayerIndex = 0
             return
         }
-        delegate?.didRemoveLayers(at: [selectedLayerIndex])
+        delegate?.willRemoveLayers(at: [selectedLayerIndex])
 
         guard let layers = modelManager.getLayers(of: shotLabel) else {
             return
@@ -220,7 +266,7 @@ extension LayerTableController {
             Alert.presentAtLeastOneLayerAlert(controller: self)
             return
         }
-        delegate?.didRemoveLayers(at: multipleSelectionIndices)
+        delegate?.willRemoveLayers(at: multipleSelectionIndices)
 
         guard let layers = modelManager.getLayers(of: shotLabel) else {
             return
@@ -284,6 +330,9 @@ protocol LayerTableDelegate: AnyObject {
     func didToggleLayerLock(at index: Int)
     func didToggleLayerVisibility(at index: Int)
     func didChangeLayerName(at index: Int, newName: String)
-    func didRemoveLayers(at indices: [Int])
+    func willRemoveLayers(at indices: [Int])
     func didMoveLayer(from oldIndex: Int, to newIndex: Int)
+    func willDuplicateLayers(at indices: [Int])
+    func willGroupLayers(at indices: [Int])
+    func willUngroupLayer(at index: Int)
 }

@@ -405,6 +405,7 @@ extension ShotDesignerViewController: UIGestureRecognizerDelegate {
 }
 
 extension ShotDesignerViewController: LayerTableDelegate {
+
     func didMoveLayer(from oldIndex: Int, to newIndex: Int) {
         shotView.moveLayer(from: oldIndex, to: newIndex)
     }
@@ -423,10 +424,21 @@ extension ShotDesignerViewController: LayerTableDelegate {
         // TODO
     }
 
-    func didRemoveLayers(at indices: [Int]) {
+    func willRemoveLayers(at indices: [Int]) {
         shotView.removeLayers(at: indices)
     }
 
+    func willDuplicateLayers(at indices: [Int]) {
+        shotView.duplicateLayers(at: indices)
+    }
+
+    func willGroupLayers(at indices: [Int]) {
+        shotView.groupLayers(at: indices)
+    }
+
+    func willUngroupLayer(at index: Int) {
+        shotView.ungroupLayer(at: index)
+    }
     private func toggleLayerLock(at index: Int) {
 
         guard let layers = modelManager.getLayers(of: shotLabel) else {

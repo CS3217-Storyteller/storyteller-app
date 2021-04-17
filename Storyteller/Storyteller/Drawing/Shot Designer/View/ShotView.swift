@@ -124,7 +124,10 @@ extension ShotView {
 
         var selectedLayerViews = [LayerView]()
         for index in indices {
-            selectedLayerViews.append(layerViews[index])
+            let layerView = layerViews[index]
+            layerView.isLocked = false
+            layerView.isVisible = true
+            selectedLayerViews.append(layerView)
         }
         let groupedLayerView = CompositeLayerView(canvasSize: bounds.size,
                                                   children: selectedLayerViews)
