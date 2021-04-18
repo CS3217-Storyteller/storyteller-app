@@ -371,6 +371,9 @@
                                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                         <integer key="value" value="5"/>
                                                     </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                                        <integer key="value" value="1"/>
+                                                    </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="changeBackgroundColor" destination="z2Q-eW-qmk" eventType="touchUpInside" id="oeW-sJ-KhM"/>
@@ -478,6 +481,7 @@
                     </view>
                     <connections>
                         <outlet property="addButton" destination="Bry-6K-efe" id="WTS-jt-KdM"/>
+                        <outlet property="backgroundColorButton" destination="fpP-DU-3qA" id="NPZ-fV-d5n"/>
                         <outlet property="editButton" destination="x5i-iv-H7N" id="FMY-0A-vz8"/>
                         <outlet property="groupButton" destination="9wD-Rz-zMq" id="TlF-yC-QFS"/>
                         <outlet property="tableView" destination="b3o-vO-6mA" id="3Vq-k4-9Lj"/>

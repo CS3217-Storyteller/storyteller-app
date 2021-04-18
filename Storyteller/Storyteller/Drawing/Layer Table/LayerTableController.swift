@@ -45,7 +45,7 @@ class LayerTableController: UIViewController {
     @IBOutlet private var groupButton: UIButton!
     @IBOutlet private var ungroupButton: UIButton!
     @IBOutlet private var addButton: UIButton!
-
+    @IBOutlet private var backgroundColorButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
@@ -58,8 +58,16 @@ class LayerTableController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        setBackgroundColor()
         setUpLayerSelection()
         reselect()
+    }
+    private func setBackgroundColor() {
+        guard let color = modelManager.getBackgroundColor(of: shotLabel) else {
+            backgroundColorButton.backgroundColor = .white
+            return
+        }
+        backgroundColorButton.backgroundColor = color
     }
     private func reselect() {
         let selected = selectedLayerIndex
@@ -171,6 +179,10 @@ extension LayerTableController {
         setUpLayerSelection()
     }
     @IBAction private func changeBackgroundColor() {
+        let picker = UIColorPickerViewController()
+        picker.selectedColor = modelManager.getBackgroundColor(of: shotLabel) ?? .white
+        picker.delegate = self
+        self.present(picker, animated: true, completion: nil)
     }
 
     @IBAction private func increasePrevOnionSkin() {
@@ -293,7 +305,15 @@ extension LayerTableController {
         modelManager.addLayer(to: shotLabel)
         selectedLayerIndex = numOfRows - 1
     }
-
+}
+// MARK: - UIColorPickerViewControllerDelegate
+extension LayerTableController: UIColorPickerViewControllerDelegate {
+    func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
+        let color = viewController.selectedColor
+        backgroundColorButton.backgroundColor = color
+        modelManager.setBackgroundColor(of: shotLabel, using: color)
+        delegate?.backgroundColorDidChange()
+    }
 }
 // MARK: - ModelManagerObserver
 extension LayerTableController: ModelManagerObserver {
@@ -345,4 +365,5 @@ protocol LayerTableDelegate: AnyObject {
     func willGroupLayers(at indices: [Int])
     func willUngroupLayer(at index: Int)
     func onionSkinsDidChange()
+    func backgroundColorDidChange()
 }

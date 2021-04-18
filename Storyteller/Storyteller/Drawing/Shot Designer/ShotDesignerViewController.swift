@@ -405,6 +405,10 @@ extension ShotDesignerViewController: UIGestureRecognizerDelegate {
 }
 
 extension ShotDesignerViewController: LayerTableDelegate {
+    func backgroundColorDidChange() {
+        shotView.backgroundColor = modelManager.getBackgroundColor(of: shotLabel) ?? .white
+    }
+
     func onionSkinsDidChange() {
         updateOnionSkins()
     }
