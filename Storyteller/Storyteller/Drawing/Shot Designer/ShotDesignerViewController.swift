@@ -35,7 +35,7 @@ class ShotDesignerViewController: UIViewController {
             }
         }
     }
-
+    var onionSkinRange = OnionSkinRange()
     var toolPicker = PKToolPicker()
     // should be intialized via segue
     var modelManager: ModelManager!
@@ -101,44 +101,6 @@ class ShotDesignerViewController: UIViewController {
         updateShotTransform()
     }
 
-    @IBAction private func nextShot(_ sender: Any) {
-        guard let scene = modelManager.getScene(of: shotLabel.sceneLabel) else {
-            return
-        }
-        let currentShotId = self.shotLabel.shotId
-        guard let index = scene.shotOrder.firstIndex(of: currentShotId) else {
-            return
-        }
-        if index + 1 >= scene.shotOrder.count {
-            return
-        }
-        let nextShotId = scene.shotOrder[index + 1]
-        guard let nextShot = scene.shots[nextShotId] else {
-            return
-        }
-        self.setShotLabel(to: nextShot.label)
-        self.setUpShot()
-    }
-
-    @IBAction private func previousShot(_ sender: Any) {
-        guard let scene = modelManager.getScene(of: shotLabel.sceneLabel) else {
-            return
-        }
-        let currentShotId = self.shotLabel.shotId
-        guard let index = scene.shotOrder.firstIndex(of: currentShotId) else {
-            return
-        }
-        if index <= 0 {
-            return
-        }
-        let nextShotId = scene.shotOrder[index - 1]
-        guard let nextShot = scene.shots[nextShotId] else {
-            return
-        }
-        self.setShotLabel(to: nextShot.label)
-        self.setUpShot()
-    }
-
     private func setUpShot() {
         shotView.backgroundColor = shot?.backgroundColor.uiColor
 
@@ -149,10 +111,20 @@ class ShotDesignerViewController: UIViewController {
 
         let layerViews = layers.map({ DrawingUtility.generateLayerView(for: $0) })
         shotView.setUpLayerViews(layerViews, toolPicker: toolPicker, PKDelegate: self)
+        updateOnionSkins()
 
         updateShotTransform()
     }
-
+    private func updateOnionSkins() {
+        guard modelManager != nil, shotView != nil else {
+            return
+        }
+        let redOnionSkin = onionSkinRange.redIndicies.compactMap({ modelManager.getShot($0, after: shotLabel) })
+            .reduce(UIImage.solidImage(ofColor: .clear, ofSize: canvasSize), { $0.mergeWith($1.redOnionSkin) })
+        let greenOnionSkin = onionSkinRange.greenIndicies.compactMap({ modelManager.getShot($0, after: shotLabel) })
+            .reduce(UIImage.solidImage(ofColor: .clear, ofSize: canvasSize), { $0.mergeWith($1.greenOnionSkin) })
+        shotView.updateOnionSkins(skins: redOnionSkin.mergeWith(greenOnionSkin))
+    }
     private func updateShotTransform() {
         shotView.transform = .identity
         shotView.transform = zoomToFitTransform.concatenating(canvasTransform)
@@ -301,6 +273,21 @@ extension ShotDesignerViewController {
         }
     }
 
+    @IBAction private func nextShot(_ sender: Any) {
+        guard let nextShot = modelManager.getShot(1, after: shotLabel) else {
+            return
+        }
+        setShotLabel(to: nextShot.label)
+        setUpShot()
+    }
+
+    @IBAction private func previousShot(_ sender: Any) {
+        guard let prevShot = modelManager.getShot(-1, after: shotLabel) else {
+            return
+        }
+        setShotLabel(to: prevShot.label)
+        setUpShot()
+    }
 }
 
 // MARK: - ModelManagerObserver
@@ -344,6 +331,7 @@ extension ShotDesignerViewController {
         if let layerTable = segue.destination as? LayerTableController {
             editingMode = .free
 
+            layerTable.onionSkinRange = onionSkinRange
             layerTable.selectedLayerIndex = selectedLayerIndex
             layerTable.modelManager = modelManager
             layerTable.shotLabel = shotLabel
@@ -417,7 +405,9 @@ extension ShotDesignerViewController: UIGestureRecognizerDelegate {
 }
 
 extension ShotDesignerViewController: LayerTableDelegate {
-
+    func onionSkinsDidChange() {
+        updateOnionSkins()
+    }
     func didMoveLayer(from oldIndex: Int, to newIndex: Int) {
         shotView.moveLayer(from: oldIndex, to: newIndex)
     }

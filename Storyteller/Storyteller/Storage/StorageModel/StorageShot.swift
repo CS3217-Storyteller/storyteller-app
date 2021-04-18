@@ -15,6 +15,8 @@ struct StorageShot: Codable {
     let canvasSize: CGSize
 
     var thumbnail: Data
+    var redOnionSkin: Data
+    var greenOnionSkin: Data
 
     init(_ shot: Shot) {
         self.layers = shot.layers.mapValues({ StorageLayer($0) })
@@ -23,6 +25,8 @@ struct StorageShot: Codable {
         self.backgroundColor = shot.backgroundColor
         self.canvasSize = shot.canvasSize
         self.thumbnail = shot.thumbnail.pngData()!
+        self.redOnionSkin = shot.redOnionSkin.pngData()!
+        self.greenOnionSkin = shot.greenOnionSkin.pngData()!
     }
 }
 
@@ -34,6 +38,8 @@ extension StorageShot {
              label: label,
              backgroundColor: backgroundColor,
              canvasSize: canvasSize,
-             thumbnail: UIImage(data: thumbnail)!)
+             thumbnail: UIImage(data: thumbnail)!,
+             redOnionSkin: UIImage(data: redOnionSkin)!,
+             greenOnionSkin: UIImage(data: greenOnionSkin)!)
     }
 }

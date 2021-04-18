@@ -15,7 +15,21 @@ struct Shot {
     let canvasSize: CGSize
 
     var thumbnail = Constants.clearImage
+    var redOnionSkin = Constants.clearImage
+    var greenOnionSkin = Constants.clearImage
 
+    mutating func generateThumbnails() {
+        thumbnail = orderedLayers
+            .reduce(UIImage.solidImage(ofColor: backgroundColor.uiColor,
+                                       ofSize: canvasSize), {
+                                        $0.mergeWith($1.thumbnail) })
+        redOnionSkin = orderedLayers
+            .reduce(UIImage.solidImage(ofColor: .clear, ofSize: canvasSize), {
+                                        $0.mergeWith($1.redOnionSkin) })
+        greenOnionSkin = orderedLayers
+            .reduce(UIImage.solidImage(ofColor: .clear, ofSize: canvasSize), {
+                                        $0.mergeWith($1.greenOnionSkin) })
+    }
     // TODO: change to directly generate thumbnail here
     mutating func updateThumbnail(_ thumbnail: UIImage) {
         self.thumbnail = thumbnail
@@ -108,10 +122,11 @@ struct Shot {
 
 // MARK: - Onion Skins
 extension Shot {
-    var redOnionSkin: UIImage {
-        orderedLayers.reduce(UIImage.solidImage(ofColor: .clear, ofSize: canvasSize)) { $0.mergeWith($1.redOnionSkin) }
-    }
-    var greenOnionSkin: UIImage {
-        orderedLayers.reduce(UIImage.solidImage(ofColor: .clear, ofSize: canvasSize)) { $0.mergeWith($1.greenOnionSkin) }
-    }
+//    var redOnionSkin: UIImage {
+//        orderedLayers.reduce(UIImage.solidImage(ofColor: .clear, ofSize: canvasSize)) { $0.mergeWith($1.redOnionSkin) }
+//    }
+//    var greenOnionSkin: UIImage {
+//        orderedLayers.reduce(UIImage.solidImage(ofColor: .clear,
+//                                                ofSize: canvasSize)) { $0.mergeWith($1.greenOnionSkin) }
+//    }
 }

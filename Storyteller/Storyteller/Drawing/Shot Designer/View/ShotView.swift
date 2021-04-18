@@ -63,7 +63,11 @@ class ShotView: UIView {
         let selected = selectedLayerIndex
         selectedLayerIndex = selected
     }
-
+    func updateOnionSkins(skins: UIImage) {
+        print("called")
+        onionSkins.image = skins
+        bringSubviewToFront(onionSkins)
+    }
     func add(layerView: LayerView, toolPicker: PKToolPicker,
              PKDelegate: PKCanvasViewDelegate) {
         layerViews.append(layerView)

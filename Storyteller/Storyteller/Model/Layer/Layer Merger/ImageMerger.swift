@@ -19,6 +19,7 @@ class ImageMerger: LayerMerger {
     }
     func mergeImage(component: ImageComponent) -> UIImage {
         let emptyBackground = UIView(frame: component.canvasSize.rectAtOrigin)
+        emptyBackground.backgroundColor = .clear
         emptyBackground.addSubview(component.merge(merger: NormalLayerMerger()))
         return emptyBackground.asImage()
     }

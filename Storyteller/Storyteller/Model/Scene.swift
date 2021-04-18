@@ -36,14 +36,9 @@ struct Scene {
         let shotId = layerLabel.shotId
         shots[shotId]?.updateLayer(layerLabel, withLayer: newLayer)
     }
-    mutating func generateThumbnail(of layerLabel: LayerLabel) {
-        self.shots[layerLabel.shotId]?.generateThumbnail(of: layerLabel)
-    }
-    mutating func updateThumbnail(of layerLabel: LayerLabel, using thumbnail: UIImage) {
-        self.shots[layerLabel.shotId]?.updateThumbnail(of: layerLabel, using: thumbnail)
-    }
-    mutating func updateThumbnail(of shotLabel: ShotLabel, using thumbnail: UIImage) {
-        shots[shotLabel.shotId]?.updateThumbnail(thumbnail)
+    mutating func updateShot(_ shotLabel: ShotLabel, withShot shot: Shot) {
+        let shotId = shotLabel.shotId
+        shots[shotId] = shot
     }
     mutating func addShot(_ shot: Shot) {
         let shotId = shot.id

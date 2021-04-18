@@ -92,6 +92,18 @@ class ModelManager {
             .shots[shotId]
     }
 
+    func getShot(_ index: Int, after shotLabel: ShotLabel) -> Shot? {
+        guard let scene = getScene(of: shotLabel.sceneLabel),
+              let currentIndex = scene.shotOrder.firstIndex(of: shotLabel.shotId),
+              scene.shotOrder.indices.contains(currentIndex + index) else {
+            return nil
+        }
+        let shotId = scene.shotOrder[currentIndex + index]
+        guard let shot = scene.shots[shotId] else {
+            return nil
+        }
+        return shot
+    }
     // TODO: Return optional, or empty array if shot is nil?
     func getLayers(of shotLabel: ShotLabel) -> [Layer]? {
         let layers = getShot(of: shotLabel)?.orderedLayers
@@ -211,20 +223,16 @@ extension ModelManager {
 
     private func generateThumbnailAndSave(shotLabel: ShotLabel) {
         let projectId = shotLabel.projectId
-        guard let shot = getShot(of: shotLabel) else {
+        guard var shot = getShot(of: shotLabel) else {
             return
         }
         let workItem = DispatchWorkItem {
-            let thumbnail = shot.orderedLayers
-                .reduce(UIImage.solidImage(ofColor: shot.backgroundColor.uiColor,
-                                           ofSize: shot.canvasSize)) {
-                    $0.mergeWith($1.thumbnail)
-                }
+            shot.generateThumbnails()
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else {
                     return
                 }
-                self.projects[projectId]?.updateThumbnail(of: shotLabel, using: thumbnail)
+                self.projects[projectId]?.updateShot(shotLabel, withShot: shot)
                 self.saveProject(self.projects[projectId])
                 self.onGoingThumbnailTask = nil
             }

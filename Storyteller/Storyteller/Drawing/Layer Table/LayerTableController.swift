@@ -34,6 +34,7 @@ class LayerTableController: UIViewController {
     // should be intialized via segue
     var modelManager: ModelManager!
     var shotLabel: ShotLabel!
+    var onionSkinRange: OnionSkinRange!
 
     var layerSelection = [Bool]()
     var multipleSelectionIndices: [Int] {
@@ -173,15 +174,23 @@ extension LayerTableController {
     }
 
     @IBAction private func increasePrevOnionSkin() {
+        onionSkinRange.decreaseLowerBound()
+        delegate?.onionSkinsDidChange()
     }
 
     @IBAction private func decreasePrevOnionSkin() {
+        onionSkinRange.increaseLowerBound()
+        delegate?.onionSkinsDidChange()
     }
 
     @IBAction private func increaseNextOnionSkin() {
+        onionSkinRange.increaseUpperBound()
+        delegate?.onionSkinsDidChange()
     }
 
     @IBAction private func decreaseNextOnionSkin() {
+        onionSkinRange.decreaseUpperBound()
+        delegate?.onionSkinsDidChange()
     }
 
     // MARK: - Layers Actions
@@ -335,4 +344,5 @@ protocol LayerTableDelegate: AnyObject {
     func willDuplicateLayers(at indices: [Int])
     func willGroupLayers(at indices: [Int])
     func willUngroupLayer(at index: Int)
+    func onionSkinsDidChange()
 }
