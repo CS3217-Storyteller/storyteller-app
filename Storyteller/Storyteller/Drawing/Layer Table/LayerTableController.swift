@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import PencilKit
 
 class LayerTableController: UIViewController {
     var numOfRows: Int {
@@ -33,7 +34,9 @@ class LayerTableController: UIViewController {
 
     // should be intialized via segue
     var modelManager: ModelManager!
-    var shotLabel: ShotLabel!
+    var shot: Shot!
+    var scene: Scene!
+    var project: Project!
 
     var layerSelection = [Bool]()
     var multipleSelectionIndices: [Int] {
@@ -66,7 +69,7 @@ class LayerTableController: UIViewController {
         selectedLayerIndex = selected
     }
     func setUpLayerSelection() {
-        let count = modelManager.getLayers(of: shotLabel)?.count ?? 0
+        let count = self.shot.orderedLayers.count
         layerSelection = Array(repeating: false, count: count)
     }
 
@@ -75,10 +78,7 @@ class LayerTableController: UIViewController {
 // MARK: - UITableViewDataSource
 extension LayerTableController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let layerCount = modelManager.getLayers(of: shotLabel)?.count else {
-            fatalError("Failed to get the number of layers")
-        }
-
+        let layerCount = self.shot.orderedLayers.count
         return layerCount
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -88,10 +88,7 @@ extension LayerTableController: UITableViewDataSource {
             fatalError("Cannot get reusable cell.")
         }
 
-        guard let layerOrder = modelManager.getLayers(of: shotLabel) else {
-            fatalError("Failed to get the layer at \(indexPath.row)")
-        }
-
+        let layerOrder = self.shot.orderedLayers
         let layer = layerOrder[indexPath.row]
         cell.setUp(thumbnail: layer.thumbnail, name: layer.name,
                    isLocked: layer.isLocked, isVisible: layer.isVisible)
@@ -118,8 +115,8 @@ extension LayerTableController: UITableViewDelegate {
         selectedLayerIndex = indexPath.row
     }
     private func selectLayerDuringEditing(at indexPath: IndexPath) {
-        layerSelection[indexPath.row] = true
-        selectedLayerIndex = indexPath.row
+        self.layerSelection[indexPath.row] = true
+        self.selectedLayerIndex = indexPath.row
     }
 
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
@@ -133,12 +130,11 @@ extension LayerTableController: UITableViewDelegate {
                    to destinationIndexPath: IndexPath) {
         delegate?.didMoveLayer(from: sourceIndexPath.row, to: destinationIndexPath.row)
 
-        guard let layers = modelManager.getLayers(of: shotLabel) else {
-            return
-        }
+        let layers = self.shot.orderedLayers
         let layer = layers[sourceIndexPath.row]
-        modelManager.moveLayer(layer.label, to: destinationIndexPath.row)
-        selectedLayerIndex = destinationIndexPath.row
+        
+        self.shot.moveLayer(withId: layer.id, to: destinationIndexPath.row)
+        self.selectedLayerIndex = destinationIndexPath.row
     }
     func tableView(_ tableView: UITableView,
                    editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
@@ -199,11 +195,12 @@ extension LayerTableController {
         }
         delegate?.didRemoveLayers(at: [selectedLayerIndex])
 
-        guard let layers = modelManager.getLayers(of: shotLabel) else {
-            return
-        }
+        let layers = self.shot.orderedLayers
         let layer = layers[selectedLayerIndex]
-        modelManager.removeLayers(withIds: [layer.id], of: shotLabel)
+        
+        self.shot.removeLayer(withId: layer.id)
+        
+//        modelManager.removeLayers(withIds: [layer.id], of: shotLabel)
     }
     private func deleteMultipleLayer() {
         guard numOfRows > multipleSelectionIndices.count else {
@@ -212,20 +209,28 @@ extension LayerTableController {
         }
         delegate?.didRemoveLayers(at: multipleSelectionIndices)
 
-        guard let layers = modelManager.getLayers(of: shotLabel) else {
-            return
-        }
+        let layers = self.shot.orderedLayers
 
         var layerIds = [UUID]()
         for index in multipleSelectionIndices {
             let layer = layers[index]
             layerIds.append(layer.id)
         }
-
-        modelManager.removeLayers(withIds: layerIds, of: shotLabel)
+        self.shot.removeLayers(withIds: Set(layerIds))
+//        modelManager.removeLayers(withIds: layerIds, of: shotLabel)
     }
     @IBAction private func addLayer(_ sender: Any) {
-        modelManager.addLayer(to: shotLabel)
+        
+        let layer = Layer(
+            id: UUID(),
+            name: "Give me a Name",
+            canvasSize: self.shot.canvasSize,
+            layerWithDrawing: PKDrawing()
+        )
+        self.shot.addLayer(with: layer)
+        self.modelManager.observers.forEach({ $0.willAddLayer() })
+        self.modelManager.saveProject(self.project)
+//        modelManager.addLayer(to: shotLabel)
         selectedLayerIndex = numOfRows - 1
     }
 

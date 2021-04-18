@@ -189,7 +189,9 @@ extension SceneViewController: UICollectionViewDelegate {
                 return
             }
             shotDesignerController.setModelManager(to: modelManager)
-            shotDesignerController.setShotId(to: shotId)
+            shotDesignerController.setShot(to: shot)
+            shotDesignerController.setScene(to: scene)
+            shotDesignerController.setProject(to: project)
             shotDesignerController.modalTransitionStyle = .flipHorizontal
             self.navigationController?.pushViewController(shotDesignerController, animated: true)
         } else {
@@ -209,8 +211,7 @@ extension SceneViewController: UICollectionViewDelegate {
             return
         }
 
-        guard let modelManager = self.modelManager,
-              let project = self.project
+        guard let project = self.project
         else {
             return
         }
@@ -220,23 +221,14 @@ extension SceneViewController: UICollectionViewDelegate {
             return
         }
         let sourceIndex = sourceIndexPath.row
-        let sourceShotId = scene.shotOrder[sourceIndex]
-        guard let sourceShot = scene.shots[sourceShotId] else {
-            return
-        }
-        let sourceShotLabel = sourceShot.label
-
         let destinationIndex = destinationIndexPath.row
-
-        modelManager.moveShot(sourceShotLabel, to: destinationIndex)
+        scene.swapShots(sourceIndex, destinationIndex)
     }
 }
 
 extension SceneViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let modelManager = self.modelManager,
-              let projectId = self.projectId,
-              let project = modelManager.getProject(withId: projectId)
+        guard let project = self.project
         else {
             return 0
         }
@@ -248,9 +240,7 @@ extension SceneViewController: UICollectionViewDataSource {
     }
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        guard let projectId = self.projectId,
-              let modelManager = self.modelManager,
-              let project = modelManager.getProject(withId: projectId) else {
+        guard let project = self.project else {
             return 0
         }
         return project.scenes.count

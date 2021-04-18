@@ -211,12 +211,15 @@ extension ProjectViewController: UICollectionViewDelegate {
         case .view:
             self.collectionView.deselectItem(at: indexPath, animated: true)
             let projectId = self.modelManager.projectOrder[indexPath.row]
+            guard let project = self.modelManager.getProject(withId: projectId) else {
+                return
+            }
             guard let sceneViewController = self.storyboard?
                     .instantiateViewController(identifier: "SceneViewController") as? SceneViewController else {
                 return
             }
             sceneViewController.modalPresentationStyle = .fullScreen
-            sceneViewController.setProjectId(to: projectId)
+            sceneViewController.setProject(to: project)
             sceneViewController.setModelManager(to: self.modelManager)
             self.navigationController?.pushViewController(sceneViewController, animated: true)
         case .select:

@@ -35,17 +35,15 @@ class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
     var toolPicker = PKToolPicker()
     
     // should be intialized via segue
-    var shotId: UUID!
+    var shot: Shot!
+    var scene: Scene!
+    var project: Project!
     var modelManager: ModelManager!
 
     var canvasTransform = CGAffineTransform.identity {
         didSet {
             self.updateShotTransform()
         }
-    }
-    
-    var shot: Shot? {
-        self.modelManager.getShot(of: shotLabel)
     }
     
     var canvasSize: CGSize {
@@ -62,9 +60,7 @@ class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
     }
 
     var selectedLayer: Layer? {
-        guard let layers = modelManager.getLayers(of: shotLabel) else {
-            return nil
-        }
+        let layers = self.shot.orderedLayers
         let layer = layers[selectedLayerIndex]
         return layer
     }
@@ -73,8 +69,16 @@ class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
         self.modelManager = modelManager
     }
 
-    func setShotLabel(to shotLabel: ShotLabel) {
-        self.shotLabel = shotLabel
+    func setShot(to shot: Shot) {
+        self.shot = shot
+    }
+    
+    func setScene(to scene: Scene) {
+        self.scene = scene
+    }
+    
+    func setProject(to project: Project) {
+        self.project = project
     }
 
     override var prefersStatusBarHidden: Bool {
@@ -85,30 +89,26 @@ class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        toolPicker.addObserver(self)
-        modelManager.observers.append(self)
+        self.toolPicker.addObserver(self)
+        self.modelManager.observers.append(self)
 
-        shotView.frame.size = canvasSize
-        shotView.bounds.size = canvasSize
+        self.shotView.frame.size = self.canvasSize
+        self.shotView.bounds.size = self.canvasSize
 
-        setUpShot()
+        self.setUpShot()
 
-        editingMode = .drawing
-        navigationItem.leftItemsSupplementBackButton = true
+        self.editingMode = .drawing
+        self.navigationItem.leftItemsSupplementBackButton = true
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        updateShotTransform()
+        self.updateShotTransform()
     }
 
     @IBAction private func nextShot(_ sender: Any) {
-        let sceneLabel = self.shotLabel.sceneLabel
-        guard let scene = self.modelManager.getScene(of: sceneLabel) else {
-            return
-        }
-        let currentShotId = self.shotLabel.shotId
-        guard let idx = scene.shotOrder.firstIndex(of: currentShotId) else {
+        let currentShotId = self.shot.id
+        guard let idx = self.scene.shotOrder.firstIndex(of: currentShotId) else {
             return
         }
         if idx + 1 >= scene.shotOrder.count {
@@ -118,50 +118,46 @@ class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
         guard let nextShot = scene.shots[nextShotId] else {
             return
         }
-        self.setShotLabel(to: nextShot.label)
+        self.setShot(to: nextShot)
         self.setUpShot()
 
     }
 
     @IBAction private func previousShot(_ sender: Any) {
-        let sceneLabel = self.shotLabel.sceneLabel
-        guard let scene = self.modelManager.getScene(of: sceneLabel) else {
-            return
-        }
-        let currentShotId = self.shotLabel.shotId
-        guard let idx = scene.shotOrder.firstIndex(of: currentShotId) else {
+        let currentShotId = self.shot.id
+        guard let idx = self.scene.shotOrder.firstIndex(of: currentShotId) else {
             return
         }
         if idx <= 0 {
             return
         }
-        let nextShotId = scene.shotOrder[idx - 1]
-        guard let nextShot = scene.shots[nextShotId] else {
+        let nextShotId = self.scene.shotOrder[idx - 1]
+        guard let nextShot = self.scene.shots[nextShotId] else {
             return
         }
-        self.setShotLabel(to: nextShot.label)
+        self.setShot(to: nextShot)
         self.setUpShot()
     }
 
     private func setUpShot() {
-        shotView.backgroundColor = shot?.backgroundColor.uiColor
+        self.shotView.backgroundColor = self.shot.backgroundColor.uiColor
 
-        guard let layers = modelManager.getLayers(of: shotLabel),
-              !layers.isEmpty else {
+        let layers = self.shot.orderedLayers
+        
+        if layers.isEmpty {
             return
         }
 
         let layerViews = layers.map({ DrawingUtility.generateLayerView(for: $0) })
-        shotView.setUpLayerViews(layerViews, toolPicker: toolPicker, PKDelegate: self)
+        self.shotView.setUpLayerViews(layerViews, toolPicker: toolPicker, PKDelegate: self)
 
-        updateShotTransform()
+        self.updateShotTransform()
     }
 
     private func updateShotTransform() {
-        shotView.transform = .identity
-        shotView.transform = zoomToFitTransform.concatenating(canvasTransform)
-
-        shotView.center = canvasCenter
+        self.shotView.transform = .identity
+        self.shotView.transform = zoomToFitTransform.concatenating(canvasTransform)
+        self.shotView.center = canvasCenter
     }
 
     private var panPosition = CGPoint.zero
@@ -234,8 +230,7 @@ extension ShotDesignerViewController {
             return
         }
         let newLayer = transform(layer)
-        modelManager.updateLayer(layerLabel: layer.label, withLayer: newLayer)
-        // modelManager.update(layer: newLayer, at: selectedLayerIndex, of: shotLabel)
+        self.shot.updateLayer(withId: layer.id, withLayer: newLayer)
     }
 }
 
@@ -252,13 +247,15 @@ extension ShotDesignerViewController {
     }
 
     @IBAction private func duplicateShot(_ sender: UIBarButtonItem) {
-        guard let shot = shot else {
-            return
+        let newShot = self.shot.duplicate()
+        if newShot.layers.isEmpty {
+            let layer = Layer(id: UUID(), canvasSize: newShot.canvasSize , layerWithDrawing: PKDrawing())
+            newShot.addLayer(with: layer)
         }
-
-        modelManager.addShot(ofShot: shotLabel.nextLabel,
-                             shot: shot,
-                             backgroundColor: shot.backgroundColor.uiColor)
+    
+//        modelManager.addShot(ofShot: shotLabel.nextLabel,
+//                             shot: shot,
+//                             backgroundColor: shot.backgroundColor.uiColor)
     }
 
     @IBAction private func toggleTransformLayer(_ sender: TransformLayerButton) {
@@ -286,21 +283,18 @@ extension ShotDesignerViewController: ModelManagerObserver {
 //        setUpShot()
     }
     func layerDidUpdate() {
-        guard let shot = shot else {
-            return
-        }
-        shotView.updateLayerViews(newLayerViews: DrawingUtility.generateLayerViews(for: shot))
+        self.shotView.updateLayerViews(newLayerViews: DrawingUtility.generateLayerViews(for: self.shot))
     }
     func willAddLayer() {
-        shotView.add(
+        self.shotView.add(
             layerView: DrawingUtility.generateLayerView(
                 for: Layer.getEmptyLayer(
-                    canvasSize: canvasSize,
+                    canvasSize: self.canvasSize,
                     name: Constants.defaultLayerName,
-                    forShot: shotLabel
+                    shotId: self.shot.id
                 )
             ),
-            toolPicker: toolPicker, PKDelegate: self
+            toolPicker: self.toolPicker, PKDelegate: self
         )
     }
 }
@@ -310,7 +304,10 @@ extension ShotDesignerViewController: PKCanvasViewDelegate {
         guard let newLayer = selectedLayer?.setDrawing(to: canvasView.drawing) else {
             return
         }
-        modelManager.updateLayer(layerLabel: newLayer.label, withLayer: newLayer)
+        
+        self.shot.updateLayer(withId: newLayer.id, withLayer: newLayer)
+        
+//        modelManager.updateLayer(layerLabel: newLayer.label, withLayer: newLayer)
     }
 }
 
@@ -325,9 +322,11 @@ extension ShotDesignerViewController {
 extension ShotDesignerViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let layerTable = segue.destination as? LayerTableController {
-            layerTable.selectedLayerIndex = selectedLayerIndex
-            layerTable.modelManager = modelManager
-            layerTable.shotLabel = shotLabel
+            layerTable.selectedLayerIndex = self.selectedLayerIndex
+            layerTable.modelManager = self.modelManager
+            layerTable.shot = self.shot
+            layerTable.scene = self.scene
+            layerTable.project = self.project
             layerTable.delegate = self
         }
     }
@@ -422,21 +421,21 @@ extension ShotDesignerViewController: LayerTableDelegate {
 
     private func toggleLayerLock(at index: Int) {
 
-        guard let layers = modelManager.getLayers(of: shotLabel) else {
-            return
-        }
-        var newLayer = layers[index]
+        let layers = self.shot.orderedLayers
+        let layer = layers[index]
+        let newLayer = layer.duplicate(withId: layer.id)
         newLayer.isLocked.toggle()
-        modelManager.updateLayer(layerLabel: newLayer.label, withLayer: newLayer)
+        self.shot.updateLayer(withId: newLayer.id, withLayer: newLayer)
+//        modelManager.updateLayer(layerLabel: newLayer.label, withLayer: newLayer)
     }
 
     private func toggleLayerVisibility(at index: Int) {
 
-        guard let layers = modelManager.getLayers(of: shotLabel) else {
-            return
-        }
-        var newLayer = layers[index]
+        let layers = self.shot.orderedLayers
+        let layer = layers[index]
+        let newLayer = layer.duplicate(withId: layer.id)
         newLayer.isVisible.toggle()
-        modelManager.updateLayer(layerLabel: newLayer.label, withLayer: newLayer)
+        self.shot.updateLayer(withId: layer.id, withLayer: newLayer)
+//        modelManager.updateLayer(layerLabel: newLayer.label, withLayer: newLayer)
     }
 }

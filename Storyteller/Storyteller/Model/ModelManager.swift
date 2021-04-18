@@ -110,14 +110,14 @@ class ModelManager {
 //        return projects[projectId]?.canvasSize
 //    }
 
-    private func saveProject(_ project: Project?) {
+    func saveProject(_ project: Project?) {
         if let project = project {
             self.storageManager.saveProject(project: project)
             self.observers.forEach({ $0.modelDidChange() })
         }
     }
 
-    private func deleteProject(_ project: Project) {
+    func deleteProject(_ project: Project) {
         self.storageManager.deleteProject(project: project)
         self.observers.forEach({ $0.modelDidChange() })
     }
