@@ -308,6 +308,9 @@ extension ModelManager {
         // and put them at the index of the the composite component
         generateThumbnailAndSave(shotLabel: shotLabel)
     }
+    func renameLayer(withId id: UUID, of shotLabel: ShotLabel) {
+
+    }
     // MARK: - Rearrange elements
     func moveLayer(_ layerLabel: LayerLabel, to newIndex: Int) {
         let projectId = layerLabel.projectId
