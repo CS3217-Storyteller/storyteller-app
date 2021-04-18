@@ -265,6 +265,7 @@ extension ShotDesignerViewController {
         additionalLayerTransform = .identity
         setUpShot()
     }
+
 }
 
 // MARK: - Actions

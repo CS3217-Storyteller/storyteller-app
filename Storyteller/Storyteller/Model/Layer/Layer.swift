@@ -13,7 +13,11 @@ struct Layer {
     var label: LayerLabel
     var id: UUID
     var isLocked = false
-    var isVisible = true
+    var isVisible = true {
+        didSet {
+            generateThumbnail()
+        }
+    }
 
     var thumbnail: UIImage
 
@@ -45,7 +49,7 @@ struct Layer {
          name: String = Constants.defaultImageLayerName, label: LayerLabel) {
         self.canvasSize = canvasSize
         self.component = ImageComponent(
-            canvasSize: canvasSize, imageData: image.scaleToFit(canvasSize).pngData()!)
+            canvasSize: canvasSize, imageData: image.pngData()!)
         self.name = name
         self.label = label
         self.id = label.layerId
@@ -60,10 +64,14 @@ struct Layer {
     func updateComponent(_ component: LayerComponent) -> Layer {
         var newLayer = self
         newLayer.component = component
-//        newLayer.generateThumbnail()
+        newLayer.generateThumbnail()
         return newLayer
     }
     mutating func generateThumbnail() {
+        guard isVisible else {
+            thumbnail = UIImage.solidImage(ofColor: .clear, ofSize: canvasSize)
+            return
+        }
         thumbnail = component.merge(merger: NormalImageMerger())
     }
     mutating func updateThumbnail(using thumbnail: UIImage) {

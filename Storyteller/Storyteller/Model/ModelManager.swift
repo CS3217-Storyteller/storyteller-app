@@ -7,7 +7,8 @@
 import PencilKit
 
 class ModelManager {
-    private let thumbnailQueue = DispatchQueue(label: "ThumbnailQueue", qos: .userInitiated)
+    private let thumbnailQueue = DispatchQueue(label: "ThumbnailQueue", qos: .background)
+    private let storageQueue = DispatchQueue(label: "StorageQueue", qos: .background)
 
     private let storageManager = StorageManager()
     var observers = [ModelManagerObserver]()
@@ -111,9 +112,11 @@ class ModelManager {
     }
 
     private func saveProject(_ project: Project?) {
+        self.observers.forEach({ $0.modelDidChange() })
         if let project = project {
-            self.storageManager.saveProject(project: project)
-            self.observers.forEach({ $0.modelDidChange() })
+            storageQueue.async {
+                self.storageManager.saveProject(project: project)
+            }
         }
     }
 
@@ -265,15 +268,13 @@ extension ModelManager {
                           canvasSize: shot.canvasSize,
                           label: label)
         projects[projectId]?.addLayer(layer, at: index, to: shotLabel)
-        saveProject(projects[projectId])
+        generateThumbnailAndSave(shotLabel: shotLabel)
         observers.forEach({ $0.DidAddLayer(layer: layer) })
     }
     func updateLayer(layerLabel: LayerLabel, withLayer newLayer: Layer) {
         let projectId = layerLabel.projectId
         projects[projectId]?.updateLayer(layerLabel, withLayer: newLayer)
-        self.saveProject(self.projects[projectId])
-        // TODO: Delete
-//        generateThumbnailAndSave(shotLabel: layerLabel.shotLabel)
+        generateThumbnailAndSave(shotLabel: layerLabel.shotLabel)
         observers.forEach({ $0.DidUpdateLayer() })
     }
     func removeLayers(withIds ids: [UUID], of shotLabel: ShotLabel) {
