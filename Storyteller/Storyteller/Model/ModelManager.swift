@@ -206,19 +206,6 @@ extension ModelManager {
         generateThumbnailAndSave(shotLabel: shotLabel)
     }
 
-    private func generateLayerThumbnail(of updatedLayer: LayerLabel) {
-        thumbnailQueue.async { [weak self] in
-            guard let self = self else {
-                return
-            }
-            let projectId = updatedLayer.projectId
-            self.projects[projectId]?.generateThumbnail(of: updatedLayer)
-            self.saveProject(self.projects[projectId])
-            DispatchQueue.main.async {
-                self.generateThumbnailAndSave(shotLabel: updatedLayer.shotLabel)
-            }
-        }
-    }
     private func generateThumbnailAndSave(shotLabel: ShotLabel) {
         let projectId = shotLabel.projectId
         guard let shot = getShot(of: shotLabel) else {
@@ -284,7 +271,9 @@ extension ModelManager {
     func updateLayer(layerLabel: LayerLabel, withLayer newLayer: Layer) {
         let projectId = layerLabel.projectId
         projects[projectId]?.updateLayer(layerLabel, withLayer: newLayer)
-        generateLayerThumbnail(of: layerLabel)
+        self.saveProject(self.projects[projectId])
+        // TODO: Delete
+//        generateThumbnailAndSave(shotLabel: layerLabel.shotLabel)
         observers.forEach({ $0.DidUpdateLayer() })
     }
     func removeLayers(withIds ids: [UUID], of shotLabel: ShotLabel) {

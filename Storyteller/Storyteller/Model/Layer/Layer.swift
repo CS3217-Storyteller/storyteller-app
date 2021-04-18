@@ -44,8 +44,8 @@ struct Layer {
     init(withImage image: UIImage, canvasSize: CGSize,
          name: String = Constants.defaultImageLayerName, label: LayerLabel) {
         self.canvasSize = canvasSize
-        self.component = ImageComponent(canvasSize: canvasSize,
-                                        imageData: image.pngData()!)
+        self.component = ImageComponent(
+            canvasSize: canvasSize, imageData: image.scaleToFit(canvasSize).pngData()!)
         self.name = name
         self.label = label
         self.id = label.layerId
