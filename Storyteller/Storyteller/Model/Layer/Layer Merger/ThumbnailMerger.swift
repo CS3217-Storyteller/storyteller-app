@@ -10,25 +10,39 @@ import UIKit
 class ThumbnailMerger: LayerMerger {
 
     func mergeDrawing(component: DrawingComponent) -> Thumbnail {
-        let thumbnail = component.merge(merger: ImageMerger())
-        let redOnionSkin = component.merge(merger: RedOnionSkinMerger())
-        let greenOnionSkin = component.merge(merger: GreenOnionSkinMerger())
+        let canvasSize = component.canvasSize
+        let drawing = component.drawing
+        guard !(drawing.bounds.isEmpty || drawing.bounds.isInfinite) else {
+            return Thumbnail()
+        }
+
+        let thumbnail = drawing.image(from: canvasSize.rectAtOrigin, scale: 0.5)
+        let redOnionSkin = drawing.redOnionSkin
+            .image(from: canvasSize.rectAtOrigin, scale: 0.5)
+        let greenOnionSkin = drawing.greenOnionSkin
+            .image(from: canvasSize.rectAtOrigin, scale: 0.5)
         return Thumbnail(defaultThumbnail: thumbnail, redOnionSkin: redOnionSkin,
                          greenOnionSkin: greenOnionSkin)
     }
     func mergeImage(component: ImageComponent) -> Thumbnail {
-        let thumbnail = component.merge(merger: ImageMerger())
-        let redOnionSkin = component.merge(merger: RedOnionSkinMerger())
-        let greenOnionSkin = component.merge(merger: GreenOnionSkinMerger())
-        return Thumbnail(defaultThumbnail: thumbnail, redOnionSkin: redOnionSkin,
-                         greenOnionSkin: greenOnionSkin)
+        let emptyBackground = UIView(frame: component.canvasSize.rectAtOrigin)
+        emptyBackground.backgroundColor = .clear
+        emptyBackground.addSubview(component.merge(merger: NormalLayerMerger()))
+        let image = emptyBackground.asImage()
+        return Thumbnail(defaultThumbnail: image, redOnionSkin: image,
+                         greenOnionSkin: image)
     }
 
     func merge(results: [Thumbnail], composite: CompositeComponent) -> Thumbnail {
-        let thumbnail = composite.merge(merger: ImageMerger())
-        let redOnionSkin = composite.merge(merger: RedOnionSkinMerger())
-        let greenOnionSkin = composite.merge(merger: GreenOnionSkinMerger())
-        return Thumbnail(defaultThumbnail: thumbnail, redOnionSkin: redOnionSkin,
+        let clearImage = UIImage.solidImage(ofColor: .clear,
+                                            ofSize: composite.canvasSize)
+        let defaultThumbnail = results.map({ $0.defaultThumbnail })
+            .reduce(clearImage, { $0.mergeWith($1) })
+        let redOnionSkin = results.map({ $0.redOnionSkin })
+            .reduce(clearImage, { $0.mergeWith($1) })
+        let greenOnionSkin = results.map({ $0.redOnionSkin })
+            .reduce(clearImage, { $0.mergeWith($1) })
+        return Thumbnail(defaultThumbnail: defaultThumbnail, redOnionSkin: redOnionSkin,
                          greenOnionSkin: greenOnionSkin)
     }
 }
