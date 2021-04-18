@@ -78,6 +78,13 @@ class ShotView: UIView {
         layerViews.forEach({ $0.removeFromSuperview() })
         layerViews = []
     }
+
+    func getThumbnailOfSelectedLayer() -> UIImage {
+        let emptyBackground = UIView(frame: bounds)
+        let duplicatedLayer = selectedLayerView.duplicate()
+        emptyBackground.addSubview(duplicatedLayer)
+        return emptyBackground.asImage()
+    }
 }
 
 // MARK: - Update Layer View

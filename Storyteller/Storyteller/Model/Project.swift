@@ -33,6 +33,14 @@ struct Project {
         let sceneId = layerLabel.sceneId
         self.scenes[sceneId]?.generateThumbnail(of: layerLabel)
     }
+    mutating func updateThumbnail(of layerLabel: LayerLabel, using thumbnail: UIImage) {
+        let sceneId = layerLabel.sceneId
+        self.scenes[sceneId]?.updateThumbnail(of: layerLabel, using: thumbnail)
+    }
+    mutating func updateThumbnail(of shotLabel: ShotLabel, using thumbnail: UIImage) {
+        let sceneId = shotLabel.sceneId
+        scenes[sceneId]?.updateThumbnail(of: shotLabel, using: thumbnail)
+    }
     // TODO: What if scene already exist? Just update?
     mutating func addScene(_ scene: Scene) {
         let id = scene.id
@@ -69,10 +77,6 @@ struct Project {
     mutating func moveShot(_ shotLabel: ShotLabel, to newIndex: Int) {
         let sceneId = shotLabel.sceneId
         scenes[sceneId]?.moveShot(shotLabel, to: newIndex)
-    }
-    mutating func updateThumbnail(of shotLabel: ShotLabel, using thumbnail: UIImage) {
-        let sceneId = shotLabel.sceneId
-        scenes[sceneId]?.updateThumbnail(of: shotLabel, using: thumbnail)
     }
     func duplicate(withId newProjectId: UUID = UUID()) -> Self {
         let newLabel = ProjectLabel(projectId: newProjectId)

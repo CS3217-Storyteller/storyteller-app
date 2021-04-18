@@ -60,11 +60,14 @@ struct Layer {
     func updateComponent(_ component: LayerComponent) -> Layer {
         var newLayer = self
         newLayer.component = component
-        newLayer.generateThumbnail()
+//        newLayer.generateThumbnail()
         return newLayer
     }
     mutating func generateThumbnail() {
         thumbnail = component.merge(merger: NormalImageMerger())
+    }
+    mutating func updateThumbnail(using thumbnail: UIImage) {
+        self.thumbnail = thumbnail
     }
 
     func duplicate(withId newId: UUID = UUID()) -> Layer {

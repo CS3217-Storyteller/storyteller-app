@@ -19,6 +19,9 @@ struct Shot {
     mutating func updateThumbnail(_ thumbnail: UIImage) {
         self.thumbnail = thumbnail
     }
+    mutating func updateThumbnail(of layerLabel: LayerLabel, using thumbnail: UIImage) {
+        self.layers[layerLabel.layerId]?.updateThumbnail(using: thumbnail)
+    }
     mutating func removeLayers(withIds ids: Set<UUID>) {
         layers = layers.filter { id, _ in
             !ids.contains(id)

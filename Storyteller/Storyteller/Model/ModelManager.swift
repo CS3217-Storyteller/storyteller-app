@@ -206,6 +206,15 @@ extension ModelManager {
         generateThumbnailAndSave(shotLabel: shotLabel)
     }
 
+    private func generateLayerThumbnail(of updatedLayer: LayerLabel,
+                                        using thumbnail: UIImage) {
+        let projectId = updatedLayer.projectId
+        self.projects[projectId]?.updateThumbnail(of: updatedLayer,
+                                                  using: thumbnail)
+        self.saveProject(self.projects[projectId])
+        self.observers.forEach({ $0.DidUpdateLayer() })
+        self.generateThumbnailAndSave(shotLabel: updatedLayer.shotLabel)
+    }
     private func generateThumbnailAndSave(shotLabel: ShotLabel) {
         let projectId = shotLabel.projectId
         guard let shot = getShot(of: shotLabel) else {
@@ -268,11 +277,11 @@ extension ModelManager {
         saveProject(projects[projectId])
         observers.forEach({ $0.DidAddLayer(layer: layer) })
     }
-    func updateLayer(layerLabel: LayerLabel, withLayer newLayer: Layer) {
+    func updateLayer(layerLabel: LayerLabel, withLayer newLayer: Layer,
+                     thumbnail: UIImage) {
         let projectId = layerLabel.projectId
         projects[projectId]?.updateLayer(layerLabel, withLayer: newLayer)
-        generateThumbnailAndSave(shotLabel: layerLabel.shotLabel)
-        observers.forEach({ $0.DidUpdateLayer() })
+        generateLayerThumbnail(of: layerLabel, using: thumbnail)
     }
     func removeLayers(withIds ids: [UUID], of shotLabel: ShotLabel) {
         let projectId = shotLabel.projectId

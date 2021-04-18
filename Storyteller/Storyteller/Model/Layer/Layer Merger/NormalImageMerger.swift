@@ -18,7 +18,9 @@ class NormalImageMerger: LayerMerger {
         return drawing.image(from: canvasSize.rectAtOrigin, scale: 0.5)
     }
     func mergeImage(component: ImageComponent) -> UIImage {
-        let emptyBackground = UIView(frame: component.canvasSize.rectAtOrigin)
+        let emptyBackground = ImageLayerView(canvasSize: component.canvasSize,
+                                             image: UIImage.solidImage(ofColor: .clear, ofSize: component.canvasSize))
+        // UIView(frame: component.canvasSize.rectAtOrigin)
         emptyBackground.addSubview(component.merge(merger: NormalLayerMerger()))
         return emptyBackground.asImage()
     }

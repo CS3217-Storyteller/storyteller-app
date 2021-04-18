@@ -39,6 +39,12 @@ struct Scene {
     mutating func generateThumbnail(of layerLabel: LayerLabel) {
         self.shots[layerLabel.shotId]?.generateThumbnail(of: layerLabel)
     }
+    mutating func updateThumbnail(of layerLabel: LayerLabel, using thumbnail: UIImage) {
+        self.shots[layerLabel.shotId]?.updateThumbnail(of: layerLabel, using: thumbnail)
+    }
+    mutating func updateThumbnail(of shotLabel: ShotLabel, using thumbnail: UIImage) {
+        shots[shotLabel.shotId]?.updateThumbnail(thumbnail)
+    }
     mutating func addShot(_ shot: Shot) {
         let shotId = shot.id
         if shots[shotId] == nil {
@@ -69,9 +75,6 @@ struct Scene {
 
         shotOrder.remove(at: oldIndex)
         shotOrder.insert(shotId, at: newIndex)
-    }
-    mutating func updateThumbnail(of shotLabel: ShotLabel, using thumbnail: UIImage) {
-        shots[shotLabel.shotId]?.updateThumbnail(thumbnail)
     }
     func duplicate(withId newSceneId: UUID = UUID()) -> Self {
         let newLabel = SceneLabel(projectId: label.projectId,

@@ -261,8 +261,9 @@ extension ShotDesignerViewController {
             return
         }
         let newLayer = layer.transformed(using: additionalLayerTransform)
+        modelManager.updateLayer(layerLabel: layer.label, withLayer: newLayer,
+                                 thumbnail: shotView.getThumbnailOfSelectedLayer())
         additionalLayerTransform = .identity
-        modelManager.updateLayer(layerLabel: layer.label, withLayer: newLayer)
         setUpShot()
     }
 }
@@ -326,7 +327,8 @@ extension ShotDesignerViewController: PKCanvasViewDelegate {
         guard let newLayer = selectedLayer?.setDrawing(to: canvasView.drawing) else {
             return
         }
-        modelManager.updateLayer(layerLabel: newLayer.label, withLayer: newLayer)
+        modelManager.updateLayer(layerLabel: newLayer.label, withLayer: newLayer,
+                                 thumbnail: shotView.getThumbnailOfSelectedLayer())
     }
 }
 
@@ -457,7 +459,8 @@ extension ShotDesignerViewController: LayerTableDelegate {
         }
         var newLayer = layers[index]
         newLayer.isLocked.toggle()
-        modelManager.updateLayer(layerLabel: newLayer.label, withLayer: newLayer)
+        modelManager.updateLayer(layerLabel: newLayer.label, withLayer: newLayer,
+                                 thumbnail: shotView.getThumbnailOfSelectedLayer())
     }
 
     private func toggleLayerVisibility(at index: Int) {
@@ -467,7 +470,8 @@ extension ShotDesignerViewController: LayerTableDelegate {
         }
         var newLayer = layers[index]
         newLayer.isVisible.toggle()
-        modelManager.updateLayer(layerLabel: newLayer.label, withLayer: newLayer)
+        modelManager.updateLayer(layerLabel: newLayer.label, withLayer: newLayer,
+                                 thumbnail: shotView.getThumbnailOfSelectedLayer())
     }
 }
 // MARK: - UIDropInteractionDelegate
