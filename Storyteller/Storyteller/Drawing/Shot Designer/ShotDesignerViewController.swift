@@ -454,7 +454,7 @@ extension ShotDesignerViewController: LayerTableDelegate {
         self.toggleLayerVisibility(at: index)
     }
     func didChangeLayerName(at index: Int, newName: String) {
-        // TODO
+        self.updateLayerName(at: index, to: newName)
     }
 
     func willRemoveLayers(at indices: [Int]) {
@@ -491,6 +491,17 @@ extension ShotDesignerViewController: LayerTableDelegate {
         let layer = layers[index]
         let newLayer = layer.duplicate()
         newLayer.isVisible.toggle()
+        self.shot.updateLayer(layer, with: newLayer)
+        self.modelManager.generateThumbnailAndSave(project: self.project, shot: self.shot)
+        self.modelManager.observers.forEach({ $0.DidUpdateLayer() })
+        self.modelManager.saveProject(self.project)
+    }
+    
+    private func updateLayerName(at index: Int, to newName: String) {
+        let layers = self.shot.layers
+        let layer = layers[index]
+        let newLayer = layer.duplicate()
+        newLayer.name = newName
         self.shot.updateLayer(layer, with: newLayer)
         self.modelManager.generateThumbnailAndSave(project: self.project, shot: self.shot)
         self.modelManager.observers.forEach({ $0.DidUpdateLayer() })

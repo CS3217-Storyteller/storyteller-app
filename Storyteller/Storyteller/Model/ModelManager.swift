@@ -396,9 +396,6 @@ extension ModelManager {
 }
 
 
-
- 
- 
 protocol ModelManagerObserver {
     /// Invoked when the model changes.
     func modelDidChange()

@@ -114,6 +114,25 @@ extension LayerTableController: UITableViewDelegate {
     private func selectSingleLayer(at indexPath: IndexPath) {
         guard selectedLayerIndex != indexPath.row else {
             // TODO: rename layer name process
+            let alertController = UIAlertController(
+                title: "Rename",
+                message: "",
+                preferredStyle: .alert
+            )
+            alertController.addTextField { textField in
+                textField.text = self.shot.layers[indexPath.row].name
+            }
+
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
+                guard let newLayerName = alertController.textFields?[0].text else {
+                    return
+                }
+                self.delegate?.didChangeLayerName(at: indexPath.row, newName: newLayerName)
+            }
+            alertController.addAction(cancelAction)
+            alertController.addAction(saveAction)
+            present(alertController, animated: true, completion: nil)
             return
         }
         selectedLayerIndex = indexPath.row
@@ -215,10 +234,8 @@ extension LayerTableController {
         let newLayer = layer.duplicate()
         shot.addLayer(newLayer)
         modelManager.generateThumbnailAndSave(project: project, shot: shot)
-        
 //        modelManager.duplicateLayers(withIds: [layer.id], of: shotLabel)
     }
-    
     private func duplicateMultipleLayer() {
         delegate?.willDuplicateLayers(at: multipleSelectionIndices)
 
@@ -228,7 +245,7 @@ extension LayerTableController {
             let layer = layers[index]
             list.append(layer)
         }
-        
+
         for layer in list {
             shot.addLayer(layer)
             modelManager.generateThumbnailAndSave(project: project, shot: shot)
@@ -294,7 +311,7 @@ extension LayerTableController {
             shot.removeLayer(layer)
             modelManager.generateThumbnailAndSave(project: project, shot: shot)
         }
-        
+
 //        modelManager.removeLayers(withIds: layerIds, of: shotLabel)
     }
     @IBAction private func addLayer(_ sender: Any) {
@@ -367,4 +384,5 @@ protocol LayerTableDelegate: AnyObject {
     func willUngroupLayer(at index: Int)
     func onionSkinsDidChange()
     func backgroundColorDidChange()
+
 }
