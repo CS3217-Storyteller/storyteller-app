@@ -19,6 +19,10 @@ class ShotView: UIView {
     }
     var selectedLayerIndex = 0 {
         didSet {
+            guard selectedLayerIndex < layerViews.count, selectedLayerIndex >= 0 else {
+                selectedLayerIndex = layerViews.count - 1
+                return
+            }
             updateEffectForSelectedLayer()
         }
     }
@@ -79,13 +83,6 @@ class ShotView: UIView {
     func reset() {
         layerViews.forEach({ $0.removeFromSuperview() })
         layerViews = []
-    }
-
-    func getThumbnailOfSelectedLayer() -> UIImage {
-        let emptyBackground = UIView(frame: bounds)
-        let duplicatedLayer = selectedLayerView.duplicate()
-        emptyBackground.addSubview(duplicatedLayer)
-        return emptyBackground.asImage()
     }
 }
 
@@ -155,7 +152,8 @@ extension ShotView {
         insert(groupedLayerView, at: newIndex)
     }
     func ungroupLayer(at index: Int) {
-        guard let children = (layerViews[index] as? CompositeLayerView)?.children else {
+        guard let children = (layerViews.remove(at: index)
+                                as? CompositeLayerView)?.children else {
             return
         }
         children.reversed().forEach({ insert($0, at: index) })

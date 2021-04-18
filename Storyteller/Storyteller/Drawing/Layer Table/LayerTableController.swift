@@ -216,7 +216,13 @@ extension LayerTableController {
     }
 
     @IBAction private func groupLayers() {
+        guard let lastIndex = multipleSelectionIndices.last else {
+            return
+        }
         delegate?.willGroupLayers(at: multipleSelectionIndices)
+
+        let newIndex = lastIndex - (multipleSelectionIndices.count - 1)
+        selectedLayerIndex = newIndex
     }
     @IBAction private func ungroupLayers() {
         delegate?.willUngroupLayer(at: selectedLayerIndex)

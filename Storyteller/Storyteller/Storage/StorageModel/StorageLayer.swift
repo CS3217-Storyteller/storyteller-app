@@ -21,7 +21,6 @@ struct StorageLayer: Codable {
         self.canvasSize = layer.canvasSize
         self.name = layer.name
         self.isLocked = layer.isLocked
-        print("during init: \(layer.isVisible)")
         self.isVisible = layer.isVisible
         self.thumbnail = layer.thumbnail
     }
@@ -30,9 +29,7 @@ struct StorageLayer: Codable {
 
 extension StorageLayer {
     var layer: Layer {
-        let layer = Layer(component: storageComponent.component, canvasSize: canvasSize,
+        Layer(component: storageComponent.component, canvasSize: canvasSize,
               name: name, isLocked: isLocked, isVisible: isVisible, thumbnail: thumbnail)
-        print(layer.isVisible)
-        return layer
     }
 }

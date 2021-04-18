@@ -25,9 +25,10 @@ class Layer {
         self.canvasSize = canvasSize
         self.name = name
         self.isLocked = isLocked
-        self.isVisible = isLocked
+        self.isVisible = isVisible
         guard let thumbnail = thumbnail else {
             self.thumbnail = Thumbnail()
+            generateThumbnail()
             return
         }
         self.thumbnail = thumbnail

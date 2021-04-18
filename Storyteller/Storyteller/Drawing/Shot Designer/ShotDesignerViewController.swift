@@ -321,7 +321,6 @@ extension ShotDesignerViewController: PKToolPickerObserver {
 extension ShotDesignerViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let layerTable = segue.destination as? LayerTableController {
-            editingMode = .free
 
             modelManager.observers.append(layerTable)
 
@@ -443,30 +442,45 @@ extension ShotDesignerViewController: LayerTableDelegate {
         shotView.add(layerView: DrawingUtility.generateLayerView(for: layer),
                      toolPicker: toolPicker, PKDelegate: self)
         shot.addLayer(layer)
-        selectedLayerIndex = shot.layers.count - 1
+        selectTopLayer()
         modelManager.generateThumbnailAndSave(project: project, shot: shot)
     }
+    private func selectTopLayer() {
+        selectedLayerIndex = shot.layers.count - 1
+    }
     func willRemoveLayers(at indices: [Int]) {
+        guard !indices.isEmpty else {
+            return
+        }
         shotView.removeLayers(at: indices)
         shot.removeLayers(at: indices)
         modelManager.generateThumbnailAndSave(project: project, shot: shot)
     }
 
     func willDuplicateLayers(at indices: [Int]) {
-        shotView.duplicateLayers(at: indices)
+        guard !indices.isEmpty else {
+            return
+        }
         shot.duplicateLayers(at: indices)
+        setUpShot()
         modelManager.generateThumbnailAndSave(project: project, shot: shot)
     }
 
     func willGroupLayers(at indices: [Int]) {
-        shotView.groupLayers(at: indices)
+        guard let lastIndex = indices.last else {
+            return
+        }
+        let newIndex = lastIndex - (indices.count - 1)
+
         shot.groupLayers(at: indices)
+        setUpShot()
+        selectedLayerIndex = newIndex
         modelManager.generateThumbnailAndSave(project: project, shot: shot)
     }
 
     func willUngroupLayer(at index: Int) {
-        shotView.ungroupLayer(at: index)
         shot.ungroupLayer(at: index)
+        setUpShot()
         modelManager.generateThumbnailAndSave(project: project, shot: shot)
     }
 }
@@ -492,6 +506,7 @@ extension ShotDesignerViewController: UIDropInteractionDelegate {
             self.shotView
                 .add(layerView: DrawingUtility.generateLayerView(for: layer),
                      toolPicker: self.toolPicker, PKDelegate: self)
+            self.selectTopLayer()
             self.modelManager.generateThumbnailAndSave(project: self.project, shot: self.shot)
         }
     }

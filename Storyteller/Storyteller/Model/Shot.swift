@@ -100,7 +100,8 @@ class Shot {
         addLayer(groupedLayer, at: newIndex)
     }
     func ungroupLayer(at index: Int) {
-        layers[index].ungroup().reversed().forEach({ addLayer($0, at: index) })
+        let layerToBeUngrouped = layers.remove(at: index)
+        layerToBeUngrouped.ungroup().reversed().forEach({ addLayer($0, at: index) })
     }
 }
 
