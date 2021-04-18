@@ -42,7 +42,6 @@ class LayerTableViewCell: UITableViewCell {
         visibilityButton.isChosen.toggle()
         delegate?.didToggleLayerVisibility(cell: self)
     }
-    // TODO: implement change layer name
 }
 
 protocol LayerCellDelegate: AnyObject {

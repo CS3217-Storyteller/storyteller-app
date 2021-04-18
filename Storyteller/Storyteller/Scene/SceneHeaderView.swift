@@ -29,14 +29,6 @@ class SceneHeaderView: UICollectionReusableView {
         return button
     }()
 
-//    private let rename: UIButton = {
-//        let button = UIButton()
-//        button.backgroundColor = .darkGray
-//        button.setTitle("RENAME", for: .normal)
-//        button.addTarget(self, action: #selector(renameAction), for: .touchUpInside)
-//        return button
-//    }()
-
     func configure(sceneIndex: Int, delegate: SceneHeaderDelegate) {
         self.index = sceneIndex
         self.backgroundColor = .gray
@@ -62,11 +54,6 @@ class SceneHeaderView: UICollectionReusableView {
             self.delegate?.didDeleteScene(at: index)
         }
     }
-
-//    @objc func renameAction(sender: UIButton!) {
-//      print("Button tapped")
-//    }
-
 }
 
 protocol SceneHeaderDelegate: AnyObject {

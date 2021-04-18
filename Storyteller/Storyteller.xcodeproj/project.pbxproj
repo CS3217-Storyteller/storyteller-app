@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		2C36EC742607383700250ADE /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C36EC732607383700250ADE /* Color.swift */; };
-		89F207E3260F1E1B00D5A78F /* LayerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89F207E2260F1E1B00D5A78F /* LayerLabel.swift */; };
 		A209157F2606FE3F001A242E /* ProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A209157E2606FE3F001A242E /* ProjectViewController.swift */; };
 		A2091585260703D1001A242E /* SceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2091584260703D1001A242E /* SceneViewController.swift */; };
 		A209158926070553001A242E /* SceneHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A209158826070553001A242E /* SceneHeaderView.swift */; };
@@ -27,9 +26,6 @@
 		A29A19582607242800710943 /* Shot.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19292607237100710943 /* Shot.swift */; };
 		A29A195B2607243300710943 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19202607237100710943 /* Scene.swift */; };
 		A29A19612607243800710943 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19222607237100710943 /* Project.swift */; };
-		A29A19642607243E00710943 /* ShotLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19232607237100710943 /* ShotLabel.swift */; };
-		A29A19672607244000710943 /* ProjectLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19242607237100710943 /* ProjectLabel.swift */; };
-		A29A196A2607244200710943 /* SceneLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19252607237100710943 /* SceneLabel.swift */; };
 		A2F2C8962607634800FD4FF6 /* AddShotViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F2C8952607634800FD4FF6 /* AddShotViewCell.swift */; };
 		A2F2C89A260768E900FD4FF6 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F2C899260768E900FD4FF6 /* Color.swift */; };
 		B30AA8592610C3B5008B6714 /* StorageProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30AA8582610C3B5008B6714 /* StorageProject.swift */; };
@@ -93,7 +89,6 @@
 
 /* Begin PBXFileReference section */
 		2C36EC732607383700250ADE /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
-		89F207E2260F1E1B00D5A78F /* LayerLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerLabel.swift; sourceTree = "<group>"; };
 		A209157E2606FE3F001A242E /* ProjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewController.swift; sourceTree = "<group>"; };
 		A2091584260703D1001A242E /* SceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneViewController.swift; sourceTree = "<group>"; };
 		A209158826070553001A242E /* SceneHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneHeaderView.swift; sourceTree = "<group>"; };
@@ -111,9 +106,6 @@
 		A29A18F126071A3700710943 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A29A19202607237100710943 /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
 		A29A19222607237100710943 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
-		A29A19232607237100710943 /* ShotLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotLabel.swift; sourceTree = "<group>"; };
-		A29A19242607237100710943 /* ProjectLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectLabel.swift; sourceTree = "<group>"; };
-		A29A19252607237100710943 /* SceneLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneLabel.swift; sourceTree = "<group>"; };
 		A29A19272607237100710943 /* ModelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
 		A29A19282607237100710943 /* Layer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layer.swift; sourceTree = "<group>"; };
 		A29A19292607237100710943 /* Shot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shot.swift; sourceTree = "<group>"; };
@@ -264,21 +256,9 @@
 			path = StorytellerTests;
 			sourceTree = "<group>";
 		};
-		A29A19262607237100710943 /* Index */ = {
-			isa = PBXGroup;
-			children = (
-				A29A19242607237100710943 /* ProjectLabel.swift */,
-				A29A19252607237100710943 /* SceneLabel.swift */,
-				89F207E2260F1E1B00D5A78F /* LayerLabel.swift */,
-				A29A19232607237100710943 /* ShotLabel.swift */,
-			);
-			path = Index;
-			sourceTree = "<group>";
-		};
 		A29A192A2607237100710943 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				A29A19262607237100710943 /* Index */,
 				A29A19272607237100710943 /* ModelManager.swift */,
 				A29A19222607237100710943 /* Project.swift */,
 				A29A19202607237100710943 /* Scene.swift */,
@@ -571,7 +551,6 @@
 				B3D7AD612615A54C0082D591 /* CompositeLayerView.swift in Sources */,
 				B30AA85D2610C3D7008B6714 /* StorageScene.swift in Sources */,
 				B3440873262B0076009F3CC0 /* ImageLayerView.swift in Sources */,
-				A29A19642607243E00710943 /* ShotLabel.swift in Sources */,
 				B3C7BFA6262C217C0005F159 /* PKDrawing+redOnionSkin.swift in Sources */,
 				B34A84562617AC6D00A3185A /* ImageMerger.swift in Sources */,
 				A209158C26070595001A242E /* SceneShotViewCell.swift in Sources */,
@@ -604,7 +583,6 @@
 				B3C7BFBA262C393A0005F159 /* Thumbnail.swift in Sources */,
 				B3C7BFB2262C24E50005F159 /* GreenOnionSkinMerger.swift in Sources */,
 				A29A195B2607243300710943 /* Scene.swift in Sources */,
-				89F207E3260F1E1B00D5A78F /* LayerLabel.swift in Sources */,
 				A29A19322607239E00710943 /* StorageUtility.swift in Sources */,
 				A2F2C8962607634800FD4FF6 /* AddShotViewCell.swift in Sources */,
 				B3C7BFB6262C29930005F159 /* OnionSkinRange.swift in Sources */,
@@ -618,10 +596,8 @@
 				B35115BA26123B510056886C /* UIView+newPointInView.swift in Sources */,
 				B358305C2615F57500824C55 /* LayerLockButton.swift in Sources */,
 				A24F62F62600CC7300FC7CD4 /* AppDelegate.swift in Sources */,
-				A29A19672607244000710943 /* ProjectLabel.swift in Sources */,
 				2C36EC742607383700250ADE /* Color.swift in Sources */,
 				B3755AA22605F21400EC0F56 /* LayerView.swift in Sources */,
-				A29A196A2607244200710943 /* SceneLabel.swift in Sources */,
 				B35FA2BC2614AB7100D656E3 /* StorageLayerComponent.swift in Sources */,
 				A24F62F82600CC7300FC7CD4 /* SceneDelegate.swift in Sources */,
 				B30AA8902610D384008B6714 /* UIImage+mergeWith.swift in Sources */,
