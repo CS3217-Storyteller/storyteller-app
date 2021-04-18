@@ -10,9 +10,9 @@ class Shot {
     var layers: [Layer] = [Layer]()
     var backgroundColor: Color
     let canvasSize: CGSize
-    
+
     var thumbnail: Thumbnail
-    
+
     init(canvasSize: CGSize,
          backgroundColor: Color,
          layers: [Layer] = [],
@@ -22,7 +22,6 @@ class Shot {
         self.layers = layers
         self.thumbnail = thumbnail
     }
-    
 
     func generateThumbnails() {
         let defaultThumbnail = layers.reduce(
@@ -39,7 +38,7 @@ class Shot {
         thumbnail = Thumbnail(defaultThumbnail: defaultThumbnail,
                               redOnionSkin: redOnionSkin, greenOnionSkin: greenOnionSkin)
     }
-    
+
     // TODO: What if layer already exist? Just update?
     func addLayer(_ layer: Layer, at index: Int? = nil) {
         if let index = index {
@@ -48,7 +47,7 @@ class Shot {
             layers.append(layer)
         }
     }
-    
+
     func removeLayers(_ removedLayers: [Layer]) {
         for layer in removedLayers {
             self.removeLayer(layer)
@@ -79,11 +78,11 @@ class Shot {
             self.layers[index] = newLayer
         }
     }
-    
+
 //    func generateThumbnail(of layerId: UUID) {
 //        layers[layerId]?.generateThumbnail()
 //    }
-    
+
     func generateLayerThumbnails() {
         for layer in layers {
             layer.generateThumbnail()
@@ -98,7 +97,7 @@ class Shot {
         return Shot(canvasSize: canvasSize, backgroundColor: backgroundColor,
                     layers: list, thumbnail: thumbnail)
     }
-    
+
     func setBackgroundColor(color: Color) {
         self.backgroundColor = color
     }

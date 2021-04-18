@@ -113,7 +113,6 @@ extension LayerTableController: UITableViewDelegate {
     }
     private func selectSingleLayer(at indexPath: IndexPath) {
         guard selectedLayerIndex != indexPath.row else {
-            // TODO: rename layer name process
             let alertController = UIAlertController(
                 title: "Rename",
                 message: "",
@@ -269,7 +268,7 @@ extension LayerTableController {
         delegate?.willUngroupLayer(at: selectedLayerIndex)
 
         let layers = shot.layers
-        let layer = layers[selectedLayerIndex]
+        _ = layers[selectedLayerIndex]
 //        modelManager.ungroupLayer(withId: layer.id, of: shotLabel)
     }
     @IBAction private func deleteLayers() {

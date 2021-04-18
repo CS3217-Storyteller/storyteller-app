@@ -9,7 +9,7 @@ import PencilKit
 class Scene {
     let canvasSize: CGSize
     var shots: [Shot] = [Shot]()
-    
+
     init(canvasSize: CGSize, shots: [Shot] = []) {
         self.canvasSize = canvasSize
         self.shots = shots
@@ -24,16 +24,15 @@ class Scene {
             self.shots[index] = shot
         }
     }
-    
+
     func addShot(_ shot: Shot) {
         self.shots.append(shot)
     }
-    
+
     func addShot(_ shot: Shot, at index: Int) {
         self.shots.insert(shot, at: index)
     }
 
-    
 //    func updateLayer(withId layerId: UUID, withDrawing drawing: PKDrawing) {
 //        let shotId = layerLabel.shotId
 //        shots[shotId]?.updateLayer(layerLabel, withDrawing: drawing)
@@ -44,8 +43,6 @@ class Scene {
 //        let shotId = layerLabel.shotId
 //        shots[shotId]?.updateLayer(layerLabel, withLayer: newLayer)
 //    }
-
-
 
 //    mutating func addLayer(_ layer: Layer, at index: Int?, to shotLabel: ShotLabel) {
 //        let shotId = shotLabel.shotId
@@ -68,14 +65,14 @@ class Scene {
         self.shots.remove(at: oldIndex)
         self.shots.insert(shot, at: newIndex)
     }
-    
+
     func duplicate() -> Scene {
-        return Scene(
+        Scene(
             canvasSize: canvasSize,
             shots: shots.map({ $0.duplicate() })
         )
     }
-    
+
     func getShot(_ index: Int, after shot: Shot) -> Shot? {
         guard let currentIndex = self.shots.firstIndex(where: { $0 === shot }),
               self.shots.indices.contains(currentIndex + index) else {

@@ -28,14 +28,14 @@ class ModelManager {
         self.projects.append(project)
         self.saveProject(project)
     }
-    
+
     func removeProject(_ project: Project) {
         if let index = self.projects.firstIndex(where: { $0 === project }) {
             self.projects.remove(at: index)
             self.deleteProject(project)
         }
     }
-    
+
     func renameProject(_ project: Project, to name: String) {
         self.removeProject(project)
         project.setTitle(to: name)
@@ -62,7 +62,7 @@ class ModelManager {
 //    }
 
     var onGoingSaveTask: (project: Project, workItem: DispatchWorkItem)?
-    
+
     func saveProject(_ project: Project?) {
         self.observers.forEach({ $0.modelDidChange() })
 
@@ -83,7 +83,7 @@ class ModelManager {
         self.storageManager.deleteProject(projectTitle: project.title)
         self.observers.forEach({ $0.modelDidChange() })
     }
-    
+
 //    func getProject(withId projectId: UUID) -> Project? {
 //        return projects[projectId]
 //    }
@@ -104,10 +104,7 @@ class ModelManager {
 //        self.projectOrder.append(newProjectId)
 //        self.saveProject(newProject)
 //    }
-    
-    
 
-    
 //    func removeProject(withId projectId: UUID) {
 //        if let project = projects[projectId] {
 //            self.deleteProject(project)
@@ -117,8 +114,6 @@ class ModelManager {
 //            self.projectOrder.remove(at: idx)
 //        }
 //    }
-
-
 
 //    func getScene(of sceneLabel: SceneLabel) -> Scene? {
 //        let projectId = sceneLabel.projectId
@@ -166,8 +161,6 @@ class ModelManager {
 //        let projectId = shotLabel.projectId
 //        return projects[projectId]?.canvasSize
 //    }
-
-
 
 //    func addScene(projectLabel: ProjectLabel, scene: Scene? = nil) {
 //        let id = UUID()
@@ -243,10 +236,9 @@ class ModelManager {
     var onGoingThumbnailTask: (shot: Shot, workItem: DispatchWorkItem)?
 }
 
-
 // MARK: - Specific Shot Methods
 extension ModelManager {
-    
+
 //    func getBackgroundColor(of shotLabel: ShotLabel) -> UIColor? {
 //        self.getShot(of: shotLabel)?.backgroundColor.uiColor
 //    }
@@ -254,7 +246,6 @@ extension ModelManager {
 //        // TODO
 //        generateThumbnailAndSave(shotLabel: shotLabel)
 //    }
-
 
     func generateThumbnailAndSave(project: Project, shot: Shot) {
         saveProject(project)
@@ -274,7 +265,6 @@ extension ModelManager {
         }
         self.thumbnailQueue.async(execute: workItem)
     }
-
 
 //    // MARK: - Layers CRUD
 //    func addLayer(at index: Int? = nil, to shotLabel: ShotLabel,
@@ -394,7 +384,6 @@ extension ModelManager {
 //        generateThumbnailAndSave(shotLabel: layerLabel.shotLabel)
 //    }
 }
-
 
 protocol ModelManagerObserver {
     /// Invoked when the model changes.
