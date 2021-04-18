@@ -123,13 +123,21 @@ class ModelManager {
         return projects[projectId]?.canvasSize
     }
 
+    var onGoingSaveTask: (project: Project, workItem: DispatchWorkItem)?
     private func saveProject(_ project: Project?) {
         self.observers.forEach({ $0.modelDidChange() })
-        if let project = project {
-            storageQueue.async {
-                self.storageManager.saveProject(project: project)
-            }
+
+        guard let project = project else {
+            return
         }
+        let workItem = DispatchWorkItem { [weak self] in
+            self?.storageManager.saveProject(project: project)
+        }
+        if let task = onGoingSaveTask, task.project.title == project.title {
+            task.workItem.cancel()
+            onGoingSaveTask = (project, workItem)
+        }
+        storageQueue.async(execute: workItem)
     }
 
     private func deleteProject(_ project: Project) {
@@ -223,6 +231,7 @@ extension ModelManager {
 
     private func generateThumbnailAndSave(shotLabel: ShotLabel) {
         let projectId = shotLabel.projectId
+        saveProject(projects[projectId])
         guard var shot = getShot(of: shotLabel) else {
             return
         }
@@ -232,6 +241,7 @@ extension ModelManager {
                 guard let self = self else {
                     return
                 }
+                // TODO: Change to update thumbnail only
                 self.projects[projectId]?.updateShot(shotLabel, withShot: shot)
                 self.saveProject(self.projects[projectId])
                 self.onGoingThumbnailTask = nil
@@ -259,8 +269,8 @@ extension ModelManager {
                           canvasSize: shot.canvasSize,
                           label: label)
         projects[projectId]?.addLayer(layer, at: index, to: shotLabel)
-        generateThumbnailAndSave(shotLabel: shotLabel)
         observers.forEach({ $0.DidAddLayer(layer: layer) })
+        generateThumbnailAndSave(shotLabel: shotLabel)
     }
     func addLayer(at index: Int? = nil, to shotLabel: ShotLabel,
                   withImage image: UIImage) {
@@ -276,14 +286,14 @@ extension ModelManager {
                           canvasSize: shot.canvasSize,
                           label: label)
         projects[projectId]?.addLayer(layer, at: index, to: shotLabel)
-        generateThumbnailAndSave(shotLabel: shotLabel)
         observers.forEach({ $0.DidAddLayer(layer: layer) })
+        generateThumbnailAndSave(shotLabel: shotLabel)
     }
     func updateLayer(layerLabel: LayerLabel, withLayer newLayer: Layer) {
         let projectId = layerLabel.projectId
         projects[projectId]?.updateLayer(layerLabel, withLayer: newLayer)
-        generateThumbnailAndSave(shotLabel: layerLabel.shotLabel)
         observers.forEach({ $0.DidUpdateLayer() })
+        generateThumbnailAndSave(shotLabel: layerLabel.shotLabel)
     }
     func removeLayers(withIds ids: [UUID], of shotLabel: ShotLabel) {
         let projectId = shotLabel.projectId
