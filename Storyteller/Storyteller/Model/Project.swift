@@ -22,6 +22,10 @@ class Project {
         self.scenes.append(scene)
     }
 
+    func deleteScene(at index: Int) {
+        self.scenes.remove(at: index)
+    }
+
     func setTitle(to title: String) {
         self.title = title
     }
