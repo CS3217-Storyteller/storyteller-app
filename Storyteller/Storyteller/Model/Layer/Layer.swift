@@ -16,7 +16,7 @@ class Layer {
             generateThumbnail()
         }
     }
-    
+
     var thumbnail: Thumbnail
 
     init(component: LayerComponent, canvasSize: CGSize, name: String,
@@ -38,7 +38,7 @@ class Layer {
         self.name = name
         self.thumbnail = component.merge(merger: ThumbnailMerger())
     }
-    
+
     init(withImage image: UIImage, canvasSize: CGSize,
          name: String = Constants.defaultImageLayerName) {
         self.canvasSize = canvasSize
@@ -59,7 +59,7 @@ class Layer {
         newLayer.generateThumbnail()
         return newLayer
     }
-    
+
     func generateThumbnail() {
         guard isVisible else {
             thumbnail = Thumbnail()
@@ -69,7 +69,7 @@ class Layer {
     }
 
     func duplicate(withId newId: UUID = UUID()) -> Layer {
-        return Layer(
+        Layer(
             component: component,
             canvasSize: canvasSize,
             name: name,

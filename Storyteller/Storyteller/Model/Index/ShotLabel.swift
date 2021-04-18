@@ -1,12 +1,12 @@
-////
-////  ShotLabel.swift
-////  Storyteller
-////
-////  Created by TFang on 20/3/21.
-////
-//import Foundation
 //
-//struct ShotLabel: Codable {
+//  ShotLabel.swift
+//  Storyteller
+//
+//  Created by TFang on 20/3/21.
+//
+// import Foundation
+//
+// struct ShotLabel: Codable {
 //    var projectId: UUID
 //    var sceneId: UUID
 //    var shotId: UUID
@@ -40,10 +40,10 @@
 //             sceneId: sceneId,
 //             shotId: newShotId)
 //    }
-//}
+// }
 //
-//extension ShotLabel {
+// extension ShotLabel {
 //    var nextLabel: ShotLabel {
 //        ShotLabel(projectId: projectId, sceneId: sceneId, shotId: UUID())
 //    }
-//}
+// }
