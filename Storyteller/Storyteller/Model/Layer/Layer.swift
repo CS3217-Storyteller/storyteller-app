@@ -10,20 +10,22 @@ class Layer {
     var component: LayerComponent
     var name: String
     var canvasSize: CGSize
-    var isLocked: Bool = false
+    var isLocked = false
     var isVisible = true {
         didSet {
             generateThumbnail()
         }
     }
-    
+
     var thumbnail: Thumbnail
 
     init(component: LayerComponent, canvasSize: CGSize, name: String,
-         isLocked: Bool, isVisible: Bool, thumbnail: Thumbnail?) {
+         isLocked: Bool = false, isVisible: Bool = true, thumbnail: Thumbnail? = nil) {
         self.component = component
         self.canvasSize = canvasSize
         self.name = name
+        self.isLocked = isLocked
+        self.isVisible = isLocked
         guard let thumbnail = thumbnail else {
             self.thumbnail = Thumbnail()
             return
@@ -68,13 +70,13 @@ class Layer {
         thumbnail = component.merge(merger: ThumbnailMerger())
     }
 
-    func duplicate(withId newId: UUID = UUID()) -> Layer {
+    func duplicate() -> Layer {
         return Layer(
             component: component,
             canvasSize: canvasSize,
             name: name,
             isLocked: isLocked,
-            isVisible: isVisible, // TODO: verify these values
+            isVisible: isVisible,
             thumbnail: thumbnail
         )
     }
@@ -85,8 +87,7 @@ class Layer {
         return children.map({ Layer(component: $0, canvasSize: canvasSize,
                                     name: Constants.defaultUngroupedLayerName,
                                     isLocked: isLocked,
-                                    isVisible: isVisible,
-                                    thumbnail: nil)})
+                                    isVisible: isVisible)})
     }
 }
 

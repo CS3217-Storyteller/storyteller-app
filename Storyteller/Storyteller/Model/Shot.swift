@@ -39,7 +39,21 @@ class Shot {
         thumbnail = Thumbnail(defaultThumbnail: defaultThumbnail,
                               redOnionSkin: redOnionSkin, greenOnionSkin: greenOnionSkin)
     }
-    
+
+    func duplicate() -> Shot {
+        var list = [Layer]()
+        for layer in layers.reversed() {
+            list.append(layer.duplicate())
+        }
+        return Shot(canvasSize: canvasSize, backgroundColor: backgroundColor,
+                    layers: list, thumbnail: thumbnail)
+    }
+
+    func setBackgroundColor(color: Color) {
+        self.backgroundColor = color
+    }
+
+    // MARK: - Layer Related Methods
     // TODO: What if layer already exist? Just update?
     func addLayer(_ layer: Layer, at index: Int? = nil) {
         if let index = index {
@@ -48,7 +62,22 @@ class Shot {
             layers.append(layer)
         }
     }
-    
+
+    func duplicateLayers(at indices: [Int]) {
+        for index in indices.reversed() {
+            duplicateLayer(at: index)
+        }
+    }
+    func duplicateLayer(at index: Int) {
+        let duplicatedlayer = layers[index].duplicate()
+        layers.insert(duplicatedlayer, at: index + 1)
+    }
+    func removeLayers(at indices: [Int]) {
+        for index in indices.reversed() {
+            layers.remove(at: index)
+        }
+    }
+
     func removeLayers(_ removedLayers: [Layer]) {
         for layer in removedLayers {
             self.removeLayer(layer)
@@ -61,46 +90,30 @@ class Shot {
         }
     }
 
-    func moveLayer(layer: Layer, to newIndex: Int) {
-        guard let oldIndex = layers.firstIndex(where: { $0 === layer }) else {
-            return
-        }
-        layers.remove(at: oldIndex)
-        layers.insert(layer, at: newIndex)
+    func moveLayer(from oldIndex: Int, to newIndex: Int) {
+        layers.insert(layers.remove(at: oldIndex), at: newIndex)
     }
-
-//    func updateLayer(layer: Layer, withDrawing drawing: PKDrawing) {
-//        layers[layerId]?.setDrawing(to: drawing)
-//    }
-//
 
     func updateLayer(_ layer: Layer, with newLayer: Layer) {
         if let index = self.layers.firstIndex(where: { $0 === layer }) {
             self.layers[index] = newLayer
         }
     }
-    
-//    func generateThumbnail(of layerId: UUID) {
-//        layers[layerId]?.generateThumbnail()
-//    }
-    
-    func generateLayerThumbnails() {
-        for layer in layers {
-            layer.generateThumbnail()
-        }
-    }
 
-    func duplicate(withId newShotId: UUID = UUID()) -> Shot {
-        var list = [Layer]()
-        for layer in layers.reversed() {
-            list.append(layer.duplicate())
+    func groupLayers(at indices: [Int]) {
+        guard let lastIndex = indices.last else {
+            return
         }
-        return Shot(canvasSize: canvasSize, backgroundColor: backgroundColor,
-                    layers: list, thumbnail: thumbnail)
+        let newIndex = lastIndex - (indices.count - 1)
+
+        let children = indices.map({ layers[$0].component })
+        let component = CompositeComponent(children: children)
+        let groupedLayer = Layer(component: component, canvasSize: canvasSize, name: Constants.defaultGroupedLayerName)
+        removeLayers(at: indices)
+        addLayer(groupedLayer, at: newIndex)
     }
-    
-    func setBackgroundColor(color: Color) {
-        self.backgroundColor = color
+    func ungroupLayer(at index: Int) {
+        layers[index].ungroup().reversed().forEach({ addLayer($0, at: index) })
     }
 }
 

@@ -104,10 +104,7 @@ class ModelManager {
 //        self.projectOrder.append(newProjectId)
 //        self.saveProject(newProject)
 //    }
-    
-    
 
-    
 //    func removeProject(withId projectId: UUID) {
 //        if let project = projects[projectId] {
 //            self.deleteProject(project)
@@ -117,8 +114,6 @@ class ModelManager {
 //            self.projectOrder.remove(at: idx)
 //        }
 //    }
-
-
 
 //    func getScene(of sceneLabel: SceneLabel) -> Scene? {
 //        let projectId = sceneLabel.projectId
@@ -255,7 +250,6 @@ extension ModelManager {
 //        generateThumbnailAndSave(shotLabel: shotLabel)
 //    }
 
-
     func generateThumbnailAndSave(project: Project, shot: Shot) {
         saveProject(project)
         let workItem = DispatchWorkItem {
@@ -274,7 +268,6 @@ extension ModelManager {
         }
         self.thumbnailQueue.async(execute: workItem)
     }
-
 
 //    // MARK: - Layers CRUD
 //    func addLayer(at index: Int? = nil, to shotLabel: ShotLabel,

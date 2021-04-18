@@ -32,10 +32,7 @@ class LayerTableController: UIViewController {
     @IBOutlet private var tableView: UITableView!
 
     // should be intialized via segue
-    var modelManager: ModelManager!
     var shot: Shot!
-    var scene: Scene!
-    var project: Project!
     var onionSkinRange: OnionSkinRange!
 
     var layerSelection = [Bool]()
@@ -48,13 +45,12 @@ class LayerTableController: UIViewController {
     @IBOutlet private var ungroupButton: UIButton!
     @IBOutlet private var addButton: UIButton!
     @IBOutlet private var backgroundColorButton: UIButton!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
         tableView.allowsMultipleSelectionDuringEditing = true
-
-        modelManager.observers.append(self)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -131,13 +127,7 @@ extension LayerTableController: UITableViewDelegate {
     func tableView(_ tableView: UITableView,
                    moveRowAt sourceIndexPath: IndexPath,
                    to destinationIndexPath: IndexPath) {
-        delegate?.didMoveLayer(from: sourceIndexPath.row, to: destinationIndexPath.row)
-
-        let layers = shot.layers
-        let layer = layers[sourceIndexPath.row]
-        shot.moveLayer(layer: layer, to: destinationIndexPath.row)
-        modelManager.generateThumbnailAndSave(project: project, shot: shot)
-//        modelManager.moveLayer(layer.label, to: destinationIndexPath.row)
+        delegate?.willMoveLayer(from: sourceIndexPath.row, to: destinationIndexPath.row)
     }
     func tableView(_ tableView: UITableView,
                    editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
@@ -201,59 +191,17 @@ extension LayerTableController {
     // MARK: - Layers Actions
     @IBAction private func duplicateLayers() {
         guard tableView.isEditing else {
-            duplicateSingleLayer()
+            delegate?.willDuplicateLayers(at: [selectedLayerIndex])
             return
         }
-        duplicateMultipleLayer()
-    }
-    // TODO: Move all the modelManager logic to shot designer
-    private func duplicateSingleLayer() {
-        delegate?.willDuplicateLayers(at: [selectedLayerIndex])
-
-        let layers = shot.layers
-        let layer = layers[selectedLayerIndex]
-        let newLayer = layer.duplicate()
-        shot.addLayer(newLayer)
-        modelManager.generateThumbnailAndSave(project: project, shot: shot)
-        
-//        modelManager.duplicateLayers(withIds: [layer.id], of: shotLabel)
-    }
-    
-    private func duplicateMultipleLayer() {
         delegate?.willDuplicateLayers(at: multipleSelectionIndices)
-
-        let layers = shot.layers
-        var list = [Layer]()
-        for index in multipleSelectionIndices {
-            let layer = layers[index]
-            list.append(layer)
-        }
-        
-        for layer in list {
-            shot.addLayer(layer)
-            modelManager.generateThumbnailAndSave(project: project, shot: shot)
-        }
-
-//        modelManager.duplicateLayers(withIds: layerIds, of: shotLabel)
     }
+
     @IBAction private func groupLayers() {
         delegate?.willGroupLayers(at: multipleSelectionIndices)
-
-        let layers = shot.layers
-        var list = [Layer]()
-        for index in multipleSelectionIndices {
-            let layer = layers[index]
-            list.append(layer)
-        }
-
-//        modelManager.groupLayers(withIds: layerIds, of: shotLabel)
     }
     @IBAction private func ungroupLayers() {
         delegate?.willUngroupLayer(at: selectedLayerIndex)
-
-        let layers = shot.layers
-        let layer = layers[selectedLayerIndex]
-//        modelManager.ungroupLayer(withId: layer.id, of: shotLabel)
     }
     @IBAction private func deleteLayers() {
         guard tableView.isEditing else {
@@ -269,12 +217,6 @@ extension LayerTableController {
             return
         }
         delegate?.willRemoveLayers(at: [selectedLayerIndex])
-
-        let layers = shot.layers
-        let layer = layers[selectedLayerIndex]
-        shot.removeLayer(layer)
-        modelManager.generateThumbnailAndSave(project: project, shot: shot)
-//        modelManager.removeLayers(withIds: [layer.id], of: shotLabel)
     }
     private func deleteMultipleLayer() {
         guard numOfRows > multipleSelectionIndices.count else {
@@ -282,27 +224,9 @@ extension LayerTableController {
             return
         }
         delegate?.willRemoveLayers(at: multipleSelectionIndices)
-
-        let layers = shot.layers
-        var list = [Layer]()
-        for index in multipleSelectionIndices {
-            let layer = layers[index]
-            list.append(layer)
-        }
-
-        for layer in list {
-            shot.removeLayer(layer)
-            modelManager.generateThumbnailAndSave(project: project, shot: shot)
-        }
-        
-//        modelManager.removeLayers(withIds: layerIds, of: shotLabel)
     }
     @IBAction private func addLayer(_ sender: Any) {
-        let layer = Layer(withDrawing: PKDrawing(), canvasSize: shot.canvasSize)
-        shot.addLayer(layer)
-        modelManager.generateThumbnailAndSave(project: project, shot: shot)
-        modelManager.observers.forEach({ $0.DidAddLayer(layer: layer) })
-//        modelManager.addLayer(to: shotLabel)
+        delegate?.willAddLayer()
         selectedLayerIndex = numOfRows - 1
     }
 }
@@ -311,9 +235,7 @@ extension LayerTableController: UIColorPickerViewControllerDelegate {
     func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
         let color = viewController.selectedColor
         backgroundColorButton.backgroundColor = color
-        shot.setBackgroundColor(color: Color(uiColor: color))
-//        modelManager.setBackgroundColor(of: shotLabel, using: color)
-        delegate?.backgroundColorDidChange()
+        delegate?.backgroundColorWillChange(color: color)
     }
 }
 // MARK: - ModelManagerObserver
@@ -360,11 +282,13 @@ protocol LayerTableDelegate: AnyObject {
     func didToggleLayerLock(at index: Int)
     func didToggleLayerVisibility(at index: Int)
     func didChangeLayerName(at index: Int, newName: String)
+
+    func willAddLayer()
     func willRemoveLayers(at indices: [Int])
-    func didMoveLayer(from oldIndex: Int, to newIndex: Int)
+    func willMoveLayer(from oldIndex: Int, to newIndex: Int)
     func willDuplicateLayers(at indices: [Int])
     func willGroupLayers(at indices: [Int])
     func willUngroupLayer(at index: Int)
+    func backgroundColorWillChange(color: UIColor)
     func onionSkinsDidChange()
-    func backgroundColorDidChange()
 }

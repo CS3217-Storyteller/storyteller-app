@@ -101,6 +101,11 @@ extension ShotView {
         return transform
     }
 
+    func updateLayerView(at index: Int, isLocked: Bool, isVisible: Bool) {
+        layerViews[index].isLocked = isLocked
+        layerViews[index].isVisible = isVisible
+        updateEffectForSelectedLayer()
+    }
     func updateLayerViews(newLayerViews: [LayerView]) {
         for i in newLayerViews.indices {
             layerViews[i].isLocked = newLayerViews[i].isLocked

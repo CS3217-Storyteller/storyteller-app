@@ -179,10 +179,10 @@ extension SceneViewController: UICollectionViewDelegate {
 
         if indexPath.row < scene.shots.count {
             let shot = scene.shots[indexPath.row]
-            shotDesignerController.setModelManager(to: modelManager)
-            shotDesignerController.setShot(to: shot)
-            shotDesignerController.setScene(to: scene)
-            shotDesignerController.setProject(to: project)
+            shotDesignerController.modelManager = modelManager
+            shotDesignerController.shot = shot
+            shotDesignerController.scene = scene
+            shotDesignerController.project = project
             shotDesignerController.modalTransitionStyle = .flipHorizontal
             self.navigationController?.pushViewController(shotDesignerController, animated: true)
         } else {

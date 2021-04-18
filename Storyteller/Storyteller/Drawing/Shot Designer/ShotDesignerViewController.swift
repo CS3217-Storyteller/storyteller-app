@@ -45,42 +45,26 @@ class ShotDesignerViewController: UIViewController {
 
     var canvasTransform = CGAffineTransform.identity {
         didSet {
-            self.updateShotTransform()
+            updateShotTransform()
         }
     }
 
     var canvasSize: CGSize {
-        self.shot.canvasSize
+        shot.canvasSize
     }
 
     var selectedLayerIndex: Int {
         get {
-            self.shotView.selectedLayerIndex
+            shotView.selectedLayerIndex
         }
         set {
-            self.shotView.selectedLayerIndex = newValue
+            shotView.selectedLayerIndex = newValue
         }
     }
 
     var selectedLayer: Layer? {
-        let layer = self.shot.layers[selectedLayerIndex]
+        let layer = shot.layers[selectedLayerIndex]
         return layer
-    }
-
-    func setModelManager(to modelManager: ModelManager) {
-        self.modelManager = modelManager
-    }
-
-    func setShot(to shot: Shot) {
-        self.shot = shot
-    }
-    
-    func setScene(to scene: Scene) {
-        self.scene = scene
-    }
-    
-    func setProject(to project: Project) {
-        self.project = project
     }
 
     override var prefersStatusBarHidden: Bool {
@@ -91,52 +75,50 @@ class ShotDesignerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.toolPicker.addObserver(self)
-        self.modelManager.observers.append(self)
+        toolPicker.addObserver(self)
+        modelManager.observers.append(self)
 
-        self.shotView.setSize(canvasSize: self.canvasSize)
-        self.setUpShot()
+        shotView.setSize(canvasSize: canvasSize)
+        setUpShot()
 
-        self.editingMode = .drawing
-        self.navigationItem.leftItemsSupplementBackButton = true
+        editingMode = .drawing
+        navigationItem.leftItemsSupplementBackButton = true
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.updateShotTransform()
+        updateShotTransform()
     }
 
     private func setUpShot() {
-        self.shotView.backgroundColor = self.shot.backgroundColor.uiColor
-        let layers = self.shot.layers
-        
+        shotView.backgroundColor = shot.backgroundColor.uiColor
+        let layers = shot.layers
+
         if layers.isEmpty {
             return
         }
 
         let layerViews = layers.map({ DrawingUtility.generateLayerView(for: $0) })
-        self.shotView.setUpLayerViews(layerViews, toolPicker: toolPicker, PKDelegate: self)
-        self.updateOnionSkins()
-        self.updateShotTransform()
+        shotView.setUpLayerViews(layerViews, toolPicker: toolPicker, PKDelegate: self)
+        updateOnionSkins()
+        updateShotTransform()
     }
-    
+
     private func updateOnionSkins() {
-        guard self.modelManager != nil, self.shotView != nil else {
+        guard modelManager != nil, shotView != nil else {
             return
         }
-        let redOnionSkin = onionSkinRange.redIndicies.compactMap({ self.scene.getShot($0, after: self.shot) })
-            .reduce(UIImage.solidImage(ofColor: .clear, ofSize: self.canvasSize), { $0.mergeWith($1.redOnionSkin) })
-        
-        let greenOnionSkin = onionSkinRange.greenIndicies.compactMap({ self.scene.getShot($0, after: self.shot) })
-            .reduce(UIImage.solidImage(ofColor: .clear, ofSize: self.canvasSize), { $0.mergeWith($1.greenOnionSkin) })
-        
-        self.shotView.updateOnionSkins(skins: redOnionSkin.mergeWith(greenOnionSkin))
+        let redOnionSkin = onionSkinRange.redIndicies.compactMap({ scene.getShot($0, after: shot) })
+            .reduce(UIImage.solidImage(ofColor: .clear, ofSize: canvasSize), { $0.mergeWith($1.redOnionSkin) })
+        let greenOnionSkin = onionSkinRange.greenIndicies.compactMap({ scene.getShot($0, after: shot) })
+            .reduce(UIImage.solidImage(ofColor: .clear, ofSize: canvasSize), { $0.mergeWith($1.greenOnionSkin) })
+        shotView.updateOnionSkins(skins: redOnionSkin.mergeWith(greenOnionSkin))
     }
-    
+
     private func updateShotTransform() {
-        self.shotView.transform = .identity
-        self.shotView.transform = self.zoomToFitTransform.concatenating(self.canvasTransform)
-        self.shotView.center = self.canvasCenter
+        shotView.transform = .identity
+        shotView.transform = zoomToFitTransform.concatenating(canvasTransform)
+        shotView.center = canvasCenter
     }
 
     private var panPosition = CGPoint.zero
@@ -149,30 +131,30 @@ extension ShotDesignerViewController {
     @IBAction private func handlePan(_ sender: UIPanGestureRecognizer) {
         switch sender.state {
         case .began:
-            self.panPosition = sender.location(in: view)
+            panPosition = sender.location(in: view)
         case .changed:
             let location = sender.location(in: view)
-            let offsetX = location.x - self.panPosition.x
-            let offsetY = location.y - self.panPosition.y
-            self.panPosition = location
+            let offsetX = location.x - panPosition.x
+            let offsetY = location.y - panPosition.y
+            panPosition = location
 
-            switch self.editingMode {
+            switch editingMode {
             case .transformLayer:
-                self.transformLayer(
+                transformLayer(
                     using: CGAffineTransform(translationX: offsetX, y: offsetY)
                 )
             case .free, .drawing:
-                self.canvasTransform = self.canvasTransform.concatenating(
+                canvasTransform = canvasTransform.concatenating(
                     CGAffineTransform(translationX: offsetX, y: offsetY)
                 )
             }
         case .ended:
-            switch self.editingMode {
+            switch editingMode {
             case .transformLayer:
-                guard self.selectedLayer?.canTransform == true else {
+                guard selectedLayer?.canTransform == true else {
                     return
                 }
-                self.endTransform()
+                endTransform()
             case .free, .drawing:
                 return
             }
@@ -182,76 +164,76 @@ extension ShotDesignerViewController {
     }
 
     @IBAction private func handlePinch(_ sender: UIPinchGestureRecognizer) {
-        switch self.editingMode {
+        switch editingMode {
         case .transformLayer:
-            self.scaleLayer(sender)
+            scaleLayer(sender)
         case .free, .drawing:
-            self.scaleCanvas(sender)
+            scaleCanvas(sender)
         }
     }
     
     private func scaleCanvas(_ sender: UIPinchGestureRecognizer) {
         let scale = sender.scale
         sender.scale = 1
-        self.canvasTransform = self.canvasTransform.scaledBy(x: scale, y: scale)
+        canvasTransform = canvasTransform.scaledBy(x: scale, y: scale)
     }
     
     private func scaleLayer(_ sender: UIPinchGestureRecognizer) {
-        guard self.selectedLayer?.canTransform == true else {
+        guard selectedLayer?.canTransform == true else {
             return
         }
         let scale = sender.scale
         sender.scale = 1
-        self.transformLayer(using: CGAffineTransform(scaleX: scale, y: scale))
+        transformLayer(using: CGAffineTransform(scaleX: scale, y: scale))
         if sender.state == .ended {
-            self.endTransform()
+            endTransform()
         }
     }
 
     @IBAction private func handleRotation(_ sender: UIRotationGestureRecognizer) {
-        switch self.editingMode {
+        switch editingMode {
         case .transformLayer:
-            self.rotateLayer(sender)
+            rotateLayer(sender)
         case .free, .drawing:
-            self.rotateCanvas(sender)
+            rotateCanvas(sender)
         }
     }
     
     private func rotateCanvas(_ sender: UIRotationGestureRecognizer) {
         let rotation = sender.rotation
         sender.rotation = .zero
-        self.canvasTransform = self.canvasTransform.rotated(by: rotation)
+        canvasTransform = canvasTransform.rotated(by: rotation)
     }
     
     private func rotateLayer(_ sender: UIRotationGestureRecognizer) {
-        guard self.selectedLayer?.canTransform == true else {
+        guard selectedLayer?.canTransform == true else {
             return
         }
         let rotation = sender.rotation
         sender.rotation = .zero
-        self.transformLayer(using: CGAffineTransform(rotationAngle: rotation))
+        transformLayer(using: CGAffineTransform(rotationAngle: rotation))
         if sender.state == .ended {
-            self.endTransform()
+            endTransform()
         }
     }
 
     private func transformLayer(using transform: CGAffineTransform) {
-        guard let layer = self.selectedLayer, layer.canTransform else {
+        guard let layer = selectedLayer, layer.canTransform else {
             return
         }
-        self.shotView.transformedSelectedLayer(using: transform)
-        self.additionalLayerTransform = self.additionalLayerTransform.concatenating(transform)
+        shotView.transformedSelectedLayer(using: transform)
+        additionalLayerTransform = additionalLayerTransform.concatenating(transform)
     }
     private func endTransform() {
-        guard let layer = self.selectedLayer, layer.canTransform else {
+        guard let layer = selectedLayer, layer.canTransform else {
             return
         }
         let newLayer = layer.transformed(using: additionalLayerTransform)
         
-        self.shot.updateLayer(layer, with: newLayer)
-        self.modelManager.generateThumbnailAndSave(project: self.project, shot: self.shot)
-        self.modelManager.observers.forEach({ $0.DidUpdateLayer() })
-        self.modelManager.saveProject(self.project)
+        shot.updateLayer(layer, with: newLayer)
+        modelManager.generateThumbnailAndSave(project: project, shot: shot)
+        modelManager.observers.forEach({ $0.DidUpdateLayer() })
+        modelManager.saveProject(project)
 
 //        modelManager.updateLayer(layerLabel: layer.label, withLayer: newLayer)
         additionalLayerTransform = .identity
@@ -264,15 +246,15 @@ extension ShotDesignerViewController {
 extension ShotDesignerViewController {
     
     @IBAction private func zoomToFit() {
-        self.canvasTransform = .identity
-        self.updateShotTransform()
+        canvasTransform = .identity
+        updateShotTransform()
     }
 
     @IBAction private func duplicateShot(_ sender: UIBarButtonItem) {
-        if let index = self.scene.shots.firstIndex(where: { $0 === self.shot }) {
-            let newShot = self.shot.duplicate()
-            self.scene.addShot(newShot, at: index + 1)
-            self.modelManager.saveProject(self.project)
+        if let index = scene.shots.firstIndex(where: { $0 === shot }) {
+            let newShot = shot.duplicate()
+            scene.addShot(newShot, at: index + 1)
+            modelManager.saveProject(project)
         }
         
 //        modelManager.addShot(ofShot: shotLabel.nextLabel,
@@ -281,35 +263,35 @@ extension ShotDesignerViewController {
     }
 
     @IBAction private func toggleTransformLayer(_ sender: TransformLayerButton) {
-        if self.editingMode == .transformLayer {
-            self.editingMode = .free
+        if editingMode == .transformLayer {
+            editingMode = .free
         } else {
-            self.editingMode = .transformLayer
+            editingMode = .transformLayer
         }
     }
 
     @IBAction private func toggleDrawingMode(_ sender: DrawingModeButton) {
-        if self.editingMode == .drawing {
-            self.editingMode = .free
+        if editingMode == .drawing {
+            editingMode = .free
         } else {
-            self.editingMode = .drawing
+            editingMode = .drawing
         }
     }
 
     @IBAction private func nextShot(_ sender: Any) {
-        guard let nextShot = self.scene.getShot(1, after: shot) else {
+        guard let nextShot = scene.getShot(1, after: shot) else {
             return
         }
-        self.setShot(to: nextShot)
-        self.setUpShot()
+        shot = nextShot
+        setUpShot()
     }
 
     @IBAction private func previousShot(_ sender: Any) {
-        guard let prevShot = self.scene.getShot(-1, after: shot) else {
+        guard let prevShot = scene.getShot(-1, after: shot) else {
             return
         }
-        self.setShot(to: prevShot)
-        self.setUpShot()
+        shot = prevShot
+        setUpShot()
     }
 }
 
@@ -320,12 +302,12 @@ extension ShotDesignerViewController: ModelManagerObserver {
 //        setUpShot()
     }
     func DidUpdateLayer() {
-        self.shotView.updateLayerViews(newLayerViews: DrawingUtility.generateLayerViews(for: self.shot))
+        shotView.updateLayerViews(newLayerViews: DrawingUtility.generateLayerViews(for: shot))
     }
     func DidAddLayer(layer: Layer) {
-        self.shotView.add(layerView: DrawingUtility.generateLayerView(for: layer),
+        shotView.add(layerView: DrawingUtility.generateLayerView(for: layer),
                           toolPicker: toolPicker, PKDelegate: self)
-        self.selectedLayerIndex = self.shot.layers.count - 1
+        selectedLayerIndex = shot.layers.count - 1
     }
 }
 // MARK: - PKCanvasViewDelegate
@@ -335,10 +317,10 @@ extension ShotDesignerViewController: PKCanvasViewDelegate {
             return
         }
         let newLayer = selectedLayer.setDrawing(to: canvasView.drawing)
-        self.shot.updateLayer(selectedLayer, with: newLayer)
-        self.modelManager.generateThumbnailAndSave(project: self.project, shot: self.shot)
-        self.modelManager.observers.forEach({ $0.DidUpdateLayer() })
-        self.modelManager.saveProject(self.project)
+        shot.updateLayer(selectedLayer, with: newLayer)
+        modelManager.generateThumbnailAndSave(project: project, shot: shot)
+        modelManager.observers.forEach({ $0.DidUpdateLayer() })
+        modelManager.saveProject(project)
         
 //        modelManager.updateLayer(layerLabel: newLayer.label, withLayer: newLayer)
     }
@@ -347,7 +329,7 @@ extension ShotDesignerViewController: PKCanvasViewDelegate {
 // MARK: - PKToolPickerObserver {
 extension ShotDesignerViewController: PKToolPickerObserver {
     func toolPickerFramesObscuredDidChange(_ toolPicker: PKToolPicker) {
-        self.updateShotTransform()
+        updateShotTransform()
     }
 }
 
@@ -355,13 +337,13 @@ extension ShotDesignerViewController: PKToolPickerObserver {
 extension ShotDesignerViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let layerTable = segue.destination as? LayerTableController {
-            self.editingMode = .free
+            editingMode = .free
+
+            modelManager.observers.append(layerTable)
+
             layerTable.onionSkinRange = onionSkinRange
             layerTable.selectedLayerIndex = selectedLayerIndex
-            layerTable.modelManager = modelManager
             layerTable.shot = shot
-            layerTable.scene = scene
-            layerTable.project = project
             layerTable.delegate = self
         }
     }
@@ -369,54 +351,54 @@ extension ShotDesignerViewController {
 // MARK: - Zoom To Fit Resize
 extension ShotDesignerViewController {
     var windowSize: CGSize {
-        self.view.frame.size
+        view.frame.size
     }
     var windowWidth: CGFloat {
-        self.windowSize.width
+        windowSize.width
     }
     var windowHeight: CGFloat {
-        self.windowSize.height
+        windowSize.height
     }
 
     var topInset: CGFloat {
-        self.view.safeAreaInsets.top
+        view.safeAreaInsets.top
     }
     var bottomInset: CGFloat {
-        max(self.view.safeAreaInsets.bottom, self.toolPicker.frameObscured(in: self.view).height)
+        max(view.safeAreaInsets.bottom, toolPicker.frameObscured(in: view).height)
     }
 
     var canvasMaxHeight: CGFloat {
-        self.windowHeight - self.topInset - self.bottomInset - Constants.verticalCanvasMargin * 2
+        windowHeight - topInset - bottomInset - Constants.verticalCanvasMargin * 2
     }
     var canvasMaxWidth: CGFloat {
-        self.windowWidth - Constants.horizontalCanvasMargin * 2
+        windowWidth - Constants.horizontalCanvasMargin * 2
     }
     var canvasMaxSize: CGSize {
-        CGSize(width: self.canvasMaxWidth, height: self.canvasMaxHeight)
+        CGSize(width: canvasMaxWidth, height: canvasMaxHeight)
     }
 
     var canvasCenterY: CGFloat {
-        self.topInset + Constants.verticalCanvasMargin + self.canvasMaxHeight / 2
+        topInset + Constants.verticalCanvasMargin + canvasMaxHeight / 2
     }
     var canvasCenterX: CGFloat {
-        self.windowWidth / 2
+        windowWidth / 2
     }
     var canvasCenter: CGPoint {
-        CGPoint(x: self.canvasCenterX, y: self.canvasCenterY)
+        CGPoint(x: canvasCenterX, y: canvasCenterY)
     }
 
     var canvasCenterTranslation: (x: CGFloat, y: CGFloat) {
-        (self.canvasCenterX - self.shotView.center.x, self.canvasCenterY - self.shotView.center.y)
+        (canvasCenterX - shotView.center.x, canvasCenterY - shotView.center.y)
     }
 
     var canvasScale: CGFloat {
-        let widthScale = self.canvasMaxWidth / self.shotView.bounds.width
-        let heightScale = self.canvasMaxHeight / self.shotView.bounds.height
+        let widthScale = canvasMaxWidth / shotView.bounds.width
+        let heightScale = canvasMaxHeight / shotView.bounds.height
         return min(widthScale, heightScale)
     }
 
     var zoomToFitTransform: CGAffineTransform {
-        CGAffineTransform(scaleX: self.canvasScale, y: self.canvasScale)
+        CGAffineTransform(scaleX: canvasScale, y: canvasScale)
     }
 
 }
@@ -432,69 +414,75 @@ extension ShotDesignerViewController: UIGestureRecognizerDelegate {
 }
 
 extension ShotDesignerViewController: LayerTableDelegate {
-    func backgroundColorDidChange() {
-        self.shotView.backgroundColor = self.shot.backgroundColor.uiColor
-    }
 
-    func onionSkinsDidChange() {
-        self.updateOnionSkins()
-    }
-    func didMoveLayer(from oldIndex: Int, to newIndex: Int) {
-        self.shotView.moveLayer(from: oldIndex, to: newIndex)
+    func backgroundColorWillChange(color: UIColor) {
+        shotView.backgroundColor = shot.backgroundColor.uiColor
+        shot.setBackgroundColor(color: Color(uiColor: color))
+        modelManager.generateThumbnailAndSave(project: project, shot: shot)
     }
 
     func didSelectLayer(at index: Int) {
-        self.selectedLayerIndex = index
+        selectedLayerIndex = index
+    }
+    func onionSkinsDidChange() {
+        updateOnionSkins()
+    }
+    func willMoveLayer(from oldIndex: Int, to newIndex: Int) {
+        shotView.moveLayer(from: oldIndex, to: newIndex)
+        shot.moveLayer(from: oldIndex, to: newIndex)
+        modelManager.generateThumbnailAndSave(project: project, shot: shot)
     }
 
+
     func didToggleLayerLock(at index: Int) {
-        self.toggleLayerLock(at: index)
+        let layer = shot.layers[index]
+        layer.isLocked.toggle()
+        shotView.updateLayerView(at: index, isLocked: layer.isLocked,
+                                 isVisible: layer.isVisible)
+        modelManager.generateThumbnailAndSave(project: project, shot: shot)
     }
     func didToggleLayerVisibility(at index: Int) {
-        self.toggleLayerVisibility(at: index)
+        let layer = shot.layers[index]
+        layer.isVisible.toggle()
+        shotView.updateLayerView(at: index, isLocked: layer.isLocked,
+                                 isVisible: layer.isVisible)
+        modelManager.generateThumbnailAndSave(project: project, shot: shot)
     }
+
     func didChangeLayerName(at index: Int, newName: String) {
         // TODO
     }
 
+    func willAddLayer() {
+        let layer = Layer(withDrawing: PKDrawing(), canvasSize: shot.canvasSize)
+        shotView.add(layerView: DrawingUtility.generateLayerView(for: layer),
+                     toolPicker: toolPicker, PKDelegate: self)
+        shot.addLayer(layer)
+        selectedLayerIndex = shot.layers.count - 1
+        modelManager.generateThumbnailAndSave(project: project, shot: shot)
+    }
     func willRemoveLayers(at indices: [Int]) {
-        self.shotView.removeLayers(at: indices)
+        shotView.removeLayers(at: indices)
+        shot.removeLayers(at: indices)
+        modelManager.generateThumbnailAndSave(project: project, shot: shot)
     }
 
     func willDuplicateLayers(at indices: [Int]) {
-        self.shotView.duplicateLayers(at: indices)
+        shotView.duplicateLayers(at: indices)
+        shot.duplicateLayers(at: indices)
+        modelManager.generateThumbnailAndSave(project: project, shot: shot)
     }
 
     func willGroupLayers(at indices: [Int]) {
-        self.shotView.groupLayers(at: indices)
+        shotView.groupLayers(at: indices)
+        shot.groupLayers(at: indices)
+        modelManager.generateThumbnailAndSave(project: project, shot: shot)
     }
 
     func willUngroupLayer(at index: Int) {
-        self.shotView.ungroupLayer(at: index)
-    }
-    private func toggleLayerLock(at index: Int) {
-
-        let layer = self.shot.layers[index]
-        let newLayer = layer.duplicate()
-        newLayer.isLocked.toggle()
-        self.shot.updateLayer(layer, with: newLayer)
-        self.modelManager.generateThumbnailAndSave(project: self.project, shot: self.shot)
-        self.modelManager.observers.forEach({ $0.DidUpdateLayer() })
-        self.modelManager.saveProject(self.project)
-        
-//        modelManager.updateLayer(layerLabel: newLayer.label, withLayer: newLayer)
-    }
-
-    private func toggleLayerVisibility(at index: Int) {
-
-        let layers = self.shot.layers
-        let layer = layers[index]
-        let newLayer = layer.duplicate()
-        newLayer.isVisible.toggle()
-        self.shot.updateLayer(layer, with: newLayer)
-        self.modelManager.generateThumbnailAndSave(project: self.project, shot: self.shot)
-        self.modelManager.observers.forEach({ $0.DidUpdateLayer() })
-        self.modelManager.saveProject(self.project)
+        shotView.ungroupLayer(at: index)
+        shot.ungroupLayer(at: index)
+        modelManager.generateThumbnailAndSave(project: project, shot: shot)
     }
 }
 // MARK: - UIDropInteractionDelegate
@@ -519,7 +507,6 @@ extension ShotDesignerViewController: UIDropInteractionDelegate {
             self.modelManager.generateThumbnailAndSave(project: self.project, shot: self.shot)
             self.modelManager.observers.forEach({ $0.DidUpdateLayer() })
             self.modelManager.saveProject(self.project)
-//            self.modelManager?.addLayer(to: self.shotLabel, withImage: image)
         }
     }
 }
