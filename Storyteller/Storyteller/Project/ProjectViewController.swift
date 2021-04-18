@@ -131,9 +131,7 @@ class ProjectViewController: UIViewController {
         for indexPath in toDeleteIndexPath {
             let index = min(indexPath.row, self.modelManager.projectOrder.count - 1)
             let projectId = self.modelManager.projectOrder[index]
-            if let project = self.modelManager.projects[projectId] {
-                self.modelManager.removeProject(of: project.label)
-            }
+            self.modelManager.removeProject(withId: projectId)
         }
         self.selectedIndexPath.removeAll()
         self.mode = .view
@@ -179,7 +177,7 @@ class ProjectViewController: UIViewController {
             guard let newProjectName = alertController.textFields?[0].text else {
                 return
             }
-            self.modelManager.renameProject(of: project.label, to: newProjectName)
+            self.modelManager.renameProject(withId: projectId, to: newProjectName)
             self.collectionView.reloadData()
             self.mode = .view
         }
@@ -213,15 +211,12 @@ extension ProjectViewController: UICollectionViewDelegate {
         case .view:
             self.collectionView.deselectItem(at: indexPath, animated: true)
             let projectId = self.modelManager.projectOrder[indexPath.row]
-            guard let project = self.modelManager.projects[projectId] else {
-                return
-            }
             guard let sceneViewController = self.storyboard?
                     .instantiateViewController(identifier: "SceneViewController") as? SceneViewController else {
                 return
             }
             sceneViewController.modalPresentationStyle = .fullScreen
-            sceneViewController.setProjectLabel(to: project.label)
+            sceneViewController.setProjectId(to: projectId)
             sceneViewController.setModelManager(to: self.modelManager)
             self.navigationController?.pushViewController(sceneViewController, animated: true)
         case .select:

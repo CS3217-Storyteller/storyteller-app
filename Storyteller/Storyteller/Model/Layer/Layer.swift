@@ -6,77 +6,94 @@
 //
 import PencilKit
 
-struct Layer {
-    var component: LayerComponent
-    var canvasSize: CGSize
-    var name: String
-    var label: LayerLabel
+class Layer {
     var id: UUID
-    var isLocked = false
-    var isVisible = true
-
+    var name: String
+    var canvasSize: CGSize
+    var isLocked: Bool
+    var isVisible: Bool
+    var component: LayerComponent
+    
     var thumbnail: UIImage {
         component.image
-//        DrawingUtility.generateLayerView(for: self).asImage()
     }
 
-    init(component: LayerComponent, canvasSize: CGSize, name: String,
-         isLocked: Bool, isVisible: Bool, label: LayerLabel) {
-        self.component = component
-        self.canvasSize = canvasSize
+    init(
+        id: UUID,
+        name: String,
+        canvasSize: CGSize,
+        isLocked: Bool,
+        isVisible: Bool,
+        component: LayerComponent
+    ) {
+        self.id = id
         self.name = name
-        self.label = label
-        self.id = label.layerId
+        self.canvasSize = canvasSize
+        self.component = component
+        self.isLocked = false
+        self.isVisible = true
     }
 
-    init(layerWithDrawing: PKDrawing, canvasSize: CGSize,
-         name: String = Constants.defaultLayerName, label: LayerLabel) {
+    init(
+        id: UUID,
+        name: String = Constants.defaultLayerName,
+        canvasSize: CGSize,
+        layerWithDrawing: PKDrawing
+    ) {
+        self.id = id
+        self.name = name
         self.canvasSize = canvasSize
         self.component = DrawingComponent(drawing: layerWithDrawing, canvasSize: canvasSize)
-        self.name = name
-        self.label = label
-        self.id = label.layerId
+        self.isLocked = false
+        self.isVisible = true
     }
 
     @discardableResult
     func setDrawing(to drawing: PKDrawing) -> Layer {
-        updateComponent(component.setDrawing(to: drawing))
+        self.updateComponent(self.component.setDrawing(to: drawing))
     }
 
     func updateComponent(_ component: LayerComponent) -> Layer {
-        var newLayer = self
+        let newLayer = self
         newLayer.component = component
         return newLayer
     }
 
-    func duplicate(withId newId: UUID = UUID()) -> Self {
-        let newLabel = self.label.withLayerId(newId)
-        return Self(
-            component: self.component,
-            canvasSize: self.canvasSize,
+    func duplicate(withId newLayerId: UUID = UUID()) -> Layer {
+
+        let newLayer = Layer(
+            id: newLayerId,
             name: self.name,
-            isLocked: false,
-            isVisible: true, // TODO: verify these values
-            label: newLabel
+            canvasSize: self.canvasSize,
+            isLocked: self.isLocked,
+            isVisible: self.isVisible,
+            component: self.component
         )
+        
+        return newLayer
     }
 }
 
 extension Layer {
-    static func getEmptyLayer(canvasSize: CGSize, name: String, forShot shotLabel: ShotLabel) -> Layer {
-        Layer(layerWithDrawing: PKDrawing(),
-              canvasSize: canvasSize,
-              name: name,
-              label: shotLabel.generateLayerLabel(withId: UUID())
+    static func getEmptyLayer(canvasSize: CGSize, name: String, shotId: UUID) -> Layer {
+        Layer(
+            id: shotId,
+            name: name,
+            canvasSize: canvasSize,
+            layerWithDrawing: PKDrawing()
         )
     }
 }
 
 extension Layer: Transformable {
     var transform: CGAffineTransform {
-        component.transform
+        self.component.transform
     }
-    func updateTransform(_ transform: CGAffineTransform) -> Layer {
-        updateComponent(component.updateTransform(transform))
+    
+    func updateTransform(_ transform: CGAffineTransform) -> Self {
+        guard let layer = self.updateComponent(component.updateTransform(transform)) as? Self else {
+            return self
+        }
+        return layer
     }
 }

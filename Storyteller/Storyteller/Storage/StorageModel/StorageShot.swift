@@ -9,28 +9,29 @@ import Foundation
 import CoreGraphics
 
 struct StorageShot: Codable {
+    let id: UUID
+    let canvasSize: CGSize
+    var backgroundColor: Color
     var layers: [UUID: StorageLayer]
     var layerOrder: [UUID]
-    var label: ShotLabel
-    var backgroundColor: Color
-    let canvasSize: CGSize
-
+    
     init(_ shot: Shot) {
+        self.id = shot.id
+        self.canvasSize = shot.canvasSize
+        self.backgroundColor = shot.backgroundColor
         self.layers = shot.layers.mapValues({ StorageLayer($0) })
         self.layerOrder = shot.layerOrder
-        self.label = shot.label
-        self.backgroundColor = shot.backgroundColor
-        self.canvasSize = shot.canvasSize
     }
 }
 
 extension StorageShot {
     var shot: Shot {
-        Shot(layers: layers.mapValues({ $0.layer }),
-             layerOrder: layerOrder,
-             id: label.shotId,
-             label: label,
-             backgroundColor: backgroundColor,
-             canvasSize: canvasSize)
+        Shot(
+            id: self.id,
+            canvasSize: self.canvasSize,
+            backgroundColor: self.backgroundColor,
+            layers: self.layers.mapValues({ $0.layer }),
+            layerOrder: layerOrder
+        )
     }
 }

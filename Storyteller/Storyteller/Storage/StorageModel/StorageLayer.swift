@@ -5,6 +5,7 @@
 //  Created by TFang on 28/3/21.
 //
 
+import Foundation
 import CoreGraphics
 
 struct StorageLayer: Codable {
@@ -13,7 +14,7 @@ struct StorageLayer: Codable {
     var name: String
     var isLocked: Bool
     var isVisible: Bool
-    var label: LayerLabel
+    let id: UUID
 
     init(_ layer: Layer) {
         self.storageComponent = StorageLayerComponent(layer.component)
@@ -21,14 +22,20 @@ struct StorageLayer: Codable {
         self.name = layer.name
         self.isLocked = layer.isLocked
         self.isVisible = layer.isVisible
-        self.label = layer.label
+        self.id = layer.id
     }
 
 }
 
 extension StorageLayer {
     var layer: Layer {
-        Layer(component: storageComponent.component, canvasSize: canvasSize,
-              name: name, isLocked: isLocked, isVisible: isVisible, label: label)
+        Layer(
+            id: self.id,
+            name: self.name,
+            canvasSize: self.canvasSize,
+            isLocked: self.isLocked,
+            isVisible: self.isVisible,
+            component: self.storageComponent.component
+        )
     }
 }

@@ -315,9 +315,9 @@
 				B30AA88F2610D384008B6714 /* UIImage+mergeWith.swift */,
 				B35FA28726143B7900D656E3 /* UIImage+clearImage.swift */,
 				B35115BF261341980056886C /* UIView+setAnchorPoint.swift */,
-				B35115B926123B510056886C /* UIView+newPointInView.swift */,
 				B3D7AD6A2615B4C30082D591 /* UIView+showBorder.swift */,
 				B34A84512617AC0000A3185A /* UIView+asImage.swift */,
+				B35115B926123B510056886C /* UIView+newPointInView.swift */,
 				B31A650D2618201900F532AF /* CGAffineTransform+rotatedAround.swift */,
 			);
 			path = Extensions;

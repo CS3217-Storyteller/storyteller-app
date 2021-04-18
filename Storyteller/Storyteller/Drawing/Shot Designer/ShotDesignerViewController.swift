@@ -17,34 +17,37 @@ class ShotDesignerViewController: UIViewController, PKToolPickerObserver {
         didSet {
             switch editingMode {
             case .free:
-                transformLayerButton.deselect()
-                drawingModeButton.deselect()
-                shotView.isInDrawingMode = false
+                self.transformLayerButton.deselect()
+                self.drawingModeButton.deselect()
+                self.shotView.isInDrawingMode = false
             case .transformLayer:
-                transformLayerButton.select()
-                drawingModeButton.deselect()
-                shotView.isInDrawingMode = false
+                self.transformLayerButton.select()
+                self.drawingModeButton.deselect()
+                self.shotView.isInDrawingMode = false
             case .drawing:
-                transformLayerButton.deselect()
-                drawingModeButton.select()
-                shotView.isInDrawingMode = true
+                self.transformLayerButton.deselect()
+                self.drawingModeButton.select()
+                self.shotView.isInDrawingMode = true
             }
         }
     }
 
     var toolPicker = PKToolPicker()
+    
     // should be intialized via segue
+    var shotId: UUID!
     var modelManager: ModelManager!
-    var shotLabel: ShotLabel!
 
     var canvasTransform = CGAffineTransform.identity {
         didSet {
-            updateShotTransform()
+            self.updateShotTransform()
         }
     }
+    
     var shot: Shot? {
-        modelManager.getShot(of: shotLabel)
+        self.modelManager.getShot(of: shotLabel)
     }
+    
     var canvasSize: CGSize {
         shot?.canvasSize ?? .zero
     }

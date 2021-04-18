@@ -52,10 +52,9 @@ class StorageManager {
         return projects
     }
 
-    // MARK: - Save
     @discardableResult
     func saveProject(project: Project) -> Bool {
-        let fileName = project.title
+        let fileName = project.id.uuidString
         let fileUrl = StorageUtility.getFileUrl(of: fileName)
         guard (try? JSONEncoder().encode(StorageProject(project)).write(to: fileUrl)) != nil else {
             return false
@@ -63,8 +62,9 @@ class StorageManager {
         return true
     }
 
-    func deleteProject(projectTitle: String) {
-        let filePath = StorageUtility.getFileUrl(of: projectTitle)
+    func deleteProject(project: Project) {
+        let filename = project.id.uuidString
+        let filePath = StorageUtility.getFileUrl(of: filename)
         try? FileManager.default.removeItem(at: filePath)
     }
 }
