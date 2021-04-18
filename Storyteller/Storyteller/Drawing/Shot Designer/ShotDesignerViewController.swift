@@ -62,9 +62,8 @@ class ShotDesignerViewController: UIViewController {
         }
     }
 
-    var selectedLayer: Layer? {
-        let layer = shot.layers[selectedLayerIndex]
-        return layer
+    var selectedLayer: Layer {
+        shot.layers[selectedLayerIndex]
     }
 
     override var prefersStatusBarHidden: Bool {
@@ -151,7 +150,7 @@ extension ShotDesignerViewController {
         case .ended:
             switch editingMode {
             case .transformLayer:
-                guard selectedLayer?.canTransform == true else {
+                guard selectedLayer.canTransform else {
                     return
                 }
                 endTransform()
@@ -179,7 +178,7 @@ extension ShotDesignerViewController {
     }
 
     private func scaleLayer(_ sender: UIPinchGestureRecognizer) {
-        guard selectedLayer?.canTransform == true else {
+        guard selectedLayer.canTransform else {
             return
         }
         let scale = sender.scale
@@ -206,7 +205,7 @@ extension ShotDesignerViewController {
     }
 
     private func rotateLayer(_ sender: UIRotationGestureRecognizer) {
-        guard selectedLayer?.canTransform == true else {
+        guard selectedLayer.canTransform else {
             return
         }
         let rotation = sender.rotation
@@ -218,24 +217,22 @@ extension ShotDesignerViewController {
     }
 
     private func transformLayer(using transform: CGAffineTransform) {
-        guard let layer = selectedLayer, layer.canTransform else {
+        guard selectedLayer.canTransform else {
             return
         }
         shotView.transformedSelectedLayer(using: transform)
         additionalLayerTransform = additionalLayerTransform.concatenating(transform)
     }
     private func endTransform() {
-        guard let layer = selectedLayer, layer.canTransform else {
+        guard selectedLayer.canTransform else {
             return
         }
-        let newLayer = layer.transformed(using: additionalLayerTransform)
-        shot.updateLayer(layer, with: newLayer)
-        modelManager.generateThumbnailAndSave(project: project, shot: shot)
-        modelManager.observers.forEach({ $0.DidUpdateLayer() })
-        modelManager.saveProject(project)
+        selectedLayer.transform(using: additionalLayerTransform)
 
         additionalLayerTransform = .identity
         setUpShot()
+
+        modelManager.generateThumbnailAndSave(project: project, shot: shot)
     }
 
 }
@@ -296,26 +293,20 @@ extension ShotDesignerViewController: ModelManagerObserver {
         // TODO: disable this since PKCanvasView will get refreshed every time
 //        setUpShot()
     }
-    func DidUpdateLayer() {
-        shotView.updateLayerViews(newLayerViews: DrawingUtility.generateLayerViews(for: shot))
-    }
-    func DidAddLayer(layer: Layer) {
-        shotView.add(layerView: DrawingUtility.generateLayerView(for: layer),
-                          toolPicker: toolPicker, PKDelegate: self)
-        selectedLayerIndex = shot.layers.count - 1
-    }
+//    func DidUpdateLayer() {
+//        shotView.updateLayerViews(newLayerViews: DrawingUtility.generateLayerViews(for: shot))
+//    }
+//    func DidAddLayer(layer: Layer) {
+//        shotView.add(layerView: DrawingUtility.generateLayerView(for: layer),
+//                     toolPicker: toolPicker, PKDelegate: self)
+//        selectedLayerIndex = shot.layers.count - 1
+//    }
 }
 // MARK: - PKCanvasViewDelegate
 extension ShotDesignerViewController: PKCanvasViewDelegate {
     func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
-        guard let selectedLayer = selectedLayer else {
-            return
-        }
-        let newLayer = selectedLayer.setDrawing(to: canvasView.drawing)
-        shot.updateLayer(selectedLayer, with: newLayer)
+        selectedLayer.setDrawing(to: canvasView.drawing)
         modelManager.generateThumbnailAndSave(project: project, shot: shot)
-        modelManager.observers.forEach({ $0.DidUpdateLayer() })
-        modelManager.saveProject(project)
     }
 }
 
@@ -426,7 +417,6 @@ extension ShotDesignerViewController: LayerTableDelegate {
         modelManager.generateThumbnailAndSave(project: project, shot: shot)
     }
 
-
     func didToggleLayerLock(at index: Int) {
         let layer = shot.layers[index]
         layer.isLocked.toggle()
@@ -443,7 +433,9 @@ extension ShotDesignerViewController: LayerTableDelegate {
     }
 
     func didChangeLayerName(at index: Int, newName: String) {
-        self.updateLayerName(at: index, to: newName)
+        let layer = shot.layers[index]
+        layer.name = newName
+        modelManager.generateThumbnailAndSave(project: project, shot: shot)
     }
 
     func willAddLayer() {
@@ -477,17 +469,6 @@ extension ShotDesignerViewController: LayerTableDelegate {
         shot.ungroupLayer(at: index)
         modelManager.generateThumbnailAndSave(project: project, shot: shot)
     }
-
-    private func updateLayerName(at index: Int, to newName: String) {
-        let layers = shot.layers
-        let layer = layers[index]
-        let newLayer = layer.duplicate()
-        newLayer.name = newName
-        shot.updateLayer(layer, with: newLayer)
-        modelManager.generateThumbnailAndSave(project: project, shot: shot)
-        modelManager.observers.forEach({ $0.DidUpdateLayer() })
-        modelManager.saveProject(project)
-    }
 }
 // MARK: - UIDropInteractionDelegate
 extension ShotDesignerViewController: UIDropInteractionDelegate {
@@ -508,9 +489,10 @@ extension ShotDesignerViewController: UIDropInteractionDelegate {
             }
             let layer = Layer(withImage: image, canvasSize: self.shot.canvasSize)
             self.shot.addLayer(layer)
+            self.shotView
+                .add(layerView: DrawingUtility.generateLayerView(for: layer),
+                     toolPicker: self.toolPicker, PKDelegate: self)
             self.modelManager.generateThumbnailAndSave(project: self.project, shot: self.shot)
-            self.modelManager.observers.forEach({ $0.DidUpdateLayer() })
-            self.modelManager.saveProject(self.project)
         }
     }
 }

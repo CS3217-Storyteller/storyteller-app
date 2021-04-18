@@ -50,16 +50,13 @@ class Layer {
         self.thumbnail = component.merge(merger: ThumbnailMerger())
     }
 
-    @discardableResult
-    func setDrawing(to drawing: PKDrawing) -> Layer {
+    func setDrawing(to drawing: PKDrawing) {
         updateComponent(component.setDrawing(to: drawing))
     }
 
-    func updateComponent(_ component: LayerComponent) -> Layer {
-        let newLayer = self
-        newLayer.component = component
-        newLayer.generateThumbnail()
-        return newLayer
+    func updateComponent(_ component: LayerComponent) {
+        self.component = component
+        generateThumbnail()
     }
 
     func generateThumbnail() {
@@ -91,7 +88,7 @@ class Layer {
 
 // MARK: - Transformable
 extension Layer {
-    func transformed(using transform: CGAffineTransform) -> Layer {
+    func transform(using transform: CGAffineTransform) {
         updateComponent(component.transformed(using: transform))
     }
 
