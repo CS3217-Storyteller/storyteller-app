@@ -38,9 +38,6 @@ class SceneViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-/* // TODO: Conflict
-        self.navigationItem.hidesBackButton = true
-*/
 
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -270,41 +267,6 @@ extension SceneViewController: UICollectionViewDelegateFlowLayout {
         UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
     }
 
-/* TODO: Conflict
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.collectionView.deselectItem(at: indexPath, animated: true)
-
-        guard let shotDesignerController = self.storyboard?
-                .instantiateViewController(identifier: "ShotDesignerViewController")
-                as? ShotDesignerViewController else {
-            return
-        }
-        shotDesignerController.modalPresentationStyle = .fullScreen
-
-        guard let modelManager = self.modelManager,
-              let projectLabel = self.projectLabel
-        else {
-            return
-        }
-        let sceneLabel = SceneLabel(projectLabel: projectLabel, sceneIndex: indexPath.section)
-        guard let scene = modelManager.getScene(of: sceneLabel) else {
-            return
-        }
-
-        let shotLabel = ShotLabel(sceneLabel: sceneLabel, shotIndex: indexPath.row)
-
-        if indexPath.row < scene.shots.count {
-            shotDesignerController.setModelManager(to: modelManager)
-            shotDesignerController.setShotLabel(to: shotLabel)
-            shotDesignerController.modalTransitionStyle = .flipHorizontal
-//            self.present(shotDesignerController, animated: true, completion: nil)
-            self.navigationController?.pushViewController(shotDesignerController, animated: true)
-        } else {
-            modelManager.addShot(ofShot: shotLabel, backgroundColor: .white)
-            self.collectionView.reloadData()
-        }
-    }
-*/
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize {

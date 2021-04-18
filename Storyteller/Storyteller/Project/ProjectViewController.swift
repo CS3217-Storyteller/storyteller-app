@@ -108,17 +108,6 @@ class ProjectViewController: UIViewController {
         ]
     }
 
-/* // TODO: CONFLICT
-    @IBAction private func addProject(_ sender: UIButton) {
-        // TODO: Allow customize canvasSize
-        let canvasSize = Constants.defaultCanvasSize
-        let projectTitle = "Project \(self.NumOfProjects)"
-        self.modelManager.addProject(canvasSize: canvasSize, title: projectTitle)
-        self.NumOfProjects += 1
-        self.collectionView.reloadData()
-    }
-*/
-
     @objc func didSelectButtonClicked(_ sender: UIBarButtonItem) {
         self.mode = self.mode == .view ? .select : .view
     }

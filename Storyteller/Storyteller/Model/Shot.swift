@@ -53,7 +53,6 @@ class Shot {
     }
 
     // MARK: - Layer Related Methods
-    // TODO: What if layer already exist? Just update?
     func addLayer(_ layer: Layer, at index: Int? = nil) {
         if let index = index {
             layers.insert(layer, at: index)
