@@ -86,6 +86,11 @@ extension ShotView {
         selectedLayerView.transform = selectedLayerView.transform
             .concatenating(transform)
     }
+    func resetSelectedLayerTransform() -> CGAffineTransform {
+        let transform = selectedLayerView.transform
+        selectedLayerView.transform = .identity
+        return transform
+    }
 
     func updateLayerViews(newLayerViews: [LayerView]) {
         for i in newLayerViews.indices {

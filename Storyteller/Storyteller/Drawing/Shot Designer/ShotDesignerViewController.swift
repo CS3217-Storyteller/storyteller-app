@@ -161,6 +161,7 @@ class ShotDesignerViewController: UIViewController {
     }
 
     private var panPosition = CGPoint.zero
+    private var additionalLayerTransform = CGAffineTransform.identity
 }
 
 // MARK: - Gestures
@@ -189,7 +190,7 @@ extension ShotDesignerViewController {
                 guard selectedLayer?.canTransform == true else {
                     return
                 }
-                setUpShot()
+                endTransform()
             case .free, .drawing:
                 return
             }
@@ -219,7 +220,7 @@ extension ShotDesignerViewController {
         sender.scale = 1
         transformLayer(using: CGAffineTransform(scaleX: scale, y: scale))
         if sender.state == .ended {
-            setUpShot()
+            endTransform()
         }
     }
 
@@ -244,7 +245,7 @@ extension ShotDesignerViewController {
         sender.rotation = .zero
         transformLayer(using: CGAffineTransform(rotationAngle: rotation))
         if sender.state == .ended {
-            setUpShot()
+            endTransform()
         }
     }
 
@@ -252,9 +253,17 @@ extension ShotDesignerViewController {
         guard let layer = selectedLayer, layer.canTransform else {
             return
         }
-        let newLayer = layer.transformed(using: transform)
         shotView.transformedSelectedLayer(using: transform)
+        additionalLayerTransform = additionalLayerTransform.concatenating(transform)
+    }
+    private func endTransform() {
+        guard let layer = selectedLayer, layer.canTransform else {
+            return
+        }
+        let newLayer = layer.transformed(using: additionalLayerTransform)
+        additionalLayerTransform = .identity
         modelManager.updateLayer(layerLabel: layer.label, withLayer: newLayer)
+        setUpShot()
     }
 }
 
