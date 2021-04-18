@@ -11,15 +11,19 @@ class Project {
     let canvasSize: CGSize
 
     var scenes: [Scene] = []
-    
+
     init(title: String, canvasSize: CGSize, scenes: [Scene] = []) {
         self.title = title
         self.canvasSize = canvasSize
         self.scenes = scenes
     }
-    
+
     func addScene(_ scene: Scene) {
         self.scenes.append(scene)
+    }
+
+    func deleteScene(at index: Int) {
+        self.scenes.remove(at: index)
     }
 
     func setTitle(to title: String) {
@@ -27,7 +31,7 @@ class Project {
     }
 
     func duplicate() -> Project {
-        return Project(
+        Project(
             title: self.title,
             canvasSize: self.canvasSize,
             scenes: scenes.map({ $0.duplicate() })

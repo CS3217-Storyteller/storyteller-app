@@ -10,9 +10,9 @@ class Shot {
     var layers: [Layer] = [Layer]()
     var backgroundColor: Color
     let canvasSize: CGSize
-    
+
     var thumbnail: Thumbnail
-    
+
     init(canvasSize: CGSize,
          backgroundColor: Color,
          layers: [Layer] = [],
@@ -22,7 +22,6 @@ class Shot {
         self.layers = layers
         self.thumbnail = thumbnail
     }
-    
 
     func generateThumbnails() {
         let defaultThumbnail = layers.reduce(
@@ -75,18 +74,6 @@ class Shot {
     func removeLayers(at indices: [Int]) {
         for index in indices.reversed() {
             layers.remove(at: index)
-        }
-    }
-
-    func removeLayers(_ removedLayers: [Layer]) {
-        for layer in removedLayers {
-            self.removeLayer(layer)
-        }
-    }
-
-    func removeLayer(_ layer: Layer) {
-        if let index = self.layers.firstIndex(where: { $0 === layer }) {
-            self.layers.remove(at: index)
         }
     }
 

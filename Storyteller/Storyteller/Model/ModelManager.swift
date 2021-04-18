@@ -28,14 +28,14 @@ class ModelManager {
         self.projects.append(project)
         self.saveProject(project)
     }
-    
+
     func removeProject(_ project: Project) {
         if let index = self.projects.firstIndex(where: { $0 === project }) {
             self.projects.remove(at: index)
             self.deleteProject(project)
         }
     }
-    
+
     func renameProject(_ project: Project, to name: String) {
         self.removeProject(project)
         project.setTitle(to: name)
@@ -62,7 +62,7 @@ class ModelManager {
 //    }
 
     var onGoingSaveTask: (project: Project, workItem: DispatchWorkItem)?
-    
+
     func saveProject(_ project: Project?) {
         self.observers.forEach({ $0.modelDidChange() })
 
@@ -83,7 +83,7 @@ class ModelManager {
         self.storageManager.deleteProject(projectTitle: project.title)
         self.observers.forEach({ $0.modelDidChange() })
     }
-    
+
 //    func getProject(withId projectId: UUID) -> Project? {
 //        return projects[projectId]
 //    }
@@ -162,8 +162,6 @@ class ModelManager {
 //        return projects[projectId]?.canvasSize
 //    }
 
-
-
 //    func addScene(projectLabel: ProjectLabel, scene: Scene? = nil) {
 //        let id = UUID()
 //        guard let project = getProject(of: projectLabel) else {
@@ -238,10 +236,9 @@ class ModelManager {
     var onGoingThumbnailTask: (shot: Shot, workItem: DispatchWorkItem)?
 }
 
-
 // MARK: - Specific Shot Methods
 extension ModelManager {
-    
+
 //    func getBackgroundColor(of shotLabel: ShotLabel) -> UIColor? {
 //        self.getShot(of: shotLabel)?.backgroundColor.uiColor
 //    }
@@ -388,10 +385,6 @@ extension ModelManager {
 //    }
 }
 
-
-
- 
- 
 protocol ModelManagerObserver {
     /// Invoked when the model changes.
     func modelDidChange()

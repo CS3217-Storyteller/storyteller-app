@@ -158,7 +158,7 @@ class ProjectViewController: UIViewController {
         for (key, value) in self.selectedIndexPath where value {
             index = key.row
         }
-        
+
         let project = self.modelManager.projects[index]
         let projectName = project.title
 

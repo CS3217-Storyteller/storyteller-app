@@ -40,7 +40,7 @@ class Layer {
         self.name = name
         self.thumbnail = component.merge(merger: ThumbnailMerger())
     }
-    
+
     init(withImage image: UIImage, canvasSize: CGSize,
          name: String = Constants.defaultImageLayerName) {
         self.canvasSize = canvasSize
@@ -61,7 +61,7 @@ class Layer {
         newLayer.generateThumbnail()
         return newLayer
     }
-    
+
     func generateThumbnail() {
         guard isVisible else {
             thumbnail = Thumbnail()
@@ -71,14 +71,12 @@ class Layer {
     }
 
     func duplicate() -> Layer {
-        return Layer(
-            component: component,
-            canvasSize: canvasSize,
-            name: name,
-            isLocked: isLocked,
-            isVisible: isVisible,
-            thumbnail: thumbnail
-        )
+        Layer(component: component,
+              canvasSize: canvasSize,
+              name: name,
+              isLocked: isLocked,
+              isVisible: isVisible,
+              thumbnail: thumbnail)
     }
     func ungroup() -> [Layer] {
         guard let children = (component as? CompositeComponent)?.children else {

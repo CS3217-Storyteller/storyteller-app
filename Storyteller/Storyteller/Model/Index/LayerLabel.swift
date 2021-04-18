@@ -1,13 +1,13 @@
-////
-////  LayerLabel.swift
-////  Storyteller
-////
-////  Created by mmarcus on 27/3/21.
-////
 //
-//import Foundation
+//  LayerLabel.swift
+//  Storyteller
 //
-//struct LayerLabel: Codable {
+//  Created by mmarcus on 27/3/21.
+//
+//
+// import Foundation
+//
+// struct LayerLabel: Codable {
 //    var projectId: UUID
 //    var sceneId: UUID
 //    var shotId: UUID
@@ -52,4 +52,4 @@
 //             shotId: shotId,
 //             layerId: newLayerId)
 //    }
-//}
+// }

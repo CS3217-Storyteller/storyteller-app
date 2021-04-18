@@ -108,6 +108,11 @@ class SceneViewController: UIViewController {
         modelManager.saveProject(project)
         self.collectionView.reloadData()
     }
+
+    func deleteScene(at index: Int) {
+        project?.deleteScene(at: index)
+        modelManager?.saveProject(project)
+    }
 }
 
 extension SceneViewController: UICollectionViewDelegate {
@@ -156,7 +161,7 @@ extension SceneViewController: UICollectionViewDelegate {
                 withReuseIdentifier: SceneHeaderView.identifier, for: indexPath) as? SceneHeaderView else {
             fatalError("cannot get scene header!")
         }
-        sceneHeader.configure(sceneIndex: indexPath.section)
+        sceneHeader.configure(sceneIndex: indexPath.section, delegate: self)
         return sceneHeader
     }
 
@@ -303,7 +308,7 @@ extension SceneViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize {
-        CGSize(width: self.view.frame.size.width, height: 70)
+        CGSize(width: self.view.frame.size.width, height: 50)
     }
 
 }
@@ -312,5 +317,11 @@ extension SceneViewController: UICollectionViewDelegateFlowLayout {
 extension SceneViewController: ModelManagerObserver {
     func modelDidChange() {
         collectionView.reloadData()
+    }
+}
+
+extension SceneViewController: SceneHeaderDelegate {
+    func didDeleteScene(at index: Int) {
+        self.deleteScene(at: index)
     }
 }

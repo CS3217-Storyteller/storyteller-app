@@ -127,7 +127,7 @@ class ShotDesignerViewController: UIViewController {
 
 // MARK: - Gestures
 extension ShotDesignerViewController {
-    
+
     @IBAction private func handlePan(_ sender: UIPanGestureRecognizer) {
         switch sender.state {
         case .began:
@@ -171,13 +171,13 @@ extension ShotDesignerViewController {
             scaleCanvas(sender)
         }
     }
-    
+
     private func scaleCanvas(_ sender: UIPinchGestureRecognizer) {
         let scale = sender.scale
         sender.scale = 1
         canvasTransform = canvasTransform.scaledBy(x: scale, y: scale)
     }
-    
+
     private func scaleLayer(_ sender: UIPinchGestureRecognizer) {
         guard selectedLayer?.canTransform == true else {
             return
@@ -198,13 +198,13 @@ extension ShotDesignerViewController {
             rotateCanvas(sender)
         }
     }
-    
+
     private func rotateCanvas(_ sender: UIRotationGestureRecognizer) {
         let rotation = sender.rotation
         sender.rotation = .zero
         canvasTransform = canvasTransform.rotated(by: rotation)
     }
-    
+
     private func rotateLayer(_ sender: UIRotationGestureRecognizer) {
         guard selectedLayer?.canTransform == true else {
             return
@@ -229,13 +229,11 @@ extension ShotDesignerViewController {
             return
         }
         let newLayer = layer.transformed(using: additionalLayerTransform)
-        
         shot.updateLayer(layer, with: newLayer)
         modelManager.generateThumbnailAndSave(project: project, shot: shot)
         modelManager.observers.forEach({ $0.DidUpdateLayer() })
         modelManager.saveProject(project)
 
-//        modelManager.updateLayer(layerLabel: layer.label, withLayer: newLayer)
         additionalLayerTransform = .identity
         setUpShot()
     }
@@ -244,7 +242,7 @@ extension ShotDesignerViewController {
 
 // MARK: - Actions
 extension ShotDesignerViewController {
-    
+
     @IBAction private func zoomToFit() {
         canvasTransform = .identity
         updateShotTransform()
@@ -256,10 +254,7 @@ extension ShotDesignerViewController {
             scene.addShot(newShot, at: index + 1)
             modelManager.saveProject(project)
         }
-        
-//        modelManager.addShot(ofShot: shotLabel.nextLabel,
-//                             shot: shot,
-//                             backgroundColor: shot.backgroundColor.uiColor)
+
     }
 
     @IBAction private func toggleTransformLayer(_ sender: TransformLayerButton) {
@@ -321,8 +316,6 @@ extension ShotDesignerViewController: PKCanvasViewDelegate {
         modelManager.generateThumbnailAndSave(project: project, shot: shot)
         modelManager.observers.forEach({ $0.DidUpdateLayer() })
         modelManager.saveProject(project)
-        
-//        modelManager.updateLayer(layerLabel: newLayer.label, withLayer: newLayer)
     }
 }
 
@@ -450,7 +443,7 @@ extension ShotDesignerViewController: LayerTableDelegate {
     }
 
     func didChangeLayerName(at index: Int, newName: String) {
-        // TODO
+        self.updateLayerName(at: index, to: newName)
     }
 
     func willAddLayer() {
@@ -483,6 +476,17 @@ extension ShotDesignerViewController: LayerTableDelegate {
         shotView.ungroupLayer(at: index)
         shot.ungroupLayer(at: index)
         modelManager.generateThumbnailAndSave(project: project, shot: shot)
+    }
+
+    private func updateLayerName(at index: Int, to newName: String) {
+        let layers = shot.layers
+        let layer = layers[index]
+        let newLayer = layer.duplicate()
+        newLayer.name = newName
+        shot.updateLayer(layer, with: newLayer)
+        modelManager.generateThumbnailAndSave(project: project, shot: shot)
+        modelManager.observers.forEach({ $0.DidUpdateLayer() })
+        modelManager.saveProject(project)
     }
 }
 // MARK: - UIDropInteractionDelegate
