@@ -30,7 +30,7 @@ struct Layer {
         self.label = label
         self.id = label.layerId
         guard let thumbnail = thumbnail else {
-            self.thumbnail = component.merge(merger: NormalImageMerger())
+            self.thumbnail = component.merge(merger: ImageMerger())
             return
         }
         self.thumbnail = thumbnail
@@ -43,7 +43,7 @@ struct Layer {
         self.name = name
         self.label = label
         self.id = label.layerId
-        self.thumbnail = component.merge(merger: NormalImageMerger())
+        self.thumbnail = component.merge(merger: ImageMerger())
     }
     init(withImage image: UIImage, canvasSize: CGSize,
          name: String = Constants.defaultImageLayerName, label: LayerLabel) {
@@ -53,7 +53,7 @@ struct Layer {
         self.name = name
         self.label = label
         self.id = label.layerId
-        self.thumbnail = component.merge(merger: NormalImageMerger())
+        self.thumbnail = component.merge(merger: ImageMerger())
     }
 
     @discardableResult
@@ -72,7 +72,7 @@ struct Layer {
             thumbnail = UIImage.solidImage(ofColor: .clear, ofSize: canvasSize)
             return
         }
-        thumbnail = component.merge(merger: NormalImageMerger())
+        thumbnail = component.merge(merger: ImageMerger())
     }
     mutating func updateThumbnail(using thumbnail: UIImage) {
         self.thumbnail = thumbnail
@@ -103,6 +103,7 @@ struct Layer {
     }
 }
 
+// MARK: - Transformable
 extension Layer: Transformable {
     func transformed(using transform: CGAffineTransform) -> Layer {
         updateComponent(component.transformed(using: transform))
@@ -110,5 +111,15 @@ extension Layer: Transformable {
 
     var canTransform: Bool {
         !isLocked && isVisible
+    }
+}
+
+// MARK: - Onion Skins
+extension Layer {
+    var redOnionSkin: UIImage {
+        component.merge(merger: RedOnionSkinMerger())
+    }
+    var greenOnionSkin: UIImage {
+        component.merge(merger: GreenOnionSkinMerger())
     }
 }

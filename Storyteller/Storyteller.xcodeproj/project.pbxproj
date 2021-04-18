@@ -45,7 +45,7 @@
 		B3440873262B0076009F3CC0 /* ImageLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3440872262B0076009F3CC0 /* ImageLayerView.swift */; };
 		B3440878262B61AD009F3CC0 /* CGSize+rectAtOrigin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3440877262B61AD009F3CC0 /* CGSize+rectAtOrigin.swift */; };
 		B34A84522617AC0000A3185A /* UIView+asImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34A84512617AC0000A3185A /* UIView+asImage.swift */; };
-		B34A84562617AC6D00A3185A /* NormalImageMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34A84552617AC6D00A3185A /* NormalImageMerger.swift */; };
+		B34A84562617AC6D00A3185A /* ImageMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34A84552617AC6D00A3185A /* ImageMerger.swift */; };
 		B35115BA26123B510056886C /* UIView+newPointInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35115B926123B510056886C /* UIView+newPointInView.swift */; };
 		B35115C0261341980056886C /* UIView+setAnchorPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35115BF261341980056886C /* UIView+setAnchorPoint.swift */; };
 		B35115D22613790F0056886C /* EditingMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35115D12613790F0056886C /* EditingMode.swift */; };
@@ -66,6 +66,9 @@
 		B3755AD626065C0700EC0F56 /* DrawingUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AD526065C0700EC0F56 /* DrawingUtility.swift */; };
 		B3878B882629BBB100DEDE1A /* ImageComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3878B872629BBB100DEDE1A /* ImageComponent.swift */; };
 		B3C7BF98262C101F0005F159 /* UIImage+scaleToFit.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C7BF97262C101F0005F159 /* UIImage+scaleToFit.swift */; };
+		B3C7BFA2262C21430005F159 /* RedOnionSkinMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C7BFA1262C21430005F159 /* RedOnionSkinMerger.swift */; };
+		B3C7BFA6262C217C0005F159 /* PKDrawing+redOnionSkin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C7BFA5262C217C0005F159 /* PKDrawing+redOnionSkin.swift */; };
+		B3C7BFB2262C24E50005F159 /* GreenOnionSkinMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C7BFB1262C24E50005F159 /* GreenOnionSkinMerger.swift */; };
 		B3D7AD532615A1280082D591 /* DrawingLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D7AD522615A1280082D591 /* DrawingLayerView.swift */; };
 		B3D7AD612615A54C0082D591 /* CompositeLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D7AD602615A54C0082D591 /* CompositeLayerView.swift */; };
 		B3D7AD6B2615B4C30082D591 /* UIView+showBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D7AD6A2615B4C30082D591 /* UIView+showBorder.swift */; };
@@ -127,7 +130,7 @@
 		B3440872262B0076009F3CC0 /* ImageLayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLayerView.swift; sourceTree = "<group>"; };
 		B3440877262B61AD009F3CC0 /* CGSize+rectAtOrigin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGSize+rectAtOrigin.swift"; sourceTree = "<group>"; };
 		B34A84512617AC0000A3185A /* UIView+asImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+asImage.swift"; sourceTree = "<group>"; };
-		B34A84552617AC6D00A3185A /* NormalImageMerger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalImageMerger.swift; sourceTree = "<group>"; };
+		B34A84552617AC6D00A3185A /* ImageMerger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMerger.swift; sourceTree = "<group>"; };
 		B35115B926123B510056886C /* UIView+newPointInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+newPointInView.swift"; sourceTree = "<group>"; };
 		B35115BF261341980056886C /* UIView+setAnchorPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+setAnchorPoint.swift"; sourceTree = "<group>"; };
 		B35115D12613790F0056886C /* EditingMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditingMode.swift; sourceTree = "<group>"; };
@@ -148,6 +151,9 @@
 		B3755AD526065C0700EC0F56 /* DrawingUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingUtility.swift; sourceTree = "<group>"; };
 		B3878B872629BBB100DEDE1A /* ImageComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageComponent.swift; sourceTree = "<group>"; };
 		B3C7BF97262C101F0005F159 /* UIImage+scaleToFit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+scaleToFit.swift"; sourceTree = "<group>"; };
+		B3C7BFA1262C21430005F159 /* RedOnionSkinMerger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedOnionSkinMerger.swift; sourceTree = "<group>"; };
+		B3C7BFA5262C217C0005F159 /* PKDrawing+redOnionSkin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PKDrawing+redOnionSkin.swift"; sourceTree = "<group>"; };
+		B3C7BFB1262C24E50005F159 /* GreenOnionSkinMerger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreenOnionSkinMerger.swift; sourceTree = "<group>"; };
 		B3D7AD522615A1280082D591 /* DrawingLayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingLayerView.swift; sourceTree = "<group>"; };
 		B3D7AD602615A54C0082D591 /* CompositeLayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeLayerView.swift; sourceTree = "<group>"; };
 		B3D7AD6A2615B4C30082D591 /* UIView+showBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+showBorder.swift"; sourceTree = "<group>"; };
@@ -330,6 +336,7 @@
 				B34A84512617AC0000A3185A /* UIView+asImage.swift */,
 				B3440877262B61AD009F3CC0 /* CGSize+rectAtOrigin.swift */,
 				B31A650D2618201900F532AF /* CGAffineTransform+transformedAround.swift */,
+				B3C7BFA5262C217C0005F159 /* PKDrawing+redOnionSkin.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -361,7 +368,9 @@
 			children = (
 				B3320D1D260F6AB20063558A /* LayerMerger.swift */,
 				B3320D21260F6BA10063558A /* NormalLayerMerger.swift */,
-				B34A84552617AC6D00A3185A /* NormalImageMerger.swift */,
+				B34A84552617AC6D00A3185A /* ImageMerger.swift */,
+				B3C7BFA1262C21430005F159 /* RedOnionSkinMerger.swift */,
+				B3C7BFB1262C24E50005F159 /* GreenOnionSkinMerger.swift */,
 			);
 			path = "Layer Merger";
 			sourceTree = "<group>";
@@ -551,10 +560,12 @@
 				B30AA85D2610C3D7008B6714 /* StorageScene.swift in Sources */,
 				B3440873262B0076009F3CC0 /* ImageLayerView.swift in Sources */,
 				A29A19642607243E00710943 /* ShotLabel.swift in Sources */,
-				B34A84562617AC6D00A3185A /* NormalImageMerger.swift in Sources */,
+				B3C7BFA6262C217C0005F159 /* PKDrawing+redOnionSkin.swift in Sources */,
+				B34A84562617AC6D00A3185A /* ImageMerger.swift in Sources */,
 				A209158C26070595001A242E /* SceneShotViewCell.swift in Sources */,
 				A2091585260703D1001A242E /* SceneViewController.swift in Sources */,
 				B3755AAB26062B9700EC0F56 /* ShotDesignerViewController.swift in Sources */,
+				B3C7BFA2262C21430005F159 /* RedOnionSkinMerger.swift in Sources */,
 				B35FA2982614401C00D656E3 /* TransformLayerButton.swift in Sources */,
 				A29A19582607242800710943 /* Shot.swift in Sources */,
 				B3FB29062617680100DC4BEE /* Alert.swift in Sources */,
@@ -577,6 +588,7 @@
 				B3755AB92606454900EC0F56 /* ShotView.swift in Sources */,
 				A2091590260705EB001A242E /* ProjectViewCell.swift in Sources */,
 				B35FA2C42614C22A00D656E3 /* Transformable.swift in Sources */,
+				B3C7BFB2262C24E50005F159 /* GreenOnionSkinMerger.swift in Sources */,
 				A29A195B2607243300710943 /* Scene.swift in Sources */,
 				89F207E3260F1E1B00D5A78F /* LayerLabel.swift in Sources */,
 				A29A19322607239E00710943 /* StorageUtility.swift in Sources */,

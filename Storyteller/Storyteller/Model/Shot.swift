@@ -16,6 +16,7 @@ struct Shot {
 
     var thumbnail = Constants.clearImage
 
+    // TODO: change to directly generate thumbnail here
     mutating func updateThumbnail(_ thumbnail: UIImage) {
         self.thumbnail = thumbnail
     }
@@ -102,5 +103,15 @@ struct Shot {
                     backgroundColor: backgroundColor,
                     canvasSize: canvasSize,
                     thumbnail: thumbnail)
+    }
+}
+
+// MARK: - Onion Skins
+extension Shot {
+    var redOnionSkin: UIImage {
+        orderedLayers.reduce(UIImage.solidImage(ofColor: .clear, ofSize: canvasSize)) { $0.mergeWith($1.redOnionSkin) }
+    }
+    var greenOnionSkin: UIImage {
+        orderedLayers.reduce(UIImage.solidImage(ofColor: .clear, ofSize: canvasSize)) { $0.mergeWith($1.greenOnionSkin) }
     }
 }

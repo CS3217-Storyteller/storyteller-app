@@ -1,5 +1,5 @@
 //
-//  NormalImageMerger.swift
+//  ImageMerger.swift
 //  Storyteller
 //
 //  Created by TFang on 3/4/21.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NormalImageMerger: LayerMerger {
+class ImageMerger: LayerMerger {
 
     func mergeDrawing(component: DrawingComponent) -> UIImage {
         let drawing = component.drawing
@@ -18,9 +18,7 @@ class NormalImageMerger: LayerMerger {
         return drawing.image(from: canvasSize.rectAtOrigin, scale: 0.5)
     }
     func mergeImage(component: ImageComponent) -> UIImage {
-        let emptyBackground = ImageLayerView(canvasSize: component.canvasSize,
-                                             image: UIImage.solidImage(ofColor: .clear, ofSize: component.canvasSize))
-        // UIView(frame: component.canvasSize.rectAtOrigin)
+        let emptyBackground = UIView(frame: component.canvasSize.rectAtOrigin)
         emptyBackground.addSubview(component.merge(merger: NormalLayerMerger()))
         return emptyBackground.asImage()
     }
