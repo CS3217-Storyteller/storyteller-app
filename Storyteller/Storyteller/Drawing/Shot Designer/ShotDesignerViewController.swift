@@ -75,7 +75,6 @@ class ShotDesignerViewController: UIViewController {
         super.viewDidLoad()
 
         toolPicker.addObserver(self)
-        modelManager.observers.append(self)
 
         shotView.setSize(canvasSize: canvasSize)
         setUpShot()
@@ -287,21 +286,6 @@ extension ShotDesignerViewController {
     }
 }
 
-// MARK: - ModelManagerObserver
-extension ShotDesignerViewController: ModelManagerObserver {
-    func modelDidChange() {
-        // TODO: disable this since PKCanvasView will get refreshed every time
-//        setUpShot()
-    }
-//    func DidUpdateLayer() {
-//        shotView.updateLayerViews(newLayerViews: DrawingUtility.generateLayerViews(for: shot))
-//    }
-//    func DidAddLayer(layer: Layer) {
-//        shotView.add(layerView: DrawingUtility.generateLayerView(for: layer),
-//                     toolPicker: toolPicker, PKDelegate: self)
-//        selectedLayerIndex = shot.layers.count - 1
-//    }
-}
 // MARK: - PKCanvasViewDelegate
 extension ShotDesignerViewController: PKCanvasViewDelegate {
     func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
@@ -467,14 +451,8 @@ extension ShotDesignerViewController: LayerTableDelegate {
     }
 
     func willGroupLayers(at indices: [Int]) {
-        guard let lastIndex = indices.last else {
-            return
-        }
-        let newIndex = lastIndex - (indices.count - 1)
-
         shot.groupLayers(at: indices)
         setUpShot()
-        selectedLayerIndex = newIndex
         modelManager.generateThumbnailAndSave(project: project, shot: shot)
     }
 

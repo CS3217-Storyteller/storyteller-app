@@ -68,14 +68,6 @@ class Layer {
         thumbnail = component.merge(merger: ThumbnailMerger())
     }
 
-    func duplicate() -> Layer {
-        Layer(component: component,
-              canvasSize: canvasSize,
-              name: name,
-              isLocked: isLocked,
-              isVisible: isVisible,
-              thumbnail: thumbnail)
-    }
     func ungroup() -> [Layer] {
         guard let children = (component as? CompositeComponent)?.children else {
             return [self]
@@ -84,6 +76,14 @@ class Layer {
                                     name: Constants.defaultUngroupedLayerName,
                                     isLocked: isLocked,
                                     isVisible: isVisible)})
+    }
+    func duplicate() -> Layer {
+        Layer(component: component,
+              canvasSize: canvasSize,
+              name: name,
+              isLocked: isLocked,
+              isVisible: isVisible,
+              thumbnail: thumbnail)
     }
 }
 

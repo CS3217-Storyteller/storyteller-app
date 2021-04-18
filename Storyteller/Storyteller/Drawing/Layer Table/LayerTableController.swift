@@ -16,12 +16,14 @@ class LayerTableController: UIViewController {
             guard tableView != nil else {
                 return
             }
-            guard selectedLayerIndex < numOfRows else {
+            guard selectedLayerIndex < numOfRows, selectedLayerIndex >= 0 else {
                 selectedLayerIndex = numOfRows - 1
                 return
             }
-            tableView.selectRow(at: selectedIndexPath, animated: true, scrollPosition: .none)
-            delegate?.didSelectLayer(at: selectedLayerIndex)
+            if !tableView.isEditing {
+                tableView.selectRow(at: selectedIndexPath, animated: true, scrollPosition: .none)
+                delegate?.didSelectLayer(at: selectedLayerIndex)
+            }
         }
     }
     var selectedIndexPath: IndexPath {
@@ -109,25 +111,7 @@ extension LayerTableController: UITableViewDelegate {
     }
     private func selectSingleLayer(at indexPath: IndexPath) {
         guard selectedLayerIndex != indexPath.row else {
-            let alertController = UIAlertController(
-                title: "Rename",
-                message: "",
-                preferredStyle: .alert
-            )
-            alertController.addTextField { textField in
-                textField.text = self.shot.layers[indexPath.row].name
-            }
-
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
-                guard let newLayerName = alertController.textFields?[0].text else {
-                    return
-                }
-                self.delegate?.didChangeLayerName(at: indexPath.row, newName: newLayerName)
-            }
-            alertController.addAction(cancelAction)
-            alertController.addAction(saveAction)
-            present(alertController, animated: true, completion: nil)
+            Alert.presentRenameLayerAlert(at: indexPath.row, controlloer: self)
             return
         }
         selectedLayerIndex = indexPath.row
@@ -216,7 +200,8 @@ extension LayerTableController {
     }
 
     @IBAction private func groupLayers() {
-        guard let lastIndex = multipleSelectionIndices.last else {
+        guard let lastIndex = multipleSelectionIndices.last,
+              multipleSelectionIndices.count > 1 else {
             return
         }
         delegate?.willGroupLayers(at: multipleSelectionIndices)
@@ -241,6 +226,7 @@ extension LayerTableController {
             return
         }
         delegate?.willRemoveLayers(at: [selectedLayerIndex])
+        selectedLayerIndex = max(0, selectedLayerIndex - 1)
     }
     private func deleteMultipleLayer() {
         guard numOfRows > multipleSelectionIndices.count else {
@@ -248,6 +234,7 @@ extension LayerTableController {
             return
         }
         delegate?.willRemoveLayers(at: multipleSelectionIndices)
+        selectedLayerIndex = 0
     }
     @IBAction private func addLayer(_ sender: Any) {
         delegate?.willAddLayer()
