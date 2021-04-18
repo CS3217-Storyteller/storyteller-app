@@ -206,6 +206,7 @@ extension LayerTableController {
         }
         duplicateMultipleLayer()
     }
+    // TODO: Move all the modelManager logic to shot designer
     private func duplicateSingleLayer() {
         delegate?.willDuplicateLayers(at: [selectedLayerIndex])
 

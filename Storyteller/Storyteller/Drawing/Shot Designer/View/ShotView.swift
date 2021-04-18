@@ -47,7 +47,7 @@ class ShotView: UIView {
     }
     func setUpLayerViews(_ layerViews: [LayerView], toolPicker: PKToolPicker,
                          PKDelegate: PKCanvasViewDelegate) {
-        let originalLayerCount = layerViews.count
+        let originalLayerCount = self.layerViews.count
         reset()
         guard !layerViews.isEmpty else {
             return
@@ -55,7 +55,6 @@ class ShotView: UIView {
         self.toolPicker = toolPicker
         layerViews.forEach({ add(layerView: $0, toolPicker: toolPicker,
                                  PKDelegate: PKDelegate) })
-
         guard layerViews.count == originalLayerCount else {
             selectedLayerIndex = layerViews.count - 1
             return

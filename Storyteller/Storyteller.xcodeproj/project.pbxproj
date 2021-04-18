@@ -378,8 +378,8 @@
 			children = (
 				B3320D1D260F6AB20063558A /* LayerMerger.swift */,
 				B3320D21260F6BA10063558A /* NormalLayerMerger.swift */,
-				B34A84552617AC6D00A3185A /* ImageMerger.swift */,
 				B3C7BFBF262C3C8B0005F159 /* ThumbnailMerger.swift */,
+				B34A84552617AC6D00A3185A /* ImageMerger.swift */,
 				B3C7BFA1262C21430005F159 /* RedOnionSkinMerger.swift */,
 				B3C7BFB1262C24E50005F159 /* GreenOnionSkinMerger.swift */,
 			);

@@ -41,14 +41,42 @@ class ModelManager {
         project.setTitle(to: name)
         self.addProject(project)
     }
+//
+//    // TODO: Return optional, or empty array if shot is nil?
+//    func getLayers(of shotLabel: ShotLabel) -> [Layer]? {
+//        let layers = getShot(of: shotLabel)?.orderedLayers
+//        return layers
+//    }
+//
+//    // old signature: func getLayer(at layerIndex: Int, of shotLabel: ShotLabel) -> Layer?
+//    func getLayer(label: LayerLabel) -> Layer? {
+//        let shotLabel = label.shotLabel
+//        let layerId = label.layerId
+//        let shot = getShot(of: shotLabel)
+//        return shot?.layers[layerId]
+//    }
+//
+//    func getCanvasSize(of shotLabel: ShotLabel) -> CGSize? {
+//        let projectId = shotLabel.projectId
+//        return projects[projectId]?.canvasSize
+//    }
+
+    var onGoingSaveTask: (project: Project, workItem: DispatchWorkItem)?
     
     func saveProject(_ project: Project?) {
         self.observers.forEach({ $0.modelDidChange() })
-        if let project = project {
-            storageQueue.async {
-                self.storageManager.saveProject(project: project)
-            }
+
+        guard let project = project else {
+            return
         }
+        let workItem = DispatchWorkItem { [weak self] in
+            self?.storageManager.saveProject(project: project)
+        }
+        if let task = onGoingSaveTask, task.project.title == project.title {
+            task.workItem.cancel()
+            onGoingSaveTask = (project, workItem)
+        }
+        storageQueue.async(execute: workItem)
     }
 
     func deleteProject(_ project: Project) {
@@ -227,18 +255,15 @@ extension ModelManager {
 //        generateThumbnailAndSave(shotLabel: shotLabel)
 //    }
 
+
     func generateThumbnailAndSave(project: Project, shot: Shot) {
-//        let projectId = shotLabel.projectId
-//        guard var shot = getShot(of: shotLabel) else {
-//            return
-//        }
+        saveProject(project)
         let workItem = DispatchWorkItem {
             shot.generateThumbnails()
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else {
                     return
                 }
-//                project.updateShot(shotLabel, withShot: shot)
                 self.saveProject(project)
                 self.onGoingThumbnailTask = nil
             }
@@ -250,9 +275,54 @@ extension ModelManager {
         self.thumbnailQueue.async(execute: workItem)
     }
 
+
 //    // MARK: - Layers CRUD
 //    func addLayer(at index: Int? = nil, to shotLabel: ShotLabel,
 //                  withDrawing drawing: PKDrawing = PKDrawing()) {
+//        let projectId = shotLabel.projectId
+//        guard let shot = getShot(of: shotLabel) else {
+//            return
+//        }
+//        let newId = UUID()
+//        let sceneId = shotLabel.sceneId
+//        let shotId = shotLabel.shotId
+//        let label = LayerLabel(projectId: projectId, sceneId: sceneId, shotId: shotId, layerId: newId)
+//        let layer = Layer(withDrawing: drawing,
+//                          canvasSize: shot.canvasSize,
+//                          label: label)
+//        projects[projectId]?.addLayer(layer, at: index, to: shotLabel)
+//        observers.forEach({ $0.DidAddLayer(layer: layer) })
+//        generateThumbnailAndSave(shotLabel: shotLabel)
+//    }
+//    func addLayer(at index: Int? = nil, to shotLabel: ShotLabel,
+//                  withImage image: UIImage) {
+//        let projectId = shotLabel.projectId
+//        guard let shot = getShot(of: shotLabel) else {
+//            return
+//        }
+//        let newId = UUID()
+//        let sceneId = shotLabel.sceneId
+//        let shotId = shotLabel.shotId
+//        let label = LayerLabel(projectId: projectId, sceneId: sceneId, shotId: shotId, layerId: newId)
+//        let layer = Layer(withImage: image,
+//                          canvasSize: shot.canvasSize,
+//                          label: label)
+//        projects[projectId]?.addLayer(layer, at: index, to: shotLabel)
+//        observers.forEach({ $0.DidAddLayer(layer: layer) })
+//        generateThumbnailAndSave(shotLabel: shotLabel)
+//    }
+//    func updateLayer(layerLabel: LayerLabel, withLayer newLayer: Layer) {
+//        let projectId = layerLabel.projectId
+//        projects[projectId]?.updateLayer(layerLabel, withLayer: newLayer)
+//        observers.forEach({ $0.DidUpdateLayer() })
+//        generateThumbnailAndSave(shotLabel: layerLabel.shotLabel)
+//    }
+//    func removeLayers(withIds ids: [UUID], of shotLabel: ShotLabel) {
+//        let projectId = shotLabel.projectId
+//        projects[projectId]?.removeLayers(withIds: Set(ids), of: shotLabel)
+//        generateThumbnailAndSave(shotLabel: shotLabel)
+//    }
+//    func duplicateLayers(withIds ids: [UUID], of shotLabel: ShotLabel) {
 //        let projectId = shotLabel.projectId
 //        guard let shot = getShot(of: shotLabel) else {
 //            return
