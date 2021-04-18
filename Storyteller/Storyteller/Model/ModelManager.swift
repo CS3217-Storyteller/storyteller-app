@@ -193,6 +193,7 @@ class ModelManager {
         }
         saveProject(getProject(of: sceneLabel.projectLabel))
     }
+    var onGoingThumbnailTask: (shot: ShotLabel, workItem: DispatchWorkItem)?
 }
 
 // MARK: - Specific Shot Methods
@@ -204,12 +205,13 @@ extension ModelManager {
         // TODO
         generateThumbnailAndSave(shotLabel: shotLabel)
     }
+
     private func generateThumbnailAndSave(shotLabel: ShotLabel) {
         let projectId = shotLabel.projectId
         guard let shot = getShot(of: shotLabel) else {
             return
         }
-        thumbnailQueue.async {
+        let workItem = DispatchWorkItem {
             let thumbnail = shot.orderedLayers
                 .reduce(UIImage.solidImage(ofColor: shot.backgroundColor.uiColor,
                                            ofSize: shot.canvasSize)) {
@@ -221,8 +223,14 @@ extension ModelManager {
                 }
                 self.projects[projectId]?.updateThumbnail(of: shotLabel, using: thumbnail)
                 self.saveProject(self.projects[projectId])
+                self.onGoingThumbnailTask = nil
             }
         }
+        if let task = onGoingThumbnailTask, task.shot.shotId == shotLabel.shotId {
+            task.workItem.cancel()
+            onGoingThumbnailTask = (shotLabel, workItem)
+        }
+        thumbnailQueue.async(execute: workItem)
     }
 
     // MARK: - Layers CRUD

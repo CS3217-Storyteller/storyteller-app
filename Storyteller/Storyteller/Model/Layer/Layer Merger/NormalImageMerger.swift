@@ -8,13 +8,6 @@
 import UIKit
 
 class NormalImageMerger: LayerMerger {
-    let canvasSize: CGSize
-    let emptyBackground: UIView
-    init(canvasSize: CGSize) {
-        self.canvasSize = canvasSize
-        self.emptyBackground = UIView(frame: canvasSize.rectAtOrigin)
-        emptyBackground.backgroundColor = .clear
-    }
 
     func mergeDrawing(component: DrawingComponent) -> UIImage {
         let drawing = component.drawing
@@ -25,7 +18,7 @@ class NormalImageMerger: LayerMerger {
         return drawing.image(from: canvasSize.rectAtOrigin, scale: 0.5)
     }
     func mergeImage(component: ImageComponent) -> UIImage {
-        emptyBackground.subviews.forEach({ $0.removeFromSuperview() })
+        let emptyBackground = UIView(frame: component.canvasSize.rectAtOrigin)
         emptyBackground.addSubview(component.merge(merger: NormalLayerMerger()))
         return emptyBackground.asImage()
     }

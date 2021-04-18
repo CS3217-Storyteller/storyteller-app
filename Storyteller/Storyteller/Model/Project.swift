@@ -29,7 +29,10 @@ struct Project {
         let sceneId = layerLabel.sceneId
         self.scenes[sceneId]?.updateLayer(layerLabel, withLayer: newLayer)
     }
-
+    mutating func generateThumbnail(of layerLabel: LayerLabel) {
+        let sceneId = layerLabel.sceneId
+        self.scenes[sceneId]?.generateThumbnail(of: layerLabel)
+    }
     // TODO: What if scene already exist? Just update?
     mutating func addScene(_ scene: Scene) {
         let id = scene.id

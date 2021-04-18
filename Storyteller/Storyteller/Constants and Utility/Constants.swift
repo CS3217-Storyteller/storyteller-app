@@ -29,4 +29,7 @@ class Constants {
     static let minLayerZoomScale = CGFloat(0.2)
 
     static let layerBorderWidth = CGFloat(0.5)
+
+    static let clearImage = UIImage.solidImage(ofColor: .clear,
+                                               ofSize: Constants.defaultCanvasSize)
 }

@@ -15,17 +15,21 @@ struct Layer {
     var isLocked = false
     var isVisible = true
 
-    var thumbnail: UIImage {
-        component.merge(merger: NormalImageMerger(canvasSize: canvasSize))
-    }
+    var thumbnail: UIImage
 
     init(component: LayerComponent, canvasSize: CGSize, name: String,
-         isLocked: Bool, isVisible: Bool, label: LayerLabel) {
+         isLocked: Bool, isVisible: Bool, label: LayerLabel,
+         thumbnail: UIImage?) {
         self.component = component
         self.canvasSize = canvasSize
         self.name = name
         self.label = label
         self.id = label.layerId
+        guard let thumbnail = thumbnail else {
+            self.thumbnail = component.merge(merger: NormalImageMerger())
+            return
+        }
+        self.thumbnail = thumbnail
     }
 
     init(withDrawing drawing: PKDrawing, canvasSize: CGSize,
@@ -35,6 +39,7 @@ struct Layer {
         self.name = name
         self.label = label
         self.id = label.layerId
+        self.thumbnail = component.merge(merger: NormalImageMerger())
     }
     init(withImage image: UIImage, canvasSize: CGSize,
          name: String = Constants.defaultImageLayerName, label: LayerLabel) {
@@ -44,6 +49,7 @@ struct Layer {
         self.name = name
         self.label = label
         self.id = label.layerId
+        self.thumbnail = component.merge(merger: NormalImageMerger())
     }
 
     @discardableResult
@@ -54,7 +60,11 @@ struct Layer {
     func updateComponent(_ component: LayerComponent) -> Layer {
         var newLayer = self
         newLayer.component = component
+        newLayer.generateThumbnail()
         return newLayer
+    }
+    mutating func generateThumbnail() {
+        thumbnail = component.merge(merger: NormalImageMerger())
     }
 
     func duplicate(withId newId: UUID = UUID()) -> Layer {
@@ -65,7 +75,8 @@ struct Layer {
             name: name,
             isLocked: isLocked,
             isVisible: isVisible, // TODO: verify these values
-            label: newLabel
+            label: newLabel,
+            thumbnail: thumbnail
         )
     }
     func ungroup() -> [Layer] {
@@ -76,7 +87,8 @@ struct Layer {
                                     name: Constants.defaultUngroupedLayerName,
                                     isLocked: isLocked,
                                     isVisible: isVisible,
-                                    label: label.withLayerId(UUID()))})
+                                    label: label.withLayerId(UUID()),
+                                    thumbnail: nil)})
     }
 }
 

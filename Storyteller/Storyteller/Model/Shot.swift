@@ -14,8 +14,7 @@ struct Shot {
     var backgroundColor: Color
     let canvasSize: CGSize
 
-    var thumbnail = UIImage.solidImage(ofColor: .clear,
-                                       ofSize: Constants.defaultCanvasSize)
+    var thumbnail = Constants.clearImage
 
     mutating func updateThumbnail(_ thumbnail: UIImage) {
         self.thumbnail = thumbnail
@@ -64,7 +63,14 @@ struct Shot {
         let layerId = layerLabel.layerId
         layers[layerId] = layer
     }
-
+    mutating func generateThumbnail(of layerLabel: LayerLabel) {
+        layers[layerLabel.layerId]?.generateThumbnail()
+    }
+    mutating func generateLayerThumbnails() {
+        for id in layerOrder {
+            layers[id]?.generateThumbnail()
+        }
+    }
     // TODO: What if layer already exist? Just update?
     mutating func addLayer(_ layer: Layer, at index: Int? = nil) {
         let layerId = layer.id
