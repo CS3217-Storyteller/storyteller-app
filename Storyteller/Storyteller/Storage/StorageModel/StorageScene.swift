@@ -9,25 +9,18 @@ import CoreGraphics
 import Foundation
 
 struct StorageScene: Codable {
-    var shots: [UUID: StorageShot]
-    var shotOrder: [UUID]
-    var label: SceneLabel
+    var shots: [StorageShot]
     let canvasSize: CGSize
 
     init(_ scene: Scene) {
-        self.shots = scene.shots.mapValues({ StorageShot($0) })
-        self.shotOrder = scene.shotOrder
-        self.label = scene.label
+        self.shots = scene.shots.map({ StorageShot($0) })
         self.canvasSize = scene.canvasSize
     }
 }
 
 extension StorageScene {
     var scene: Scene {
-        Scene(label: label,
-              canvasSize: canvasSize,
-              id: label.sceneId,
-              shots: shots.mapValues({ $0.shot }),
-              shotOrder: shotOrder)
+        Scene(canvasSize: canvasSize,
+              shots: shots.map({ $0.shot }))
     }
 }

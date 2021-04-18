@@ -8,18 +8,13 @@
 import UIKit
 
 struct StorageShot: Codable {
-    var layers: [UUID: StorageLayer]
-    var layerOrder: [UUID]
-    var label: ShotLabel
+    var layers: [StorageLayer]
     var backgroundColor: Color
     let canvasSize: CGSize
-
     var thumbnail: Thumbnail
 
     init(_ shot: Shot) {
-        self.layers = shot.layers.mapValues({ StorageLayer($0) })
-        self.layerOrder = shot.layerOrder
-        self.label = shot.label
+        self.layers = shot.layers.map({ StorageLayer($0) })
         self.backgroundColor = shot.backgroundColor
         self.canvasSize = shot.canvasSize
         self.thumbnail = shot.thumbnail
@@ -28,12 +23,9 @@ struct StorageShot: Codable {
 
 extension StorageShot {
     var shot: Shot {
-        Shot(layers: layers.mapValues({ $0.layer }),
-             layerOrder: layerOrder,
-             id: label.shotId,
-             label: label,
+        Shot(canvasSize: canvasSize,
              backgroundColor: backgroundColor,
-             canvasSize: canvasSize,
+             layers: layers.map({ $0.layer }),
              thumbnail: thumbnail)
     }
 }

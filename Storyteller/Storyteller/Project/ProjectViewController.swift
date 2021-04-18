@@ -129,11 +129,9 @@ class ProjectViewController: UIViewController {
             toDeleteIndexPath.append(key)
         }
         for indexPath in toDeleteIndexPath {
-            let index = min(indexPath.row, self.modelManager.projectOrder.count - 1)
-            let projectId = self.modelManager.projectOrder[index]
-            if let project = self.modelManager.projects[projectId] {
-                self.modelManager.removeProject(of: project.label)
-            }
+            let index = min(indexPath.row, self.modelManager.projects.count - 1)
+            let project = self.modelManager.projects[index]
+            self.modelManager.removeProject(project)
         }
         self.selectedIndexPath.removeAll()
         self.mode = .view
@@ -142,7 +140,8 @@ class ProjectViewController: UIViewController {
     @objc func didAddButtonClicked(_ sender: UIButton) {
         let canvasSize = Constants.defaultCanvasSize
         let projectTitle = "Project \(self.NumOfProjects)"
-        self.modelManager.addProject(canvasSize: canvasSize, title: projectTitle)
+        let project = Project(title: projectTitle, canvasSize: canvasSize)
+        self.modelManager.addProject(project)
         self.NumOfProjects += 1
         self.collectionView.reloadData()
     }
@@ -159,10 +158,8 @@ class ProjectViewController: UIViewController {
         for (key, value) in self.selectedIndexPath where value {
             index = key.row
         }
-        let projectId = self.modelManager.projectOrder[index]
-        guard let project = self.modelManager.projects[projectId] else {
-            return
-        }
+        
+        let project = self.modelManager.projects[index]
         let projectName = project.title
 
         let alertController = UIAlertController(
@@ -179,7 +176,7 @@ class ProjectViewController: UIViewController {
             guard let newProjectName = alertController.textFields?[0].text else {
                 return
             }
-            self.modelManager.renameProject(of: project.label, to: newProjectName)
+            self.modelManager.renameProject(project, to: newProjectName)
             self.collectionView.reloadData()
             self.mode = .view
         }
@@ -194,11 +191,7 @@ extension ProjectViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        let projectId = self.modelManager.projectOrder[indexPath.row]
-        guard let project = self.modelManager.projects[projectId] else {
-            return UICollectionViewCell()
-        }
-
+        let project = self.modelManager.projects[indexPath.row]
         guard let projectViewCell = self.collectionView
                 .dequeueReusableCell(withReuseIdentifier: ProjectViewCell.identifier,
                                      for: indexPath) as? ProjectViewCell else {
@@ -212,16 +205,13 @@ extension ProjectViewController: UICollectionViewDelegate {
         switch self.mode {
         case .view:
             self.collectionView.deselectItem(at: indexPath, animated: true)
-            let projectId = self.modelManager.projectOrder[indexPath.row]
-            guard let project = self.modelManager.projects[projectId] else {
-                return
-            }
+            let project = self.modelManager.projects[indexPath.row]
             guard let sceneViewController = self.storyboard?
                     .instantiateViewController(identifier: "SceneViewController") as? SceneViewController else {
                 return
             }
             sceneViewController.modalPresentationStyle = .fullScreen
-            sceneViewController.setProjectLabel(to: project.label)
+            sceneViewController.setProject(to: project)
             sceneViewController.setModelManager(to: self.modelManager)
             self.navigationController?.pushViewController(sceneViewController, animated: true)
         case .select:

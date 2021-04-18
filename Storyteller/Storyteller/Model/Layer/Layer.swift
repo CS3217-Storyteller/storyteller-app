@@ -6,29 +6,24 @@
 //
 import PencilKit
 
-struct Layer {
+class Layer {
     var component: LayerComponent
-    var canvasSize: CGSize
     var name: String
-    var label: LayerLabel
-    var id: UUID
-    var isLocked = false
+    var canvasSize: CGSize
+    var isLocked: Bool = false
     var isVisible = true {
         didSet {
             generateThumbnail()
         }
     }
-
+    
     var thumbnail: Thumbnail
 
     init(component: LayerComponent, canvasSize: CGSize, name: String,
-         isLocked: Bool, isVisible: Bool, label: LayerLabel,
-         thumbnail: Thumbnail?) {
+         isLocked: Bool, isVisible: Bool, thumbnail: Thumbnail?) {
         self.component = component
         self.canvasSize = canvasSize
         self.name = name
-        self.label = label
-        self.id = label.layerId
         guard let thumbnail = thumbnail else {
             self.thumbnail = Thumbnail()
             return
@@ -37,22 +32,19 @@ struct Layer {
     }
 
     init(withDrawing drawing: PKDrawing, canvasSize: CGSize,
-         name: String = Constants.defaultDrawingLayerName, label: LayerLabel) {
+         name: String = Constants.defaultDrawingLayerName) {
         self.canvasSize = canvasSize
         self.component = DrawingComponent(canvasSize: canvasSize, drawing: drawing)
         self.name = name
-        self.label = label
-        self.id = label.layerId
         self.thumbnail = component.merge(merger: ThumbnailMerger())
     }
+    
     init(withImage image: UIImage, canvasSize: CGSize,
-         name: String = Constants.defaultImageLayerName, label: LayerLabel) {
+         name: String = Constants.defaultImageLayerName) {
         self.canvasSize = canvasSize
         self.component = ImageComponent(
             canvasSize: canvasSize, imageData: image.pngData()!)
         self.name = name
-        self.label = label
-        self.id = label.layerId
         self.thumbnail = component.merge(merger: ThumbnailMerger())
     }
 
@@ -62,12 +54,13 @@ struct Layer {
     }
 
     func updateComponent(_ component: LayerComponent) -> Layer {
-        var newLayer = self
+        let newLayer = self
         newLayer.component = component
         newLayer.generateThumbnail()
         return newLayer
     }
-    mutating func generateThumbnail() {
+    
+    func generateThumbnail() {
         guard isVisible else {
             thumbnail = Thumbnail()
             return
@@ -76,14 +69,12 @@ struct Layer {
     }
 
     func duplicate(withId newId: UUID = UUID()) -> Layer {
-        let newLabel = label.withLayerId(newId)
         return Layer(
             component: component,
             canvasSize: canvasSize,
             name: name,
             isLocked: isLocked,
             isVisible: isVisible, // TODO: verify these values
-            label: newLabel,
             thumbnail: thumbnail
         )
     }
@@ -95,13 +86,12 @@ struct Layer {
                                     name: Constants.defaultUngroupedLayerName,
                                     isLocked: isLocked,
                                     isVisible: isVisible,
-                                    label: label.withLayerId(UUID()),
                                     thumbnail: nil)})
     }
 }
 
 // MARK: - Transformable
-extension Layer: Transformable {
+extension Layer {
     func transformed(using transform: CGAffineTransform) -> Layer {
         updateComponent(component.transformed(using: transform))
     }

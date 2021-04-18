@@ -33,7 +33,9 @@ class LayerTableController: UIViewController {
 
     // should be intialized via segue
     var modelManager: ModelManager!
-    var shotLabel: ShotLabel!
+    var shot: Shot!
+    var scene: Scene!
+    var project: Project!
     var onionSkinRange: OnionSkinRange!
 
     var layerSelection = [Bool]()
@@ -63,10 +65,7 @@ class LayerTableController: UIViewController {
         reselect()
     }
     private func setBackgroundColor() {
-        guard let color = modelManager.getBackgroundColor(of: shotLabel) else {
-            backgroundColorButton.backgroundColor = .white
-            return
-        }
+        let color = shot.backgroundColor.uiColor
         backgroundColorButton.backgroundColor = color
     }
     private func reselect() {
@@ -74,7 +73,7 @@ class LayerTableController: UIViewController {
         selectedLayerIndex = selected
     }
     func setUpLayerSelection() {
-        let count = modelManager.getLayers(of: shotLabel)?.count ?? 0
+        let count = shot.layers.count
         layerSelection = Array(repeating: false, count: count)
     }
 
@@ -83,10 +82,7 @@ class LayerTableController: UIViewController {
 // MARK: - UITableViewDataSource
 extension LayerTableController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let layerCount = modelManager.getLayers(of: shotLabel)?.count else {
-            fatalError("Failed to get the number of layers")
-        }
-
+        let layerCount = shot.layers.count
         return layerCount
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -96,10 +92,7 @@ extension LayerTableController: UITableViewDataSource {
             fatalError("Cannot get reusable cell.")
         }
 
-        guard let layerOrder = modelManager.getLayers(of: shotLabel) else {
-            fatalError("Failed to get the layer at \(indexPath.row)")
-        }
-
+        let layerOrder = shot.layers
         let layer = layerOrder[indexPath.row]
         cell.setUp(thumbnail: layer.defaultThumbnail, name: layer.name,
                    isLocked: layer.isLocked, isVisible: layer.isVisible)
@@ -140,11 +133,11 @@ extension LayerTableController: UITableViewDelegate {
                    to destinationIndexPath: IndexPath) {
         delegate?.didMoveLayer(from: sourceIndexPath.row, to: destinationIndexPath.row)
 
-        guard let layers = modelManager.getLayers(of: shotLabel) else {
-            return
-        }
+        let layers = shot.layers
         let layer = layers[sourceIndexPath.row]
-        modelManager.moveLayer(layer.label, to: destinationIndexPath.row)
+        shot.moveLayer(layer: layer, to: destinationIndexPath.row)
+        modelManager.generateThumbnailAndSave(project: project, shot: shot)
+//        modelManager.moveLayer(layer.label, to: destinationIndexPath.row)
     }
     func tableView(_ tableView: UITableView,
                    editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
@@ -180,7 +173,7 @@ extension LayerTableController {
     }
     @IBAction private func changeBackgroundColor() {
         let picker = UIColorPickerViewController()
-        picker.selectedColor = modelManager.getBackgroundColor(of: shotLabel) ?? .white
+        picker.selectedColor = shot.backgroundColor.uiColor
         picker.delegate = self
         self.present(picker, animated: true, completion: nil)
     }
@@ -216,50 +209,50 @@ extension LayerTableController {
     private func duplicateSingleLayer() {
         delegate?.willDuplicateLayers(at: [selectedLayerIndex])
 
-        guard let layers = modelManager.getLayers(of: shotLabel) else {
-            return
-        }
+        let layers = shot.layers
         let layer = layers[selectedLayerIndex]
-        modelManager.duplicateLayers(withIds: [layer.id], of: shotLabel)
+        let newLayer = layer.duplicate()
+        shot.addLayer(newLayer)
+        modelManager.generateThumbnailAndSave(project: project, shot: shot)
+        
+//        modelManager.duplicateLayers(withIds: [layer.id], of: shotLabel)
     }
+    
     private func duplicateMultipleLayer() {
         delegate?.willDuplicateLayers(at: multipleSelectionIndices)
 
-        guard let layers = modelManager.getLayers(of: shotLabel) else {
-            return
-        }
-
-        var layerIds = [UUID]()
+        let layers = shot.layers
+        var list = [Layer]()
         for index in multipleSelectionIndices {
             let layer = layers[index]
-            layerIds.append(layer.id)
+            list.append(layer)
+        }
+        
+        for layer in list {
+            shot.addLayer(layer)
+            modelManager.generateThumbnailAndSave(project: project, shot: shot)
         }
 
-        modelManager.duplicateLayers(withIds: layerIds, of: shotLabel)
+//        modelManager.duplicateLayers(withIds: layerIds, of: shotLabel)
     }
     @IBAction private func groupLayers() {
         delegate?.willGroupLayers(at: multipleSelectionIndices)
 
-        guard let layers = modelManager.getLayers(of: shotLabel) else {
-            return
-        }
-
-        var layerIds = [UUID]()
+        let layers = shot.layers
+        var list = [Layer]()
         for index in multipleSelectionIndices {
             let layer = layers[index]
-            layerIds.append(layer.id)
+            list.append(layer)
         }
 
-        modelManager.groupLayers(withIds: layerIds, of: shotLabel)
+//        modelManager.groupLayers(withIds: layerIds, of: shotLabel)
     }
     @IBAction private func ungroupLayers() {
         delegate?.willUngroupLayer(at: selectedLayerIndex)
 
-        guard let layers = modelManager.getLayers(of: shotLabel) else {
-            return
-        }
+        let layers = shot.layers
         let layer = layers[selectedLayerIndex]
-        modelManager.ungroupLayer(withId: layer.id, of: shotLabel)
+//        modelManager.ungroupLayer(withId: layer.id, of: shotLabel)
     }
     @IBAction private func deleteLayers() {
         guard tableView.isEditing else {
@@ -276,11 +269,11 @@ extension LayerTableController {
         }
         delegate?.willRemoveLayers(at: [selectedLayerIndex])
 
-        guard let layers = modelManager.getLayers(of: shotLabel) else {
-            return
-        }
+        let layers = shot.layers
         let layer = layers[selectedLayerIndex]
-        modelManager.removeLayers(withIds: [layer.id], of: shotLabel)
+        shot.removeLayer(layer)
+        modelManager.generateThumbnailAndSave(project: project, shot: shot)
+//        modelManager.removeLayers(withIds: [layer.id], of: shotLabel)
     }
     private func deleteMultipleLayer() {
         guard numOfRows > multipleSelectionIndices.count else {
@@ -289,20 +282,26 @@ extension LayerTableController {
         }
         delegate?.willRemoveLayers(at: multipleSelectionIndices)
 
-        guard let layers = modelManager.getLayers(of: shotLabel) else {
-            return
-        }
-
-        var layerIds = [UUID]()
+        let layers = shot.layers
+        var list = [Layer]()
         for index in multipleSelectionIndices {
             let layer = layers[index]
-            layerIds.append(layer.id)
+            list.append(layer)
         }
 
-        modelManager.removeLayers(withIds: layerIds, of: shotLabel)
+        for layer in list {
+            shot.removeLayer(layer)
+            modelManager.generateThumbnailAndSave(project: project, shot: shot)
+        }
+        
+//        modelManager.removeLayers(withIds: layerIds, of: shotLabel)
     }
     @IBAction private func addLayer(_ sender: Any) {
-        modelManager.addLayer(to: shotLabel)
+        let layer = Layer(withDrawing: PKDrawing(), canvasSize: shot.canvasSize)
+        shot.addLayer(layer)
+        modelManager.generateThumbnailAndSave(project: project, shot: shot)
+        modelManager.observers.forEach({ $0.DidAddLayer(layer: layer) })
+//        modelManager.addLayer(to: shotLabel)
         selectedLayerIndex = numOfRows - 1
     }
 }
@@ -311,7 +310,8 @@ extension LayerTableController: UIColorPickerViewControllerDelegate {
     func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
         let color = viewController.selectedColor
         backgroundColorButton.backgroundColor = color
-        modelManager.setBackgroundColor(of: shotLabel, using: color)
+        shot.setBackgroundColor(color: Color(uiColor: color))
+//        modelManager.setBackgroundColor(of: shotLabel, using: color)
         delegate?.backgroundColorDidChange()
     }
 }

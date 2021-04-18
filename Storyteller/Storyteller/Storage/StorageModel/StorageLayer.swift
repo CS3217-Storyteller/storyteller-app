@@ -13,7 +13,6 @@ struct StorageLayer: Codable {
     var name: String
     var isLocked: Bool
     var isVisible: Bool
-    var label: LayerLabel
 
     var thumbnail: Thumbnail
 
@@ -23,7 +22,6 @@ struct StorageLayer: Codable {
         self.name = layer.name
         self.isLocked = layer.isLocked
         self.isVisible = layer.isVisible
-        self.label = layer.label
         self.thumbnail = layer.thumbnail
     }
 
@@ -32,7 +30,6 @@ struct StorageLayer: Codable {
 extension StorageLayer {
     var layer: Layer {
         Layer(component: storageComponent.component, canvasSize: canvasSize,
-              name: name, isLocked: isLocked, isVisible: isVisible, label: label,
-              thumbnail: thumbnail)
+              name: name, isLocked: isLocked, isVisible: isVisible, thumbnail: thumbnail)
     }
 }

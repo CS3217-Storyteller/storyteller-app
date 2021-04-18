@@ -8,16 +8,12 @@ import Foundation
 import CoreGraphics
 
 struct StorageProject: Codable {
-    var scenes: [UUID: StorageScene]
-    var sceneOrder: [UUID]
-    var label: ProjectLabel
+    var scenes: [StorageScene]
     let canvasSize: CGSize
     let title: String
 
     init(_ project: Project) {
-        self.scenes = project.scenes.mapValues({ StorageScene($0) })
-        self.sceneOrder = project.sceneOrder
-        self.label = project.label
+        self.scenes = project.scenes.map({ StorageScene($0) })
         self.canvasSize = project.canvasSize
         self.title = project.title
     }
@@ -25,7 +21,7 @@ struct StorageProject: Codable {
 
 extension StorageProject {
     var project: Project {
-        Project(id: label.projectId, label: label, title: title,
-                canvasSize: canvasSize, scenes: scenes.mapValues({ $0.scene }), sceneOrder: sceneOrder)
+        Project(title: title, canvasSize: canvasSize,
+                scenes: scenes.map({ $0.scene }))
     }
 }

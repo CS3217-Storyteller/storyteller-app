@@ -6,110 +6,101 @@
 //
 import PencilKit
 
-struct Shot {
-    var layers: [UUID: Layer] = [UUID: Layer]()
-    var layerOrder: [UUID] = [UUID]()
-    var id: UUID
-    var label: ShotLabel
+class Shot {
+    var layers: [Layer] = [Layer]()
     var backgroundColor: Color
     let canvasSize: CGSize
+    
+    var thumbnail: Thumbnail
+    
+    init(canvasSize: CGSize,
+         backgroundColor: Color,
+         layers: [Layer] = [],
+         thumbnail: Thumbnail = Thumbnail()) {
+        self.canvasSize = canvasSize
+        self.backgroundColor = backgroundColor
+        self.layers = layers
+        self.thumbnail = thumbnail
+    }
+    
 
-    var thumbnail = Thumbnail()
-
-    mutating func generateThumbnails() {
-        let defaultThumbnail = orderedLayers
-            .reduce(UIImage.solidImage(ofColor: backgroundColor.uiColor,
-                                       ofSize: canvasSize), {
-                                        $0.mergeWith($1.defaultThumbnail) })
-        let redOnionSkin = orderedLayers
+    func generateThumbnails() {
+        let defaultThumbnail = layers.reduce(
+            UIImage.solidImage(ofColor: backgroundColor.uiColor,
+                               ofSize: canvasSize), {
+                                $0.mergeWith($1.defaultThumbnail)
+                               })
+        let redOnionSkin = layers
             .reduce(UIImage.solidImage(ofColor: .clear, ofSize: canvasSize), {
                                         $0.mergeWith($1.redOnionSkin) })
-        let greenOnionSkin = orderedLayers
+        let greenOnionSkin = layers
             .reduce(UIImage.solidImage(ofColor: .clear, ofSize: canvasSize), {
                                         $0.mergeWith($1.greenOnionSkin) })
         thumbnail = Thumbnail(defaultThumbnail: defaultThumbnail,
                               redOnionSkin: redOnionSkin, greenOnionSkin: greenOnionSkin)
     }
-    mutating func removeLayers(withIds ids: Set<UUID>) {
-        layers = layers.filter { id, _ in
-            !ids.contains(id)
-        }
-        layerOrder = layerOrder.filter { id in
-            !ids.contains(id)
-        }
-    }
-
-    mutating func removeLayer(withId id: UUID) { // }-> Layer {
-        guard let index = layerOrder.firstIndex(of: id) else {
-            return
-        }
-        layerOrder.remove(at: index)
-        layers.removeValue(forKey: id)
-    }
-
-    mutating func moveLayer(_ layerLabel: LayerLabel, to newIndex: Int) {
-        let layerId = layerLabel.layerId
-        guard let oldIndex = layerOrder.firstIndex(of: layerId) else {
-            return
-        }
-
-        layerOrder.remove(at: oldIndex)
-        layerOrder.insert(layerId, at: newIndex)
-    }
-
-    var orderedLayers: [Layer] {
-        layerOrder
-            .map { id in
-                layers[id]
-            }
-            .compactMap { $0 }
-    }
-
-    mutating func updateLayer(_ layerLabel: LayerLabel, withDrawing drawing: PKDrawing) {
-        let layerId = layerLabel.layerId
-        layers[layerId]?.setDrawing(to: drawing)
-    }
-
-    mutating func updateLayer(_ layerLabel: LayerLabel, withLayer layer: Layer) {
-        let layerId = layerLabel.layerId
-        layers[layerId] = layer
-    }
-    mutating func generateThumbnail(of layerLabel: LayerLabel) {
-        layers[layerLabel.layerId]?.generateThumbnail()
-    }
-    mutating func generateLayerThumbnails() {
-        for id in layerOrder {
-            layers[id]?.generateThumbnail()
-        }
-    }
+    
     // TODO: What if layer already exist? Just update?
-    mutating func addLayer(_ layer: Layer, at index: Int? = nil) {
-        let layerId = layer.id
-        if let index = index, layers[layerId] == nil {
-            layerOrder.insert(layerId, at: index)
+    func addLayer(_ layer: Layer, at index: Int? = nil) {
+        if let index = index {
+            layers.insert(layer, at: index)
         } else {
-            layerOrder.append(layer.id)
+            layers.append(layer)
         }
-        layers[layerId] = layer
+    }
+    
+    func removeLayers(_ removedLayers: [Layer]) {
+        for layer in removedLayers {
+            self.removeLayer(layer)
+        }
     }
 
-    func duplicate(withId newShotId: UUID = UUID()) -> Self {
-        let newLabel = label.withShotId(newShotId)
-        var dict = [UUID: Layer]()
-        var order = [UUID]()
-        for (_, var layer) in layers {
-            layer.label = layer.label.withShotId(newShotId)
-            let newLayerId = UUID()
-            dict[newLayerId] = layer.duplicate(withId: newLayerId)
-            order.append(newLayerId)
+    func removeLayer(_ layer: Layer) {
+        if let index = self.layers.firstIndex(where: { $0 === layer }) {
+            self.layers.remove(at: index)
         }
-        return Self(layers: dict,
-                    layerOrder: order,
-                    id: newShotId,
-                    label: newLabel,
-                    backgroundColor: backgroundColor,
-                    canvasSize: canvasSize,
-                    thumbnail: thumbnail)
+    }
+
+    func moveLayer(layer: Layer, to newIndex: Int) {
+        guard let oldIndex = layers.firstIndex(where: { $0 === layer }) else {
+            return
+        }
+        layers.remove(at: oldIndex)
+        layers.insert(layer, at: newIndex)
+    }
+
+//    func updateLayer(layer: Layer, withDrawing drawing: PKDrawing) {
+//        layers[layerId]?.setDrawing(to: drawing)
+//    }
+//
+
+    func updateLayer(_ layer: Layer, with newLayer: Layer) {
+        if let index = self.layers.firstIndex(where: { $0 === layer }) {
+            self.layers[index] = newLayer
+        }
+    }
+    
+//    func generateThumbnail(of layerId: UUID) {
+//        layers[layerId]?.generateThumbnail()
+//    }
+    
+    func generateLayerThumbnails() {
+        for layer in layers {
+            layer.generateThumbnail()
+        }
+    }
+
+    func duplicate(withId newShotId: UUID = UUID()) -> Shot {
+        var list = [Layer]()
+        for layer in layers.reversed() {
+            list.append(layer.duplicate())
+        }
+        return Shot(canvasSize: canvasSize, backgroundColor: backgroundColor,
+                    layers: list, thumbnail: thumbnail)
+    }
+    
+    func setBackgroundColor(color: Color) {
+        self.backgroundColor = color
     }
 }
 

@@ -11,7 +11,7 @@ class SceneViewController: UIViewController {
 
     @IBOutlet private var collectionView: UICollectionView!
 
-    var projectLabel: ProjectLabel?
+    var project: Project?
     var modelManager: ModelManager?
 
     lazy var addSceneBarButton: UIBarButtonItem = {
@@ -24,8 +24,8 @@ class SceneViewController: UIViewController {
         return barButtonItem
     }()
 
-    func setProjectLabel(to projectLabel: ProjectLabel) {
-        self.projectLabel = projectLabel
+    func setProject(to project: Project) {
+        self.project = project
     }
 
     func setModelManager(to modelManager: ModelManager) {
@@ -64,8 +64,7 @@ class SceneViewController: UIViewController {
         self.view.addSubview(collectionView)
 
         guard let modelManager = self.modelManager,
-              let projectLabel = self.projectLabel,
-              let project = modelManager.getProject(of: projectLabel) else {
+              let project = self.project else {
             return
         }
 
@@ -98,11 +97,15 @@ class SceneViewController: UIViewController {
     }
 
     @objc func didAddSceneButtonClicked(_ sender: Any) {
-        guard let projectLabel = self.projectLabel,
+        guard let project = self.project,
               let modelManager = self.modelManager else {
             return
         }
-        modelManager.addScene(projectLabel: projectLabel)
+//        modelManager.addScene(projectLabel: projectLabel)
+
+        let newScene = Scene(canvasSize: project.canvasSize)
+        project.addScene(newScene)
+        modelManager.saveProject(project)
         self.collectionView.reloadData()
     }
 }
@@ -120,24 +123,16 @@ extension SceneViewController: UICollectionViewDelegate {
                                      for: indexPath) as? AddShotViewCell else {
             return UICollectionViewCell()
         }
-        guard let modelManager = self.modelManager,
-              let projectLabel = self.projectLabel,
-              let project = modelManager.getProject(of: projectLabel)
+        guard let project = self.project
         else {
             return UICollectionViewCell()
         }
 
-        let sceneId = project.sceneOrder[indexPath.section]
-        guard let scene = project.scenes[sceneId] else {
-            return UICollectionViewCell()
-        }
+        let scene = project.scenes[indexPath.section]
 
         if indexPath.row < scene.shots.count {
 
-            let shotId = scene.shotOrder[indexPath.row]
-            guard let shot = scene.shots[shotId] else {
-                return UICollectionViewCell()
-            }
+            let shot = scene.shots[indexPath.row]
             if !shot.layers.isEmpty {
                 sceneCell.setImage(image: shot.defaultThumbnail)
 //
@@ -176,28 +171,29 @@ extension SceneViewController: UICollectionViewDelegate {
         shotDesignerController.modalPresentationStyle = .fullScreen
 
         guard let modelManager = self.modelManager,
-              let projectLabel = self.projectLabel,
-              let project = modelManager.getProject(of: projectLabel)
+              let project = self.project
         else {
             return
         }
-        let sceneId = project.sceneOrder[indexPath.section]
-        guard let scene = project.scenes[sceneId] else {
-            return
-        }
+        let scene = project.scenes[indexPath.section]
 
         if indexPath.row < scene.shots.count {
-            let shotId = scene.shotOrder[indexPath.row]
-            guard let shot = scene.shots[shotId] else {
-                return
-            }
+            let shot = scene.shots[indexPath.row]
             shotDesignerController.setModelManager(to: modelManager)
-            shotDesignerController.setShotLabel(to: shot.label)
+            shotDesignerController.setShot(to: shot)
+            shotDesignerController.setScene(to: scene)
+            shotDesignerController.setProject(to: project)
             shotDesignerController.modalTransitionStyle = .flipHorizontal
             self.navigationController?.pushViewController(shotDesignerController, animated: true)
         } else {
-            let shotLabel = scene.label.generateShotLabel(withId: UUID())
-            modelManager.addShot(ofShot: shotLabel, backgroundColor: .white)
+            let newShot = Shot(canvasSize: scene.canvasSize, backgroundColor: Color(uiColor: .white))
+            if newShot.layers.isEmpty {
+                let layer = Layer(withDrawing: PKDrawing(), canvasSize: newShot.canvasSize)
+                newShot.addLayer(layer)
+            }
+            scene.addShot(newShot)
+            modelManager.saveProject(project)
+//            modelManager.addShot(ofShot: shotLabel, backgroundColor: .white)
             self.collectionView.reloadData()
         }
     }
@@ -213,48 +209,31 @@ extension SceneViewController: UICollectionViewDelegate {
         }
 
         guard let modelManager = self.modelManager,
-              let projectLabel = self.projectLabel,
-              let project = modelManager.getProject(of: projectLabel)
+              let project = self.project
         else {
             return
         }
 
-        let sceneId = project.sceneOrder[sourceIndexPath.section]
-        guard let scene = project.scenes[sceneId] else {
-            return
-        }
+        let scene = project.scenes[sourceIndexPath.section]
         let sourceIndex = sourceIndexPath.row
-        let sourceShotId = scene.shotOrder[sourceIndex]
-        guard let sourceShot = scene.shots[sourceShotId] else {
-            return
-        }
-        let sourceShotLabel = sourceShot.label
-
         let destinationIndex = destinationIndexPath.row
-
-        modelManager.moveShot(sourceShotLabel, to: destinationIndex)
+        scene.swapShots(sourceIndex, destinationIndex)
+        modelManager.saveProject(project)
     }
 }
 
 extension SceneViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let modelManager = self.modelManager,
-              let projectLabel = self.projectLabel,
-              let project = modelManager.getProject(of: projectLabel)
+        guard let project = self.project
         else {
             return 0
         }
-        let sceneId = project.sceneOrder[section]
-        guard let scene = project.scenes[sceneId] else {
-            return 0
-        }
+        let scene = project.scenes[section]
         return scene.shots.count + 1
     }
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        guard let projectLabel = self.projectLabel,
-              let modelManager = self.modelManager,
-              let project = modelManager.getProject(of: projectLabel) else {
+        guard let project = self.project else {
             return 0
         }
         return project.scenes.count

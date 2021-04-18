@@ -6,86 +6,81 @@
 //
 import PencilKit
 
-struct Scene {
-    var label: SceneLabel
+class Scene {
     let canvasSize: CGSize
-    var id: UUID
-    var shots: [UUID: Shot] = [UUID: Shot]()
-    var shotOrder: [UUID] = [UUID]()
-
-    var orderedShots: [Shot] {
-        shotOrder
-            .map { id in
-                shots[id]
-            }
-            .compactMap { $0 }
+    var shots: [Shot] = [Shot]()
+    
+    init(canvasSize: CGSize, shots: [Shot] = []) {
+        self.canvasSize = canvasSize
+        self.shots = shots
     }
 
-    mutating func swapShots(_ index1: Int, _ index2: Int) {
-        self.shotOrder.swapAt(index1, index2)
+    func swapShots(_ index1: Int, _ index2: Int) {
+        self.shots.swapAt(index1, index2)
     }
 
-    mutating func updateLayer(_ layerLabel: LayerLabel,
-                              withDrawing drawing: PKDrawing) {
-        let shotId = layerLabel.shotId
-        shots[shotId]?.updateLayer(layerLabel, withDrawing: drawing)
-    }
-
-    mutating func updateLayer(_ layerLabel: LayerLabel,
-                              withLayer newLayer: Layer) {
-        let shotId = layerLabel.shotId
-        shots[shotId]?.updateLayer(layerLabel, withLayer: newLayer)
-    }
-    mutating func updateShot(_ shotLabel: ShotLabel, withShot shot: Shot) {
-        let shotId = shotLabel.shotId
-        shots[shotId] = shot
-    }
-    mutating func addShot(_ shot: Shot) {
-        let shotId = shot.id
-        if shots[shotId] == nil {
-            shotOrder.append(shotId)
+    func updateShot(shot: Shot, with newShot: Shot) {
+        if let index = self.shots.firstIndex(where: { $0 === shot }) {
+            self.shots[index] = shot
         }
-        shots[shotId] = shot
+    }
+    
+    func addShot(_ shot: Shot) {
+        self.shots.append(shot)
+    }
+    
+    func addShot(_ shot: Shot, at index: Int) {
+        self.shots.insert(shot, at: index)
     }
 
-    mutating func addLayer(_ layer: Layer, at index: Int?, to shotLabel: ShotLabel) {
-        let shotId = shotLabel.shotId
-        shots[shotId]?.addLayer(layer, at: index)
-    }
+    
+//    func updateLayer(withId layerId: UUID, withDrawing drawing: PKDrawing) {
+//        let shotId = layerLabel.shotId
+//        shots[shotId]?.updateLayer(layerLabel, withDrawing: drawing)
+//    }
+//
+//    mutating func updateLayer(_ layerLabel: LayerLabel,
+//                              withLayer newLayer: Layer) {
+//        let shotId = layerLabel.shotId
+//        shots[shotId]?.updateLayer(layerLabel, withLayer: newLayer)
+//    }
 
-    mutating func removeLayers(withIds ids: Set<UUID>, of shotLabel: ShotLabel) {
-        shots[shotLabel.shotId]?.removeLayers(withIds: ids)
-    }
 
-    mutating func moveLayer(_ layerLabel: LayerLabel, to newIndex: Int) {
-        let shotId = layerLabel.shotId
-        shots[shotId]?.moveLayer(layerLabel, to: newIndex)
-    }
 
-    mutating func moveShot(_ shotLabel: ShotLabel, to newIndex: Int) {
-        let shotId = shotLabel.shotId
-        guard let oldIndex = shotOrder.firstIndex(of: shotId) else {
+//    mutating func addLayer(_ layer: Layer, at index: Int?, to shotLabel: ShotLabel) {
+//        let shotId = shotLabel.shotId
+//        shots[shotId]?.addLayer(layer, at: index)
+//    }
+//
+//    mutating func removeLayers(withIds ids: Set<UUID>, of shotLabel: ShotLabel) {
+//        shots[shotLabel.shotId]?.removeLayers(withIds: ids)
+//    }
+//
+//    mutating func moveLayer(_ layerLabel: LayerLabel, to newIndex: Int) {
+//        let shotId = layerLabel.shotId
+//        shots[shotId]?.moveLayer(layerLabel, to: newIndex)
+//    }
+
+    func moveShot(shot: Shot, to newIndex: Int) {
+        guard let oldIndex = self.shots.firstIndex(where: { $0 === shot }) else {
             return
         }
-
-        shotOrder.remove(at: oldIndex)
-        shotOrder.insert(shotId, at: newIndex)
+        self.shots.remove(at: oldIndex)
+        self.shots.insert(shot, at: newIndex)
     }
-    func duplicate(withId newSceneId: UUID = UUID()) -> Self {
-        let newLabel = SceneLabel(projectId: label.projectId,
-                                  sceneId: newSceneId)
-        var dict = [UUID: Shot]()
-        var order = [UUID]()
-        for (_, var shot) in shots {
-            shot.label = shot.label.withSceneId(newSceneId)
-            let newShotId = UUID()
-            dict[newShotId] = shot.duplicate(withId: newShotId)
-            order.append(newShotId)
+    
+    func duplicate() -> Scene {
+        return Scene(
+            canvasSize: canvasSize,
+            shots: shots.map({ $0.duplicate() })
+        )
+    }
+    
+    func getShot(_ index: Int, after shot: Shot) -> Shot? {
+        guard let currentIndex = self.shots.firstIndex(where: { $0 === shot }),
+              self.shots.indices.contains(currentIndex + index) else {
+            return nil
         }
-        return Self(label: newLabel,
-                    canvasSize: canvasSize,
-                    id: newSceneId,
-                    shots: dict,
-                    shotOrder: order)
+        return self.shots[currentIndex + index]
     }
 }

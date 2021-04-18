@@ -13,7 +13,7 @@ class DrawingUtility {
         return layerView
     }
     static func generateLayerViews(for shot: Shot) -> [LayerView] {
-        shot.orderedLayers.map({ generateLayerView(for: $0) })
+        shot.layers.map({ generateLayerView(for: $0) })
     }
     static func generateShotThumbnail(for shot: Shot) -> UIImage {
         let shotView = UIView(frame: shot.canvasSize.rectAtOrigin)
