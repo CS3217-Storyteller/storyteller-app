@@ -139,7 +139,7 @@ extension SceneViewController: UICollectionViewDelegate {
                 return UICollectionViewCell()
             }
             if !shot.layers.isEmpty {
-                sceneCell.setImage(image: shot.thumbnail)
+                sceneCell.setImage(image: shot.defaultThumbnail)
 //
 //                let thumbnail = shot.orderedLayers[0].drawing
 //                    .image(from: CGRect(x: 0, y: 0,

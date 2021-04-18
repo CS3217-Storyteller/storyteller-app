@@ -15,7 +15,7 @@ struct StorageLayer: Codable {
     var isVisible: Bool
     var label: LayerLabel
 
-    var thumbnail: Data
+    var thumbnail: Thumbnail
 
     init(_ layer: Layer) {
         self.storageComponent = StorageLayerComponent(layer.component)
@@ -24,7 +24,7 @@ struct StorageLayer: Codable {
         self.isLocked = layer.isLocked
         self.isVisible = layer.isVisible
         self.label = layer.label
-        self.thumbnail = layer.thumbnail.pngData()!
+        self.thumbnail = layer.thumbnail
     }
 
 }
@@ -33,6 +33,6 @@ extension StorageLayer {
     var layer: Layer {
         Layer(component: storageComponent.component, canvasSize: canvasSize,
               name: name, isLocked: isLocked, isVisible: isVisible, label: label,
-              thumbnail: UIImage(data: thumbnail))
+              thumbnail: thumbnail)
     }
 }

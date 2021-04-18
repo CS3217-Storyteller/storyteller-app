@@ -93,7 +93,7 @@ extension LayerTableController: UITableViewDataSource {
         }
 
         let layer = layerOrder[indexPath.row]
-        cell.setUp(thumbnail: layer.thumbnail, name: layer.name,
+        cell.setUp(thumbnail: layer.defaultThumbnail, name: layer.name,
                    isLocked: layer.isLocked, isVisible: layer.isVisible)
         cell.delegate = self
         return cell

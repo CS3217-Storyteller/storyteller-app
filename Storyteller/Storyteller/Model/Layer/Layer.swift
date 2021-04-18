@@ -19,18 +19,18 @@ struct Layer {
         }
     }
 
-    var thumbnail: UIImage
+    var thumbnail: Thumbnail
 
     init(component: LayerComponent, canvasSize: CGSize, name: String,
          isLocked: Bool, isVisible: Bool, label: LayerLabel,
-         thumbnail: UIImage?) {
+         thumbnail: Thumbnail?) {
         self.component = component
         self.canvasSize = canvasSize
         self.name = name
         self.label = label
         self.id = label.layerId
         guard let thumbnail = thumbnail else {
-            self.thumbnail = component.merge(merger: ImageMerger())
+            self.thumbnail = Thumbnail()
             return
         }
         self.thumbnail = thumbnail
@@ -43,7 +43,7 @@ struct Layer {
         self.name = name
         self.label = label
         self.id = label.layerId
-        self.thumbnail = component.merge(merger: ImageMerger())
+        self.thumbnail = component.merge(merger: ThumbnailMerger())
     }
     init(withImage image: UIImage, canvasSize: CGSize,
          name: String = Constants.defaultImageLayerName, label: LayerLabel) {
@@ -53,7 +53,7 @@ struct Layer {
         self.name = name
         self.label = label
         self.id = label.layerId
-        self.thumbnail = component.merge(merger: ImageMerger())
+        self.thumbnail = component.merge(merger: ThumbnailMerger())
     }
 
     @discardableResult
@@ -69,13 +69,10 @@ struct Layer {
     }
     mutating func generateThumbnail() {
         guard isVisible else {
-            thumbnail = UIImage.solidImage(ofColor: .clear, ofSize: canvasSize)
+            thumbnail = Thumbnail()
             return
         }
-        thumbnail = component.merge(merger: ImageMerger())
-    }
-    mutating func updateThumbnail(using thumbnail: UIImage) {
-        self.thumbnail = thumbnail
+        thumbnail = component.merge(merger: ThumbnailMerger())
     }
 
     func duplicate(withId newId: UUID = UUID()) -> Layer {
@@ -114,12 +111,6 @@ extension Layer: Transformable {
     }
 }
 
-// MARK: - Onion Skins
-extension Layer {
-    var redOnionSkin: UIImage {
-        component.merge(merger: RedOnionSkinMerger())
-    }
-    var greenOnionSkin: UIImage {
-        component.merge(merger: GreenOnionSkinMerger())
-    }
+// MARK: - Thumbnailable
+extension Layer: Thumbnailable {
 }

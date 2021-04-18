@@ -71,6 +71,8 @@
 		B3C7BFB2262C24E50005F159 /* GreenOnionSkinMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C7BFB1262C24E50005F159 /* GreenOnionSkinMerger.swift */; };
 		B3C7BFB6262C29930005F159 /* OnionSkinRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C7BFB5262C29930005F159 /* OnionSkinRange.swift */; };
 		B3C7BFBA262C393A0005F159 /* Thumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C7BFB9262C393A0005F159 /* Thumbnail.swift */; };
+		B3C7BFC0262C3C8B0005F159 /* ThumbnailMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C7BFBF262C3C8B0005F159 /* ThumbnailMerger.swift */; };
+		B3C7BFC4262C3F3A0005F159 /* Thumbnailable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C7BFC3262C3F3A0005F159 /* Thumbnailable.swift */; };
 		B3D7AD532615A1280082D591 /* DrawingLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D7AD522615A1280082D591 /* DrawingLayerView.swift */; };
 		B3D7AD612615A54C0082D591 /* CompositeLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D7AD602615A54C0082D591 /* CompositeLayerView.swift */; };
 		B3D7AD6B2615B4C30082D591 /* UIView+showBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D7AD6A2615B4C30082D591 /* UIView+showBorder.swift */; };
@@ -158,6 +160,8 @@
 		B3C7BFB1262C24E50005F159 /* GreenOnionSkinMerger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreenOnionSkinMerger.swift; sourceTree = "<group>"; };
 		B3C7BFB5262C29930005F159 /* OnionSkinRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnionSkinRange.swift; sourceTree = "<group>"; };
 		B3C7BFB9262C393A0005F159 /* Thumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thumbnail.swift; sourceTree = "<group>"; };
+		B3C7BFBF262C3C8B0005F159 /* ThumbnailMerger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailMerger.swift; sourceTree = "<group>"; };
+		B3C7BFC3262C3F3A0005F159 /* Thumbnailable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thumbnailable.swift; sourceTree = "<group>"; };
 		B3D7AD522615A1280082D591 /* DrawingLayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingLayerView.swift; sourceTree = "<group>"; };
 		B3D7AD602615A54C0082D591 /* CompositeLayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeLayerView.swift; sourceTree = "<group>"; };
 		B3D7AD6A2615B4C30082D591 /* UIView+showBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+showBorder.swift"; sourceTree = "<group>"; };
@@ -310,9 +314,10 @@
 			isa = PBXGroup;
 			children = (
 				A29A19282607237100710943 /* Layer.swift */,
+				B3C7BFB9262C393A0005F159 /* Thumbnail.swift */,
+				B3C7BFC3262C3F3A0005F159 /* Thumbnailable.swift */,
 				B3C4B32C2611F307007BE693 /* Layer Component */,
 				B3C4B32D2611F317007BE693 /* Layer Merger */,
-				B3C7BFB9262C393A0005F159 /* Thumbnail.swift */,
 			);
 			path = Layer;
 			sourceTree = "<group>";
@@ -374,6 +379,7 @@
 				B3320D1D260F6AB20063558A /* LayerMerger.swift */,
 				B3320D21260F6BA10063558A /* NormalLayerMerger.swift */,
 				B34A84552617AC6D00A3185A /* ImageMerger.swift */,
+				B3C7BFBF262C3C8B0005F159 /* ThumbnailMerger.swift */,
 				B3C7BFA1262C21430005F159 /* RedOnionSkinMerger.swift */,
 				B3C7BFB1262C24E50005F159 /* GreenOnionSkinMerger.swift */,
 			);
@@ -581,6 +587,7 @@
 				B35115C0261341980056886C /* UIView+setAnchorPoint.swift in Sources */,
 				B35115D22613790F0056886C /* EditingMode.swift in Sources */,
 				B30AA8592610C3B5008B6714 /* StorageProject.swift in Sources */,
+				B3C7BFC0262C3C8B0005F159 /* ThumbnailMerger.swift in Sources */,
 				B35FA2B82614A84900D656E3 /* CompositeComponent.swift in Sources */,
 				A29A19552607242600710943 /* Layer.swift in Sources */,
 				B31A650E2618201900F532AF /* CGAffineTransform+transformedAround.swift in Sources */,
@@ -603,6 +610,7 @@
 				B3C7BFB6262C29930005F159 /* OnionSkinRange.swift in Sources */,
 				A29A19612607243800710943 /* Project.swift in Sources */,
 				B3440878262B61AD009F3CC0 /* CGSize+rectAtOrigin.swift in Sources */,
+				B3C7BFC4262C3F3A0005F159 /* Thumbnailable.swift in Sources */,
 				B3320D22260F6BA10063558A /* NormalLayerMerger.swift in Sources */,
 				A2F2C89A260768E900FD4FF6 /* Color.swift in Sources */,
 				B34A84522617AC0000A3185A /* UIView+asImage.swift in Sources */,

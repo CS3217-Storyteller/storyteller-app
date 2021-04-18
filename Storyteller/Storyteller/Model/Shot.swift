@@ -14,28 +14,21 @@ struct Shot {
     var backgroundColor: Color
     let canvasSize: CGSize
 
-    var thumbnail = Constants.clearImage
-    var redOnionSkin = Constants.clearImage
-    var greenOnionSkin = Constants.clearImage
+    var thumbnail = Thumbnail()
 
     mutating func generateThumbnails() {
-        thumbnail = orderedLayers
+        let defaultThumbnail = orderedLayers
             .reduce(UIImage.solidImage(ofColor: backgroundColor.uiColor,
                                        ofSize: canvasSize), {
-                                        $0.mergeWith($1.thumbnail) })
-        redOnionSkin = orderedLayers
+                                        $0.mergeWith($1.defaultThumbnail) })
+        let redOnionSkin = orderedLayers
             .reduce(UIImage.solidImage(ofColor: .clear, ofSize: canvasSize), {
                                         $0.mergeWith($1.redOnionSkin) })
-        greenOnionSkin = orderedLayers
+        let greenOnionSkin = orderedLayers
             .reduce(UIImage.solidImage(ofColor: .clear, ofSize: canvasSize), {
                                         $0.mergeWith($1.greenOnionSkin) })
-    }
-    // TODO: change to directly generate thumbnail here
-    mutating func updateThumbnail(_ thumbnail: UIImage) {
-        self.thumbnail = thumbnail
-    }
-    mutating func updateThumbnail(of layerLabel: LayerLabel, using thumbnail: UIImage) {
-        self.layers[layerLabel.layerId]?.updateThumbnail(using: thumbnail)
+        thumbnail = Thumbnail(defaultThumbnail: defaultThumbnail,
+                              redOnionSkin: redOnionSkin, greenOnionSkin: greenOnionSkin)
     }
     mutating func removeLayers(withIds ids: Set<UUID>) {
         layers = layers.filter { id, _ in
@@ -120,13 +113,6 @@ struct Shot {
     }
 }
 
-// MARK: - Onion Skins
-extension Shot {
-//    var redOnionSkin: UIImage {
-//        orderedLayers.reduce(UIImage.solidImage(ofColor: .clear, ofSize: canvasSize)) { $0.mergeWith($1.redOnionSkin) }
-//    }
-//    var greenOnionSkin: UIImage {
-//        orderedLayers.reduce(UIImage.solidImage(ofColor: .clear,
-//                                                ofSize: canvasSize)) { $0.mergeWith($1.greenOnionSkin) }
-//    }
+// MARK: - Thumbnailable
+extension Shot: Thumbnailable {
 }

@@ -64,7 +64,6 @@ class ShotView: UIView {
         selectedLayerIndex = selected
     }
     func updateOnionSkins(skins: UIImage) {
-        print("called")
         onionSkins.image = skins
         bringSubviewToFront(onionSkins)
     }
