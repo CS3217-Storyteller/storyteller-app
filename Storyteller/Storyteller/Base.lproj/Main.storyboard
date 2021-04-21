@@ -115,12 +115,12 @@
                             </barButtonItem>
                             <barButtonItem title="Item" image="arrow.backward" catalog="system" id="hba-lq-xHu">
                                 <connections>
-                                    <action selector="previousShot:" destination="mXm-tZ-pGV" id="IX5-wY-V0t"/>
+                                    <action selector="previousShot" destination="mXm-tZ-pGV" id="dMA-gB-jTu"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem title="Item" image="arrow.right" catalog="system" id="c60-JY-szr">
                                 <connections>
-                                    <action selector="nextShot:" destination="mXm-tZ-pGV" id="cRe-aC-fQe"/>
+                                    <action selector="nextShot" destination="mXm-tZ-pGV" id="qvp-dy-mKU"/>
                                 </connections>
                             </barButtonItem>
                         </leftBarButtonItems>

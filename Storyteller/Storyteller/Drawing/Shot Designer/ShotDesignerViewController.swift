@@ -249,6 +249,7 @@ extension ShotDesignerViewController {
             let newShot = shot.duplicate()
             scene.addShot(newShot, at: index + 1)
             modelManager.saveProject(project)
+            nextShot()
         }
 
     }
@@ -269,7 +270,7 @@ extension ShotDesignerViewController {
         }
     }
 
-    @IBAction private func nextShot(_ sender: Any) {
+    @IBAction private func nextShot() {
         guard let nextShot = scene.getShot(1, after: shot) else {
             return
         }
@@ -277,7 +278,7 @@ extension ShotDesignerViewController {
         setUpShot()
     }
 
-    @IBAction private func previousShot(_ sender: Any) {
+    @IBAction private func previousShot() {
         guard let prevShot = scene.getShot(-1, after: shot) else {
             return
         }
