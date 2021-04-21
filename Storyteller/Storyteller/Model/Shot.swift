@@ -41,7 +41,7 @@ class Shot {
 
     func duplicate() -> Shot {
         var list = [Layer]()
-        for layer in layers.reversed() {
+        for layer in layers {
             list.append(layer.duplicate())
         }
         return Shot(canvasSize: canvasSize, backgroundColor: backgroundColor,
