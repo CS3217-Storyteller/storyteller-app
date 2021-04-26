@@ -4,33 +4,33 @@
 //
 //  Created by TFang on 31/3/21.
 //
-struct StorageLayerComponent: Codable {
+struct PersistedLayerComponent: Codable {
     enum StorageNodeType {
         case drawing(DrawingComponent)
         case image(ImageComponent)
-        case composite([StorageLayerComponent])
+        case composite([PersistedLayerComponent])
     }
 
     var type: StorageNodeType
 
     init(_ node: LayerComponent) {
-        self = StorageLayerComponent.generateStorageComponent(node)
+        self = PersistedLayerComponent.generateStorageComponent(node)
     }
 
     init(type: StorageNodeType) {
         self.type = type
     }
 
-    static func generateStorageComponent(_ layerComponent: LayerComponent) -> StorageLayerComponent {
+    static func generateStorageComponent(_ layerComponent: LayerComponent) -> PersistedLayerComponent {
         if let drawingComponent = layerComponent as? DrawingComponent {
-            return StorageLayerComponent(type: .drawing(drawingComponent))
+            return PersistedLayerComponent(type: .drawing(drawingComponent))
         }
         if let imageComponent = layerComponent as? ImageComponent {
-            return StorageLayerComponent(type: .image(imageComponent))
+            return PersistedLayerComponent(type: .image(imageComponent))
         }
         if let composite = layerComponent as? CompositeComponent {
             let storageChildren = composite.children.map({ generateStorageComponent($0) })
-            return StorageLayerComponent(type: .composite(storageChildren))
+            return PersistedLayerComponent(type: .composite(storageChildren))
         }
 
         fatalError("Failed to generate storage layer component")
@@ -72,17 +72,17 @@ struct StorageLayerComponent: Codable {
             self.type = .image(imageComponent)
             return
         }
-        if let children = try? container.decode([StorageLayerComponent].self, forKey: .children) {
+        if let children = try? container.decode([PersistedLayerComponent].self, forKey: .children) {
             self.type = .composite(children)
             return
         }
 
-        throw CodableError.decoding("Error while decoding StorageLayerComponent")
+        throw CodableError.decoding("Error while decoding PersistedLayerComponent")
     }
 }
 
-extension StorageLayerComponent {
-    static func generateLayerComponent(_ storageComponent: StorageLayerComponent) -> LayerComponent {
+extension PersistedLayerComponent {
+    static func generateLayerComponent(_ storageComponent: PersistedLayerComponent) -> LayerComponent {
         switch storageComponent.type {
         case .drawing(let drawingComponent):
             return drawingComponent
@@ -95,6 +95,6 @@ extension StorageLayerComponent {
     }
 
     var component: LayerComponent {
-        StorageLayerComponent.generateLayerComponent(self)
+        PersistedLayerComponent.generateLayerComponent(self)
     }
 }

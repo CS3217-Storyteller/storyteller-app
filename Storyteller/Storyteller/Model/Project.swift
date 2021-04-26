@@ -11,6 +11,7 @@ class Project {
     let canvasSize: CGSize
 
     var scenes: [Scene] = []
+    var id = UUID()
 
     init(title: String, canvasSize: CGSize, scenes: [Scene] = []) {
         self.title = title

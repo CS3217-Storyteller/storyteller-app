@@ -9,6 +9,7 @@ import PencilKit
 class Scene {
     let canvasSize: CGSize
     var shots: [Shot] = [Shot]()
+    var id = UUID()
 
     init(canvasSize: CGSize, shots: [Shot] = []) {
         self.canvasSize = canvasSize
