@@ -16,6 +16,7 @@ class Layer {
             generateThumbnail()
         }
     }
+    var id = UUID()
 
     var thumbnail: Thumbnail
 

@@ -6,6 +6,7 @@
 //
 import PencilKit
 
+// TODO: Rename ModelManager to ProjectManager?
 class ModelManager {
 
     private let thumbnailQueue = DispatchQueue(label: "ThumbnailQueue", qos: .background)
@@ -91,14 +92,14 @@ extension ModelManager {
     }
 }
 
-protocol ModelManagerObserver {
+/*protocol ModelObserver {
     /// Invoked when the model changes.
     func modelDidChange()
-    func DidUpdateLayer()
+}/*    func DidUpdateLayer()
     func DidAddLayer(layer: Layer)
 }
 
-extension ModelManagerObserver {
+extension ModelObserver {
     func DidUpdateLayer() { }
     func DidAddLayer(layer: Layer) { }
-}
+}*/*/

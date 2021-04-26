@@ -10,6 +10,7 @@ class Shot {
     var layers: [Layer] = [Layer]()
     var backgroundColor: Color
     let canvasSize: CGSize
+    var id = UUID()
 
     var thumbnail: Thumbnail
 
