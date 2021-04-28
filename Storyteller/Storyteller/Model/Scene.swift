@@ -35,31 +35,6 @@ class Scene {
         self.shots.insert(shot, at: index)
     }
 
-//    func updateLayer(withId layerId: UUID, withDrawing drawing: PKDrawing) {
-//        let shotId = layerLabel.shotId
-//        shots[shotId]?.updateLayer(layerLabel, withDrawing: drawing)
-//    }
-//
-//    mutating func updateLayer(_ layerLabel: LayerLabel,
-//                              withLayer newLayer: Layer) {
-//        let shotId = layerLabel.shotId
-//        shots[shotId]?.updateLayer(layerLabel, withLayer: newLayer)
-//    }
-
-//    mutating func addLayer(_ layer: Layer, at index: Int?, to shotLabel: ShotLabel) {
-//        let shotId = shotLabel.shotId
-//        shots[shotId]?.addLayer(layer, at: index)
-//    }
-//
-//    mutating func removeLayers(withIds ids: Set<UUID>, of shotLabel: ShotLabel) {
-//        shots[shotLabel.shotId]?.removeLayers(withIds: ids)
-//    }
-//
-//    mutating func moveLayer(_ layerLabel: LayerLabel, to newIndex: Int) {
-//        let shotId = layerLabel.shotId
-//        shots[shotId]?.moveLayer(layerLabel, to: newIndex)
-//    }
-
     func moveShot(shot: Shot, to newIndex: Int) {
         guard let oldIndex = self.shots.firstIndex(where: { $0 === shot }) else {
             return
