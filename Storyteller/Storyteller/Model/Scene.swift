@@ -9,10 +9,12 @@ import PencilKit
 class Scene {
     let canvasSize: CGSize
     var shots: [Shot] = [Shot]()
+    let id: UUID
 
-    init(canvasSize: CGSize, shots: [Shot] = []) {
+    init(canvasSize: CGSize, shots: [Shot] = [], id: UUID = UUID()) {
         self.canvasSize = canvasSize
         self.shots = shots
+        self.id = id
     }
 
     func swapShots(_ index1: Int, _ index2: Int) {

@@ -9,13 +9,15 @@ import PencilKit
 class Project {
     var title: String
     let canvasSize: CGSize
+    let id: UUID
 
     var scenes: [Scene] = []
 
-    init(title: String, canvasSize: CGSize, scenes: [Scene] = []) {
+    init(title: String, canvasSize: CGSize, scenes: [Scene] = [], id: UUID = UUID()) {
         self.title = title
         self.canvasSize = canvasSize
         self.scenes = scenes
+        self.id = id
     }
 
     func addScene(_ scene: Scene) {

@@ -12,15 +12,18 @@ class Shot {
     let canvasSize: CGSize
 
     var thumbnail: Thumbnail
+    let id: UUID
 
     init(canvasSize: CGSize,
          backgroundColor: Color,
          layers: [Layer] = [],
-         thumbnail: Thumbnail = Thumbnail()) {
+         thumbnail: Thumbnail = Thumbnail(),
+         id: UUID = UUID()) {
         self.canvasSize = canvasSize
         self.backgroundColor = backgroundColor
         self.layers = layers
         self.thumbnail = thumbnail
+        self.id = id
     }
 
     func generateThumbnails() {
@@ -40,12 +43,8 @@ class Shot {
     }
 
     func duplicate() -> Shot {
-        var list = [Layer]()
-        for layer in layers {
-            list.append(layer.duplicate())
-        }
-        return Shot(canvasSize: canvasSize, backgroundColor: backgroundColor,
-                    layers: list, thumbnail: thumbnail)
+        Shot(canvasSize: canvasSize, backgroundColor: backgroundColor,
+                    layers: layers.map({ $0.duplicate() }), thumbnail: thumbnail)
     }
 
     func setBackgroundColor(color: Color) {

@@ -16,16 +16,18 @@ class Layer {
             generateThumbnail()
         }
     }
+    let id: UUID
 
     var thumbnail: Thumbnail
 
     init(component: LayerComponent, canvasSize: CGSize, name: String,
-         isLocked: Bool = false, isVisible: Bool = true, thumbnail: Thumbnail? = nil) {
+         isLocked: Bool = false, isVisible: Bool = true, thumbnail: Thumbnail? = nil, id: UUID = UUID()) {
         self.component = component
         self.canvasSize = canvasSize
         self.name = name
         self.isLocked = isLocked
         self.isVisible = isVisible
+        self.id = id
         guard let thumbnail = thumbnail else {
             self.thumbnail = Thumbnail()
             generateThumbnail()
@@ -35,19 +37,21 @@ class Layer {
     }
 
     init(withDrawing drawing: PKDrawing, canvasSize: CGSize,
-         name: String = Constants.defaultDrawingLayerName) {
+         name: String = Constants.defaultDrawingLayerName, id: UUID = UUID()) {
         self.canvasSize = canvasSize
         self.component = DrawingComponent(canvasSize: canvasSize, drawing: drawing)
         self.name = name
+        self.id = id
         self.thumbnail = component.merge(merger: ThumbnailMerger())
     }
 
     init(withImage image: UIImage, canvasSize: CGSize,
-         name: String = Constants.defaultImageLayerName) {
+         name: String = Constants.defaultImageLayerName, id: UUID = UUID()) {
         self.canvasSize = canvasSize
         self.component = ImageComponent(
             canvasSize: canvasSize, imageData: image.pngData()!)
         self.name = name
+        self.id = id
         self.thumbnail = component.merge(merger: ThumbnailMerger())
     }
 
