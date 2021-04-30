@@ -65,6 +65,10 @@ extension PersistenceManager {
     func encodeToJSON<T: Encodable>(_ encodableObject: T) -> Data? {
         try? JSONEncoder().encode(encodableObject)
     }
+
+    func decodeFromJSON<T: Decodable>(_ data: Data, as type: T.Type) -> T? {
+        try? JSONDecoder().decode(T.self, from: data)
+    }
 }
 
 /*

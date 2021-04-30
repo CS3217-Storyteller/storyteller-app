@@ -17,11 +17,15 @@ class ModelManager {
     var projects: [Project]
 
     init() {
+        let persistedModelTree = PersistedModelLoader().loadPersistedModels()
+        self.projects = ModelFactory().loadProjectModel(from: persistedModelTree)
+        /*
         var list = [Project]()
         for project in storageManager.getAllProjects() {
             list.append(project)
         }
         self.projects = list
+         */
     }
 
     func addProject(_ project: Project) {

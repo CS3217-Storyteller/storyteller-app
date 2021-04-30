@@ -17,6 +17,7 @@
 		899FBA582639DED700E0CF1A /* ShotPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899FBA572639DED700E0CF1A /* ShotPersistenceManager.swift */; };
 		899FBA5C2639E57B00E0CF1A /* MainPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899FBA5B2639E57B00E0CF1A /* MainPersistenceManager.swift */; };
 		899FBA6E263ACCDA00E0CF1A /* PersistedModelLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899FBA6D263ACCDA00E0CF1A /* PersistedModelLoader.swift */; };
+		899FBA72263BF69D00E0CF1A /* ModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899FBA71263BF69D00E0CF1A /* ModelFactory.swift */; };
 		A209157F2606FE3F001A242E /* ProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A209157E2606FE3F001A242E /* ProjectViewController.swift */; };
 		A2091585260703D1001A242E /* SceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2091584260703D1001A242E /* SceneViewController.swift */; };
 		A209158926070553001A242E /* SceneHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A209158826070553001A242E /* SceneHeaderView.swift */; };
@@ -104,6 +105,7 @@
 		899FBA572639DED700E0CF1A /* ShotPersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotPersistenceManager.swift; sourceTree = "<group>"; };
 		899FBA5B2639E57B00E0CF1A /* MainPersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPersistenceManager.swift; sourceTree = "<group>"; };
 		899FBA6D263ACCDA00E0CF1A /* PersistedModelLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistedModelLoader.swift; sourceTree = "<group>"; };
+		899FBA71263BF69D00E0CF1A /* ModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelFactory.swift; sourceTree = "<group>"; };
 		A209157E2606FE3F001A242E /* ProjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewController.swift; sourceTree = "<group>"; };
 		A2091584260703D1001A242E /* SceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneViewController.swift; sourceTree = "<group>"; };
 		A209158826070553001A242E /* SceneHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneHeaderView.swift; sourceTree = "<group>"; };
@@ -293,6 +295,7 @@
 				899FBA4F2639DEBF00E0CF1A /* ProjectPersistenceManager.swift */,
 				899FBA532639DECD00E0CF1A /* ScenePersistenceManager.swift */,
 				899FBA572639DED700E0CF1A /* ShotPersistenceManager.swift */,
+				899FBA71263BF69D00E0CF1A /* ModelFactory.swift */,
 				A29A192E2607239E00710943 /* StorageUtility.swift */,
 			);
 			name = Storage;
@@ -608,6 +611,7 @@
 				A29A19322607239E00710943 /* StorageUtility.swift in Sources */,
 				A2F2C8962607634800FD4FF6 /* AddShotViewCell.swift in Sources */,
 				B3C7BFB6262C29930005F159 /* OnionSkinRange.swift in Sources */,
+				899FBA72263BF69D00E0CF1A /* ModelFactory.swift in Sources */,
 				A29A19612607243800710943 /* Project.swift in Sources */,
 				B3440878262B61AD009F3CC0 /* CGSize+rectAtOrigin.swift in Sources */,
 				899FBA502639DEBF00E0CF1A /* ProjectPersistenceManager.swift in Sources */,

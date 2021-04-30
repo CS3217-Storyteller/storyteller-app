@@ -15,7 +15,7 @@ class ScenePersistenceManager {
     }
 
     init(at url: URL) {
-        self.manager = PersistenceManager(url: url)
+        self.manager = PersistenceManager(at: url)
     }
 
     func saveShot(_ shot: PersistedShot) {
@@ -37,11 +37,26 @@ class ScenePersistenceManager {
         guard let data = manager.loadData("Shot Metadata", atFolder: folderName) else {
             return nil
         }
-        return try? JSONDecoder().decode(PersistedShot.self, from: data)
+        return manager.decodeFromJSON(data, as: PersistedShot.self)
     }
 
     func getShotPersistenceManager(of shot: PersistedShot) -> ShotPersistenceManager {
         let folderName = shot.id.uuidString
         return ShotPersistenceManager(at: url.appendingPathComponent(folderName))
+    }
+
+    func getShotPersistenceManagers() -> [ShotPersistenceManager] {
+        manager.getAllDirectoryUrls()?.compactMap {
+            ShotPersistenceManager(at: $0)
+        } ?? []
+    }
+
+    func loadPersistedShots() -> [PersistedShot] {
+        let data = manager.getAllDirectoryUrls()?.compactMap {
+            manager.loadData("Shot Metadata", atFolder: $0.lastPathComponent.description)
+        }
+        return data?.compactMap {
+            manager.decodeFromJSON($0, as: PersistedShot.self)
+        } ?? []
     }
 }

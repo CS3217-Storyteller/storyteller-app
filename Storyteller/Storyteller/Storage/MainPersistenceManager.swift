@@ -37,11 +37,20 @@ class MainPersistenceManager {
         guard let data = manager.loadData("Project Metadata", atFolder: folderName) else {
             return nil
         }
-        return try? JSONDecoder().decode(PersistedProject.self, from: data)
+        return manager.decodeFromJSON(data, as: PersistedProject.self)
     }
 
     func getProjectPersistenceManager(of project: PersistedProject) -> ProjectPersistenceManager {
         let folderName = project.id.uuidString
         return ProjectPersistenceManager(at: url.appendingPathComponent(folderName))
+    }
+
+    func loadPersistedProjects() -> [PersistedProject] {
+        let data = manager.getAllDirectoryUrls()?.compactMap {
+            manager.loadData("Project Metadata", atFolder: $0.lastPathComponent.description)
+        }
+        return data?.compactMap {
+            manager.decodeFromJSON($0, as: PersistedProject.self)
+        } ?? []
     }
 }

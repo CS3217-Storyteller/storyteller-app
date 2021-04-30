@@ -8,28 +8,33 @@
 import Foundation
 
 class PersistedModelLoader {
-    let manager = PersistenceManager()
+    typealias PersistedModelTree = [(PersistedProject,
+                                    [(PersistedScene,
+                                      [(PersistedShot,
+                                        [PersistedLayer]
+                                      )])])]
 
-    func loadPersistedProjects() -> [PersistedProject] {
-        let data = manager.getAllDirectoryUrls()?.compactMap {
-            manager.loadData("Project Metadata", atFolder: $0.lastPathComponent.description)
+    let rootManager = MainPersistenceManager()
+
+    // [PersistedProject: [PersistedScene: [PersistedShot: [PersistedLayer]]
+
+    func loadPersistedModels() -> PersistedModelTree {
+        let projects = rootManager.loadPersistedProjects()
+        return projects.map {
+            let projectManager = rootManager.getProjectPersistenceManager(of: $0)
+            let scenes = projectManager.loadPersistedScenes()
+            return ($0,
+             scenes.map {
+                let sceneManager = projectManager.getScenePersistenceManager(of: $0)
+                let shots = sceneManager.loadPersistedShots()
+                return ($0,
+                    shots.map {
+                        let shotManager = sceneManager.getShotPersistenceManager(of: $0)
+                        let layers = shotManager.loadPersistedLayers()
+                        return ($0, layers)
+                    }
+                )
+             })
         }
-        let decoder = JSONDecoder()
-        return data?.compactMap { try? decoder.decode(PersistedProject.self, from: $0) } ?? [PersistedProject]()
     }
-
-    func loadPersistedScenes(ofProject project: PersistedProject) -> [PersistedScene] {
-        return []
-    }
-
-    func loadPersistedShots(ofScene scene: PersistedScene) -> [PersistedShot] {
-        return []
-    }
-
-    func loadPersistedLayers(ofShot shot: PersistedShot) -> [PersistedLayer] {
-        return []
-    }
-
-
-
 }
