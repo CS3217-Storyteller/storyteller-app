@@ -57,7 +57,7 @@ class StorageManager {
     func saveProject(project: Project) -> Bool {
         let fileName = project.title
         let fileUrl = StorageUtility.getFileUrl(of: fileName)
-        guard (try? JSONEncoder().encode(StorageProject(project)).write(to: fileUrl)) != nil else {
+        guard (try? JSONEncoder().encode(PersistedProject(project)).write(to: fileUrl)) != nil else {
             return false
         }
         return true

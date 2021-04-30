@@ -11,6 +11,12 @@
 		899FBA362639D97600E0CF1A /* PersistedProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899FBA352639D97600E0CF1A /* PersistedProject.swift */; };
 		899FBA3C2639DAD800E0CF1A /* PersistedScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899FBA3B2639DAD800E0CF1A /* PersistedScene.swift */; };
 		899FBA422639DB1A00E0CF1A /* PersistedShot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899FBA412639DB1A00E0CF1A /* PersistedShot.swift */; };
+		899FBA4C2639DDD900E0CF1A /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899FBA4B2639DDD900E0CF1A /* PersistenceManager.swift */; };
+		899FBA502639DEBF00E0CF1A /* ProjectPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899FBA4F2639DEBF00E0CF1A /* ProjectPersistenceManager.swift */; };
+		899FBA542639DECD00E0CF1A /* ScenePersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899FBA532639DECD00E0CF1A /* ScenePersistenceManager.swift */; };
+		899FBA582639DED700E0CF1A /* ShotPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899FBA572639DED700E0CF1A /* ShotPersistenceManager.swift */; };
+		899FBA5C2639E57B00E0CF1A /* MainPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899FBA5B2639E57B00E0CF1A /* MainPersistenceManager.swift */; };
+		899FBA6E263ACCDA00E0CF1A /* PersistedModelLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899FBA6D263ACCDA00E0CF1A /* PersistedModelLoader.swift */; };
 		A209157F2606FE3F001A242E /* ProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A209157E2606FE3F001A242E /* ProjectViewController.swift */; };
 		A2091585260703D1001A242E /* SceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2091584260703D1001A242E /* SceneViewController.swift */; };
 		A209158926070553001A242E /* SceneHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A209158826070553001A242E /* SceneHeaderView.swift */; };
@@ -92,6 +98,12 @@
 		899FBA352639D97600E0CF1A /* PersistedProject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistedProject.swift; sourceTree = "<group>"; };
 		899FBA3B2639DAD800E0CF1A /* PersistedScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistedScene.swift; sourceTree = "<group>"; };
 		899FBA412639DB1A00E0CF1A /* PersistedShot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistedShot.swift; sourceTree = "<group>"; };
+		899FBA4B2639DDD900E0CF1A /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
+		899FBA4F2639DEBF00E0CF1A /* ProjectPersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectPersistenceManager.swift; sourceTree = "<group>"; };
+		899FBA532639DECD00E0CF1A /* ScenePersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScenePersistenceManager.swift; sourceTree = "<group>"; };
+		899FBA572639DED700E0CF1A /* ShotPersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotPersistenceManager.swift; sourceTree = "<group>"; };
+		899FBA5B2639E57B00E0CF1A /* MainPersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPersistenceManager.swift; sourceTree = "<group>"; };
+		899FBA6D263ACCDA00E0CF1A /* PersistedModelLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistedModelLoader.swift; sourceTree = "<group>"; };
 		A209157E2606FE3F001A242E /* ProjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewController.swift; sourceTree = "<group>"; };
 		A2091584260703D1001A242E /* SceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneViewController.swift; sourceTree = "<group>"; };
 		A209158826070553001A242E /* SceneHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneHeaderView.swift; sourceTree = "<group>"; };
@@ -275,6 +287,12 @@
 			children = (
 				B33549552610B0B400B881ED /* StorageModel */,
 				A29A192C2607239E00710943 /* StorageManager.swift */,
+				899FBA4B2639DDD900E0CF1A /* PersistenceManager.swift */,
+				899FBA5B2639E57B00E0CF1A /* MainPersistenceManager.swift */,
+				899FBA6D263ACCDA00E0CF1A /* PersistedModelLoader.swift */,
+				899FBA4F2639DEBF00E0CF1A /* ProjectPersistenceManager.swift */,
+				899FBA532639DECD00E0CF1A /* ScenePersistenceManager.swift */,
+				899FBA572639DED700E0CF1A /* ShotPersistenceManager.swift */,
 				A29A192E2607239E00710943 /* StorageUtility.swift */,
 			);
 			name = Storage;
@@ -562,6 +580,8 @@
 				A29A19302607239E00710943 /* StorageManager.swift in Sources */,
 				B35830562615F0C000824C55 /* LayerTableViewCell.swift in Sources */,
 				B3D7AD532615A1280082D591 /* DrawingLayerView.swift in Sources */,
+				899FBA5C2639E57B00E0CF1A /* MainPersistenceManager.swift in Sources */,
+				899FBA542639DECD00E0CF1A /* ScenePersistenceManager.swift in Sources */,
 				B35115C0261341980056886C /* UIView+setAnchorPoint.swift in Sources */,
 				B35115D22613790F0056886C /* EditingMode.swift in Sources */,
 				B3C7BFC0262C3C8B0005F159 /* ThumbnailMerger.swift in Sources */,
@@ -579,15 +599,19 @@
 				899FBA422639DB1A00E0CF1A /* PersistedShot.swift in Sources */,
 				A2091590260705EB001A242E /* ProjectViewCell.swift in Sources */,
 				B35FA2C42614C22A00D656E3 /* Transformable.swift in Sources */,
+				899FBA4C2639DDD900E0CF1A /* PersistenceManager.swift in Sources */,
 				899FBA362639D97600E0CF1A /* PersistedProject.swift in Sources */,
 				B3C7BFBA262C393A0005F159 /* Thumbnail.swift in Sources */,
 				B3C7BFB2262C24E50005F159 /* GreenOnionSkinMerger.swift in Sources */,
 				A29A195B2607243300710943 /* Scene.swift in Sources */,
+				899FBA6E263ACCDA00E0CF1A /* PersistedModelLoader.swift in Sources */,
 				A29A19322607239E00710943 /* StorageUtility.swift in Sources */,
 				A2F2C8962607634800FD4FF6 /* AddShotViewCell.swift in Sources */,
 				B3C7BFB6262C29930005F159 /* OnionSkinRange.swift in Sources */,
 				A29A19612607243800710943 /* Project.swift in Sources */,
 				B3440878262B61AD009F3CC0 /* CGSize+rectAtOrigin.swift in Sources */,
+				899FBA502639DEBF00E0CF1A /* ProjectPersistenceManager.swift in Sources */,
+				899FBA582639DED700E0CF1A /* ShotPersistenceManager.swift in Sources */,
 				B3C7BFC4262C3F3A0005F159 /* Thumbnailable.swift in Sources */,
 				B3320D22260F6BA10063558A /* NormalLayerMerger.swift in Sources */,
 				A2F2C89A260768E900FD4FF6 /* Color.swift in Sources */,

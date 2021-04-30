@@ -15,6 +15,7 @@ struct PersistedLayer: Codable {
     var isVisible: Bool
 
     var thumbnail: Thumbnail
+    let id: UUID
 
     init(_ layer: Layer) {
         self.storageComponent = PersistedLayerComponent(layer.component)
@@ -23,6 +24,7 @@ struct PersistedLayer: Codable {
         self.isLocked = layer.isLocked
         self.isVisible = layer.isVisible
         self.thumbnail = layer.thumbnail
+        self.id = layer.id
     }
 
 }
