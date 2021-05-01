@@ -6,11 +6,8 @@
 //
 import PencilKit
 
-// TODO: Each model class should have the right model manager, saving system, etc.
 // TODO: Should PersistedProject be created here or created in persistencemanager?
 class ModelManager {
-
-    private let storageQueue = DispatchQueue(label: "StorageQueue", qos: .background)
 
     private let persistenceManager = MainPersistenceManager()
     var observers = [ModelManagerObserver]()
@@ -53,8 +50,6 @@ class ModelManager {
         self.addProject(project)
     }
 
-    var onGoingSaveTask: (project: Project, workItem: DispatchWorkItem)?
-
     func saveProject(_ project: Project?) {
         guard let project = project else {
             return
@@ -62,21 +57,6 @@ class ModelManager {
         let persistedProject = PersistedProject(project)
         self.persistenceManager.saveProject(persistedProject)
         notifyObservers()
-        /*
-        self.observers.forEach({ $0.modelDidChange() })
-
-        guard let project = project else {
-            return
-        }
-        let workItem = DispatchWorkItem { [weak self] in
-            self?.storageManager.saveProject(project: project)
-        }
-        if let task = onGoingSaveTask, task.project.title == project.title {
-            task.workItem.cancel()
-            onGoingSaveTask = (project, workItem)
-        }
-        storageQueue.async(execute: workItem)
-        */
     }
 
     func deleteProject(_ project: Project) {

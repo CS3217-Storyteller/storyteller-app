@@ -10,7 +10,6 @@ class Project {
     var title: String
     let canvasSize: CGSize
     let id: UUID
-    // TODO: Should be a compulsory property when initialized
     private var persistenceManager: ProjectPersistenceManager?
     private var observers = [ProjectObserver]()
 
@@ -23,7 +22,6 @@ class Project {
     }
 
     var scenes: [Scene] = []
-    // TODO: list of observers
 
     func loadScene(at index: Int) -> Scene? {
         guard scenes.indices.contains(index) else {
