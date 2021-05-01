@@ -46,11 +46,11 @@ class MainPersistenceManager {
     }
 
     func loadPersistedProjects() -> [PersistedProject] {
-        let data = manager.getAllDirectoryUrls()?.compactMap {
+        let data = manager.getAllDirectoryUrls().compactMap {
             manager.loadData("Project Metadata", atFolder: $0.lastPathComponent.description)
         }
-        return data?.compactMap {
+        return data.compactMap {
             manager.decodeFromJSON($0, as: PersistedProject.self)
-        } ?? []
+        }
     }
 }

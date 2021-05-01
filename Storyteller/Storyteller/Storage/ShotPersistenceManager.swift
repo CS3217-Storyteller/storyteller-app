@@ -47,12 +47,12 @@ class ShotPersistenceManager {
     }
 
     func loadPersistedLayers() -> [PersistedLayer] {
-        let data = manager.getAllJsonUrls()?.compactMap {
+        let data = manager.getAllJsonUrls().compactMap {
             manager.loadData($0.deletingPathExtension().lastPathComponent.description)
         }
-        return data?.compactMap {
+        return data.compactMap {
             manager.decodeFromJSON($0, as: PersistedLayer.self)
-        } ?? []
+        }
     }
 
     func getLayerPersistenceManager(for persistedLayer: PersistedLayer) -> LayerPersistenceManager {

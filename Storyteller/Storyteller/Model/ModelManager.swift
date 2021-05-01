@@ -6,7 +6,6 @@
 //
 import PencilKit
 
-// TODO: Should PersistedProject be created here or created in persistencemanager?
 class ModelManager {
 
     private let persistenceManager = MainPersistenceManager()
@@ -59,7 +58,6 @@ class ModelManager {
     }
 
     func deleteProject(_ project: Project) {
-        // self.storageManager.deleteProject(projectTitle: project.title)
         let persistedProject = PersistedProject(project)
         self.persistenceManager.deleteProject(persistedProject)
         notifyObservers()

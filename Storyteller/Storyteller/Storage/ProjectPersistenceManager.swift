@@ -53,17 +53,17 @@ class ProjectPersistenceManager {
     }
 
     func getScenePersistenceManagers() -> [ScenePersistenceManager] {
-        manager.getAllDirectoryUrls()?.compactMap {
+        manager.getAllDirectoryUrls().compactMap {
             ScenePersistenceManager(at: $0)
-        } ?? []
+        }
     }
 
     func loadPersistedScenes() -> [PersistedScene] {
-        let data = manager.getAllDirectoryUrls()?.compactMap {
+        let data = manager.getAllDirectoryUrls().compactMap {
             manager.loadData("Scene Metadata", atFolder: $0.lastPathComponent.description)
         }
-        return data?.compactMap {
+        return data.compactMap {
             manager.decodeFromJSON($0, as: PersistedScene.self)
-        } ?? []
+        }
     }
 }

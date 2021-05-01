@@ -19,18 +19,21 @@ struct PersistenceManager {
 }
 
 extension PersistenceManager {
-    // TODO: return empty array if NIL?
-    func getAllJsonUrls() -> [URL]? {
-        let allUrls = try? FileManager.default.contentsOfDirectory(at: url,
-                                                     includingPropertiesForKeys: nil,
-                                                     options: .skipsSubdirectoryDescendants)
-        return allUrls?.filter({ $0.pathExtension == "json" })
+    func getAllJsonUrls() -> [URL] {
+        let allUrls = (try? FileManager
+            .default
+            .contentsOfDirectory(at: url,
+                                 includingPropertiesForKeys: nil,
+                                 options: .skipsSubdirectoryDescendants)) ?? []
+        return allUrls.filter({ $0.pathExtension == "json" })
     }
 
-    func getAllDirectoryUrls() -> [URL]? {
-        try? FileManager.default.contentsOfDirectory(at: url,
-                                                     includingPropertiesForKeys: [.isDirectoryKey],
-                                                     options: .skipsSubdirectoryDescendants)
+    func getAllDirectoryUrls() -> [URL] {
+        (try? FileManager
+            .default
+            .contentsOfDirectory(at: url,
+                                 includingPropertiesForKeys: [.isDirectoryKey],
+                                 options: .skipsSubdirectoryDescendants)) ?? []
     }
 
     func createFolder(named folderName: String) {
