@@ -50,19 +50,19 @@ class ModelFactory {
     private func initializePersistenceManagers(for projects: [Project]) {
         projects.forEach {
             let projectPersistenceManager = rootPersistenceManager
-                .getProjectPersistenceManager(of: PersistedProject($0))
+                .getProjectPersistenceManager(of: $0.persisted)
             $0.setPersistenceManager(to: projectPersistenceManager)
             $0.scenes.forEach {
                 let scenePersistenceManager = projectPersistenceManager
-                    .getScenePersistenceManager(of: PersistedScene($0))
+                    .getScenePersistenceManager(of: $0.persisted)
                 $0.setPersistenceManager(to: scenePersistenceManager)
                 $0.shots.forEach {
                     let shotPersistenceManager = scenePersistenceManager
-                        .getShotPersistenceManager(of: PersistedShot($0))
+                        .getShotPersistenceManager(of: $0.persisted)
                     $0.setPersistenceManager(to: shotPersistenceManager)
                     $0.layers.forEach {
                         let layerPersistenceManager = shotPersistenceManager
-                            .getLayerPersistenceManager(for: PersistedLayer($0))
+                            .getLayerPersistenceManager(for: $0.persisted)
                         $0.setPersistenceManager(to: layerPersistenceManager)
                     }
                 }

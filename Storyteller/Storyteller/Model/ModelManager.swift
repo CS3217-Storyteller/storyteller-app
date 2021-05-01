@@ -24,13 +24,12 @@ class ModelManager {
         }
         let project = projects[index]
         project.setPersistenceManager(to: persistenceManager
-                                        .getProjectPersistenceManager(of: PersistedProject(project)))
+                                        .getProjectPersistenceManager(of: project.persisted))
         return project
     }
 
     func addProject(_ project: Project) {
-        let persistedProject = PersistedProject(project)
-        project.setPersistenceManager(to: self.persistenceManager.getProjectPersistenceManager(of: persistedProject))
+        project.setPersistenceManager(to: self.persistenceManager.getProjectPersistenceManager(of: project.persisted))
         self.projects.append(project)
         self.saveProject(project)
     }
@@ -52,14 +51,12 @@ class ModelManager {
         guard let project = project else {
             return
         }
-        let persistedProject = PersistedProject(project)
-        self.persistenceManager.saveProject(persistedProject)
+        self.persistenceManager.saveProject(project.persisted)
         notifyObservers()
     }
 
     func deleteProject(_ project: Project) {
-        let persistedProject = PersistedProject(project)
-        self.persistenceManager.deleteProject(persistedProject)
+        self.persistenceManager.deleteProject(project.persisted)
         notifyObservers()
     }
 

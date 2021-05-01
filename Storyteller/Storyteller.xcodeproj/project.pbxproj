@@ -32,8 +32,6 @@
 		A24F62FF2600CC7500FC7CD4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A24F62FE2600CC7500FC7CD4 /* Assets.xcassets */; };
 		A24F63022600CC7500FC7CD4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A24F63002600CC7500FC7CD4 /* LaunchScreen.storyboard */; };
 		A29A18F026071A3700710943 /* StorytellerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A18EF26071A3700710943 /* StorytellerTests.swift */; };
-		A29A19302607239E00710943 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A192C2607239E00710943 /* StorageManager.swift */; };
-		A29A19322607239E00710943 /* StorageUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A192E2607239E00710943 /* StorageUtility.swift */; };
 		A29A19522607242000710943 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19272607237100710943 /* ModelManager.swift */; };
 		A29A19552607242600710943 /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19282607237100710943 /* Layer.swift */; };
 		A29A19582607242800710943 /* Shot.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19292607237100710943 /* Shot.swift */; };
@@ -132,8 +130,6 @@
 		A29A19272607237100710943 /* ModelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
 		A29A19282607237100710943 /* Layer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layer.swift; sourceTree = "<group>"; };
 		A29A19292607237100710943 /* Shot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shot.swift; sourceTree = "<group>"; };
-		A29A192C2607239E00710943 /* StorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
-		A29A192E2607239E00710943 /* StorageUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageUtility.swift; sourceTree = "<group>"; };
 		A2F2C8952607634800FD4FF6 /* AddShotViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddShotViewCell.swift; sourceTree = "<group>"; };
 		A2F2C899260768E900FD4FF6 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		B30AA8652610C419008B6714 /* PersistedLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistedLayer.swift; sourceTree = "<group>"; };
@@ -295,7 +291,6 @@
 			isa = PBXGroup;
 			children = (
 				B33549552610B0B400B881ED /* StorageModel */,
-				A29A192C2607239E00710943 /* StorageManager.swift */,
 				899FBA4B2639DDD900E0CF1A /* PersistenceManager.swift */,
 				899FBA5B2639E57B00E0CF1A /* MainPersistenceManager.swift */,
 				899FBA6D263ACCDA00E0CF1A /* PersistedModelLoader.swift */,
@@ -304,7 +299,6 @@
 				899FBA572639DED700E0CF1A /* ShotPersistenceManager.swift */,
 				897BDE3F263D67A900476CD4 /* LayerPersistenceManager.swift */,
 				899FBA71263BF69D00E0CF1A /* ModelFactory.swift */,
-				A29A192E2607239E00710943 /* StorageUtility.swift */,
 			);
 			name = Storage;
 			path = Storyteller/Storage;
@@ -607,7 +601,6 @@
 				B35FA2982614401C00D656E3 /* TransformLayerButton.swift in Sources */,
 				A29A19582607242800710943 /* Shot.swift in Sources */,
 				B3FB29062617680100DC4BEE /* Alert.swift in Sources */,
-				A29A19302607239E00710943 /* StorageManager.swift in Sources */,
 				B35830562615F0C000824C55 /* LayerTableViewCell.swift in Sources */,
 				B3D7AD532615A1280082D591 /* DrawingLayerView.swift in Sources */,
 				899FBA5C2639E57B00E0CF1A /* MainPersistenceManager.swift in Sources */,
@@ -638,7 +631,6 @@
 				B3C7BFB2262C24E50005F159 /* GreenOnionSkinMerger.swift in Sources */,
 				A29A195B2607243300710943 /* Scene.swift in Sources */,
 				899FBA6E263ACCDA00E0CF1A /* PersistedModelLoader.swift in Sources */,
-				A29A19322607239E00710943 /* StorageUtility.swift in Sources */,
 				A2F2C8962607634800FD4FF6 /* AddShotViewCell.swift in Sources */,
 				B3C7BFB6262C29930005F159 /* OnionSkinRange.swift in Sources */,
 				899FBA72263BF69D00E0CF1A /* ModelFactory.swift in Sources */,

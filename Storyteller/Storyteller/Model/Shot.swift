@@ -113,7 +113,7 @@ class Shot {
     @discardableResult
     func removeLayer(at index: Int) -> Layer {
         let removedLayer = layers.remove(at: index)
-        self.persistenceManager?.deleteLayer(PersistedLayer(removedLayer))
+        self.persistenceManager?.deleteLayer(removedLayer.persisted)
         self.saveShot()
         return removedLayer
     }
