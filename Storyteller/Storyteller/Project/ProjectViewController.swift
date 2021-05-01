@@ -207,7 +207,6 @@ extension ProjectViewController: UICollectionViewDelegate {
             }
             sceneViewController.modalPresentationStyle = .fullScreen
             sceneViewController.setProject(to: project)
-            sceneViewController.setModelManager(to: self.modelManager)
             self.navigationController?.pushViewController(sceneViewController, animated: true)
         case .select:
             self.selectedIndexPath[indexPath] = true

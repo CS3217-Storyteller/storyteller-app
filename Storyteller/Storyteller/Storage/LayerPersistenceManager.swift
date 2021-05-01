@@ -23,7 +23,6 @@ class LayerPersistenceManager {
             return
         }
         let fileName = layer.id.uuidString
-        print("saving layer to \(fileName)")
         manager.saveData(data, toFile: fileName)
     }
 }

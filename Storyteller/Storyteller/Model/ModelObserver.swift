@@ -16,17 +16,13 @@ protocol ModelManagerObserver: ModelObserver {
 }
 
 protocol ProjectObserver: ModelObserver {
-    var project: Project? { get set }
 }
 
 protocol SceneObserver: ModelObserver {
-    var scene: Scene! { get set }
 }
 
 protocol ShotObserver: ModelObserver {
-    var shot: Shot! { get set }
 }
 
 protocol LayerObserver: ModelObserver {
-    var layer: Layer! { get set }
 }

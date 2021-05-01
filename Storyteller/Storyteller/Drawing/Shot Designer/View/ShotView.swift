@@ -28,7 +28,6 @@ class ShotView: UIView {
     }
 
     var selectedLayerView: LayerView {
-        print(layerViews)
         return layerViews[selectedLayerIndex]
     }
 

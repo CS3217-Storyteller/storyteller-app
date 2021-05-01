@@ -41,22 +41,21 @@ class Scene {
 
     func setPersistenceManager(to persistenceManager: ScenePersistenceManager) {
         if self.persistenceManager != nil {
-            print("PERSISTENCE MANAGER IS NOT NIL")
             return
         }
         self.persistenceManager = persistenceManager
     }
 
-    func saveScene() {
+    private func saveScene() {
         self.persistenceManager?.saveScene(PersistedScene(self))
     }
 
-    func saveShot(_ shot: Shot) {
+    private func saveShot(_ shot: Shot) {
         self.persistenceManager?.saveShot(PersistedShot(shot))
         saveScene()
     }
 
-    func deleteShot(_ shot: Shot) {
+    private func deleteShot(_ shot: Shot) {
         self.persistenceManager?.deleteShot(PersistedShot(shot))
         saveScene()
     }
@@ -70,12 +69,10 @@ class Scene {
         self.shots.insert(shot, at: index ?? shots.endIndex)
         saveShot(shot)
         if let persistenceManager = persistenceManager {
-            print("YESSSSSS")
             shot.setPersistenceManager(to: persistenceManager
                                         .getShotPersistenceManager(of: PersistedShot(shot)))
         }
         if shot.layers.isEmpty {
-            print("Adding new layer")
             let layer = Layer(withDrawing: PKDrawing(), canvasSize: shot.canvasSize)
             shot.addLayer(layer)
         }

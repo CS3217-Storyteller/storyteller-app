@@ -78,7 +78,6 @@ class ModelFactory {
                 })
             })
         }
-        print(projects.map { $0.scenes.map { $0.shots.map { $0.layers.map { $0.id } }}})
         initializePersistenceManagers(for: projects)
         return projects
     }

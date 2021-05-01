@@ -38,10 +38,8 @@ class ShotDesignerViewController: UIViewController {
     var onionSkinRange = OnionSkinRange()
     var toolPicker = PKToolPicker()
     // should be intialized via segue
-    var modelManager: ModelManager!
     var shot: Shot!
     var scene: Scene!
-    var project: Project!
 
     var canvasTransform = CGAffineTransform.identity {
         didSet {
@@ -91,9 +89,7 @@ class ShotDesignerViewController: UIViewController {
     private func setUpShot() {
         shotView.backgroundColor = shot.backgroundColor.uiColor
         let layers = shot.layers
-        print(shot.id, shot.layers)
         if layers.isEmpty {
-            print("Layers is empty")
             return
         }
 
@@ -104,7 +100,7 @@ class ShotDesignerViewController: UIViewController {
     }
 
     private func updateOnionSkins() {
-        guard modelManager != nil, shotView != nil else {
+        guard shotView != nil else {
             return
         }
         let redOnionSkin = onionSkinRange.redIndicies.compactMap({ scene.getShot($0, after: shot) })
@@ -248,7 +244,6 @@ extension ShotDesignerViewController {
         if let index = scene.shots.firstIndex(where: { $0 === shot }) {
             let newShot = shot.duplicate()
             scene.addShot(newShot, at: index + 1)
-            modelManager.saveProject(project)
             nextShot()
         }
 

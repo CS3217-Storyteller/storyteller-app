@@ -39,18 +39,17 @@ class Shot {
 
     func setPersistenceManager(to persistenceManager: ShotPersistenceManager) {
         if self.persistenceManager != nil {
-            print("PERSISTENCE MANAGER IS NOT NIL")
             return
         }
         self.persistenceManager = persistenceManager
     }
 
-    func saveShot() {
+    private func saveShot() {
         self.persistenceManager?.saveShot(PersistedShot(self))
         notifyObservers()
     }
 
-    func saveLayer(_ layer: Layer) {
+    private func saveLayer(_ layer: Layer) {
         self.persistenceManager?.saveLayer(PersistedLayer(layer))
         saveShot()
     }
@@ -87,7 +86,6 @@ class Shot {
                                                 .getLayerPersistenceManager(for: PersistedLayer(layer)))
         }
         layers.insert(layer, at: index ?? layers.endIndex)
-        print("Saving layer...")
         saveLayer(layer)
     }
 

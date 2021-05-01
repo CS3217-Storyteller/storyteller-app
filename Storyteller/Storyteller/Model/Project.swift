@@ -45,30 +45,24 @@ class Project {
 
     func setPersistenceManager(to persistenceManager: ProjectPersistenceManager) {
         if self.persistenceManager != nil {
-            print("PERSISTENCE MANAGER IS NOT NIL")
             return
         }
         self.persistenceManager = persistenceManager
     }
 
-    func saveScene(_ scene: Scene) {
+    private func saveScene(_ scene: Scene) {
         self.persistenceManager?.saveScene(PersistedScene(scene))
-            ?? print("NO PROJECT PERSISTENCE MANAGER")
         self.saveProject()
-        // TODO: inform observers
     }
 
-    func deleteScene(_ scene: Scene) {
+    private func deleteScene(_ scene: Scene) {
         self.persistenceManager?.deleteScene(PersistedScene(scene))
-            ?? print("NO PROJECT PERSISTENCE MANAGER")
         self.saveProject()
-        // TODO: inform observers
     }
 
-    func saveProject() {
+    private func saveProject() {
         self.persistenceManager?.saveProject(PersistedProject(self))
-            ?? print("NO PROJECT PERSISTENCE MANAGER")
-        // TODO: inform observers?
+        self.notifyObservers()
     }
 
     func addScene(_ scene: Scene) {
@@ -81,7 +75,6 @@ class Project {
     }
 
     func deleteScene(at index: Int) {
-        print(scenes.count)
         let removedScene = self.scenes.remove(at: index)
         self.deleteScene(removedScene)
     }

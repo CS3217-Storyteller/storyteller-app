@@ -17,7 +17,6 @@ class ModelManager {
     init() {
         let persistedModelTree = PersistedModelLoader().loadPersistedModels()
         self.projects = ModelFactory().loadProjectModel(from: persistedModelTree)
-        print(projects.map { $0.scenes.map { $0.shots.map { $0.layers.count }}})
     }
 
     func loadProject(at index: Int) -> Project? {

@@ -12,7 +12,6 @@ class SceneViewController: UIViewController {
     @IBOutlet private var collectionView: UICollectionView!
 
     var project: Project?
-    var modelManager: ModelManager?
 
     lazy var addSceneBarButton: UIBarButtonItem = {
         let barButtonItem = UIBarButtonItem(
@@ -26,10 +25,6 @@ class SceneViewController: UIViewController {
 
     func setProject(to project: Project) {
         self.project = project
-    }
-
-    func setModelManager(to modelManager: ModelManager) {
-        self.modelManager = modelManager
     }
 
     override var prefersStatusBarHidden: Bool {
@@ -65,6 +60,12 @@ class SceneViewController: UIViewController {
         }
 
         project.observedBy(self)
+        project.scenes.forEach {
+            $0.shots.forEach {
+                // for thumbnail updates
+                $0.observedBy(self)
+            }
+        }
         self.navigationItem.title = project.title
         self.navigationItem.rightBarButtonItem = self.addSceneBarButton
 
@@ -93,21 +94,17 @@ class SceneViewController: UIViewController {
     }
 
     @objc func didAddSceneButtonClicked(_ sender: Any) {
-        // guard let modelManager = self.modelManager,
         guard let project = self.project else {
             return
         }
-//        modelManager.addScene(projectLabel: projectLabel)
 
         let newScene = Scene(canvasSize: project.canvasSize)
         project.addScene(newScene)
-        // modelManager.saveProject(project)
         self.collectionView.reloadData()
     }
 
     func deleteScene(at index: Int) {
         project?.deleteScene(at: index)
-        // modelManager?.saveProject(project)
     }
 }
 
@@ -171,8 +168,7 @@ extension SceneViewController: UICollectionViewDelegate {
         }
         shotDesignerController.modalPresentationStyle = .fullScreen
 
-        guard let modelManager = self.modelManager,
-              let project = self.project
+        guard let project = self.project
         else {
             return
         }
@@ -181,10 +177,8 @@ extension SceneViewController: UICollectionViewDelegate {
         }
 
         if let shot = scene.loadShot(at: indexPath.row) {
-            shotDesignerController.modelManager = modelManager
             shotDesignerController.shot = shot
             shotDesignerController.scene = scene
-            shotDesignerController.project = project
             shotDesignerController.modalTransitionStyle = .flipHorizontal
             self.navigationController?.pushViewController(shotDesignerController, animated: true)
         } else {
@@ -194,8 +188,6 @@ extension SceneViewController: UICollectionViewDelegate {
                 newShot.addLayer(layer)
             } */
             scene.addShot(newShot)
-            // modelManager.saveProject(project)
-//            modelManager.addShot(ofShot: shotLabel, backgroundColor: .white)
             self.collectionView.reloadData()
         }
     }
@@ -210,7 +202,6 @@ extension SceneViewController: UICollectionViewDelegate {
             return
         }
 
-        // guard let modelManager = self.modelManager,
         guard let project = self.project
         else {
             return
@@ -220,7 +211,6 @@ extension SceneViewController: UICollectionViewDelegate {
         let sourceIndex = sourceIndexPath.row
         let destinationIndex = destinationIndexPath.row
         scene?.swapShots(sourceIndex, destinationIndex)
-        // modelManager.saveProject(project)
     }
 }
 
@@ -276,7 +266,7 @@ extension SceneViewController: UICollectionViewDelegateFlowLayout {
 }
 
 // MARK: - ModelManagerObserver
-extension SceneViewController: ProjectObserver {
+extension SceneViewController: ProjectObserver, ShotObserver {
     func modelDidChange() {
         collectionView.reloadData()
     }
