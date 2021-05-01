@@ -27,6 +27,13 @@ class ScenePersistenceManager {
         manager.saveData(data, toFile: "Shot Metadata", atFolder: folderName)
     }
 
+    func saveScene(_ scene: PersistedScene) {
+        guard let data = manager.encodeToJSON(scene) else {
+            return
+        }
+        manager.saveData(data, toFile: "Scene Metadata")
+    }
+
     func deleteShot(_ shot: PersistedShot) {
         let folderName = shot.id.uuidString
         manager.deleteFolder(named: folderName)

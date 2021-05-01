@@ -26,6 +26,13 @@ class ShotPersistenceManager {
         manager.saveData(data, toFile: fileName)
     }
 
+    func saveShot(_ shot: PersistedShot) {
+        guard let data = manager.encodeToJSON(shot) else {
+            return
+        }
+        manager.saveData(data, toFile: "Shot Metadata")
+    }
+
     func deleteLayer(_ layer: PersistedLayer) {
         let fileName = layer.id.uuidString
         manager.deleteFile(fileName)

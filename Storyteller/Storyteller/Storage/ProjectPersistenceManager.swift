@@ -18,6 +18,13 @@ class ProjectPersistenceManager {
         self.manager = PersistenceManager(at: url)
     }
 
+    func saveProject(_ project: PersistedProject) {
+        guard let data = manager.encodeToJSON(project) else {
+            return
+        }
+        manager.saveData(data, toFile: "Project Metadata")
+    }
+    
     func saveScene(_ scene: PersistedScene) {
         guard let data = manager.encodeToJSON(scene) else {
             return

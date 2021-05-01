@@ -10,6 +10,7 @@ class Scene {
     let canvasSize: CGSize
     var shots: [Shot] = [Shot]()
     let id: UUID
+    private var persistenceManager: ScenePersistenceManager?
 
     init(canvasSize: CGSize, shots: [Shot] = [], id: UUID = UUID()) {
         self.canvasSize = canvasSize
@@ -17,8 +18,31 @@ class Scene {
         self.id = id
     }
 
+    func setPersistenceManager(to persistenceManager: ScenePersistenceManager) {
+        if self.persistenceManager != nil {
+            print("PERSISTENCE MANAGER IS NOT NIL")
+            return
+        }
+        self.persistenceManager = persistenceManager
+    }
+
+    func saveScene() {
+        self.persistenceManager?.saveScene(PersistedScene(self))
+    }
+
+    func saveShot(_ shot: Shot) {
+        self.persistenceManager?.saveShot(PersistedShot(shot))
+        saveScene()
+    }
+
+    func deleteShot(_ shot: Shot) {
+        self.persistenceManager?.deleteShot(PersistedShot(shot))
+        saveScene()
+    }
+
     func swapShots(_ index1: Int, _ index2: Int) {
         self.shots.swapAt(index1, index2)
+        saveScene()
     }
 
     func updateShot(shot: Shot, with newShot: Shot) {
@@ -29,18 +53,22 @@ class Scene {
 
     func addShot(_ shot: Shot) {
         self.shots.append(shot)
+        saveShot(shot)
     }
 
     func addShot(_ shot: Shot, at index: Int) {
         self.shots.insert(shot, at: index)
+        saveShot(shot)
+    }
+
+    func removeShot(_ shot: Shot) {
+        self.shots.removeAll(where: { $0 === shot })
+        saveScene()
     }
 
     func moveShot(shot: Shot, to newIndex: Int) {
-        guard let oldIndex = self.shots.firstIndex(where: { $0 === shot }) else {
-            return
-        }
-        self.shots.remove(at: oldIndex)
-        self.shots.insert(shot, at: newIndex)
+        removeShot(shot)
+        addShot(shot, at: newIndex)
     }
 
     func duplicate() -> Scene {

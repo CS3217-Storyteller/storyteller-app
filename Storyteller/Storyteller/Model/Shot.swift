@@ -13,6 +13,7 @@ class Shot {
 
     var thumbnail: Thumbnail
     let id: UUID
+    private var persistenceManager: ShotPersistenceManager?
 
     init(canvasSize: CGSize,
          backgroundColor: Color,
@@ -24,6 +25,22 @@ class Shot {
         self.layers = layers
         self.thumbnail = thumbnail
         self.id = id
+    }
+
+    func setPersistenceManager(to persistenceManager: ShotPersistenceManager) {
+        if self.persistenceManager != nil {
+            print("PERSISTENCE MANAGER IS NOT NIL")
+            return
+        }
+        self.persistenceManager = persistenceManager
+    }
+
+    func saveShot() {
+        self.persistenceManager?.saveShot(PersistedShot(self))
+    }
+
+    func saveLayer(_ layer: Layer) {
+        self.persistenceManager?.saveLayer(PersistedLayer(layer))
     }
 
     func generateThumbnails() {
@@ -53,35 +70,42 @@ class Shot {
 
     // MARK: - Layer Related Methods
     func addLayer(_ layer: Layer, at index: Int? = nil) {
-        if let index = index {
-            layers.insert(layer, at: index)
-        } else {
-            layers.append(layer)
-        }
+        layers.insert(layer, at: index ?? layers.endIndex)
+        saveLayer(layer)
+        saveShot()
     }
 
     func duplicateLayers(at indices: [Int]) {
-        for index in indices.reversed() {
-            duplicateLayer(at: index)
-        }
+        indices
+            .reversed()
+            .forEach({ duplicateLayer(at: $0) })
     }
+
     func duplicateLayer(at index: Int) {
-        let duplicatedlayer = layers[index].duplicate()
-        layers.insert(duplicatedlayer, at: index + 1)
+        let duplicatedLayer = layers[index].duplicate()
+        addLayer(duplicatedLayer, at: index + 1)
     }
+
     func removeLayers(at indices: [Int]) {
-        for index in indices.reversed() {
-            layers.remove(at: index)
-        }
+        indices.reversed().forEach({ removeLayer(at: $0) })
+    }
+
+    @discardableResult
+    func removeLayer(at index: Int) -> Layer {
+        let removedLayer = layers.remove(at: index)
+        self.persistenceManager?.deleteLayer(PersistedLayer(removedLayer))
+        self.saveShot()
+        return removedLayer
     }
 
     func moveLayer(from oldIndex: Int, to newIndex: Int) {
-        layers.insert(layers.remove(at: oldIndex), at: newIndex)
+        addLayer(removeLayer(at: oldIndex), at: newIndex)
     }
 
     func updateLayer(_ layer: Layer, with newLayer: Layer) {
         if let index = self.layers.firstIndex(where: { $0 === layer }) {
-            self.layers[index] = newLayer
+            removeLayer(at: index)
+            addLayer(newLayer, at: index)
         }
     }
 
@@ -97,8 +121,9 @@ class Shot {
         removeLayers(at: indices)
         addLayer(groupedLayer, at: newIndex)
     }
+
     func ungroupLayer(at index: Int) {
-        let layerToBeUngrouped = layers.remove(at: index)
+        let layerToBeUngrouped = removeLayer(at: index)
         layerToBeUngrouped.ungroup().reversed().forEach({ addLayer($0, at: index) })
     }
 }

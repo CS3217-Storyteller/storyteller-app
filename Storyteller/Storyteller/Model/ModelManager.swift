@@ -6,12 +6,14 @@
 //
 import PencilKit
 
+// TODO: Each model class should have the right model manager, saving system, etc.
+// TODO: Should PersistedProject be created here or created in persistencemanager?
 class ModelManager {
 
     private let thumbnailQueue = DispatchQueue(label: "ThumbnailQueue", qos: .background)
     private let storageQueue = DispatchQueue(label: "StorageQueue", qos: .background)
 
-    private let storageManager = StorageManager()
+    private let persistenceManager = MainPersistenceManager()
     var observers = [ModelManagerObserver]()
 
     var projects: [Project]
@@ -19,16 +21,11 @@ class ModelManager {
     init() {
         let persistedModelTree = PersistedModelLoader().loadPersistedModels()
         self.projects = ModelFactory().loadProjectModel(from: persistedModelTree)
-        /*
-        var list = [Project]()
-        for project in storageManager.getAllProjects() {
-            list.append(project)
-        }
-        self.projects = list
-         */
     }
 
     func addProject(_ project: Project) {
+        let persistedProject = PersistedProject(project)
+        project.setPersistenceManager(to: self.persistenceManager.getProjectPersistenceManager(of: persistedProject))
         self.projects.append(project)
         self.saveProject(project)
     }
@@ -49,6 +46,13 @@ class ModelManager {
     var onGoingSaveTask: (project: Project, workItem: DispatchWorkItem)?
 
     func saveProject(_ project: Project?) {
+        guard let project = project else {
+            return
+        }
+        let persistedProject = PersistedProject(project)
+        self.persistenceManager.saveProject(persistedProject)
+        self.observers.forEach({ $0.modelDidChange() })
+        /*
         self.observers.forEach({ $0.modelDidChange() })
 
         guard let project = project else {
@@ -62,10 +66,13 @@ class ModelManager {
             onGoingSaveTask = (project, workItem)
         }
         storageQueue.async(execute: workItem)
+        */
     }
 
     func deleteProject(_ project: Project) {
-        self.storageManager.deleteProject(projectTitle: project.title)
+        // self.storageManager.deleteProject(projectTitle: project.title)
+        let persistedProject = PersistedProject(project)
+        self.persistenceManager.deleteProject(persistedProject)
         self.observers.forEach({ $0.modelDidChange() })
     }
 
@@ -75,6 +82,7 @@ class ModelManager {
 // MARK: - Specific Shot Methods
 extension ModelManager {
 
+    // TODO: should generate and save in SHOT class
     func generateThumbnailAndSave(project: Project, shot: Shot) {
         saveProject(project)
         let workItem = DispatchWorkItem {
@@ -98,11 +106,11 @@ extension ModelManager {
 protocol ModelManagerObserver {
     /// Invoked when the model changes.
     func modelDidChange()
-    func DidUpdateLayer()
-    func DidAddLayer(layer: Layer)
+    // func DidUpdateLayer()
+    // func DidAddLayer(layer: Layer)
 }
 
 extension ModelManagerObserver {
-    func DidUpdateLayer() { }
-    func DidAddLayer(layer: Layer) { }
+    // func DidUpdateLayer() { }
+    // func DidAddLayer(layer: Layer) { }
 }
