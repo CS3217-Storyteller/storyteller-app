@@ -71,6 +71,10 @@ class Shot {
 
     // MARK: - Layer Related Methods
     func addLayer(_ layer: Layer, at index: Int? = nil) {
+        if let persistenceManager = persistenceManager {
+            layer.setPersistenceManager(to: persistenceManager
+                                                .getLayerPersistenceManager(for: PersistedLayer(layer)))
+        }
         layers.insert(layer, at: index ?? layers.endIndex)
         print("Saving layer...")
         saveLayer(layer)

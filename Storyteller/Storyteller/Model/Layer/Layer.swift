@@ -19,6 +19,7 @@ class Layer {
     let id: UUID
 
     var thumbnail: Thumbnail
+    private var persistenceManager: LayerPersistenceManager?
 
     init(component: LayerComponent, canvasSize: CGSize, name: String,
          isLocked: Bool = false, isVisible: Bool = true, thumbnail: Thumbnail? = nil, id: UUID = UUID()) {
@@ -34,6 +35,14 @@ class Layer {
             return
         }
         self.thumbnail = thumbnail
+    }
+
+    func setPersistenceManager(to manager: LayerPersistenceManager) {
+        self.persistenceManager = manager
+    }
+
+    private func saveLayer() {
+        self.persistenceManager?.saveLayer(PersistedLayer(self))
     }
 
     init(withDrawing drawing: PKDrawing, canvasSize: CGSize,
@@ -57,11 +66,13 @@ class Layer {
 
     func setDrawing(to drawing: PKDrawing) {
         updateComponent(component.setDrawing(to: drawing))
+        saveLayer()
     }
 
     func updateComponent(_ component: LayerComponent) {
         self.component = component
         generateThumbnail()
+        saveLayer()
     }
 
     func generateThumbnail() {
@@ -70,6 +81,7 @@ class Layer {
             return
         }
         thumbnail = component.merge(merger: ThumbnailMerger())
+        saveLayer()
     }
 
     func ungroup() -> [Layer] {

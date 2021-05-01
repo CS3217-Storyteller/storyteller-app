@@ -55,4 +55,8 @@ class ShotPersistenceManager {
             manager.decodeFromJSON($0, as: PersistedLayer.self)
         } ?? []
     }
+
+    func getLayerPersistenceManager(for persistedLayer: PersistedLayer) -> LayerPersistenceManager {
+        LayerPersistenceManager(at: url)
+    }
 }

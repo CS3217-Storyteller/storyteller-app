@@ -32,6 +32,6 @@ struct PersistedLayer: Codable {
 extension PersistedLayer {
     var layer: Layer {
         Layer(component: storageComponent.component, canvasSize: canvasSize,
-              name: name, isLocked: isLocked, isVisible: isVisible, thumbnail: thumbnail)
+              name: name, isLocked: isLocked, isVisible: isVisible, thumbnail: thumbnail, id: id)
     }
 }

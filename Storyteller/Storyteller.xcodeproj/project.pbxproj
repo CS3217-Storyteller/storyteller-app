@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2C36EC742607383700250ADE /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C36EC732607383700250ADE /* Color.swift */; };
+		897BDE40263D67A900476CD4 /* LayerPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897BDE3F263D67A900476CD4 /* LayerPersistenceManager.swift */; };
 		899FBA362639D97600E0CF1A /* PersistedProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899FBA352639D97600E0CF1A /* PersistedProject.swift */; };
 		899FBA3C2639DAD800E0CF1A /* PersistedScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899FBA3B2639DAD800E0CF1A /* PersistedScene.swift */; };
 		899FBA422639DB1A00E0CF1A /* PersistedShot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 899FBA412639DB1A00E0CF1A /* PersistedShot.swift */; };
@@ -96,6 +97,7 @@
 
 /* Begin PBXFileReference section */
 		2C36EC732607383700250ADE /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		897BDE3F263D67A900476CD4 /* LayerPersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerPersistenceManager.swift; sourceTree = "<group>"; };
 		899FBA352639D97600E0CF1A /* PersistedProject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistedProject.swift; sourceTree = "<group>"; };
 		899FBA3B2639DAD800E0CF1A /* PersistedScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistedScene.swift; sourceTree = "<group>"; };
 		899FBA412639DB1A00E0CF1A /* PersistedShot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistedShot.swift; sourceTree = "<group>"; };
@@ -295,6 +297,7 @@
 				899FBA4F2639DEBF00E0CF1A /* ProjectPersistenceManager.swift */,
 				899FBA532639DECD00E0CF1A /* ScenePersistenceManager.swift */,
 				899FBA572639DED700E0CF1A /* ShotPersistenceManager.swift */,
+				897BDE3F263D67A900476CD4 /* LayerPersistenceManager.swift */,
 				899FBA71263BF69D00E0CF1A /* ModelFactory.swift */,
 				A29A192E2607239E00710943 /* StorageUtility.swift */,
 			);
@@ -598,6 +601,7 @@
 				B3878B882629BBB100DEDE1A /* ImageComponent.swift in Sources */,
 				B35115D626137BE20056886C /* LayerTableController.swift in Sources */,
 				B35FA28826143B7900D656E3 /* UIImage+solidImage.swift in Sources */,
+				897BDE40263D67A900476CD4 /* LayerPersistenceManager.swift in Sources */,
 				B3755AB92606454900EC0F56 /* ShotView.swift in Sources */,
 				899FBA422639DB1A00E0CF1A /* PersistedShot.swift in Sources */,
 				A2091590260705EB001A242E /* ProjectViewCell.swift in Sources */,

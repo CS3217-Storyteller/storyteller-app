@@ -18,13 +18,10 @@ class ModelFactory {
     private func generateProject(from persistedProject: PersistedProject, withScenes scenes: [Scene]) -> Project {
         let idToScene: [UUID: Scene] = Dictionary(scenes.map({ ($0.id, $0 )})) { $1 }
         let orderedScenes = persistedProject.scenes.compactMap({ idToScene[$0] })
-        let projectPersistenceManager = rootPersistenceManager.getProjectPersistenceManager(of: persistedProject)
-        orderedScenes.forEach({ $0.setPersistenceManager(to: projectPersistenceManager.getScenePersistenceManager(of: PersistedScene($0))) })
         return Project(title: persistedProject.title,
                        canvasSize: persistedProject.canvasSize,
                        scenes: orderedScenes,
-                       id: persistedProject.id,
-                       persistenceManager: projectPersistenceManager
+                       id: persistedProject.id
         )
     }
 
@@ -47,9 +44,7 @@ class ModelFactory {
     }
 
     private func generateLayers(from persistedLayers: [PersistedLayer]) -> [Layer] {
-        let layers = persistedLayers.map({ $0.layer })
-        print(layers)
-        return layers
+        persistedLayers.map({ $0.layer })
     }
 
     private func initializePersistenceManagers(for projects: [Project]) {
@@ -65,6 +60,11 @@ class ModelFactory {
                     let shotPersistenceManager = scenePersistenceManager
                         .getShotPersistenceManager(of: PersistedShot($0))
                     $0.setPersistenceManager(to: shotPersistenceManager)
+                    $0.layers.forEach {
+                        let layerPersistenceManager = shotPersistenceManager
+                            .getLayerPersistenceManager(for: PersistedLayer($0))
+                        $0.setPersistenceManager(to: layerPersistenceManager)
+                    }
                 }
             }
         }
@@ -78,6 +78,7 @@ class ModelFactory {
                 })
             })
         }
+        print(projects.map { $0.scenes.map { $0.shots.map { $0.layers.map { $0.id } }}})
         initializePersistenceManagers(for: projects)
         return projects
     }
