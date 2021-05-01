@@ -17,6 +17,10 @@ class Project {
         observers.append(observer)
     }
 
+    var persisted: PersistedProject {
+        PersistedProject(self)
+    }
+
     func notifyObservers() {
         observers.forEach({ $0.modelDidChange() })
     }
@@ -30,7 +34,7 @@ class Project {
         let scene = scenes[index]
         if let persistenceManager = persistenceManager {
             scene.setPersistenceManager(to: persistenceManager
-                                            .getScenePersistenceManager(of: PersistedScene(scene)))
+                                            .getScenePersistenceManager(of: scene.persisted))
         }
         return scene
     }
@@ -53,24 +57,24 @@ class Project {
     }
 
     private func saveScene(_ scene: Scene) {
-        self.persistenceManager?.saveScene(PersistedScene(scene))
+        self.persistenceManager?.saveScene(scene.persisted)
         self.saveProject()
     }
 
     private func deleteScene(_ scene: Scene) {
-        self.persistenceManager?.deleteScene(PersistedScene(scene))
+        self.persistenceManager?.deleteScene(scene.persisted)
         self.saveProject()
     }
 
     private func saveProject() {
-        self.persistenceManager?.saveProject(PersistedProject(self))
+        self.persistenceManager?.saveProject(self.persisted)
         self.notifyObservers()
     }
 
     func addScene(_ scene: Scene) {
         if let persistenceManager = persistenceManager {
             scene.setPersistenceManager(to: persistenceManager
-                                        .getScenePersistenceManager(of: PersistedScene(scene)))
+                                        .getScenePersistenceManager(of: scene.persisted))
         }
         self.scenes.append(scene)
         self.saveScene(scene)

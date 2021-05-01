@@ -22,6 +22,10 @@ class Layer {
     var thumbnail: Thumbnail
     private var persistenceManager: LayerPersistenceManager?
 
+    var persisted: PersistedLayer {
+        PersistedLayer(self)
+    }
+
     init(component: LayerComponent, canvasSize: CGSize, name: String,
          isLocked: Bool = false, isVisible: Bool = true, thumbnail: Thumbnail? = nil, id: UUID = UUID()) {
         self.component = component
@@ -51,7 +55,7 @@ class Layer {
     }
 
     private func saveLayer() {
-        self.persistenceManager?.saveLayer(PersistedLayer(self))
+        self.persistenceManager?.saveLayer(self.persisted)
     }
 
     init(withDrawing drawing: PKDrawing, canvasSize: CGSize,

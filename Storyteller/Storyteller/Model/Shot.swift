@@ -17,6 +17,10 @@ class Shot {
     private var persistenceManager: ShotPersistenceManager?
     private var observers = [ShotObserver]()
 
+    var persisted: PersistedShot {
+        PersistedShot(self)
+    }
+
     func observedBy(_ observer: ShotObserver) {
         observers.append(observer)
     }
@@ -45,12 +49,12 @@ class Shot {
     }
 
     private func saveShot() {
-        self.persistenceManager?.saveShot(PersistedShot(self))
+        self.persistenceManager?.saveShot(self.persisted)
         notifyObservers()
     }
 
     private func saveLayer(_ layer: Layer) {
-        self.persistenceManager?.saveLayer(PersistedLayer(layer))
+        self.persistenceManager?.saveLayer(layer.persisted)
         saveShot()
     }
 
@@ -85,7 +89,7 @@ class Shot {
     func addLayer(_ layer: Layer, at index: Int? = nil) {
         if let persistenceManager = persistenceManager {
             layer.setPersistenceManager(to: persistenceManager
-                                                .getLayerPersistenceManager(for: PersistedLayer(layer)))
+                                                .getLayerPersistenceManager(for: layer.persisted))
         }
         layers.insert(layer, at: index ?? layers.endIndex)
         saveLayer(layer)

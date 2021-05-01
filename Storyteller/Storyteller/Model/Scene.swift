@@ -13,6 +13,10 @@ class Scene {
     private var persistenceManager: ScenePersistenceManager?
     private var observers = [SceneObserver]()
 
+    var persisted: PersistedScene {
+        PersistedScene(self)
+    }
+
     func observedBy(_ observer: SceneObserver) {
         observers.append(observer)
     }
@@ -34,7 +38,7 @@ class Scene {
         let shot = shots[index]
         if let persistenceManager = persistenceManager {
             shot.setPersistenceManager(to: persistenceManager
-                                            .getShotPersistenceManager(of: PersistedShot(shot)))
+                                            .getShotPersistenceManager(of: shot.persisted))
         }
         return shot
     }
@@ -47,16 +51,16 @@ class Scene {
     }
 
     private func saveScene() {
-        self.persistenceManager?.saveScene(PersistedScene(self))
+        self.persistenceManager?.saveScene(self.persisted)
     }
 
     private func saveShot(_ shot: Shot) {
-        self.persistenceManager?.saveShot(PersistedShot(shot))
+        self.persistenceManager?.saveShot(shot.persisted)
         saveScene()
     }
 
     private func deleteShot(_ shot: Shot) {
-        self.persistenceManager?.deleteShot(PersistedShot(shot))
+        self.persistenceManager?.deleteShot(shot.persisted)
         saveScene()
     }
 
@@ -70,7 +74,7 @@ class Scene {
         saveShot(shot)
         if let persistenceManager = persistenceManager {
             shot.setPersistenceManager(to: persistenceManager
-                                        .getShotPersistenceManager(of: PersistedShot(shot)))
+                                        .getShotPersistenceManager(of: shot.persisted))
         }
         if shot.layers.isEmpty {
             let layer = Layer(withDrawing: PKDrawing(), canvasSize: shot.canvasSize)
