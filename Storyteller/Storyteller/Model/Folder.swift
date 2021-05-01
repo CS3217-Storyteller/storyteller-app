@@ -19,7 +19,7 @@ class Folder: Directory {
     
     var dateUpdated: Date
     
-    var children: [Folder]
+    var children: [Directory]
 
     init(name: String) {
         self.name = name
