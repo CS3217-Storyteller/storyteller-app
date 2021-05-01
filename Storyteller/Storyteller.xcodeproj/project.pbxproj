@@ -13,6 +13,9 @@
 		A209158926070553001A242E /* SceneHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A209158826070553001A242E /* SceneHeaderView.swift */; };
 		A209158C26070595001A242E /* SceneShotViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A209158B26070595001A242E /* SceneShotViewCell.swift */; };
 		A2091590260705EB001A242E /* ProjectViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A209158F260705EB001A242E /* ProjectViewCell.swift */; };
+		A2235B38263D1D9000BA15DE /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B37263D1D9000BA15DE /* Folder.swift */; };
+		A2235B3C263D26FB00BA15DE /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B3B263D26FB00BA15DE /* File.swift */; };
+		A2235B3E263D273600BA15DE /* Directory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B3D263D273600BA15DE /* Directory.swift */; };
 		A24F62F62600CC7300FC7CD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24F62F52600CC7300FC7CD4 /* AppDelegate.swift */; };
 		A24F62F82600CC7300FC7CD4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24F62F72600CC7300FC7CD4 /* SceneDelegate.swift */; };
 		A24F62FD2600CC7300FC7CD4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A24F62FB2600CC7300FC7CD4 /* Main.storyboard */; };
@@ -94,6 +97,9 @@
 		A209158826070553001A242E /* SceneHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneHeaderView.swift; sourceTree = "<group>"; };
 		A209158B26070595001A242E /* SceneShotViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneShotViewCell.swift; sourceTree = "<group>"; };
 		A209158F260705EB001A242E /* ProjectViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewCell.swift; sourceTree = "<group>"; };
+		A2235B37263D1D9000BA15DE /* Folder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
+		A2235B3B263D26FB00BA15DE /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		A2235B3D263D273600BA15DE /* Directory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Directory.swift; sourceTree = "<group>"; };
 		A24F62F22600CC7300FC7CD4 /* Storyteller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Storyteller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A24F62F52600CC7300FC7CD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A24F62F72600CC7300FC7CD4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -260,6 +266,9 @@
 			isa = PBXGroup;
 			children = (
 				A29A19272607237100710943 /* ModelManager.swift */,
+				A2235B3B263D26FB00BA15DE /* File.swift */,
+				A2235B3D263D273600BA15DE /* Directory.swift */,
+				A2235B37263D1D9000BA15DE /* Folder.swift */,
 				A29A19222607237100710943 /* Project.swift */,
 				A29A19202607237100710943 /* Scene.swift */,
 				A29A19292607237100710943 /* Shot.swift */,
@@ -558,6 +567,7 @@
 				B3755AAB26062B9700EC0F56 /* ShotDesignerViewController.swift in Sources */,
 				B3C7BFA2262C21430005F159 /* RedOnionSkinMerger.swift in Sources */,
 				B35FA2982614401C00D656E3 /* TransformLayerButton.swift in Sources */,
+				A2235B38263D1D9000BA15DE /* Folder.swift in Sources */,
 				A29A19582607242800710943 /* Shot.swift in Sources */,
 				B3FB29062617680100DC4BEE /* Alert.swift in Sources */,
 				A29A19302607239E00710943 /* StorageManager.swift in Sources */,
@@ -578,8 +588,10 @@
 				B35115D626137BE20056886C /* LayerTableController.swift in Sources */,
 				B35FA28826143B7900D656E3 /* UIImage+solidImage.swift in Sources */,
 				B3755AB92606454900EC0F56 /* ShotView.swift in Sources */,
+				A2235B3C263D26FB00BA15DE /* File.swift in Sources */,
 				A2091590260705EB001A242E /* ProjectViewCell.swift in Sources */,
 				B35FA2C42614C22A00D656E3 /* Transformable.swift in Sources */,
+				A2235B3E263D273600BA15DE /* Directory.swift in Sources */,
 				B3C7BFBA262C393A0005F159 /* Thumbnail.swift in Sources */,
 				B3C7BFB2262C24E50005F159 /* GreenOnionSkinMerger.swift in Sources */,
 				A29A195B2607243300710943 /* Scene.swift in Sources */,
@@ -775,13 +787,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = M3JC2347GD;
+				DEVELOPMENT_TEAM = X293D67B5Z;
 				INFOPLIST_FILE = Storyteller/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tf.Storyteller;
+				PRODUCT_BUNDLE_IDENTIFIER = com.john.Storyteller;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -794,13 +806,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = M3JC2347GD;
+				DEVELOPMENT_TEAM = X293D67B5Z;
 				INFOPLIST_FILE = Storyteller/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tf.Storyteller;
+				PRODUCT_BUNDLE_IDENTIFIER = com.john.Storyteller;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

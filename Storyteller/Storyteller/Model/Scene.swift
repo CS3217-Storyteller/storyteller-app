@@ -6,32 +6,63 @@
 //
 import PencilKit
 
-class Scene {
-    let canvasSize: CGSize
-    var shots: [Shot] = [Shot]()
 
-    init(canvasSize: CGSize, shots: [Shot] = []) {
+class Scene: File {
+    
+    var name: String
+    
+    var description: String
+    
+    var size: Int
+    
+    var dateAdded: Date
+    
+    var dateUpdated: Date
+    
+    var canvasSize: CGSize
+    
+    var shots: [Shot]
+    
+    init(name: String, canvasSize: CGSize) {
+        self.name = name
+        self.description = ""
+        self.size = 0
+        self.dateAdded = Date()
+        self.dateUpdated = Date()
+        
         self.canvasSize = canvasSize
-        self.shots = shots
+        self.shots = []
     }
+    
+}
 
-    func swapShots(_ index1: Int, _ index2: Int) {
-        self.shots.swapAt(index1, index2)
-    }
 
-    func updateShot(shot: Shot, with newShot: Shot) {
-        if let index = self.shots.firstIndex(where: { $0 === shot }) {
-            self.shots[index] = shot
-        }
-    }
-
-    func addShot(_ shot: Shot) {
-        self.shots.append(shot)
-    }
-
-    func addShot(_ shot: Shot, at index: Int) {
-        self.shots.insert(shot, at: index)
-    }
+//class Scene {
+//    let canvasSize: CGSize
+//    var shots: [Shot] = [Shot]()
+//
+//    init(canvasSize: CGSize, shots: [Shot] = []) {
+//        self.canvasSize = canvasSize
+//        self.shots = shots
+//    }
+//
+//    func swapShots(_ index1: Int, _ index2: Int) {
+//        self.shots.swapAt(index1, index2)
+//    }
+//
+//    func updateShot(shot: Shot, with newShot: Shot) {
+//        if let index = self.shots.firstIndex(where: { $0 === shot }) {
+//            self.shots[index] = shot
+//        }
+//    }
+//
+//    func addShot(_ shot: Shot) {
+//        self.shots.append(shot)
+//    }
+//
+//    func addShot(_ shot: Shot, at index: Int) {
+//        self.shots.insert(shot, at: index)
+//    }
 
 //    func updateLayer(withId layerId: UUID, withDrawing drawing: PKDrawing) {
 //        let shotId = layerLabel.shotId
@@ -57,27 +88,27 @@ class Scene {
 //        let shotId = layerLabel.shotId
 //        shots[shotId]?.moveLayer(layerLabel, to: newIndex)
 //    }
-
-    func moveShot(shot: Shot, to newIndex: Int) {
-        guard let oldIndex = self.shots.firstIndex(where: { $0 === shot }) else {
-            return
-        }
-        self.shots.remove(at: oldIndex)
-        self.shots.insert(shot, at: newIndex)
-    }
-
-    func duplicate() -> Scene {
-        Scene(
-            canvasSize: canvasSize,
-            shots: shots.map({ $0.duplicate() })
-        )
-    }
-
-    func getShot(_ index: Int, after shot: Shot) -> Shot? {
-        guard let currentIndex = self.shots.firstIndex(where: { $0 === shot }),
-              self.shots.indices.contains(currentIndex + index) else {
-            return nil
-        }
-        return self.shots[currentIndex + index]
-    }
-}
+//
+//    func moveShot(shot: Shot, to newIndex: Int) {
+//        guard let oldIndex = self.shots.firstIndex(where: { $0 === shot }) else {
+//            return
+//        }
+//        self.shots.remove(at: oldIndex)
+//        self.shots.insert(shot, at: newIndex)
+//    }
+//
+//    func duplicate() -> Scene {
+//        Scene(
+//            canvasSize: canvasSize,
+//            shots: shots.map({ $0.duplicate() })
+//        )
+//    }
+//
+//    func getShot(_ index: Int, after shot: Shot) -> Shot? {
+//        guard let currentIndex = self.shots.firstIndex(where: { $0 === shot }),
+//              self.shots.indices.contains(currentIndex + index) else {
+//            return nil
+//        }
+//        return self.shots[currentIndex + index]
+//    }
+//}
