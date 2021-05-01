@@ -24,7 +24,7 @@ class ProjectPersistenceManager {
         }
         manager.saveData(data, toFile: "Project Metadata")
     }
-    
+
     func saveScene(_ scene: PersistedScene) {
         guard let data = manager.encodeToJSON(scene) else {
             return

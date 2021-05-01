@@ -71,8 +71,10 @@ class Shot {
     }
 
     func duplicate() -> Shot {
-        Shot(canvasSize: canvasSize, backgroundColor: backgroundColor,
-                    layers: layers.map({ $0.duplicate() }), thumbnail: thumbnail)
+        Shot(canvasSize: canvasSize,
+             backgroundColor: backgroundColor,
+             layers: layers.map({ $0.duplicate() }),
+             thumbnail: thumbnail)
     }
 
     func setBackgroundColor(color: Color) {

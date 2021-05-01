@@ -126,7 +126,7 @@ extension SceneViewController: UICollectionViewDelegate {
             return UICollectionViewCell()
         }
 
-        let scene = project.loadScene(at: indexPath.section) //project.scenes[indexPath.section]
+        let scene = project.loadScene(at: indexPath.section)
 
         if let scene = scene, indexPath.row < scene.shots.count {
 
@@ -256,7 +256,6 @@ extension SceneViewController: UICollectionViewDelegateFlowLayout {
                         insetForSectionAt section: Int) -> UIEdgeInsets {
         UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
     }
-
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize {

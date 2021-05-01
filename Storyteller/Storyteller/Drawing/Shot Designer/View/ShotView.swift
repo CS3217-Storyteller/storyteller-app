@@ -12,7 +12,7 @@ class ShotView: UIView {
     var layerViews = [LayerView]()
     var toolPicker: PKToolPicker?
 
-    var isInDrawingMode: Bool = false {
+    var isInDrawingMode = false {
         didSet {
             updateEffectForSelectedLayer()
         }
@@ -28,7 +28,7 @@ class ShotView: UIView {
     }
 
     var selectedLayerView: LayerView {
-        return layerViews[selectedLayerIndex]
+        layerViews[selectedLayerIndex]
     }
 
     var currentCanvasView: PKCanvasView? {

@@ -35,7 +35,9 @@ class Project {
         return scene
     }
 
-    init(title: String, canvasSize: CGSize, scenes: [Scene] = [], id: UUID = UUID(), persistenceManager: ProjectPersistenceManager? = nil) {
+    init(title: String, canvasSize: CGSize, scenes: [Scene] = [],
+         id: UUID = UUID(),
+         persistenceManager: ProjectPersistenceManager? = nil) {
         self.title = title
         self.canvasSize = canvasSize
         self.scenes = scenes

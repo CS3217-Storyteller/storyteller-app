@@ -479,6 +479,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A29A18F426071A3700710943 /* Build configuration list for PBXNativeTarget "StorytellerTests" */;
 			buildPhases = (
+				897BDE4B263D83F700476CD4 /* ShellScript */,
 				A29A18E926071A3600710943 /* Sources */,
 				A29A18EA26071A3600710943 /* Frameworks */,
 				A29A18EB26071A3600710943 /* Resources */,
@@ -551,6 +552,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		897BDE4B263D83F700476CD4 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint autocorrect && swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
 		B3320D12260F640E0063558A /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

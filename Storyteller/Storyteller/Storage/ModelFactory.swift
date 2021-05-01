@@ -16,7 +16,7 @@ class ModelFactory {
                                       )])])]
 
     private func generateProject(from persistedProject: PersistedProject, withScenes scenes: [Scene]) -> Project {
-        let idToScene: [UUID: Scene] = Dictionary(scenes.map({ ($0.id, $0 )})) { $1 }
+        let idToScene: [UUID: Scene] = Dictionary(scenes.map { ($0.id, $0) }) { $1 }
         let orderedScenes = persistedProject.scenes.compactMap({ idToScene[$0] })
         return Project(title: persistedProject.title,
                        canvasSize: persistedProject.canvasSize,
@@ -26,7 +26,7 @@ class ModelFactory {
     }
 
     private func generateScene(from persistedScene: PersistedScene, withShots shots: [Shot]) -> Scene {
-        let idToShot: [UUID: Shot] = Dictionary(shots.map({ ($0.id, $0 )})) { $1 }
+        let idToShot: [UUID: Shot] = Dictionary(shots.map { ($0.id, $0) }) { $1 }
         return Scene(canvasSize: persistedScene.canvasSize,
                      shots: persistedScene.shots.compactMap({ idToShot[$0] }),
                      id: persistedScene.id
@@ -34,7 +34,7 @@ class ModelFactory {
     }
 
     private func generateShot(from persistedShot: PersistedShot, withLayers layers: [Layer]) -> Shot {
-        let idToLayer: [UUID: Layer] = Dictionary(layers.map({ ($0.id, $0 )})) { $1 }
+        let idToLayer: [UUID: Layer] = Dictionary(layers.map { ($0.id, $0) }) { $1 }
         return Shot(canvasSize: persistedShot.canvasSize,
                     backgroundColor: persistedShot.backgroundColor,
                     layers: persistedShot.layers.compactMap({ idToLayer[$0] }),
