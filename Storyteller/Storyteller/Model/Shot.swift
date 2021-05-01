@@ -7,6 +7,7 @@
 import PencilKit
 
 class Shot {
+    private static let thumbnailQueue = DispatchQueue(label: "ThumbnailQueue", qos: .background)
     var layers: [Layer] = [Layer]()
     var backgroundColor: Color
     let canvasSize: CGSize
@@ -141,8 +142,29 @@ class Shot {
         let layerToBeUngrouped = removeLayer(at: index)
         layerToBeUngrouped.ungroup().reversed().forEach({ addLayer($0, at: index) })
     }
+
+    var onGoingThumbnailTask: (shot: Shot, workItem: DispatchWorkItem)?
 }
 
 // MARK: - Thumbnailable
 extension Shot: Thumbnailable {
+
+    func generateThumbnailAndSave() {
+        self.saveShot()
+        let workItem = DispatchWorkItem {
+            self.generateThumbnails()
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                self.saveShot()
+                self.onGoingThumbnailTask = nil
+            }
+        }
+        if let task = self.onGoingThumbnailTask, task.shot === self {
+            task.workItem.cancel()
+            self.onGoingThumbnailTask = (self, workItem)
+        }
+        Shot.thumbnailQueue.async(execute: workItem)
+    }
 }

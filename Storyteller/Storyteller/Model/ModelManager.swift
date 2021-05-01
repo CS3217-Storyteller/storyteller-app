@@ -10,7 +10,6 @@ import PencilKit
 // TODO: Should PersistedProject be created here or created in persistencemanager?
 class ModelManager {
 
-    private let thumbnailQueue = DispatchQueue(label: "ThumbnailQueue", qos: .background)
     private let storageQueue = DispatchQueue(label: "StorageQueue", qos: .background)
 
     private let persistenceManager = MainPersistenceManager()
@@ -93,33 +92,5 @@ class ModelManager {
 
     func notifyObservers() {
         observers.forEach({ $0.modelDidChange() })
-    }
-
-    var onGoingThumbnailTask: (shot: Shot, workItem: DispatchWorkItem)?
-}
-
-// MARK: - Specific Shot Methods
-extension ModelManager {
-
-    // TODO: should generate and save in SHOT class
-    func generateThumbnailAndSave(project: Project, shot: Shot) {
-        shot.saveShot()
-        // self.saveProject(project)
-        let workItem = DispatchWorkItem {
-            shot.generateThumbnails()
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else {
-                    return
-                }
-                shot.saveShot()
-                // self.saveProject(project)
-                self.onGoingThumbnailTask = nil
-            }
-        }
-        if let task = self.onGoingThumbnailTask, task.shot === shot {
-            task.workItem.cancel()
-            self.onGoingThumbnailTask = (shot, workItem)
-        }
-        self.thumbnailQueue.async(execute: workItem)
     }
 }
