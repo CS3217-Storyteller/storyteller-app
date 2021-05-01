@@ -12,6 +12,15 @@ class Project {
     let id: UUID
     // TODO: Should be a compulsory property when initialized
     private var persistenceManager: ProjectPersistenceManager?
+    private var observers = [ProjectObserver]()
+
+    func observedBy(_ observer: ProjectObserver) {
+        observers.append(observer)
+    }
+
+    func notifyObservers() {
+        observers.forEach({ $0.modelDidChange() })
+    }
 
     var scenes: [Scene] = []
     // TODO: list of observers

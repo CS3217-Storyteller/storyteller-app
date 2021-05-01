@@ -14,6 +14,15 @@ class Shot {
     var thumbnail: Thumbnail
     let id: UUID
     private var persistenceManager: ShotPersistenceManager?
+    private var observers = [ShotObserver]()
+
+    func observedBy(_ observer: ShotObserver) {
+        observers.append(observer)
+    }
+
+    func notifyObservers() {
+        observers.forEach({ $0.modelDidChange() })
+    }
 
     init(canvasSize: CGSize,
          backgroundColor: Color,
@@ -37,6 +46,7 @@ class Shot {
 
     func saveShot() {
         self.persistenceManager?.saveShot(PersistedShot(self))
+        notifyObservers()
     }
 
     func saveLayer(_ layer: Layer) {

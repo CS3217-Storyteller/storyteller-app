@@ -62,7 +62,7 @@ class ModelManager {
         }
         let persistedProject = PersistedProject(project)
         self.persistenceManager.saveProject(persistedProject)
-        self.observers.forEach({ $0.modelDidChange() })
+        notifyObservers()
         /*
         self.observers.forEach({ $0.modelDidChange() })
 
@@ -84,7 +84,15 @@ class ModelManager {
         // self.storageManager.deleteProject(projectTitle: project.title)
         let persistedProject = PersistedProject(project)
         self.persistenceManager.deleteProject(persistedProject)
-        self.observers.forEach({ $0.modelDidChange() })
+        notifyObservers()
+    }
+
+    func observedBy(_ observer: ModelManagerObserver) {
+        observers.append(observer)
+    }
+
+    func notifyObservers() {
+        observers.forEach({ $0.modelDidChange() })
     }
 
     var onGoingThumbnailTask: (shot: Shot, workItem: DispatchWorkItem)?
@@ -114,16 +122,4 @@ extension ModelManager {
         }
         self.thumbnailQueue.async(execute: workItem)
     }
-}
-
-protocol ModelManagerObserver {
-    /// Invoked when the model changes.
-    func modelDidChange()
-    // func DidUpdateLayer()
-    // func DidAddLayer(layer: Layer)
-}
-
-extension ModelManagerObserver {
-    // func DidUpdateLayer() { }
-    // func DidAddLayer(layer: Layer) { }
 }

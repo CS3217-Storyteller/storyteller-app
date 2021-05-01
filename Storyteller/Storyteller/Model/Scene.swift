@@ -11,6 +11,15 @@ class Scene {
     var shots: [Shot] = [Shot]()
     let id: UUID
     private var persistenceManager: ScenePersistenceManager?
+    private var observers = [SceneObserver]()
+
+    func observedBy(_ observer: SceneObserver) {
+        observers.append(observer)
+    }
+
+    func notifyObservers() {
+        observers.forEach({ $0.modelDidChange() })
+    }
 
     init(canvasSize: CGSize, shots: [Shot] = [], id: UUID = UUID()) {
         self.canvasSize = canvasSize

@@ -16,6 +16,7 @@ class Layer {
             generateThumbnail()
         }
     }
+    private var observers = [LayerObserver]()
     let id: UUID
 
     var thumbnail: Thumbnail
@@ -35,6 +36,14 @@ class Layer {
             return
         }
         self.thumbnail = thumbnail
+    }
+
+    func observedBy(_ observer: LayerObserver) {
+        observers.append(observer)
+    }
+
+    func notifyObservers() {
+        observers.forEach({ $0.modelDidChange() })
     }
 
     func setPersistenceManager(to manager: LayerPersistenceManager) {

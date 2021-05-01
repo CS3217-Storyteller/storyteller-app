@@ -16,7 +16,7 @@ class ProjectViewController: UIViewController {
 
     @IBOutlet private var collectionView: UICollectionView!
 
-    private var modelManager = ModelManager()
+    var modelManager = ModelManager()
     private var NumOfProjects: Int = 0
 
     lazy var addBarButton: UIBarButtonItem = {
@@ -86,7 +86,7 @@ class ProjectViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.modelManager.observers.append(self)
+        self.modelManager.observedBy(self)
 
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical

@@ -308,7 +308,7 @@ extension ShotDesignerViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let layerTable = segue.destination as? LayerTableController {
 
-            modelManager.observers.append(layerTable)
+            shot.observedBy(layerTable)
 
             layerTable.onionSkinRange = onionSkinRange
             layerTable.selectedLayerIndex = selectedLayerIndex

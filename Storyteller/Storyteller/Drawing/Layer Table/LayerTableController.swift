@@ -50,6 +50,7 @@ class LayerTableController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        shot.observedBy(self)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.allowsMultipleSelectionDuringEditing = true
@@ -250,7 +251,8 @@ extension LayerTableController: UIColorPickerViewControllerDelegate {
     }
 }
 // MARK: - ModelManagerObserver
-extension LayerTableController: ModelManagerObserver {
+extension LayerTableController: ShotObserver {
+
     func modelDidChange() {
         tableView.reloadData()
 

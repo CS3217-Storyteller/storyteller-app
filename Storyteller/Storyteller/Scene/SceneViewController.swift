@@ -60,12 +60,11 @@ class SceneViewController: UIViewController {
         self.collectionView.dataSource = self
         self.view.addSubview(collectionView)
 
-        guard let modelManager = self.modelManager,
-              let project = self.project else {
+        guard let project = self.project else {
             return
         }
 
-        modelManager.observers.append(self)
+        project.observedBy(self)
         self.navigationItem.title = project.title
         self.navigationItem.rightBarButtonItem = self.addSceneBarButton
 
@@ -277,7 +276,7 @@ extension SceneViewController: UICollectionViewDelegateFlowLayout {
 }
 
 // MARK: - ModelManagerObserver
-extension SceneViewController: ModelManagerObserver {
+extension SceneViewController: ProjectObserver {
     func modelDidChange() {
         collectionView.reloadData()
     }
