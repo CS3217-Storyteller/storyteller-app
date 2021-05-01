@@ -38,7 +38,8 @@ class StorageManager {
     }
 
     private func loadProject(from url: URL) -> Project? {
-        try? JSONDecoder().decode(StorageProject.self, from: Data(contentsOf: url)).project
+        // try? JSONDecoder().decode(StorageProject.self, from: Data(contentsOf: url)).project
+        return nil
     }
 
     func getAllProjects() -> [Project] {

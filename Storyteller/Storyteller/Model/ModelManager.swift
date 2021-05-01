@@ -23,6 +23,16 @@ class ModelManager {
         self.projects = ModelFactory().loadProjectModel(from: persistedModelTree)
     }
 
+    func loadProject(at index: Int) -> Project? {
+        guard projects.indices.contains(index) else {
+            return nil
+        }
+        let project = projects[index]
+        project.setPersistenceManager(to: persistenceManager
+                                        .getProjectPersistenceManager(of: PersistedProject(project)))
+        return project
+    }
+
     func addProject(_ project: Project) {
         let persistedProject = PersistedProject(project)
         project.setPersistenceManager(to: self.persistenceManager.getProjectPersistenceManager(of: persistedProject))
@@ -84,14 +94,16 @@ extension ModelManager {
 
     // TODO: should generate and save in SHOT class
     func generateThumbnailAndSave(project: Project, shot: Shot) {
-        saveProject(project)
+        shot.saveShot()
+        // self.saveProject(project)
         let workItem = DispatchWorkItem {
             shot.generateThumbnails()
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else {
                     return
                 }
-                self.saveProject(project)
+                shot.saveShot()
+                // self.saveProject(project)
                 self.onGoingThumbnailTask = nil
             }
         }

@@ -18,6 +18,18 @@ class Scene {
         self.id = id
     }
 
+    func loadShot(at index: Int) -> Shot? {
+        guard shots.indices.contains(index) else {
+            return nil
+        }
+        let shot = shots[index]
+        if let persistenceManager = persistenceManager {
+            shot.setPersistenceManager(to: persistenceManager
+                                            .getShotPersistenceManager(of: PersistedShot(shot)))
+        }
+        return shot
+    }
+
     func setPersistenceManager(to persistenceManager: ScenePersistenceManager) {
         if self.persistenceManager != nil {
             print("PERSISTENCE MANAGER IS NOT NIL")
@@ -45,20 +57,19 @@ class Scene {
         saveScene()
     }
 
-    func updateShot(shot: Shot, with newShot: Shot) {
-        if let index = self.shots.firstIndex(where: { $0 === shot }) {
-            self.shots[index] = shot
+    func addShot(_ shot: Shot, at index: Int? = nil) {
+        self.shots.insert(shot, at: index ?? shots.endIndex)
+        saveShot(shot)
+        if let persistenceManager = persistenceManager {
+            print("YESSSSSS")
+            shot.setPersistenceManager(to: persistenceManager
+                                        .getShotPersistenceManager(of: PersistedShot(shot)))
         }
-    }
-
-    func addShot(_ shot: Shot) {
-        self.shots.append(shot)
-        saveShot(shot)
-    }
-
-    func addShot(_ shot: Shot, at index: Int) {
-        self.shots.insert(shot, at: index)
-        saveShot(shot)
+        if shot.layers.isEmpty {
+            print("Adding new layer")
+            let layer = Layer(withDrawing: PKDrawing(), canvasSize: shot.canvasSize)
+            shot.addLayer(layer)
+        }
     }
 
     func removeShot(_ shot: Shot) {
@@ -83,6 +94,6 @@ class Scene {
               self.shots.indices.contains(currentIndex + index) else {
             return nil
         }
-        return self.shots[currentIndex + index]
+        return loadShot(at: currentIndex + index)
     }
 }

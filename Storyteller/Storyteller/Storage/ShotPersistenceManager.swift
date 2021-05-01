@@ -23,6 +23,7 @@ class ShotPersistenceManager {
             return
         }
         let fileName = layer.id.uuidString
+        print("saving layer to \(fileName)")
         manager.saveData(data, toFile: fileName)
     }
 
@@ -47,8 +48,8 @@ class ShotPersistenceManager {
     }
 
     func loadPersistedLayers() -> [PersistedLayer] {
-        let data = manager.getAllDirectoryUrls()?.compactMap {
-            manager.loadData("Layer Metadata", atFolder: $0.lastPathComponent.description)
+        let data = manager.getAllJsonUrls()?.compactMap {
+            manager.loadData($0.deletingPathExtension().lastPathComponent.description)
         }
         return data?.compactMap {
             manager.decodeFromJSON($0, as: PersistedLayer.self)

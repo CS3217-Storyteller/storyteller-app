@@ -91,8 +91,9 @@ class ShotDesignerViewController: UIViewController {
     private func setUpShot() {
         shotView.backgroundColor = shot.backgroundColor.uiColor
         let layers = shot.layers
-
+        print(shot.id, shot.layers)
         if layers.isEmpty {
+            print("Layers is empty")
             return
         }
 

@@ -41,6 +41,7 @@ class Shot {
 
     func saveLayer(_ layer: Layer) {
         self.persistenceManager?.saveLayer(PersistedLayer(layer))
+        saveShot()
     }
 
     func generateThumbnails() {
@@ -71,8 +72,8 @@ class Shot {
     // MARK: - Layer Related Methods
     func addLayer(_ layer: Layer, at index: Int? = nil) {
         layers.insert(layer, at: index ?? layers.endIndex)
+        print("Saving layer...")
         saveLayer(layer)
-        saveShot()
     }
 
     func duplicateLayers(at indices: [Int]) {

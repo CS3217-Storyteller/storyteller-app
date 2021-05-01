@@ -16,6 +16,17 @@ class Project {
     var scenes: [Scene] = []
     // TODO: list of observers
 
+    func loadScene(at index: Int) -> Scene? {
+        guard scenes.indices.contains(index) else {
+            return nil
+        }
+        let scene = scenes[index]
+        if let persistenceManager = persistenceManager {
+            scene.setPersistenceManager(to: persistenceManager
+                                            .getScenePersistenceManager(of: PersistedScene(scene)))
+        }
+        return scene
+    }
 
     init(title: String, canvasSize: CGSize, scenes: [Scene] = [], id: UUID = UUID(), persistenceManager: ProjectPersistenceManager? = nil) {
         self.title = title
@@ -54,13 +65,18 @@ class Project {
     }
 
     func addScene(_ scene: Scene) {
+        if let persistenceManager = persistenceManager {
+            scene.setPersistenceManager(to: persistenceManager
+                                        .getScenePersistenceManager(of: PersistedScene(scene)))
+        }
         self.scenes.append(scene)
         self.saveScene(scene)
     }
 
     func deleteScene(at index: Int) {
-        self.scenes.remove(at: index)
-        self.saveProject()
+        print(scenes.count)
+        let removedScene = self.scenes.remove(at: index)
+        self.deleteScene(removedScene)
     }
 
     func setTitle(to title: String) {

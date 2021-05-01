@@ -19,6 +19,14 @@ struct PersistenceManager {
 }
 
 extension PersistenceManager {
+    // TODO: return empty array if NIL?
+    func getAllJsonUrls() -> [URL]? {
+        let allUrls = try? FileManager.default.contentsOfDirectory(at: url,
+                                                     includingPropertiesForKeys: nil,
+                                                     options: .skipsSubdirectoryDescendants)
+        return allUrls?.filter({ $0.pathExtension == "json" })
+    }
+
     func getAllDirectoryUrls() -> [URL]? {
         try? FileManager.default.contentsOfDirectory(at: url,
                                                      includingPropertiesForKeys: [.isDirectoryKey],
@@ -70,39 +78,3 @@ extension PersistenceManager {
         try? JSONDecoder().decode(T.self, from: data)
     }
 }
-
-/*
-class PersistenceManager {
-    let manager = FileManager.default
-
-    var url: URL {
-        manager.urls(for: .documentDirectory, in: .userDomainMask)[0]
-    }
-
-    /// Creates a new project directory
-    @discardableResult
-    func saveProject(_ project: PersistedProject) -> Bool {
-        let folderName = project.id.uuidString
-        guard let jsonProject = try? JSONEncoder().encode(project) else {
-            return false
-        }
-        let newFolderUrl = url.appendingPathComponent(folderName)
-        guard (try? manager.createDirectory(at: newFolderUrl, withIntermediateDirectories: true, attributes: [:]))
-                != nil else {
-            return false
-        }
-        guard (try? jsonProject.write(to: newFolderUrl
-                                        .appendingPathComponent("Project Metadata")
-                                        .appendingPathExtension("json"))) != nil else {
-            return false
-        }
-        return true
-    }
-
-    /// Delete the entire project directory associated with the project
-    func deleteProject(_ project: PersistedProject) {
-        let folderName = project.id.uuidString
-        try? manager.removeItem(at: url.appendingPathComponent(folderName))
-    }
-}
-*/

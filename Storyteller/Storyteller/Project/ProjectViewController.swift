@@ -119,8 +119,9 @@ class ProjectViewController: UIViewController {
         }
         for indexPath in toDeleteIndexPath {
             let index = min(indexPath.row, self.modelManager.projects.count - 1)
-            let project = self.modelManager.projects[index]
-            self.modelManager.removeProject(project)
+            if let project = self.modelManager.loadProject(at: index) {
+                self.modelManager.removeProject(project)
+            }
         }
         self.selectedIndexPath.removeAll()
         self.mode = .view
@@ -148,8 +149,8 @@ class ProjectViewController: UIViewController {
             index = key.row
         }
 
-        let project = self.modelManager.projects[index]
-        let projectName = project.title
+        let project = self.modelManager.loadProject(at: index)
+        let projectName = project?.title ?? "UNTITLED"
 
         let alertController = UIAlertController(
             title: "Rename",
@@ -163,6 +164,9 @@ class ProjectViewController: UIViewController {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
             guard let newProjectName = alertController.textFields?[0].text else {
+                return
+            }
+            guard let project = project else {
                 return
             }
             self.modelManager.renameProject(project, to: newProjectName)
@@ -180,13 +184,13 @@ extension ProjectViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        let project = self.modelManager.projects[indexPath.row]
+        let project = self.modelManager.loadProject(at: indexPath.row)
         guard let projectViewCell = self.collectionView
                 .dequeueReusableCell(withReuseIdentifier: ProjectViewCell.identifier,
                                      for: indexPath) as? ProjectViewCell else {
             return UICollectionViewCell()
         }
-        projectViewCell.setTitle(to: project.title)
+        projectViewCell.setTitle(to: project?.title ?? "UNTITLED")
         return projectViewCell
     }
 
@@ -194,9 +198,11 @@ extension ProjectViewController: UICollectionViewDelegate {
         switch self.mode {
         case .view:
             self.collectionView.deselectItem(at: indexPath, animated: true)
-            let project = self.modelManager.projects[indexPath.row]
             guard let sceneViewController = self.storyboard?
                     .instantiateViewController(identifier: "SceneViewController") as? SceneViewController else {
+                return
+            }
+            guard let project = self.modelManager.loadProject(at: indexPath.row) else {
                 return
             }
             sceneViewController.modalPresentationStyle = .fullScreen

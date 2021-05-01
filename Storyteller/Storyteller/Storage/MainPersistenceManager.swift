@@ -16,6 +16,7 @@ class MainPersistenceManager {
 
     init() {
         self.manager = PersistenceManager()
+        print(manager.url.path)
     }
 
     func saveProject(_ project: PersistedProject) {

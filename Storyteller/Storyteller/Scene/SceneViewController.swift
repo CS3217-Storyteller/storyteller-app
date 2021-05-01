@@ -94,21 +94,21 @@ class SceneViewController: UIViewController {
     }
 
     @objc func didAddSceneButtonClicked(_ sender: Any) {
-        guard let project = self.project,
-              let modelManager = self.modelManager else {
+        // guard let modelManager = self.modelManager,
+        guard let project = self.project else {
             return
         }
 //        modelManager.addScene(projectLabel: projectLabel)
 
         let newScene = Scene(canvasSize: project.canvasSize)
         project.addScene(newScene)
-        modelManager.saveProject(project)
+        // modelManager.saveProject(project)
         self.collectionView.reloadData()
     }
 
     func deleteScene(at index: Int) {
         project?.deleteScene(at: index)
-        modelManager?.saveProject(project)
+        // modelManager?.saveProject(project)
     }
 }
 
@@ -130,12 +130,12 @@ extension SceneViewController: UICollectionViewDelegate {
             return UICollectionViewCell()
         }
 
-        let scene = project.scenes[indexPath.section]
+        let scene = project.loadScene(at: indexPath.section) //project.scenes[indexPath.section]
 
-        if indexPath.row < scene.shots.count {
+        if let scene = scene, indexPath.row < scene.shots.count {
 
-            let shot = scene.shots[indexPath.row]
-            if !shot.layers.isEmpty {
+            let shot = scene.loadShot(at: indexPath.row)
+            if let shot = shot, !shot.layers.isEmpty {
                 sceneCell.setImage(image: shot.defaultThumbnail)
 //
 //                let thumbnail = shot.orderedLayers[0].drawing
@@ -177,10 +177,11 @@ extension SceneViewController: UICollectionViewDelegate {
         else {
             return
         }
-        let scene = project.scenes[indexPath.section]
+        guard let scene = project.loadScene(at: indexPath.section) else {
+            return
+        }
 
-        if indexPath.row < scene.shots.count {
-            let shot = scene.shots[indexPath.row]
+        if let shot = scene.loadShot(at: indexPath.row) {
             shotDesignerController.modelManager = modelManager
             shotDesignerController.shot = shot
             shotDesignerController.scene = scene
@@ -189,12 +190,12 @@ extension SceneViewController: UICollectionViewDelegate {
             self.navigationController?.pushViewController(shotDesignerController, animated: true)
         } else {
             let newShot = Shot(canvasSize: scene.canvasSize, backgroundColor: Color(uiColor: .white))
-            if newShot.layers.isEmpty {
+            /* if newShot.layers.isEmpty {
                 let layer = Layer(withDrawing: PKDrawing(), canvasSize: newShot.canvasSize)
                 newShot.addLayer(layer)
-            }
+            } */
             scene.addShot(newShot)
-            modelManager.saveProject(project)
+            // modelManager.saveProject(project)
 //            modelManager.addShot(ofShot: shotLabel, backgroundColor: .white)
             self.collectionView.reloadData()
         }
@@ -210,17 +211,17 @@ extension SceneViewController: UICollectionViewDelegate {
             return
         }
 
-        guard let modelManager = self.modelManager,
-              let project = self.project
+        // guard let modelManager = self.modelManager,
+        guard let project = self.project
         else {
             return
         }
 
-        let scene = project.scenes[sourceIndexPath.section]
+        let scene = project.loadScene(at: sourceIndexPath.section)
         let sourceIndex = sourceIndexPath.row
         let destinationIndex = destinationIndexPath.row
-        scene.swapShots(sourceIndex, destinationIndex)
-        modelManager.saveProject(project)
+        scene?.swapShots(sourceIndex, destinationIndex)
+        // modelManager.saveProject(project)
     }
 }
 
@@ -230,8 +231,8 @@ extension SceneViewController: UICollectionViewDataSource {
         else {
             return 0
         }
-        let scene = project.scenes[section]
-        return scene.shots.count + 1
+        let scene = project.loadScene(at: section)
+        return (scene?.shots.count ?? -1) + 1
     }
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {

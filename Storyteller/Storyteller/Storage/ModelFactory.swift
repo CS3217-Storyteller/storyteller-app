@@ -8,6 +8,7 @@
 import Foundation
 
 class ModelFactory {
+    private let rootPersistenceManager = MainPersistenceManager()
     typealias PersistedModelTree = [(PersistedProject,
                                     [(PersistedScene,
                                       [(PersistedShot,
@@ -16,9 +17,14 @@ class ModelFactory {
 
     private func generateProject(from persistedProject: PersistedProject, withScenes scenes: [Scene]) -> Project {
         let idToScene: [UUID: Scene] = Dictionary(scenes.map({ ($0.id, $0 )})) { $1 }
-        return Project(title: persistedProject.title, canvasSize: persistedProject.canvasSize,
-                       scenes: persistedProject.scenes.compactMap({ idToScene[$0] }),
-                       id: persistedProject.id
+        let orderedScenes = persistedProject.scenes.compactMap({ idToScene[$0] })
+        let projectPersistenceManager = rootPersistenceManager.getProjectPersistenceManager(of: persistedProject)
+        orderedScenes.forEach({ $0.setPersistenceManager(to: projectPersistenceManager.getScenePersistenceManager(of: PersistedScene($0))) })
+        return Project(title: persistedProject.title,
+                       canvasSize: persistedProject.canvasSize,
+                       scenes: orderedScenes,
+                       id: persistedProject.id,
+                       persistenceManager: projectPersistenceManager
         )
     }
 
@@ -41,16 +47,38 @@ class ModelFactory {
     }
 
     private func generateLayers(from persistedLayers: [PersistedLayer]) -> [Layer] {
-        persistedLayers.map({ $0.layer })
+        let layers = persistedLayers.map({ $0.layer })
+        print(layers)
+        return layers
+    }
+
+    private func initializePersistenceManagers(for projects: [Project]) {
+        projects.forEach {
+            let projectPersistenceManager = rootPersistenceManager
+                .getProjectPersistenceManager(of: PersistedProject($0))
+            $0.setPersistenceManager(to: projectPersistenceManager)
+            $0.scenes.forEach {
+                let scenePersistenceManager = projectPersistenceManager
+                    .getScenePersistenceManager(of: PersistedScene($0))
+                $0.setPersistenceManager(to: scenePersistenceManager)
+                $0.shots.forEach {
+                    let shotPersistenceManager = scenePersistenceManager
+                        .getShotPersistenceManager(of: PersistedShot($0))
+                    $0.setPersistenceManager(to: shotPersistenceManager)
+                }
+            }
+        }
     }
 
     func loadProjectModel(from tree: PersistedModelTree) -> [Project] {
-        tree.map {
+        let projects = tree.map {
             generateProject(from: $0, withScenes: $1.map {
                 generateScene(from: $0, withShots: $1.map {
                     generateShot(from: $0, withLayers: generateLayers(from: $1))
                 })
             })
         }
+        initializePersistenceManagers(for: projects)
+        return projects
     }
 }
