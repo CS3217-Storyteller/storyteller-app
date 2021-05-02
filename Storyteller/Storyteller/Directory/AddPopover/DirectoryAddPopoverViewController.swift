@@ -18,7 +18,7 @@ class DirectoryAddPopoverViewController: UIViewController {
     func set(delegate: DirectoryViewControllerDelegate) {
         self.delegate = delegate
     }
-    
+
     @IBAction func addProjectButtonPressed(_ sender: UIButton) {
         let alertController = UIAlertController(title: "Add Project", message: "Add name and description", preferredStyle: .alert)
 
@@ -39,7 +39,7 @@ class DirectoryAddPopoverViewController: UIViewController {
                 let descriptionTextField = alertController.textFields![1] as UITextField
                 let name = nameTextField.text ?? String()
                 let description = descriptionTextField.text ?? String()
-                let project = Project(name: name, canvasSize: Constants.defaultCanvasSize)
+                let project = Project(name: name, description: description, canvasSize: Constants.defaultCanvasSize)
                 self.delegate?.didAddProject(project: project)
                 self.dismiss(animated: true, completion: nil)
             }
