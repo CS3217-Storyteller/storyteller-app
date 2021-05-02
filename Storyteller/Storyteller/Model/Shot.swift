@@ -42,9 +42,6 @@ class Shot {
     }
 
     func setPersistenceManager(to persistenceManager: ShotPersistenceManager) {
-        if self.persistenceManager != nil {
-            return
-        }
         self.persistenceManager = persistenceManager
     }
 

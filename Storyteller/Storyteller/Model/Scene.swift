@@ -44,9 +44,6 @@ class Scene {
     }
 
     func setPersistenceManager(to persistenceManager: ScenePersistenceManager) {
-        if self.persistenceManager != nil {
-            return
-        }
         self.persistenceManager = persistenceManager
     }
 
