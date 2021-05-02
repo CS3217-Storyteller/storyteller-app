@@ -24,7 +24,7 @@ struct PersistedFolder: Codable, PersistedDirectory {
     var children: [UUID]
     var id: UUID
 
-    init(folder: Folder) {
+    init(_ folder: Folder) {
         self.name = folder.name
         self.description = folder.description
         self.dateAdded = folder.dateAdded
