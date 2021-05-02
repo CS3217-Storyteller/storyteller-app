@@ -7,11 +7,11 @@
 import PencilKit
 
 class Project: Directory {
-    var description: String = "DESCRIPTION" // Todo: Proper Init
-    var name: String = "Project UNNAMED" // Todo: Proper Init
+    var description: String
+    var name: String
     let id: UUID
-    var dateAdded: Date = Date() // TODO: Proper date init
-    var dateUpdated: Date = Date() // TODO: Proper date init
+    let dateAdded: Date
+    var dateUpdated: Date
 
     let canvasSize: CGSize
 
@@ -44,14 +44,22 @@ class Project: Directory {
         return scene
     }
 
-    init(name: String, canvasSize: CGSize, scenes: [Scene] = [],
+    init(name: String,
+         description: String = "",
+         canvasSize: CGSize,
+         scenes: [Scene] = [],
          id: UUID = UUID(),
-         persistenceManager: ProjectPersistenceManager? = nil) {
+         persistenceManager: ProjectPersistenceManager? = nil,
+         dateAdded: Date = Date(),
+         dateUpdated: Date = Date()) {
         self.name = name
+        self.description = description
         self.canvasSize = canvasSize
         self.scenes = scenes
         self.id = id
         self.persistenceManager = persistenceManager
+        self.dateUpdated = dateUpdated
+        self.dateAdded = dateAdded
     }
 
     func setPersistenceManager(to persistenceManager: ProjectPersistenceManager) {
@@ -61,12 +69,22 @@ class Project: Directory {
         self.persistenceManager = persistenceManager
     }
 
+    private func updateDate() {
+        self.dateUpdated = Date()
+    }
+
+    // TODO: check if working properly
     private func saveScene(_ scene: Scene) {
+        print("old: ", dateUpdated) // TODO: Remove Print
+        var project = self
+        project.dateWasUpdated()
+        print("new: ", dateUpdated) // TODO: Make sure this value is changed.
         self.persistenceManager?.saveScene(scene.persisted)
         self.saveProject()
     }
 
     private func deleteScene(_ scene: Scene) {
+        self.updateDate()
         self.persistenceManager?.deleteScene(scene.persisted)
         self.saveProject()
     }

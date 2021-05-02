@@ -66,6 +66,7 @@ class Folder: Directory {
     }
 
     private func saveDirectory(_ directory: Directory) {
+        self.updateDate()
         if let folder = directory as? Folder {
             self.persistenceManager.saveFolder(folder.persisted)
         } else if let project = directory as? Project {
@@ -76,6 +77,7 @@ class Folder: Directory {
     }
 
     private func deleteDirectory(_ directory: Directory) {
+        self.updateDate()
         if let folder = directory as? Folder {
             self.persistenceManager.deleteFolder(folder.persisted)
         } else if let project = directory as? Project {
@@ -111,6 +113,11 @@ class Folder: Directory {
         self.deleteDirectory(directory)
     }
 
+    private func updateDate() {
+        self.dateUpdated = Date()
+    }
+
+    // TODO: check if working properly
     func renameDirectory(_ directory: Directory, to name: String) {
         if var folder = directory as? Folder {
             folder.rename(to: name)
@@ -120,6 +127,7 @@ class Folder: Directory {
         saveDirectory(directory)
     }
 
+    // TODO: check if working properly
     func updateDescription(_ directory: Directory, to description: String) {
         if var folder = directory as? Folder {
             folder.updateDescription(to: description)
