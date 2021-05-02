@@ -18,7 +18,6 @@
 		A2235B4E263D6FD500BA15DE /* DirectoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2235B4C263D6FD500BA15DE /* DirectoryTableViewCell.xib */; };
 		A2235B50263D8D3500BA15DE /* DirectoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B4F263D8D3500BA15DE /* DirectoryType.swift */; };
 		A2235B52263DC82A00BA15DE /* DirectoryAddPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B51263DC82A00BA15DE /* DirectoryAddPopoverViewController.swift */; };
-		A2235B5B263DCD4600BA15DE /* DirectoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B5A263DCD4600BA15DE /* DirectoryManager.swift */; };
 		A2235B5D263E21E900BA15DE /* DirectoryMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B5C263E21E800BA15DE /* DirectoryMode.swift */; };
 		A2235B61263E50CE00BA15DE /* DirectoryMoveModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B60263E50CE00BA15DE /* DirectoryMoveModalViewController.swift */; };
 		A2235B67263E824C00BA15DE /* PersistedLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B62263E824C00BA15DE /* PersistedLayer.swift */; };
@@ -116,7 +115,6 @@
 		A2235B4C263D6FD500BA15DE /* DirectoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DirectoryTableViewCell.xib; sourceTree = "<group>"; };
 		A2235B4F263D8D3500BA15DE /* DirectoryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectoryType.swift; sourceTree = "<group>"; };
 		A2235B51263DC82A00BA15DE /* DirectoryAddPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectoryAddPopoverViewController.swift; sourceTree = "<group>"; };
-		A2235B5A263DCD4600BA15DE /* DirectoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectoryManager.swift; sourceTree = "<group>"; };
 		A2235B5C263E21E800BA15DE /* DirectoryMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectoryMode.swift; sourceTree = "<group>"; };
 		A2235B60263E50CE00BA15DE /* DirectoryMoveModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectoryMoveModalViewController.swift; sourceTree = "<group>"; };
 		A2235B62263E824C00BA15DE /* PersistedLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistedLayer.swift; sourceTree = "<group>"; };
@@ -248,14 +246,6 @@
 			path = Directory;
 			sourceTree = "<group>";
 		};
-		A2235B59263DCD2F00BA15DE /* Managers */ = {
-			isa = PBXGroup;
-			children = (
-				A2235B5A263DCD4600BA15DE /* DirectoryManager.swift */,
-			);
-			path = Managers;
-			sourceTree = "<group>";
-		};
 		A2235B81263E82E200BA15DE /* Layer */ = {
 			isa = PBXGroup;
 			children = (
@@ -385,20 +375,8 @@
 			children = (
 				B36F0C27261435C200BB697F /* Extensions */,
 				A29A192B2607239E00710943 /* Storage */,
-				A2235B71263E825F00BA15DE /* LayerPersistenceManager.swift */,
-				A2235B6F263E825F00BA15DE /* MainPersistenceManager.swift */,
-				A2235B73263E826000BA15DE /* ModelFactory.swift */,
-				A2235B6C263E825F00BA15DE /* PersistedModelLoader.swift */,
-				A2235B6D263E825F00BA15DE /* PersistenceManager.swift */,
-				A2235B72263E826000BA15DE /* ProjectPersistenceManager.swift */,
-				A2235B6E263E825F00BA15DE /* ScenePersistenceManager.swift */,
-				A2235B70263E825F00BA15DE /* ShotPersistenceManager.swift */,
 				A29A192A2607237100710943 /* Model */,
-				A2235B59263DCD2F00BA15DE /* Managers */,
-				B3755AA826062B7500EC0F56 /* Drawing */,
-				A2235B43263D558300BA15DE /* Directory */,
-				A20915812606FE51001A242E /* Project */,
-				A2091583260703B0001A242E /* Scene */,
+				A29DF1B3263EF8E00027703E /* View+ViewController */,
 				A24F630C2600CC8D00FC7CD4 /* Constants and Utility */,
 				A24F62F52600CC7300FC7CD4 /* AppDelegate.swift */,
 				A24F62F72600CC7300FC7CD4 /* SceneDelegate.swift */,
@@ -448,10 +426,29 @@
 			isa = PBXGroup;
 			children = (
 				B33549552610B0B400B881ED /* StorageModel */,
+				A2235B71263E825F00BA15DE /* LayerPersistenceManager.swift */,
+				A2235B6F263E825F00BA15DE /* MainPersistenceManager.swift */,
+				A2235B73263E826000BA15DE /* ModelFactory.swift */,
+				A2235B6C263E825F00BA15DE /* PersistedModelLoader.swift */,
+				A2235B6D263E825F00BA15DE /* PersistenceManager.swift */,
+				A2235B72263E826000BA15DE /* ProjectPersistenceManager.swift */,
+				A2235B6E263E825F00BA15DE /* ScenePersistenceManager.swift */,
+				A2235B70263E825F00BA15DE /* ShotPersistenceManager.swift */,
 			);
 			name = Storage;
 			path = Storyteller/Storage;
 			sourceTree = SOURCE_ROOT;
+		};
+		A29DF1B3263EF8E00027703E /* View+ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B3755AA826062B7500EC0F56 /* Drawing */,
+				A2235B43263D558300BA15DE /* Directory */,
+				A20915812606FE51001A242E /* Project */,
+				A2091583260703B0001A242E /* Scene */,
+			);
+			path = "View+ViewController";
+			sourceTree = "<group>";
 		};
 		B33549552610B0B400B881ED /* StorageModel */ = {
 			isa = PBXGroup;
@@ -657,7 +654,6 @@
 				A2235B9C263E82E200BA15DE /* LayerComponent.swift in Sources */,
 				A2235BD3263E854800BA15DE /* File.swift in Sources */,
 				B35FA28826143B7900D656E3 /* UIImage+solidImage.swift in Sources */,
-				A2235B5B263DCD4600BA15DE /* DirectoryManager.swift in Sources */,
 				A2091590260705EB001A242E /* ProjectViewCell.swift in Sources */,
 				A2235B74263E826000BA15DE /* PersistedModelLoader.swift in Sources */,
 				A2235BA1263E82E200BA15DE /* RedOnionSkinMerger.swift in Sources */,
