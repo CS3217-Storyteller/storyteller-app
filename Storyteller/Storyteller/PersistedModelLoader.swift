@@ -38,8 +38,8 @@ class PersistedModelLoader {
         }
     }
 
-    func getRootIds() -> [UUID] {
-        rootManager.loadRootIds()
+    func getRootId() -> UUID? {
+        rootManager.loadRootId()
     }
 
     func loadPersistedFolders() -> [PersistedFolder] {

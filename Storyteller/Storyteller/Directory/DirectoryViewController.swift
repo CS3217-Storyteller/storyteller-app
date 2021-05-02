@@ -25,7 +25,7 @@ class DirectoryViewController: UIViewController {
     @IBOutlet weak var addButton: UIBarButtonItem!
     @IBOutlet weak var doneButton: UIBarButtonItem!
 
-    var folder: Folder = Folder(name: "Root", description: "This is the topmost root folder")
+    var folder: Folder = Folder.retrieveMainFolder()
     var observers: [DirectoryViewControllerObserver] = []
     var selectedIndexes: [Int] = []
 

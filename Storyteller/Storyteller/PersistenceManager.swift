@@ -16,7 +16,7 @@ struct PersistenceManager {
             .urls(for: .documentDirectory, in: .userDomainMask)[0]
         self.url = url ?? defaultUrl
 
-        print(self.url)
+        // print("CHECK")
 
     }
 }
@@ -61,6 +61,7 @@ extension PersistenceManager {
     func loadData(_ fileName: String, atFolder folderName: String? = nil) -> Data? {
         var targetFolderUrl: URL = url
         if let folderName = folderName {
+            // print(fileName, folderName)
             targetFolderUrl = url.appendingPathComponent(folderName)
         }
         let fileUrl = targetFolderUrl.appendingPathComponent(fileName).appendingPathExtension("json")

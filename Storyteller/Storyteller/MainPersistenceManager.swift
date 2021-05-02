@@ -20,18 +20,18 @@ class MainPersistenceManager {
 
     // START: Folder methods
 
-    func saveRootIds(_ folderIds: [UUID]) {
-        guard let data = manager.encodeToJSON(folderIds) else {
+    func saveRootId(_ folderId: UUID) {
+        guard let data = manager.encodeToJSON(folderId) else {
             return
         }
-        manager.saveData(data, toFile: "Root IDs")
+        manager.saveData(data, toFile: "Root ID")
     }
 
-    func loadRootIds() -> [UUID] {
-        guard let data = manager.loadData("Root IDs") else {
-            return []
+    func loadRootId() -> UUID? {
+        guard let data = manager.loadData("Root ID") else {
+            return nil
         }
-        return manager.decodeFromJSON(data, as: [UUID].self) ?? []
+        return manager.decodeFromJSON(data, as: UUID.self)
     }
 
     func saveFolder(_ folder: PersistedFolder) {
@@ -46,6 +46,7 @@ class MainPersistenceManager {
         let data = manager.getAllJsonUrls().compactMap {
             manager.loadData($0.deletingPathExtension().lastPathComponent.description)
         }
+        print(data)
         return data.compactMap {
             manager.decodeFromJSON($0, as: PersistedFolder.self)
         }

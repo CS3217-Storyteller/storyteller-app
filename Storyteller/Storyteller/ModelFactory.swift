@@ -49,6 +49,7 @@ class ModelFactory {
 
     private func initializePersistenceManagers(for projects: [Project]) {
         projects.forEach {
+            print("project forEach")
             let projectPersistenceManager = rootPersistenceManager
                 .getProjectPersistenceManager(of: $0.persisted)
             $0.setPersistenceManager(to: projectPersistenceManager)
@@ -83,14 +84,17 @@ class ModelFactory {
     }
 
     func loadDirectoryModel(from directories: [PersistedDirectory],
-                            withRootIds rootIds: [UUID],
-                            withProjects projects: [Project]) -> [Directory] {
+                            withRootId rootId: UUID,
+                            withProjects projects: [Project]) -> Directory {
         let idToProjects: [UUID: Project] = Dictionary(projects.map { ($0.id, $0) }) { $1 }
         let idToPersistedDirectory: [UUID: PersistedDirectory] = Dictionary(directories.map { ($0.id, $0) }) { $1 }
-        let rootDirectories: [PersistedDirectory] = rootIds.compactMap { idToPersistedDirectory[$0] }
-        return rootDirectories.compactMap {
-            buildDirectory(withRoot: $0, withSubDirectories: idToPersistedDirectory, withProjects: idToProjects)
+        guard let rootDirectory = idToPersistedDirectory[rootId],
+              let dir = buildDirectory(withRoot: rootDirectory,
+                                       withSubDirectories: idToPersistedDirectory,
+                                       withProjects: idToProjects) else {
+            return Folder(name: "Root", description: "New Root Folder")
         }
+        return dir
     }
 
     private func buildDirectory(withRoot rootDirectory: PersistedDirectory,

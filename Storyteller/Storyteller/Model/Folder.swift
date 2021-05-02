@@ -28,17 +28,24 @@ class Folder: Directory {
         PersistedFolder(self)
     }
 
-    private func retrieveDirectoriesFromStorage() -> [Directory] {
+    static func retrieveMainFolder() -> Folder {
         let loader = PersistedModelLoader()
+        guard let rootId = loader.getRootId() else {
+            return Folder(name: "New Root", description: "This is a new root folder")
+        }
         let persistedModelTree = loader.loadPersistedModels()
-        let rootIds = loader.getRootIds()
+
         let persistedDirectories = loader.loadPersistedDirectories()
         let projects = ModelFactory().loadProjectModel(from: persistedModelTree)
         let directories = ModelFactory().loadDirectoryModel(from: persistedDirectories,
-                                                            withRootIds: rootIds,
+                                                            withRootId: rootId,
                                                             withProjects: projects)
+        print("directories:", directories)
 
-        return directories
+        guard let folder = directories as? Folder else {
+            return Folder(name: "New Root", description: "This is a new root folder")
+        }
+        return folder
     }
 
     init(name: String,
@@ -56,9 +63,8 @@ class Folder: Directory {
         self.dateUpdated = dateUpdated
         self.children = children
         self.parent = parent
-        self.children = (parent == nil)
-            ? self.retrieveDirectoriesFromStorage()
-            : children
+        self.children = children
+        print(self.id, self.children)
     }
 
     func setParent(to parent: Folder) {
@@ -71,6 +77,10 @@ class Folder: Directory {
             self.persistenceManager.saveFolder(folder.persisted)
         } else if let project = directory as? Project {
             self.persistenceManager.saveProject(project.persisted)
+        }
+        if self.parent == nil {
+            self.persistenceManager.saveRootId(self.id)
+            // self.persistenceManager.saveRootIds(children.map { $0.id })
         }
         self.persistenceManager.saveFolder(self.persisted)
         self.notifyObservers()
