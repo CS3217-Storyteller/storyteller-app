@@ -39,12 +39,38 @@ class Folder: Directory {
         return project
     }
 
+    // addDirectory
+    // loadDirectory
+    // removeDirectory
+    // renameDirectory
+    // private saveDirectory
+    // private deleteDirectory
+
+    func addDirectory(_ directory: Directory) {
+        print("not impl")
+    }
+
+    func loadDirectory(_ directory: Directory) {
+        print("not impl")
+    }
+
+    func removeDirectory(_ directory: Directory) {
+        print("not impl")
+    }
+
+    func renameDirectory(_ directory: Directory) {
+        print("not impl")
+    }
+
+
+    // remove
     func addProject(_ project: Project) {
         project.setPersistenceManager(to: self.persistenceManager.getProjectPersistenceManager(of: project.persisted))
         self.children.append(project)
         self.saveProject(project)
     }
 
+    // remove
     func removeProject(_ project: Project) {
         if let index = self.projects.firstIndex(where: { $0 === project }) {
             self.children.remove(at: index)
@@ -52,13 +78,15 @@ class Folder: Directory {
         }
     }
 
+    // remove
     func renameProject(_ project: Project, to name: String) {
         self.removeProject(project)
         project.setTitle(to: name)
         self.addProject(project)
     }
 
-    func saveProject(_ project: Project?) {
+    // remove
+    private func saveProject(_ project: Project?) {
         guard let project = project else {
             return
         }
@@ -66,6 +94,7 @@ class Folder: Directory {
         notifyObservers()
     }
 
+    // remove
     func deleteProject(_ project: Project) {
         self.persistenceManager.deleteProject(project.persisted)
         notifyObservers()
@@ -75,12 +104,13 @@ class Folder: Directory {
         observers.append(observer)
     }
 
-    func notifyObservers() {
+    private func notifyObservers() {
         observers.forEach({ $0.modelDidChange() })
     }
 
     func addChildren(_ newChildren: [Directory]) {
         self.children.append(contentsOf: newChildren)
+        // persist
     }
 
     func moveChildren(indices selectedIndices: [Int], to folder: Folder) {
@@ -90,12 +120,14 @@ class Folder: Directory {
         }
         folder.addChildren(movedChildren)
         sortedIndices.forEach { self.children.remove(at: $0) }
+        // persist
         notifyObservers()
     }
 
     func deleteChildren(at selectedIndices: [Int]) {
         let sortedIndices = selectedIndices.sorted(by: { $1 < $0 })
         sortedIndices.forEach { self.children.remove(at: $0) }
+        // persist
         notifyObservers()
     }
 }
