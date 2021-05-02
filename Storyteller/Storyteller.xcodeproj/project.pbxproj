@@ -7,73 +7,90 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2C36EC742607383700250ADE /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C36EC732607383700250ADE /* Color.swift */; };
 		A209157F2606FE3F001A242E /* ProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A209157E2606FE3F001A242E /* ProjectViewController.swift */; };
 		A2091585260703D1001A242E /* SceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2091584260703D1001A242E /* SceneViewController.swift */; };
 		A209158926070553001A242E /* SceneHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A209158826070553001A242E /* SceneHeaderView.swift */; };
 		A209158C26070595001A242E /* SceneShotViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A209158B26070595001A242E /* SceneShotViewCell.swift */; };
 		A2091590260705EB001A242E /* ProjectViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A209158F260705EB001A242E /* ProjectViewCell.swift */; };
+		A2235B46263D573000BA15DE /* DirectoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B45263D573000BA15DE /* DirectoryViewController.swift */; };
+		A2235B4D263D6FD500BA15DE /* DirectoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B4B263D6FD500BA15DE /* DirectoryTableViewCell.swift */; };
+		A2235B4E263D6FD500BA15DE /* DirectoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2235B4C263D6FD500BA15DE /* DirectoryTableViewCell.xib */; };
+		A2235B50263D8D3500BA15DE /* DirectoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B4F263D8D3500BA15DE /* DirectoryType.swift */; };
+		A2235B52263DC82A00BA15DE /* AddPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B51263DC82A00BA15DE /* AddPopoverViewController.swift */; };
+		A2235B5B263DCD4600BA15DE /* DirectoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B5A263DCD4600BA15DE /* DirectoryManager.swift */; };
+		A2235B5D263E21E900BA15DE /* DirectoryMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B5C263E21E800BA15DE /* DirectoryMode.swift */; };
+		A2235B61263E50CE00BA15DE /* DirectoryMoveModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B60263E50CE00BA15DE /* DirectoryMoveModalViewController.swift */; };
+		A2235B67263E824C00BA15DE /* PersistedLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B62263E824C00BA15DE /* PersistedLayer.swift */; };
+		A2235B68263E824C00BA15DE /* PersistedShot.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B63263E824C00BA15DE /* PersistedShot.swift */; };
+		A2235B69263E824C00BA15DE /* PersistedProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B64263E824C00BA15DE /* PersistedProject.swift */; };
+		A2235B6A263E824C00BA15DE /* PersistedLayerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B65263E824C00BA15DE /* PersistedLayerComponent.swift */; };
+		A2235B6B263E824C00BA15DE /* PersistedScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B66263E824C00BA15DE /* PersistedScene.swift */; };
+		A2235B74263E826000BA15DE /* PersistedModelLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B6C263E825F00BA15DE /* PersistedModelLoader.swift */; };
+		A2235B75263E826000BA15DE /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B6D263E825F00BA15DE /* PersistenceManager.swift */; };
+		A2235B76263E826000BA15DE /* ScenePersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B6E263E825F00BA15DE /* ScenePersistenceManager.swift */; };
+		A2235B77263E826000BA15DE /* MainPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B6F263E825F00BA15DE /* MainPersistenceManager.swift */; };
+		A2235B78263E826000BA15DE /* ShotPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B70263E825F00BA15DE /* ShotPersistenceManager.swift */; };
+		A2235B79263E826000BA15DE /* LayerPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B71263E825F00BA15DE /* LayerPersistenceManager.swift */; };
+		A2235B7A263E826000BA15DE /* ProjectPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B72263E826000BA15DE /* ProjectPersistenceManager.swift */; };
+		A2235B7B263E826000BA15DE /* ModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B73263E826000BA15DE /* ModelFactory.swift */; };
+		A2235B94263E82E200BA15DE /* ModelObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B7C263E82E100BA15DE /* ModelObserver.swift */; };
+		A2235B95263E82E200BA15DE /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B7D263E82E100BA15DE /* Scene.swift */; };
+		A2235B97263E82E200BA15DE /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B7F263E82E200BA15DE /* ModelManager.swift */; };
+		A2235B98263E82E200BA15DE /* Shot.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B80263E82E200BA15DE /* Shot.swift */; };
+		A2235B99263E82E200BA15DE /* Thumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B82263E82E200BA15DE /* Thumbnail.swift */; };
+		A2235B9A263E82E200BA15DE /* Thumbnailable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B83263E82E200BA15DE /* Thumbnailable.swift */; };
+		A2235B9B263E82E200BA15DE /* Transformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B85263E82E200BA15DE /* Transformable.swift */; };
+		A2235B9C263E82E200BA15DE /* LayerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B86263E82E200BA15DE /* LayerComponent.swift */; };
+		A2235B9D263E82E200BA15DE /* DrawingComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B88263E82E200BA15DE /* DrawingComponent.swift */; };
+		A2235B9E263E82E200BA15DE /* ImageComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B89263E82E200BA15DE /* ImageComponent.swift */; };
+		A2235B9F263E82E200BA15DE /* CompositeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B8A263E82E200BA15DE /* CompositeComponent.swift */; };
+		A2235BA0263E82E200BA15DE /* GreenOnionSkinMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B8C263E82E200BA15DE /* GreenOnionSkinMerger.swift */; };
+		A2235BA1263E82E200BA15DE /* RedOnionSkinMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B8D263E82E200BA15DE /* RedOnionSkinMerger.swift */; };
+		A2235BA2263E82E200BA15DE /* LayerMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B8E263E82E200BA15DE /* LayerMerger.swift */; };
+		A2235BA3263E82E200BA15DE /* ThumbnailMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B8F263E82E200BA15DE /* ThumbnailMerger.swift */; };
+		A2235BA4263E82E200BA15DE /* NormalLayerMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B90263E82E200BA15DE /* NormalLayerMerger.swift */; };
+		A2235BA5263E82E200BA15DE /* ImageMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B91263E82E200BA15DE /* ImageMerger.swift */; };
+		A2235BA6263E82E200BA15DE /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B92263E82E200BA15DE /* Layer.swift */; };
+		A2235BA7263E82E200BA15DE /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B93263E82E200BA15DE /* Color.swift */; };
+		A2235BBF263E833800BA15DE /* LayerTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235BA9263E833800BA15DE /* LayerTableController.swift */; };
+		A2235BC0263E833800BA15DE /* LayerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235BAB263E833800BA15DE /* LayerTableViewCell.swift */; };
+		A2235BC1263E833800BA15DE /* LayerVisibilityButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235BAD263E833800BA15DE /* LayerVisibilityButton.swift */; };
+		A2235BC2263E833800BA15DE /* LayerLockButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235BAE263E833800BA15DE /* LayerLockButton.swift */; };
+		A2235BC3263E833800BA15DE /* SelectableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235BAF263E833800BA15DE /* SelectableView.swift */; };
+		A2235BC4263E833800BA15DE /* ShotDesignerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235BB1263E833800BA15DE /* ShotDesignerViewController.swift */; };
+		A2235BC5263E833800BA15DE /* OnionSkinRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235BB2263E833800BA15DE /* OnionSkinRange.swift */; };
+		A2235BC6263E833800BA15DE /* EditingMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235BB3263E833800BA15DE /* EditingMode.swift */; };
+		A2235BC7263E833800BA15DE /* LayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235BB5263E833800BA15DE /* LayerView.swift */; };
+		A2235BC8263E833800BA15DE /* CompositeLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235BB6263E833800BA15DE /* CompositeLayerView.swift */; };
+		A2235BC9263E833800BA15DE /* ShotDesignerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235BB8263E833800BA15DE /* ShotDesignerButton.swift */; };
+		A2235BCA263E833800BA15DE /* DrawingModeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235BB9263E833800BA15DE /* DrawingModeButton.swift */; };
+		A2235BCB263E833800BA15DE /* TransformLayerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235BBA263E833800BA15DE /* TransformLayerButton.swift */; };
+		A2235BCC263E833800BA15DE /* ImageLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235BBB263E833800BA15DE /* ImageLayerView.swift */; };
+		A2235BCD263E833800BA15DE /* ShotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235BBC263E833800BA15DE /* ShotView.swift */; };
+		A2235BCE263E833800BA15DE /* DrawingLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235BBD263E833800BA15DE /* DrawingLayerView.swift */; };
+		A2235BCF263E833800BA15DE /* DrawingUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235BBE263E833800BA15DE /* DrawingUtility.swift */; };
+		A2235BD1263E851F00BA15DE /* Directory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235BD0263E851F00BA15DE /* Directory.swift */; };
+		A2235BD3263E854800BA15DE /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235BD2263E854800BA15DE /* File.swift */; };
+		A2235BD7263E860700BA15DE /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235BD6263E860700BA15DE /* Folder.swift */; };
+		A2235BD9263E861600BA15DE /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235BD8263E861600BA15DE /* Project.swift */; };
 		A24F62F62600CC7300FC7CD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24F62F52600CC7300FC7CD4 /* AppDelegate.swift */; };
 		A24F62F82600CC7300FC7CD4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A24F62F72600CC7300FC7CD4 /* SceneDelegate.swift */; };
 		A24F62FD2600CC7300FC7CD4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A24F62FB2600CC7300FC7CD4 /* Main.storyboard */; };
 		A24F62FF2600CC7500FC7CD4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A24F62FE2600CC7500FC7CD4 /* Assets.xcassets */; };
 		A24F63022600CC7500FC7CD4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A24F63002600CC7500FC7CD4 /* LaunchScreen.storyboard */; };
 		A29A18F026071A3700710943 /* StorytellerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A18EF26071A3700710943 /* StorytellerTests.swift */; };
-		A29A19302607239E00710943 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A192C2607239E00710943 /* StorageManager.swift */; };
-		A29A19322607239E00710943 /* StorageUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A192E2607239E00710943 /* StorageUtility.swift */; };
-		A29A19522607242000710943 /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19272607237100710943 /* ModelManager.swift */; };
-		A29A19552607242600710943 /* Layer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19282607237100710943 /* Layer.swift */; };
-		A29A19582607242800710943 /* Shot.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19292607237100710943 /* Shot.swift */; };
-		A29A195B2607243300710943 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19202607237100710943 /* Scene.swift */; };
-		A29A19612607243800710943 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29A19222607237100710943 /* Project.swift */; };
 		A2F2C8962607634800FD4FF6 /* AddShotViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F2C8952607634800FD4FF6 /* AddShotViewCell.swift */; };
-		A2F2C89A260768E900FD4FF6 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F2C899260768E900FD4FF6 /* Color.swift */; };
-		B30AA8592610C3B5008B6714 /* StorageProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30AA8582610C3B5008B6714 /* StorageProject.swift */; };
-		B30AA85D2610C3D7008B6714 /* StorageScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30AA85C2610C3D7008B6714 /* StorageScene.swift */; };
-		B30AA8612610C3F7008B6714 /* StorageShot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30AA8602610C3F7008B6714 /* StorageShot.swift */; };
-		B30AA8662610C419008B6714 /* StorageLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30AA8652610C419008B6714 /* StorageLayer.swift */; };
-		B30AA8812610C544008B6714 /* DrawingComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30AA8802610C544008B6714 /* DrawingComponent.swift */; };
 		B30AA8902610D384008B6714 /* UIImage+mergeWith.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30AA88F2610D384008B6714 /* UIImage+mergeWith.swift */; };
 		B31A650E2618201900F532AF /* CGAffineTransform+transformedAround.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31A650D2618201900F532AF /* CGAffineTransform+transformedAround.swift */; };
-		B3320D1E260F6AB20063558A /* LayerMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3320D1D260F6AB20063558A /* LayerMerger.swift */; };
-		B3320D22260F6BA10063558A /* NormalLayerMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3320D21260F6BA10063558A /* NormalLayerMerger.swift */; };
-		B3320D62260F92330063558A /* LayerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3320D61260F92330063558A /* LayerComponent.swift */; };
-		B3440873262B0076009F3CC0 /* ImageLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3440872262B0076009F3CC0 /* ImageLayerView.swift */; };
 		B3440878262B61AD009F3CC0 /* CGSize+rectAtOrigin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3440877262B61AD009F3CC0 /* CGSize+rectAtOrigin.swift */; };
 		B34A84522617AC0000A3185A /* UIView+asImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34A84512617AC0000A3185A /* UIView+asImage.swift */; };
-		B34A84562617AC6D00A3185A /* ImageMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34A84552617AC6D00A3185A /* ImageMerger.swift */; };
 		B35115BA26123B510056886C /* UIView+newPointInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35115B926123B510056886C /* UIView+newPointInView.swift */; };
 		B35115C0261341980056886C /* UIView+setAnchorPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35115BF261341980056886C /* UIView+setAnchorPoint.swift */; };
-		B35115D22613790F0056886C /* EditingMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35115D12613790F0056886C /* EditingMode.swift */; };
-		B35115D626137BE20056886C /* LayerTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35115D526137BE20056886C /* LayerTableController.swift */; };
-		B35830562615F0C000824C55 /* LayerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35830552615F0C000824C55 /* LayerTableViewCell.swift */; };
-		B358305C2615F57500824C55 /* LayerLockButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B358305B2615F57500824C55 /* LayerLockButton.swift */; };
-		B35830602615F5E200824C55 /* LayerVisibilityButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B358305F2615F5E200824C55 /* LayerVisibilityButton.swift */; };
 		B35FA28826143B7900D656E3 /* UIImage+solidImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35FA28726143B7900D656E3 /* UIImage+solidImage.swift */; };
-		B35FA29426143FA400D656E3 /* SelectableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35FA29326143FA400D656E3 /* SelectableView.swift */; };
-		B35FA2982614401C00D656E3 /* TransformLayerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35FA2972614401C00D656E3 /* TransformLayerButton.swift */; };
-		B35FA2B82614A84900D656E3 /* CompositeComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35FA2B72614A84900D656E3 /* CompositeComponent.swift */; };
-		B35FA2BC2614AB7100D656E3 /* StorageLayerComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35FA2BB2614AB7100D656E3 /* StorageLayerComponent.swift */; };
-		B35FA2C42614C22A00D656E3 /* Transformable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35FA2C32614C22A00D656E3 /* Transformable.swift */; };
-		B3755AA22605F21400EC0F56 /* LayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AA12605F21400EC0F56 /* LayerView.swift */; };
-		B3755AAB26062B9700EC0F56 /* ShotDesignerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AAA26062B9700EC0F56 /* ShotDesignerViewController.swift */; };
 		B3755AB3260643C000EC0F56 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AB2260643C000EC0F56 /* Constants.swift */; };
-		B3755AB92606454900EC0F56 /* ShotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AB82606454900EC0F56 /* ShotView.swift */; };
-		B3755AD626065C0700EC0F56 /* DrawingUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3755AD526065C0700EC0F56 /* DrawingUtility.swift */; };
-		B3878B882629BBB100DEDE1A /* ImageComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3878B872629BBB100DEDE1A /* ImageComponent.swift */; };
 		B3C7BF98262C101F0005F159 /* UIImage+scaleToFit.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C7BF97262C101F0005F159 /* UIImage+scaleToFit.swift */; };
-		B3C7BFA2262C21430005F159 /* RedOnionSkinMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C7BFA1262C21430005F159 /* RedOnionSkinMerger.swift */; };
 		B3C7BFA6262C217C0005F159 /* PKDrawing+redOnionSkin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C7BFA5262C217C0005F159 /* PKDrawing+redOnionSkin.swift */; };
-		B3C7BFB2262C24E50005F159 /* GreenOnionSkinMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C7BFB1262C24E50005F159 /* GreenOnionSkinMerger.swift */; };
-		B3C7BFB6262C29930005F159 /* OnionSkinRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C7BFB5262C29930005F159 /* OnionSkinRange.swift */; };
-		B3C7BFBA262C393A0005F159 /* Thumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C7BFB9262C393A0005F159 /* Thumbnail.swift */; };
-		B3C7BFC0262C3C8B0005F159 /* ThumbnailMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C7BFBF262C3C8B0005F159 /* ThumbnailMerger.swift */; };
-		B3C7BFC4262C3F3A0005F159 /* Thumbnailable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C7BFC3262C3F3A0005F159 /* Thumbnailable.swift */; };
-		B3D7AD532615A1280082D591 /* DrawingLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D7AD522615A1280082D591 /* DrawingLayerView.swift */; };
-		B3D7AD612615A54C0082D591 /* CompositeLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D7AD602615A54C0082D591 /* CompositeLayerView.swift */; };
 		B3D7AD6B2615B4C30082D591 /* UIView+showBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3D7AD6A2615B4C30082D591 /* UIView+showBorder.swift */; };
-		B3E19000261620F0003C7AEF /* DrawingModeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E18FFF261620F0003C7AEF /* DrawingModeButton.swift */; };
-		B3E190042616219C003C7AEF /* ShotDesignerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E190032616219C003C7AEF /* ShotDesignerButton.swift */; };
 		B3FB29062617680100DC4BEE /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FB29052617680100DC4BEE /* Alert.swift */; };
 /* End PBXBuildFile section */
 
@@ -88,12 +105,72 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2C36EC732607383700250ADE /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		A209157E2606FE3F001A242E /* ProjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewController.swift; sourceTree = "<group>"; };
 		A2091584260703D1001A242E /* SceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneViewController.swift; sourceTree = "<group>"; };
 		A209158826070553001A242E /* SceneHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneHeaderView.swift; sourceTree = "<group>"; };
 		A209158B26070595001A242E /* SceneShotViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneShotViewCell.swift; sourceTree = "<group>"; };
 		A209158F260705EB001A242E /* ProjectViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewCell.swift; sourceTree = "<group>"; };
+		A2235B45263D573000BA15DE /* DirectoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectoryViewController.swift; sourceTree = "<group>"; };
+		A2235B4B263D6FD500BA15DE /* DirectoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectoryTableViewCell.swift; sourceTree = "<group>"; };
+		A2235B4C263D6FD500BA15DE /* DirectoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DirectoryTableViewCell.xib; sourceTree = "<group>"; };
+		A2235B4F263D8D3500BA15DE /* DirectoryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectoryType.swift; sourceTree = "<group>"; };
+		A2235B51263DC82A00BA15DE /* AddPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPopoverViewController.swift; sourceTree = "<group>"; };
+		A2235B5A263DCD4600BA15DE /* DirectoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectoryManager.swift; sourceTree = "<group>"; };
+		A2235B5C263E21E800BA15DE /* DirectoryMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectoryMode.swift; sourceTree = "<group>"; };
+		A2235B60263E50CE00BA15DE /* DirectoryMoveModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectoryMoveModalViewController.swift; sourceTree = "<group>"; };
+		A2235B62263E824C00BA15DE /* PersistedLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistedLayer.swift; sourceTree = "<group>"; };
+		A2235B63263E824C00BA15DE /* PersistedShot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistedShot.swift; sourceTree = "<group>"; };
+		A2235B64263E824C00BA15DE /* PersistedProject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistedProject.swift; sourceTree = "<group>"; };
+		A2235B65263E824C00BA15DE /* PersistedLayerComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistedLayerComponent.swift; sourceTree = "<group>"; };
+		A2235B66263E824C00BA15DE /* PersistedScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistedScene.swift; sourceTree = "<group>"; };
+		A2235B6C263E825F00BA15DE /* PersistedModelLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistedModelLoader.swift; sourceTree = "<group>"; };
+		A2235B6D263E825F00BA15DE /* PersistenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
+		A2235B6E263E825F00BA15DE /* ScenePersistenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScenePersistenceManager.swift; sourceTree = "<group>"; };
+		A2235B6F263E825F00BA15DE /* MainPersistenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainPersistenceManager.swift; sourceTree = "<group>"; };
+		A2235B70263E825F00BA15DE /* ShotPersistenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShotPersistenceManager.swift; sourceTree = "<group>"; };
+		A2235B71263E825F00BA15DE /* LayerPersistenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayerPersistenceManager.swift; sourceTree = "<group>"; };
+		A2235B72263E826000BA15DE /* ProjectPersistenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectPersistenceManager.swift; sourceTree = "<group>"; };
+		A2235B73263E826000BA15DE /* ModelFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelFactory.swift; sourceTree = "<group>"; };
+		A2235B7C263E82E100BA15DE /* ModelObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelObserver.swift; sourceTree = "<group>"; };
+		A2235B7D263E82E100BA15DE /* Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
+		A2235B7F263E82E200BA15DE /* ModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
+		A2235B80263E82E200BA15DE /* Shot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shot.swift; sourceTree = "<group>"; };
+		A2235B82263E82E200BA15DE /* Thumbnail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Thumbnail.swift; sourceTree = "<group>"; };
+		A2235B83263E82E200BA15DE /* Thumbnailable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Thumbnailable.swift; sourceTree = "<group>"; };
+		A2235B85263E82E200BA15DE /* Transformable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transformable.swift; sourceTree = "<group>"; };
+		A2235B86263E82E200BA15DE /* LayerComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayerComponent.swift; sourceTree = "<group>"; };
+		A2235B88263E82E200BA15DE /* DrawingComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawingComponent.swift; sourceTree = "<group>"; };
+		A2235B89263E82E200BA15DE /* ImageComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageComponent.swift; sourceTree = "<group>"; };
+		A2235B8A263E82E200BA15DE /* CompositeComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeComponent.swift; sourceTree = "<group>"; };
+		A2235B8C263E82E200BA15DE /* GreenOnionSkinMerger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GreenOnionSkinMerger.swift; sourceTree = "<group>"; };
+		A2235B8D263E82E200BA15DE /* RedOnionSkinMerger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedOnionSkinMerger.swift; sourceTree = "<group>"; };
+		A2235B8E263E82E200BA15DE /* LayerMerger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayerMerger.swift; sourceTree = "<group>"; };
+		A2235B8F263E82E200BA15DE /* ThumbnailMerger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThumbnailMerger.swift; sourceTree = "<group>"; };
+		A2235B90263E82E200BA15DE /* NormalLayerMerger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NormalLayerMerger.swift; sourceTree = "<group>"; };
+		A2235B91263E82E200BA15DE /* ImageMerger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageMerger.swift; sourceTree = "<group>"; };
+		A2235B92263E82E200BA15DE /* Layer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Layer.swift; sourceTree = "<group>"; };
+		A2235B93263E82E200BA15DE /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		A2235BA9263E833800BA15DE /* LayerTableController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayerTableController.swift; sourceTree = "<group>"; };
+		A2235BAB263E833800BA15DE /* LayerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayerTableViewCell.swift; sourceTree = "<group>"; };
+		A2235BAD263E833800BA15DE /* LayerVisibilityButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayerVisibilityButton.swift; sourceTree = "<group>"; };
+		A2235BAE263E833800BA15DE /* LayerLockButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayerLockButton.swift; sourceTree = "<group>"; };
+		A2235BAF263E833800BA15DE /* SelectableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectableView.swift; sourceTree = "<group>"; };
+		A2235BB1263E833800BA15DE /* ShotDesignerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShotDesignerViewController.swift; sourceTree = "<group>"; };
+		A2235BB2263E833800BA15DE /* OnionSkinRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnionSkinRange.swift; sourceTree = "<group>"; };
+		A2235BB3263E833800BA15DE /* EditingMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditingMode.swift; sourceTree = "<group>"; };
+		A2235BB5263E833800BA15DE /* LayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayerView.swift; sourceTree = "<group>"; };
+		A2235BB6263E833800BA15DE /* CompositeLayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeLayerView.swift; sourceTree = "<group>"; };
+		A2235BB8263E833800BA15DE /* ShotDesignerButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShotDesignerButton.swift; sourceTree = "<group>"; };
+		A2235BB9263E833800BA15DE /* DrawingModeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawingModeButton.swift; sourceTree = "<group>"; };
+		A2235BBA263E833800BA15DE /* TransformLayerButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransformLayerButton.swift; sourceTree = "<group>"; };
+		A2235BBB263E833800BA15DE /* ImageLayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLayerView.swift; sourceTree = "<group>"; };
+		A2235BBC263E833800BA15DE /* ShotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShotView.swift; sourceTree = "<group>"; };
+		A2235BBD263E833800BA15DE /* DrawingLayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawingLayerView.swift; sourceTree = "<group>"; };
+		A2235BBE263E833800BA15DE /* DrawingUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawingUtility.swift; sourceTree = "<group>"; };
+		A2235BD0263E851F00BA15DE /* Directory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Directory.swift; sourceTree = "<group>"; };
+		A2235BD2263E854800BA15DE /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		A2235BD6263E860700BA15DE /* Folder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
+		A2235BD8263E861600BA15DE /* Project.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Project.swift; path = ../../../../../../.Trash/Project.swift; sourceTree = "<group>"; };
 		A24F62F22600CC7300FC7CD4 /* Storyteller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Storyteller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A24F62F52600CC7300FC7CD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A24F62F72600CC7300FC7CD4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -104,61 +181,18 @@
 		A29A18ED26071A3600710943 /* StorytellerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StorytellerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A29A18EF26071A3700710943 /* StorytellerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorytellerTests.swift; sourceTree = "<group>"; };
 		A29A18F126071A3700710943 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A29A19202607237100710943 /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
-		A29A19222607237100710943 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
-		A29A19272607237100710943 /* ModelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
-		A29A19282607237100710943 /* Layer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layer.swift; sourceTree = "<group>"; };
-		A29A19292607237100710943 /* Shot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shot.swift; sourceTree = "<group>"; };
-		A29A192C2607239E00710943 /* StorageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
-		A29A192E2607239E00710943 /* StorageUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageUtility.swift; sourceTree = "<group>"; };
 		A2F2C8952607634800FD4FF6 /* AddShotViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddShotViewCell.swift; sourceTree = "<group>"; };
-		A2F2C899260768E900FD4FF6 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
-		B30AA8582610C3B5008B6714 /* StorageProject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageProject.swift; sourceTree = "<group>"; };
-		B30AA85C2610C3D7008B6714 /* StorageScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageScene.swift; sourceTree = "<group>"; };
-		B30AA8602610C3F7008B6714 /* StorageShot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageShot.swift; sourceTree = "<group>"; };
-		B30AA8652610C419008B6714 /* StorageLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageLayer.swift; sourceTree = "<group>"; };
-		B30AA8802610C544008B6714 /* DrawingComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingComponent.swift; sourceTree = "<group>"; };
 		B30AA88F2610D384008B6714 /* UIImage+mergeWith.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+mergeWith.swift"; sourceTree = "<group>"; };
 		B31A650D2618201900F532AF /* CGAffineTransform+transformedAround.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGAffineTransform+transformedAround.swift"; sourceTree = "<group>"; };
-		B3320D1D260F6AB20063558A /* LayerMerger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerMerger.swift; sourceTree = "<group>"; };
-		B3320D21260F6BA10063558A /* NormalLayerMerger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NormalLayerMerger.swift; sourceTree = "<group>"; };
-		B3320D61260F92330063558A /* LayerComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerComponent.swift; sourceTree = "<group>"; };
-		B3440872262B0076009F3CC0 /* ImageLayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLayerView.swift; sourceTree = "<group>"; };
 		B3440877262B61AD009F3CC0 /* CGSize+rectAtOrigin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGSize+rectAtOrigin.swift"; sourceTree = "<group>"; };
 		B34A84512617AC0000A3185A /* UIView+asImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+asImage.swift"; sourceTree = "<group>"; };
-		B34A84552617AC6D00A3185A /* ImageMerger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMerger.swift; sourceTree = "<group>"; };
 		B35115B926123B510056886C /* UIView+newPointInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+newPointInView.swift"; sourceTree = "<group>"; };
 		B35115BF261341980056886C /* UIView+setAnchorPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+setAnchorPoint.swift"; sourceTree = "<group>"; };
-		B35115D12613790F0056886C /* EditingMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditingMode.swift; sourceTree = "<group>"; };
-		B35115D526137BE20056886C /* LayerTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerTableController.swift; sourceTree = "<group>"; };
-		B35830552615F0C000824C55 /* LayerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerTableViewCell.swift; sourceTree = "<group>"; };
-		B358305B2615F57500824C55 /* LayerLockButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerLockButton.swift; sourceTree = "<group>"; };
-		B358305F2615F5E200824C55 /* LayerVisibilityButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerVisibilityButton.swift; sourceTree = "<group>"; };
 		B35FA28726143B7900D656E3 /* UIImage+solidImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+solidImage.swift"; sourceTree = "<group>"; };
-		B35FA29326143FA400D656E3 /* SelectableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableView.swift; sourceTree = "<group>"; };
-		B35FA2972614401C00D656E3 /* TransformLayerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformLayerButton.swift; sourceTree = "<group>"; };
-		B35FA2B72614A84900D656E3 /* CompositeComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeComponent.swift; sourceTree = "<group>"; };
-		B35FA2BB2614AB7100D656E3 /* StorageLayerComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageLayerComponent.swift; sourceTree = "<group>"; };
-		B35FA2C32614C22A00D656E3 /* Transformable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transformable.swift; sourceTree = "<group>"; };
-		B3755AA12605F21400EC0F56 /* LayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayerView.swift; sourceTree = "<group>"; };
-		B3755AAA26062B9700EC0F56 /* ShotDesignerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotDesignerViewController.swift; sourceTree = "<group>"; };
 		B3755AB2260643C000EC0F56 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		B3755AB82606454900EC0F56 /* ShotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotView.swift; sourceTree = "<group>"; };
-		B3755AD526065C0700EC0F56 /* DrawingUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingUtility.swift; sourceTree = "<group>"; };
-		B3878B872629BBB100DEDE1A /* ImageComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageComponent.swift; sourceTree = "<group>"; };
 		B3C7BF97262C101F0005F159 /* UIImage+scaleToFit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+scaleToFit.swift"; sourceTree = "<group>"; };
-		B3C7BFA1262C21430005F159 /* RedOnionSkinMerger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedOnionSkinMerger.swift; sourceTree = "<group>"; };
 		B3C7BFA5262C217C0005F159 /* PKDrawing+redOnionSkin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PKDrawing+redOnionSkin.swift"; sourceTree = "<group>"; };
-		B3C7BFB1262C24E50005F159 /* GreenOnionSkinMerger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreenOnionSkinMerger.swift; sourceTree = "<group>"; };
-		B3C7BFB5262C29930005F159 /* OnionSkinRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnionSkinRange.swift; sourceTree = "<group>"; };
-		B3C7BFB9262C393A0005F159 /* Thumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thumbnail.swift; sourceTree = "<group>"; };
-		B3C7BFBF262C3C8B0005F159 /* ThumbnailMerger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailMerger.swift; sourceTree = "<group>"; };
-		B3C7BFC3262C3F3A0005F159 /* Thumbnailable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thumbnailable.swift; sourceTree = "<group>"; };
-		B3D7AD522615A1280082D591 /* DrawingLayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingLayerView.swift; sourceTree = "<group>"; };
-		B3D7AD602615A54C0082D591 /* CompositeLayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeLayerView.swift; sourceTree = "<group>"; };
 		B3D7AD6A2615B4C30082D591 /* UIView+showBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+showBorder.swift"; sourceTree = "<group>"; };
-		B3E18FFF261620F0003C7AEF /* DrawingModeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingModeButton.swift; sourceTree = "<group>"; };
-		B3E190032616219C003C7AEF /* ShotDesignerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotDesignerButton.swift; sourceTree = "<group>"; };
 		B3FB29052617680100DC4BEE /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -200,6 +234,150 @@
 			path = Scene;
 			sourceTree = "<group>";
 		};
+		A2235B43263D558300BA15DE /* Directory */ = {
+			isa = PBXGroup;
+			children = (
+				A2235B5F263E509D00BA15DE /* MoveModal */,
+				A2235B5E263E45D300BA15DE /* AddPopover */,
+				A2235B45263D573000BA15DE /* DirectoryViewController.swift */,
+				A2235B4B263D6FD500BA15DE /* DirectoryTableViewCell.swift */,
+				A2235B4C263D6FD500BA15DE /* DirectoryTableViewCell.xib */,
+				A2235B4F263D8D3500BA15DE /* DirectoryType.swift */,
+				A2235B5C263E21E800BA15DE /* DirectoryMode.swift */,
+			);
+			path = Directory;
+			sourceTree = "<group>";
+		};
+		A2235B59263DCD2F00BA15DE /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				A2235B5A263DCD4600BA15DE /* DirectoryManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		A2235B5E263E45D300BA15DE /* AddPopover */ = {
+			isa = PBXGroup;
+			children = (
+				A2235B51263DC82A00BA15DE /* AddPopoverViewController.swift */,
+			);
+			path = AddPopover;
+			sourceTree = "<group>";
+		};
+		A2235B5F263E509D00BA15DE /* MoveModal */ = {
+			isa = PBXGroup;
+			children = (
+				A2235B60263E50CE00BA15DE /* DirectoryMoveModalViewController.swift */,
+			);
+			path = MoveModal;
+			sourceTree = "<group>";
+		};
+		A2235B81263E82E200BA15DE /* Layer */ = {
+			isa = PBXGroup;
+			children = (
+				A2235B82263E82E200BA15DE /* Thumbnail.swift */,
+				A2235B83263E82E200BA15DE /* Thumbnailable.swift */,
+				A2235B84263E82E200BA15DE /* Layer Component */,
+				A2235B8B263E82E200BA15DE /* Layer Merger */,
+				A2235B92263E82E200BA15DE /* Layer.swift */,
+			);
+			path = Layer;
+			sourceTree = "<group>";
+		};
+		A2235B84263E82E200BA15DE /* Layer Component */ = {
+			isa = PBXGroup;
+			children = (
+				A2235B85263E82E200BA15DE /* Transformable.swift */,
+				A2235B86263E82E200BA15DE /* LayerComponent.swift */,
+				A2235B87263E82E200BA15DE /* Leaf Component */,
+				A2235B8A263E82E200BA15DE /* CompositeComponent.swift */,
+			);
+			path = "Layer Component";
+			sourceTree = "<group>";
+		};
+		A2235B87263E82E200BA15DE /* Leaf Component */ = {
+			isa = PBXGroup;
+			children = (
+				A2235B88263E82E200BA15DE /* DrawingComponent.swift */,
+				A2235B89263E82E200BA15DE /* ImageComponent.swift */,
+			);
+			path = "Leaf Component";
+			sourceTree = "<group>";
+		};
+		A2235B8B263E82E200BA15DE /* Layer Merger */ = {
+			isa = PBXGroup;
+			children = (
+				A2235B8C263E82E200BA15DE /* GreenOnionSkinMerger.swift */,
+				A2235B8D263E82E200BA15DE /* RedOnionSkinMerger.swift */,
+				A2235B8E263E82E200BA15DE /* LayerMerger.swift */,
+				A2235B8F263E82E200BA15DE /* ThumbnailMerger.swift */,
+				A2235B90263E82E200BA15DE /* NormalLayerMerger.swift */,
+				A2235B91263E82E200BA15DE /* ImageMerger.swift */,
+			);
+			path = "Layer Merger";
+			sourceTree = "<group>";
+		};
+		A2235BA8263E833800BA15DE /* Layer Table */ = {
+			isa = PBXGroup;
+			children = (
+				A2235BA9263E833800BA15DE /* LayerTableController.swift */,
+				A2235BAA263E833800BA15DE /* View */,
+			);
+			path = "Layer Table";
+			sourceTree = "<group>";
+		};
+		A2235BAA263E833800BA15DE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A2235BAB263E833800BA15DE /* LayerTableViewCell.swift */,
+				A2235BAC263E833800BA15DE /* Button */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A2235BAC263E833800BA15DE /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				A2235BAD263E833800BA15DE /* LayerVisibilityButton.swift */,
+				A2235BAE263E833800BA15DE /* LayerLockButton.swift */,
+			);
+			path = Button;
+			sourceTree = "<group>";
+		};
+		A2235BB0263E833800BA15DE /* Shot Designer */ = {
+			isa = PBXGroup;
+			children = (
+				A2235BB1263E833800BA15DE /* ShotDesignerViewController.swift */,
+				A2235BB2263E833800BA15DE /* OnionSkinRange.swift */,
+				A2235BB3263E833800BA15DE /* EditingMode.swift */,
+				A2235BB4263E833800BA15DE /* View */,
+			);
+			path = "Shot Designer";
+			sourceTree = "<group>";
+		};
+		A2235BB4263E833800BA15DE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A2235BB5263E833800BA15DE /* LayerView.swift */,
+				A2235BB6263E833800BA15DE /* CompositeLayerView.swift */,
+				A2235BB7263E833800BA15DE /* Button */,
+				A2235BBB263E833800BA15DE /* ImageLayerView.swift */,
+				A2235BBC263E833800BA15DE /* ShotView.swift */,
+				A2235BBD263E833800BA15DE /* DrawingLayerView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A2235BB7263E833800BA15DE /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				A2235BB8263E833800BA15DE /* ShotDesignerButton.swift */,
+				A2235BB9263E833800BA15DE /* DrawingModeButton.swift */,
+				A2235BBA263E833800BA15DE /* TransformLayerButton.swift */,
+			);
+			path = Button;
+			sourceTree = "<group>";
+		};
 		A24F62E92600CC7300FC7CD4 = {
 			isa = PBXGroup;
 			children = (
@@ -223,8 +401,18 @@
 			children = (
 				B36F0C27261435C200BB697F /* Extensions */,
 				A29A192B2607239E00710943 /* Storage */,
+				A2235B71263E825F00BA15DE /* LayerPersistenceManager.swift */,
+				A2235B6F263E825F00BA15DE /* MainPersistenceManager.swift */,
+				A2235B73263E826000BA15DE /* ModelFactory.swift */,
+				A2235B6C263E825F00BA15DE /* PersistedModelLoader.swift */,
+				A2235B6D263E825F00BA15DE /* PersistenceManager.swift */,
+				A2235B72263E826000BA15DE /* ProjectPersistenceManager.swift */,
+				A2235B6E263E825F00BA15DE /* ScenePersistenceManager.swift */,
+				A2235B70263E825F00BA15DE /* ShotPersistenceManager.swift */,
 				A29A192A2607237100710943 /* Model */,
+				A2235B59263DCD2F00BA15DE /* Managers */,
 				B3755AA826062B7500EC0F56 /* Drawing */,
+				A2235B43263D558300BA15DE /* Directory */,
 				A20915812606FE51001A242E /* Project */,
 				A2091583260703B0001A242E /* Scene */,
 				A24F630C2600CC8D00FC7CD4 /* Constants and Utility */,
@@ -259,13 +447,16 @@
 		A29A192A2607237100710943 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				A29A19272607237100710943 /* ModelManager.swift */,
-				A29A19222607237100710943 /* Project.swift */,
-				A29A19202607237100710943 /* Scene.swift */,
-				A29A19292607237100710943 /* Shot.swift */,
-				2C36EC732607383700250ADE /* Color.swift */,
-				B3320D58260F921C0063558A /* Layer */,
-				A2F2C899260768E900FD4FF6 /* Color.swift */,
+				A2235B81263E82E200BA15DE /* Layer */,
+				A2235BD0263E851F00BA15DE /* Directory.swift */,
+				A2235BD6263E860700BA15DE /* Folder.swift */,
+				A2235BD2263E854800BA15DE /* File.swift */,
+				A2235B93263E82E200BA15DE /* Color.swift */,
+				A2235B7F263E82E200BA15DE /* ModelManager.swift */,
+				A2235BD8263E861600BA15DE /* Project.swift */,
+				A2235B7C263E82E100BA15DE /* ModelObserver.swift */,
+				A2235B7D263E82E100BA15DE /* Scene.swift */,
+				A2235B80263E82E200BA15DE /* Shot.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -274,42 +465,19 @@
 			isa = PBXGroup;
 			children = (
 				B33549552610B0B400B881ED /* StorageModel */,
-				A29A192C2607239E00710943 /* StorageManager.swift */,
-				A29A192E2607239E00710943 /* StorageUtility.swift */,
 			);
 			name = Storage;
 			path = Storyteller/Storage;
 			sourceTree = SOURCE_ROOT;
 		};
-		B30AA8792610C4BC008B6714 /* Leaf Component */ = {
-			isa = PBXGroup;
-			children = (
-				B30AA8802610C544008B6714 /* DrawingComponent.swift */,
-				B3878B872629BBB100DEDE1A /* ImageComponent.swift */,
-			);
-			path = "Leaf Component";
-			sourceTree = "<group>";
-		};
-		B3320D58260F921C0063558A /* Layer */ = {
-			isa = PBXGroup;
-			children = (
-				A29A19282607237100710943 /* Layer.swift */,
-				B3C7BFB9262C393A0005F159 /* Thumbnail.swift */,
-				B3C7BFC3262C3F3A0005F159 /* Thumbnailable.swift */,
-				B3C4B32C2611F307007BE693 /* Layer Component */,
-				B3C4B32D2611F317007BE693 /* Layer Merger */,
-			);
-			path = Layer;
-			sourceTree = "<group>";
-		};
 		B33549552610B0B400B881ED /* StorageModel */ = {
 			isa = PBXGroup;
 			children = (
-				B30AA8582610C3B5008B6714 /* StorageProject.swift */,
-				B30AA85C2610C3D7008B6714 /* StorageScene.swift */,
-				B30AA8602610C3F7008B6714 /* StorageShot.swift */,
-				B30AA8652610C419008B6714 /* StorageLayer.swift */,
-				B35FA2BB2614AB7100D656E3 /* StorageLayerComponent.swift */,
+				A2235B62263E824C00BA15DE /* PersistedLayer.swift */,
+				A2235B65263E824C00BA15DE /* PersistedLayerComponent.swift */,
+				A2235B64263E824C00BA15DE /* PersistedProject.swift */,
+				A2235B66263E824C00BA15DE /* PersistedScene.swift */,
+				A2235B63263E824C00BA15DE /* PersistedShot.swift */,
 			);
 			path = StorageModel;
 			sourceTree = "<group>";
@@ -334,97 +502,12 @@
 		B3755AA826062B7500EC0F56 /* Drawing */ = {
 			isa = PBXGroup;
 			children = (
-				B35FA29326143FA400D656E3 /* SelectableView.swift */,
-				B3E18FF926161FFE003C7AEF /* Shot Designer */,
-				B3E18FF626161FBA003C7AEF /* Layer Table */,
-				B3755AD526065C0700EC0F56 /* DrawingUtility.swift */,
+				A2235BA8263E833800BA15DE /* Layer Table */,
+				A2235BB0263E833800BA15DE /* Shot Designer */,
+				A2235BBE263E833800BA15DE /* DrawingUtility.swift */,
+				A2235BAF263E833800BA15DE /* SelectableView.swift */,
 			);
 			path = Drawing;
-			sourceTree = "<group>";
-		};
-		B3C4B32C2611F307007BE693 /* Layer Component */ = {
-			isa = PBXGroup;
-			children = (
-				B35FA2C32614C22A00D656E3 /* Transformable.swift */,
-				B3320D61260F92330063558A /* LayerComponent.swift */,
-				B35FA2B72614A84900D656E3 /* CompositeComponent.swift */,
-				B30AA8792610C4BC008B6714 /* Leaf Component */,
-			);
-			path = "Layer Component";
-			sourceTree = "<group>";
-		};
-		B3C4B32D2611F317007BE693 /* Layer Merger */ = {
-			isa = PBXGroup;
-			children = (
-				B3320D1D260F6AB20063558A /* LayerMerger.swift */,
-				B3320D21260F6BA10063558A /* NormalLayerMerger.swift */,
-				B3C7BFBF262C3C8B0005F159 /* ThumbnailMerger.swift */,
-				B34A84552617AC6D00A3185A /* ImageMerger.swift */,
-				B3C7BFA1262C21430005F159 /* RedOnionSkinMerger.swift */,
-				B3C7BFB1262C24E50005F159 /* GreenOnionSkinMerger.swift */,
-			);
-			path = "Layer Merger";
-			sourceTree = "<group>";
-		};
-		B3D7AD692615B3640082D591 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				B3755AB82606454900EC0F56 /* ShotView.swift */,
-				B3755AA12605F21400EC0F56 /* LayerView.swift */,
-				B3D7AD522615A1280082D591 /* DrawingLayerView.swift */,
-				B3440872262B0076009F3CC0 /* ImageLayerView.swift */,
-				B3D7AD602615A54C0082D591 /* CompositeLayerView.swift */,
-				B3E18FFC26162034003C7AEF /* Button */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		B3E18FF626161FBA003C7AEF /* Layer Table */ = {
-			isa = PBXGroup;
-			children = (
-				B35115D526137BE20056886C /* LayerTableController.swift */,
-				B3E18FF726161FCE003C7AEF /* View */,
-			);
-			path = "Layer Table";
-			sourceTree = "<group>";
-		};
-		B3E18FF726161FCE003C7AEF /* View */ = {
-			isa = PBXGroup;
-			children = (
-				B35830552615F0C000824C55 /* LayerTableViewCell.swift */,
-				B3E18FF826161FE0003C7AEF /* Button */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		B3E18FF826161FE0003C7AEF /* Button */ = {
-			isa = PBXGroup;
-			children = (
-				B358305B2615F57500824C55 /* LayerLockButton.swift */,
-				B358305F2615F5E200824C55 /* LayerVisibilityButton.swift */,
-			);
-			path = Button;
-			sourceTree = "<group>";
-		};
-		B3E18FF926161FFE003C7AEF /* Shot Designer */ = {
-			isa = PBXGroup;
-			children = (
-				B35115D12613790F0056886C /* EditingMode.swift */,
-				B3C7BFB5262C29930005F159 /* OnionSkinRange.swift */,
-				B3755AAA26062B9700EC0F56 /* ShotDesignerViewController.swift */,
-				B3D7AD692615B3640082D591 /* View */,
-			);
-			path = "Shot Designer";
-			sourceTree = "<group>";
-		};
-		B3E18FFC26162034003C7AEF /* Button */ = {
-			isa = PBXGroup;
-			children = (
-				B3E190032616219C003C7AEF /* ShotDesignerButton.swift */,
-				B35FA2972614401C00D656E3 /* TransformLayerButton.swift */,
-				B3E18FFF261620F0003C7AEF /* DrawingModeButton.swift */,
-			);
-			path = Button;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -437,7 +520,7 @@
 				A24F62EE2600CC7300FC7CD4 /* Sources */,
 				A24F62EF2600CC7300FC7CD4 /* Frameworks */,
 				A24F62F02600CC7300FC7CD4 /* Resources */,
-				B3320D12260F640E0063558A /* ShellScript */,
+				B3320D12260F640E0063558A /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -511,6 +594,7 @@
 				A24F63022600CC7500FC7CD4 /* LaunchScreen.storyboard in Resources */,
 				A24F62FF2600CC7500FC7CD4 /* Assets.xcassets in Resources */,
 				A24F62FD2600CC7300FC7CD4 /* Main.storyboard in Resources */,
+				A2235B4E263D6FD500BA15DE /* DirectoryTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -524,7 +608,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		B3320D12260F640E0063558A /* ShellScript */ = {
+		B3320D12260F640E0063558A /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -533,13 +617,15 @@
 			);
 			inputPaths = (
 			);
+			name = "Run Script";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "
+";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -548,70 +634,86 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B3D7AD612615A54C0082D591 /* CompositeLayerView.swift in Sources */,
-				B30AA85D2610C3D7008B6714 /* StorageScene.swift in Sources */,
-				B3440873262B0076009F3CC0 /* ImageLayerView.swift in Sources */,
+				A2235BA7263E82E200BA15DE /* Color.swift in Sources */,
+				A2235BCB263E833800BA15DE /* TransformLayerButton.swift in Sources */,
 				B3C7BFA6262C217C0005F159 /* PKDrawing+redOnionSkin.swift in Sources */,
-				B34A84562617AC6D00A3185A /* ImageMerger.swift in Sources */,
 				A209158C26070595001A242E /* SceneShotViewCell.swift in Sources */,
 				A2091585260703D1001A242E /* SceneViewController.swift in Sources */,
-				B3755AAB26062B9700EC0F56 /* ShotDesignerViewController.swift in Sources */,
-				B3C7BFA2262C21430005F159 /* RedOnionSkinMerger.swift in Sources */,
-				B35FA2982614401C00D656E3 /* TransformLayerButton.swift in Sources */,
-				A29A19582607242800710943 /* Shot.swift in Sources */,
+				A2235B7B263E826000BA15DE /* ModelFactory.swift in Sources */,
+				A2235B78263E826000BA15DE /* ShotPersistenceManager.swift in Sources */,
+				A2235B4D263D6FD500BA15DE /* DirectoryTableViewCell.swift in Sources */,
+				A2235BCF263E833800BA15DE /* DrawingUtility.swift in Sources */,
+				A2235BC0263E833800BA15DE /* LayerTableViewCell.swift in Sources */,
+				A2235BC1263E833800BA15DE /* LayerVisibilityButton.swift in Sources */,
+				A2235B76263E826000BA15DE /* ScenePersistenceManager.swift in Sources */,
+				A2235B98263E82E200BA15DE /* Shot.swift in Sources */,
+				A2235B5D263E21E900BA15DE /* DirectoryMode.swift in Sources */,
+				A2235B9F263E82E200BA15DE /* CompositeComponent.swift in Sources */,
+				A2235B9B263E82E200BA15DE /* Transformable.swift in Sources */,
 				B3FB29062617680100DC4BEE /* Alert.swift in Sources */,
-				A29A19302607239E00710943 /* StorageManager.swift in Sources */,
-				B35830562615F0C000824C55 /* LayerTableViewCell.swift in Sources */,
-				B3D7AD532615A1280082D591 /* DrawingLayerView.swift in Sources */,
+				A2235BD1263E851F00BA15DE /* Directory.swift in Sources */,
+				A2235BCA263E833800BA15DE /* DrawingModeButton.swift in Sources */,
+				A2235B67263E824C00BA15DE /* PersistedLayer.swift in Sources */,
+				A2235B9E263E82E200BA15DE /* ImageComponent.swift in Sources */,
+				A2235BA2263E82E200BA15DE /* LayerMerger.swift in Sources */,
+				A2235B50263D8D3500BA15DE /* DirectoryType.swift in Sources */,
+				A2235BCD263E833800BA15DE /* ShotView.swift in Sources */,
 				B35115C0261341980056886C /* UIView+setAnchorPoint.swift in Sources */,
-				B35115D22613790F0056886C /* EditingMode.swift in Sources */,
-				B30AA8592610C3B5008B6714 /* StorageProject.swift in Sources */,
-				B3C7BFC0262C3C8B0005F159 /* ThumbnailMerger.swift in Sources */,
-				B35FA2B82614A84900D656E3 /* CompositeComponent.swift in Sources */,
-				A29A19552607242600710943 /* Layer.swift in Sources */,
+				A2235BA6263E82E200BA15DE /* Layer.swift in Sources */,
+				A2235BD9263E861600BA15DE /* Project.swift in Sources */,
+				A2235B79263E826000BA15DE /* LayerPersistenceManager.swift in Sources */,
+				A2235BCC263E833800BA15DE /* ImageLayerView.swift in Sources */,
+				A2235B95263E82E200BA15DE /* Scene.swift in Sources */,
 				B31A650E2618201900F532AF /* CGAffineTransform+transformedAround.swift in Sources */,
-				B3E190042616219C003C7AEF /* ShotDesignerButton.swift in Sources */,
+				A2235BA5263E82E200BA15DE /* ImageMerger.swift in Sources */,
 				A209158926070553001A242E /* SceneHeaderView.swift in Sources */,
-				B35FA29426143FA400D656E3 /* SelectableView.swift in Sources */,
-				A29A19522607242000710943 /* ModelManager.swift in Sources */,
-				B3878B882629BBB100DEDE1A /* ImageComponent.swift in Sources */,
-				B35115D626137BE20056886C /* LayerTableController.swift in Sources */,
+				A2235B69263E824C00BA15DE /* PersistedProject.swift in Sources */,
+				A2235BC8263E833800BA15DE /* CompositeLayerView.swift in Sources */,
+				A2235BCE263E833800BA15DE /* DrawingLayerView.swift in Sources */,
+				A2235B9C263E82E200BA15DE /* LayerComponent.swift in Sources */,
+				A2235BD3263E854800BA15DE /* File.swift in Sources */,
 				B35FA28826143B7900D656E3 /* UIImage+solidImage.swift in Sources */,
-				B3755AB92606454900EC0F56 /* ShotView.swift in Sources */,
+				A2235B5B263DCD4600BA15DE /* DirectoryManager.swift in Sources */,
 				A2091590260705EB001A242E /* ProjectViewCell.swift in Sources */,
-				B35FA2C42614C22A00D656E3 /* Transformable.swift in Sources */,
-				B3C7BFBA262C393A0005F159 /* Thumbnail.swift in Sources */,
-				B3C7BFB2262C24E50005F159 /* GreenOnionSkinMerger.swift in Sources */,
-				A29A195B2607243300710943 /* Scene.swift in Sources */,
-				A29A19322607239E00710943 /* StorageUtility.swift in Sources */,
+				A2235B74263E826000BA15DE /* PersistedModelLoader.swift in Sources */,
+				A2235BA1263E82E200BA15DE /* RedOnionSkinMerger.swift in Sources */,
+				A2235BC3263E833800BA15DE /* SelectableView.swift in Sources */,
+				A2235B97263E82E200BA15DE /* ModelManager.swift in Sources */,
+				A2235B6B263E824C00BA15DE /* PersistedScene.swift in Sources */,
+				A2235BC6263E833800BA15DE /* EditingMode.swift in Sources */,
 				A2F2C8962607634800FD4FF6 /* AddShotViewCell.swift in Sources */,
-				B3C7BFB6262C29930005F159 /* OnionSkinRange.swift in Sources */,
-				A29A19612607243800710943 /* Project.swift in Sources */,
+				A2235B9A263E82E200BA15DE /* Thumbnailable.swift in Sources */,
+				A2235BC9263E833800BA15DE /* ShotDesignerButton.swift in Sources */,
+				A2235B75263E826000BA15DE /* PersistenceManager.swift in Sources */,
+				A2235BD7263E860700BA15DE /* Folder.swift in Sources */,
 				B3440878262B61AD009F3CC0 /* CGSize+rectAtOrigin.swift in Sources */,
-				B3C7BFC4262C3F3A0005F159 /* Thumbnailable.swift in Sources */,
-				B3320D22260F6BA10063558A /* NormalLayerMerger.swift in Sources */,
-				A2F2C89A260768E900FD4FF6 /* Color.swift in Sources */,
+				A2235B9D263E82E200BA15DE /* DrawingComponent.swift in Sources */,
+				A2235BC5263E833800BA15DE /* OnionSkinRange.swift in Sources */,
+				A2235BA0263E82E200BA15DE /* GreenOnionSkinMerger.swift in Sources */,
 				B34A84522617AC0000A3185A /* UIView+asImage.swift in Sources */,
-				B30AA8662610C419008B6714 /* StorageLayer.swift in Sources */,
+				A2235B99263E82E200BA15DE /* Thumbnail.swift in Sources */,
 				B35115BA26123B510056886C /* UIView+newPointInView.swift in Sources */,
-				B358305C2615F57500824C55 /* LayerLockButton.swift in Sources */,
+				A2235B46263D573000BA15DE /* DirectoryViewController.swift in Sources */,
 				A24F62F62600CC7300FC7CD4 /* AppDelegate.swift in Sources */,
-				2C36EC742607383700250ADE /* Color.swift in Sources */,
-				B3755AA22605F21400EC0F56 /* LayerView.swift in Sources */,
-				B35FA2BC2614AB7100D656E3 /* StorageLayerComponent.swift in Sources */,
+				A2235B77263E826000BA15DE /* MainPersistenceManager.swift in Sources */,
+				A2235B6A263E824C00BA15DE /* PersistedLayerComponent.swift in Sources */,
+				A2235B94263E82E200BA15DE /* ModelObserver.swift in Sources */,
+				A2235BC2263E833800BA15DE /* LayerLockButton.swift in Sources */,
+				A2235B61263E50CE00BA15DE /* DirectoryMoveModalViewController.swift in Sources */,
 				A24F62F82600CC7300FC7CD4 /* SceneDelegate.swift in Sources */,
+				A2235BC4263E833800BA15DE /* ShotDesignerViewController.swift in Sources */,
+				A2235BC7263E833800BA15DE /* LayerView.swift in Sources */,
 				B30AA8902610D384008B6714 /* UIImage+mergeWith.swift in Sources */,
-				B30AA8612610C3F7008B6714 /* StorageShot.swift in Sources */,
-				B3320D1E260F6AB20063558A /* LayerMerger.swift in Sources */,
 				B3755AB3260643C000EC0F56 /* Constants.swift in Sources */,
-				B3320D62260F92330063558A /* LayerComponent.swift in Sources */,
+				A2235B68263E824C00BA15DE /* PersistedShot.swift in Sources */,
+				A2235BA4263E82E200BA15DE /* NormalLayerMerger.swift in Sources */,
+				A2235BBF263E833800BA15DE /* LayerTableController.swift in Sources */,
+				A2235B52263DC82A00BA15DE /* AddPopoverViewController.swift in Sources */,
+				A2235B7A263E826000BA15DE /* ProjectPersistenceManager.swift in Sources */,
 				A209157F2606FE3F001A242E /* ProjectViewController.swift in Sources */,
 				B3D7AD6B2615B4C30082D591 /* UIView+showBorder.swift in Sources */,
 				B3C7BF98262C101F0005F159 /* UIImage+scaleToFit.swift in Sources */,
-				B30AA8812610C544008B6714 /* DrawingComponent.swift in Sources */,
-				B3E19000261620F0003C7AEF /* DrawingModeButton.swift in Sources */,
-				B3755AD626065C0700EC0F56 /* DrawingUtility.swift in Sources */,
-				B35830602615F5E200824C55 /* LayerVisibilityButton.swift in Sources */,
+				A2235BA3263E82E200BA15DE /* ThumbnailMerger.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -775,7 +877,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = M3JC2347GD;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Storyteller/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -794,7 +896,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = M3JC2347GD;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Storyteller/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

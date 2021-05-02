@@ -149,7 +149,7 @@ class ProjectViewController: UIViewController {
         }
 
         let project = self.modelManager.projects[index]
-        let projectName = project.title
+        let projectName = project.name
 
         let alertController = UIAlertController(
             title: "Rename",
@@ -186,7 +186,7 @@ extension ProjectViewController: UICollectionViewDelegate {
                                      for: indexPath) as? ProjectViewCell else {
             return UICollectionViewCell()
         }
-        projectViewCell.setTitle(to: project.title)
+        projectViewCell.setTitle(to: project.name)
         return projectViewCell
     }
 

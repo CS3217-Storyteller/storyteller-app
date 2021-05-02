@@ -38,10 +38,8 @@ class ShotDesignerViewController: UIViewController {
     var onionSkinRange = OnionSkinRange()
     var toolPicker = PKToolPicker()
     // should be intialized via segue
-    var modelManager: ModelManager!
     var shot: Shot!
     var scene: Scene!
-    var project: Project!
 
     var canvasTransform = CGAffineTransform.identity {
         didSet {
@@ -91,7 +89,6 @@ class ShotDesignerViewController: UIViewController {
     private func setUpShot() {
         shotView.backgroundColor = shot.backgroundColor.uiColor
         let layers = shot.layers
-
         if layers.isEmpty {
             return
         }
@@ -103,7 +100,7 @@ class ShotDesignerViewController: UIViewController {
     }
 
     private func updateOnionSkins() {
-        guard modelManager != nil, shotView != nil else {
+        guard shotView != nil else {
             return
         }
         let redOnionSkin = onionSkinRange.redIndicies.compactMap({ scene.getShot($0, after: shot) })
@@ -230,8 +227,7 @@ extension ShotDesignerViewController {
 
         additionalLayerTransform = .identity
         setUpShot()
-
-        modelManager.generateThumbnailAndSave(project: project, shot: shot)
+        shot.generateThumbnailAndSave()
     }
 
 }
@@ -248,7 +244,6 @@ extension ShotDesignerViewController {
         if let index = scene.shots.firstIndex(where: { $0 === shot }) {
             let newShot = shot.duplicate()
             scene.addShot(newShot, at: index + 1)
-            modelManager.saveProject(project)
             nextShot()
         }
 
@@ -291,7 +286,7 @@ extension ShotDesignerViewController {
 extension ShotDesignerViewController: PKCanvasViewDelegate {
     func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
         selectedLayer.setDrawing(to: canvasView.drawing)
-        modelManager.generateThumbnailAndSave(project: project, shot: shot)
+        shot.generateThumbnailAndSave()
     }
 }
 
@@ -307,7 +302,7 @@ extension ShotDesignerViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let layerTable = segue.destination as? LayerTableController {
 
-            modelManager.observers.append(layerTable)
+            shot.observedBy(layerTable)
 
             layerTable.onionSkinRange = onionSkinRange
             layerTable.selectedLayerIndex = selectedLayerIndex
@@ -386,7 +381,7 @@ extension ShotDesignerViewController: LayerTableDelegate {
     func backgroundColorWillChange(color: UIColor) {
         shotView.backgroundColor = shot.backgroundColor.uiColor
         shot.setBackgroundColor(color: Color(uiColor: color))
-        modelManager.generateThumbnailAndSave(project: project, shot: shot)
+        shot.generateThumbnailAndSave()
     }
 
     func didSelectLayer(at index: Int) {
@@ -398,7 +393,7 @@ extension ShotDesignerViewController: LayerTableDelegate {
     func willMoveLayer(from oldIndex: Int, to newIndex: Int) {
         shotView.moveLayer(from: oldIndex, to: newIndex)
         shot.moveLayer(from: oldIndex, to: newIndex)
-        modelManager.generateThumbnailAndSave(project: project, shot: shot)
+        shot.generateThumbnailAndSave()
     }
 
     func didToggleLayerLock(at index: Int) {
@@ -406,20 +401,20 @@ extension ShotDesignerViewController: LayerTableDelegate {
         layer.isLocked.toggle()
         shotView.updateLayerView(at: index, isLocked: layer.isLocked,
                                  isVisible: layer.isVisible)
-        modelManager.generateThumbnailAndSave(project: project, shot: shot)
+        shot.generateThumbnailAndSave()
     }
     func didToggleLayerVisibility(at index: Int) {
         let layer = shot.layers[index]
         layer.isVisible.toggle()
         shotView.updateLayerView(at: index, isLocked: layer.isLocked,
                                  isVisible: layer.isVisible)
-        modelManager.generateThumbnailAndSave(project: project, shot: shot)
+        shot.generateThumbnailAndSave()
     }
 
     func didChangeLayerName(at index: Int, newName: String) {
         let layer = shot.layers[index]
         layer.name = newName
-        modelManager.generateThumbnailAndSave(project: project, shot: shot)
+        shot.generateThumbnailAndSave()
     }
 
     func willAddLayer() {
@@ -428,7 +423,7 @@ extension ShotDesignerViewController: LayerTableDelegate {
                      toolPicker: toolPicker, PKDelegate: self)
         shot.addLayer(layer)
         selectTopLayer()
-        modelManager.generateThumbnailAndSave(project: project, shot: shot)
+        shot.generateThumbnailAndSave()
     }
     private func selectTopLayer() {
         selectedLayerIndex = shot.layers.count - 1
@@ -439,7 +434,7 @@ extension ShotDesignerViewController: LayerTableDelegate {
         }
         shotView.removeLayers(at: indices)
         shot.removeLayers(at: indices)
-        modelManager.generateThumbnailAndSave(project: project, shot: shot)
+        shot.generateThumbnailAndSave()
     }
 
     func willDuplicateLayers(at indices: [Int]) {
@@ -448,19 +443,19 @@ extension ShotDesignerViewController: LayerTableDelegate {
         }
         shot.duplicateLayers(at: indices)
         setUpShot()
-        modelManager.generateThumbnailAndSave(project: project, shot: shot)
+        shot.generateThumbnailAndSave()
     }
 
     func willGroupLayers(at indices: [Int]) {
         shot.groupLayers(at: indices)
         setUpShot()
-        modelManager.generateThumbnailAndSave(project: project, shot: shot)
+        shot.generateThumbnailAndSave()
     }
 
     func willUngroupLayer(at index: Int) {
         shot.ungroupLayer(at: index)
         setUpShot()
-        modelManager.generateThumbnailAndSave(project: project, shot: shot)
+        shot.generateThumbnailAndSave()
     }
 }
 // MARK: - UIDropInteractionDelegate
@@ -469,10 +464,12 @@ extension ShotDesignerViewController: UIDropInteractionDelegate {
                          canHandle session: UIDropSession) -> Bool {
         session.canLoadObjects(ofClass: UIImage.self)
     }
+
     func dropInteraction(_ interaction: UIDropInteraction,
                          sessionDidUpdate session: UIDropSession) -> UIDropProposal {
         UIDropProposal(operation: .copy)
     }
+
     func dropInteraction(_ interaction: UIDropInteraction,
                          performDrop session: UIDropSession) {
         session.loadObjects(ofClass: UIImage.self) { [weak self] imageItems in
@@ -486,7 +483,7 @@ extension ShotDesignerViewController: UIDropInteractionDelegate {
                 .add(layerView: DrawingUtility.generateLayerView(for: layer),
                      toolPicker: self.toolPicker, PKDelegate: self)
             self.selectTopLayer()
-            self.modelManager.generateThumbnailAndSave(project: self.project, shot: self.shot)
+            self.shot.generateThumbnailAndSave()
         }
     }
 }

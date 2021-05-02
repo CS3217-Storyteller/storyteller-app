@@ -8,23 +8,28 @@ import PencilKit
 
 class ModelManager {
 
-    private let thumbnailQueue = DispatchQueue(label: "ThumbnailQueue", qos: .background)
-    private let storageQueue = DispatchQueue(label: "StorageQueue", qos: .background)
-
-    private let storageManager = StorageManager()
+    private let persistenceManager = MainPersistenceManager()
     var observers = [ModelManagerObserver]()
 
     var projects: [Project]
 
     init() {
-        var list = [Project]()
-        for project in storageManager.getAllProjects() {
-            list.append(project)
+        let persistedModelTree = PersistedModelLoader().loadPersistedModels()
+        self.projects = ModelFactory().loadProjectModel(from: persistedModelTree)
+    }
+
+    func loadProject(at index: Int) -> Project? {
+        guard projects.indices.contains(index) else {
+            return nil
         }
-        self.projects = list
+        let project = projects[index]
+        project.setPersistenceManager(to: persistenceManager
+                                        .getProjectPersistenceManager(of: project.persisted))
+        return project
     }
 
     func addProject(_ project: Project) {
+        project.setPersistenceManager(to: self.persistenceManager.getProjectPersistenceManager(of: project.persisted))
         self.projects.append(project)
         self.saveProject(project)
     }
@@ -42,63 +47,24 @@ class ModelManager {
         self.addProject(project)
     }
 
-    var onGoingSaveTask: (project: Project, workItem: DispatchWorkItem)?
-
     func saveProject(_ project: Project?) {
-        self.observers.forEach({ $0.modelDidChange() })
-
         guard let project = project else {
             return
         }
-        let workItem = DispatchWorkItem { [weak self] in
-            self?.storageManager.saveProject(project: project)
-        }
-        if let task = onGoingSaveTask, task.project.title == project.title {
-            task.workItem.cancel()
-            onGoingSaveTask = (project, workItem)
-        }
-        storageQueue.async(execute: workItem)
+        self.persistenceManager.saveProject(project.persisted)
+        notifyObservers()
     }
 
     func deleteProject(_ project: Project) {
-        self.storageManager.deleteProject(projectTitle: project.title)
-        self.observers.forEach({ $0.modelDidChange() })
+        self.persistenceManager.deleteProject(project.persisted)
+        notifyObservers()
     }
 
-    var onGoingThumbnailTask: (shot: Shot, workItem: DispatchWorkItem)?
-}
-
-// MARK: - Specific Shot Methods
-extension ModelManager {
-
-    func generateThumbnailAndSave(project: Project, shot: Shot) {
-        saveProject(project)
-        let workItem = DispatchWorkItem {
-            shot.generateThumbnails()
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else {
-                    return
-                }
-                self.saveProject(project)
-                self.onGoingThumbnailTask = nil
-            }
-        }
-        if let task = self.onGoingThumbnailTask, task.shot === shot {
-            task.workItem.cancel()
-            self.onGoingThumbnailTask = (shot, workItem)
-        }
-        self.thumbnailQueue.async(execute: workItem)
+    func observedBy(_ observer: ModelManagerObserver) {
+        observers.append(observer)
     }
-}
 
-protocol ModelManagerObserver {
-    /// Invoked when the model changes.
-    func modelDidChange()
-    func DidUpdateLayer()
-    func DidAddLayer(layer: Layer)
-}
-
-extension ModelManagerObserver {
-    func DidUpdateLayer() { }
-    func DidAddLayer(layer: Layer) { }
+    func notifyObservers() {
+        observers.forEach({ $0.modelDidChange() })
+    }
 }

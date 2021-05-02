@@ -9,61 +9,87 @@ import PencilKit
 class Scene {
     let canvasSize: CGSize
     var shots: [Shot] = [Shot]()
+    let id: UUID
+    private var persistenceManager: ScenePersistenceManager?
+    private var observers = [SceneObserver]()
 
-    init(canvasSize: CGSize, shots: [Shot] = []) {
+    var persisted: PersistedScene {
+        PersistedScene(self)
+    }
+
+    func observedBy(_ observer: SceneObserver) {
+        observers.append(observer)
+    }
+
+    func notifyObservers() {
+        observers.forEach({ $0.modelDidChange() })
+    }
+
+    init(canvasSize: CGSize, shots: [Shot] = [], id: UUID = UUID()) {
         self.canvasSize = canvasSize
         self.shots = shots
+        self.id = id
+    }
+
+    func loadShot(at index: Int) -> Shot? {
+        guard shots.indices.contains(index) else {
+            return nil
+        }
+        let shot = shots[index]
+        if let persistenceManager = persistenceManager {
+            shot.setPersistenceManager(to: persistenceManager
+                                            .getShotPersistenceManager(of: shot.persisted))
+        }
+        return shot
+    }
+
+    func setPersistenceManager(to persistenceManager: ScenePersistenceManager) {
+        if self.persistenceManager != nil {
+            return
+        }
+        self.persistenceManager = persistenceManager
+    }
+
+    private func saveScene() {
+        self.persistenceManager?.saveScene(self.persisted)
+    }
+
+    private func saveShot(_ shot: Shot) {
+        self.persistenceManager?.saveShot(shot.persisted)
+        saveScene()
+    }
+
+    private func deleteShot(_ shot: Shot) {
+        self.persistenceManager?.deleteShot(shot.persisted)
+        saveScene()
     }
 
     func swapShots(_ index1: Int, _ index2: Int) {
         self.shots.swapAt(index1, index2)
+        saveScene()
     }
 
-    func updateShot(shot: Shot, with newShot: Shot) {
-        if let index = self.shots.firstIndex(where: { $0 === shot }) {
-            self.shots[index] = shot
+    func addShot(_ shot: Shot, at index: Int? = nil) {
+        self.shots.insert(shot, at: index ?? shots.endIndex)
+        saveShot(shot)
+        if let persistenceManager = persistenceManager {
+            shot.setPersistenceManager(to: persistenceManager
+                                        .getShotPersistenceManager(of: shot.persisted))
+        }
+        if shot.layers.isEmpty {
+            let layer = Layer(withDrawing: PKDrawing(), canvasSize: shot.canvasSize)
+            shot.addLayer(layer)
         }
     }
 
-    func addShot(_ shot: Shot) {
-        self.shots.append(shot)
+    func removeShot(_ shot: Shot) {
+        self.shots.removeAll(where: { $0 === shot })
+        saveScene()
     }
-
-    func addShot(_ shot: Shot, at index: Int) {
-        self.shots.insert(shot, at: index)
-    }
-
-//    func updateLayer(withId layerId: UUID, withDrawing drawing: PKDrawing) {
-//        let shotId = layerLabel.shotId
-//        shots[shotId]?.updateLayer(layerLabel, withDrawing: drawing)
-//    }
-//
-//    mutating func updateLayer(_ layerLabel: LayerLabel,
-//                              withLayer newLayer: Layer) {
-//        let shotId = layerLabel.shotId
-//        shots[shotId]?.updateLayer(layerLabel, withLayer: newLayer)
-//    }
-
-//    mutating func addLayer(_ layer: Layer, at index: Int?, to shotLabel: ShotLabel) {
-//        let shotId = shotLabel.shotId
-//        shots[shotId]?.addLayer(layer, at: index)
-//    }
-//
-//    mutating func removeLayers(withIds ids: Set<UUID>, of shotLabel: ShotLabel) {
-//        shots[shotLabel.shotId]?.removeLayers(withIds: ids)
-//    }
-//
-//    mutating func moveLayer(_ layerLabel: LayerLabel, to newIndex: Int) {
-//        let shotId = layerLabel.shotId
-//        shots[shotId]?.moveLayer(layerLabel, to: newIndex)
-//    }
 
     func moveShot(shot: Shot, to newIndex: Int) {
-        guard let oldIndex = self.shots.firstIndex(where: { $0 === shot }) else {
-            return
-        }
-        self.shots.remove(at: oldIndex)
-        self.shots.insert(shot, at: newIndex)
+        removeShot(shot)
+        addShot(shot, at: newIndex)
     }
 
     func duplicate() -> Scene {
@@ -78,6 +104,6 @@ class Scene {
               self.shots.indices.contains(currentIndex + index) else {
             return nil
         }
-        return self.shots[currentIndex + index]
+        return loadShot(at: currentIndex + index)
     }
 }

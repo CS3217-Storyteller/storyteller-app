@@ -12,7 +12,7 @@ class ShotView: UIView {
     var layerViews = [LayerView]()
     var toolPicker: PKToolPicker?
 
-    var isInDrawingMode: Bool = false {
+    var isInDrawingMode = false {
         didSet {
             updateEffectForSelectedLayer()
         }
@@ -26,9 +26,11 @@ class ShotView: UIView {
             updateEffectForSelectedLayer()
         }
     }
+
     var selectedLayerView: LayerView {
         layerViews[selectedLayerIndex]
     }
+
     var currentCanvasView: PKCanvasView? {
         selectedLayerView.topCanvasView
     }
@@ -49,6 +51,7 @@ class ShotView: UIView {
         bounds.size = canvasSize
         onionSkins.bounds.size = canvasSize
     }
+
     func setUpLayerViews(_ layerViews: [LayerView], toolPicker: PKToolPicker,
                          PKDelegate: PKCanvasViewDelegate) {
         let originalLayerCount = self.layerViews.count
@@ -66,10 +69,12 @@ class ShotView: UIView {
         let selected = selectedLayerIndex
         selectedLayerIndex = selected
     }
+
     func updateOnionSkins(skins: UIImage) {
         onionSkins.image = skins
         bringSubviewToFront(onionSkins)
     }
+
     func add(layerView: LayerView, toolPicker: PKToolPicker,
              PKDelegate: PKCanvasViewDelegate) {
         layerViews.append(layerView)
