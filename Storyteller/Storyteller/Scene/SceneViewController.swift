@@ -12,7 +12,6 @@ class SceneViewController: UIViewController {
     @IBOutlet private var collectionView: UICollectionView!
 
     var project: Project?
-    var modelManager: ModelManager?
 
     lazy var addSceneBarButton: UIBarButtonItem = {
         let barButtonItem = UIBarButtonItem(
@@ -26,10 +25,6 @@ class SceneViewController: UIViewController {
 
     func setProject(to project: Project) {
         self.project = project
-    }
-
-    func setModelManager(to modelManager: ModelManager) {
-        self.modelManager = modelManager
     }
 
     override var prefersStatusBarHidden: Bool {
@@ -60,12 +55,17 @@ class SceneViewController: UIViewController {
         self.collectionView.dataSource = self
         self.view.addSubview(collectionView)
 
-        guard let modelManager = self.modelManager,
-              let project = self.project else {
+        guard let project = self.project else {
             return
         }
 
-        modelManager.observers.append(self)
+        project.observedBy(self)
+        project.scenes.forEach {
+            $0.shots.forEach {
+                // for thumbnail updates
+                $0.observedBy(self)
+            }
+        }
         self.navigationItem.title = project.title
         self.navigationItem.rightBarButtonItem = self.addSceneBarButton
 
@@ -94,21 +94,17 @@ class SceneViewController: UIViewController {
     }
 
     @objc func didAddSceneButtonClicked(_ sender: Any) {
-        guard let project = self.project,
-              let modelManager = self.modelManager else {
+        guard let project = self.project else {
             return
         }
-//        modelManager.addScene(projectLabel: projectLabel)
 
         let newScene = Scene(canvasSize: project.canvasSize)
         project.addScene(newScene)
-        modelManager.saveProject(project)
         self.collectionView.reloadData()
     }
 
     func deleteScene(at index: Int) {
         project?.deleteScene(at: index)
-        modelManager?.saveProject(project)
     }
 }
 
@@ -130,12 +126,12 @@ extension SceneViewController: UICollectionViewDelegate {
             return UICollectionViewCell()
         }
 
-        let scene = project.scenes[indexPath.section]
+        let scene = project.loadScene(at: indexPath.section)
 
-        if indexPath.row < scene.shots.count {
+        if let scene = scene, indexPath.row < scene.shots.count {
 
-            let shot = scene.shots[indexPath.row]
-            if !shot.layers.isEmpty {
+            let shot = scene.loadShot(at: indexPath.row)
+            if let shot = shot, !shot.layers.isEmpty {
                 sceneCell.setImage(image: shot.defaultThumbnail)
 //
 //                let thumbnail = shot.orderedLayers[0].drawing
@@ -172,30 +168,26 @@ extension SceneViewController: UICollectionViewDelegate {
         }
         shotDesignerController.modalPresentationStyle = .fullScreen
 
-        guard let modelManager = self.modelManager,
-              let project = self.project
+        guard let project = self.project
         else {
             return
         }
-        let scene = project.scenes[indexPath.section]
+        guard let scene = project.loadScene(at: indexPath.section) else {
+            return
+        }
 
-        if indexPath.row < scene.shots.count {
-            let shot = scene.shots[indexPath.row]
-            shotDesignerController.modelManager = modelManager
+        if let shot = scene.loadShot(at: indexPath.row) {
             shotDesignerController.shot = shot
             shotDesignerController.scene = scene
-            shotDesignerController.project = project
             shotDesignerController.modalTransitionStyle = .flipHorizontal
             self.navigationController?.pushViewController(shotDesignerController, animated: true)
         } else {
             let newShot = Shot(canvasSize: scene.canvasSize, backgroundColor: Color(uiColor: .white))
-            if newShot.layers.isEmpty {
+            /* if newShot.layers.isEmpty {
                 let layer = Layer(withDrawing: PKDrawing(), canvasSize: newShot.canvasSize)
                 newShot.addLayer(layer)
-            }
+            } */
             scene.addShot(newShot)
-            modelManager.saveProject(project)
-//            modelManager.addShot(ofShot: shotLabel, backgroundColor: .white)
             self.collectionView.reloadData()
         }
     }
@@ -210,17 +202,15 @@ extension SceneViewController: UICollectionViewDelegate {
             return
         }
 
-        guard let modelManager = self.modelManager,
-              let project = self.project
+        guard let project = self.project
         else {
             return
         }
 
-        let scene = project.scenes[sourceIndexPath.section]
+        let scene = project.loadScene(at: sourceIndexPath.section)
         let sourceIndex = sourceIndexPath.row
         let destinationIndex = destinationIndexPath.row
-        scene.swapShots(sourceIndex, destinationIndex)
-        modelManager.saveProject(project)
+        scene?.swapShots(sourceIndex, destinationIndex)
     }
 }
 
@@ -230,8 +220,8 @@ extension SceneViewController: UICollectionViewDataSource {
         else {
             return 0
         }
-        let scene = project.scenes[section]
-        return scene.shots.count + 1
+        let scene = project.loadScene(at: section)
+        return (scene?.shots.count ?? -1) + 1
     }
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -267,7 +257,6 @@ extension SceneViewController: UICollectionViewDelegateFlowLayout {
         UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
     }
 
-
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize {
         CGSize(width: self.view.frame.size.width, height: 50)
@@ -275,8 +264,8 @@ extension SceneViewController: UICollectionViewDelegateFlowLayout {
 
 }
 
-// MARK: - ModelManagerObserver
-extension SceneViewController: ModelManagerObserver {
+// MARK: - FolderObserver
+extension SceneViewController: ProjectObserver, ShotObserver {
     func modelDidChange() {
         collectionView.reloadData()
     }

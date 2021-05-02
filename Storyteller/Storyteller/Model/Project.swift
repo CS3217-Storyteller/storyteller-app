@@ -9,7 +9,7 @@ import PencilKit
 class Project: Directory {
     var description: String = "DESCRIPTION" // Todo: Proper Init
     var name: String = "Project UNNAMED" // Todo: Proper Init
-    let id: UUID = UUID() // TODO: Proper init
+    let id: UUID
     var dateAdded: Date = Date() // TODO: Proper date init
     var dateUpdated: Date = Date() // TODO: Proper date init
 
@@ -44,10 +44,10 @@ class Project: Directory {
         return scene
     }
 
-    init(title: String, canvasSize: CGSize, scenes: [Scene] = [],
+    init(name: String, canvasSize: CGSize, scenes: [Scene] = [],
          id: UUID = UUID(),
          persistenceManager: ProjectPersistenceManager? = nil) {
-        self.name = title
+        self.name = name
         self.canvasSize = canvasSize
         self.scenes = scenes
         self.id = id
@@ -90,14 +90,14 @@ class Project: Directory {
         self.deleteScene(removedScene)
     }
 
-    func setTitle(to title: String) {
-        self.name = title
+    func setTitle(to name: String) {
+        self.name = name
         self.saveProject()
     }
 
     func duplicate() -> Project {
         Project(
-            title: self.title,
+            name: self.name,
             canvasSize: self.canvasSize,
             scenes: scenes.map({ $0.duplicate() })
         )
