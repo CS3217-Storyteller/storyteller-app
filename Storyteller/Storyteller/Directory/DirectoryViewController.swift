@@ -96,6 +96,11 @@ class DirectoryViewController: UIViewController {
         self.folder.observedBy(self)
 
         self.navigationItem.hidesBackButton = false
+
+        let gesture = UILongPressGestureRecognizer(
+            target: self, action: #selector(self.handleLongPressGesture(_:))
+        )
+        self.tableView.addGestureRecognizer(gesture)
     }
 
     public func configure(folder: Folder) {
@@ -129,6 +134,62 @@ class DirectoryViewController: UIViewController {
 
     @IBAction func moveButtonPressed(_ sender: UIBarButtonItem) {
 
+    }
+
+    @objc func handleLongPressGesture(_ gesture: UILongPressGestureRecognizer) {
+        switch gesture.state {
+        case .began:
+            guard let indexPath = self.tableView.indexPathForRow(
+                at: gesture.location(in: self.tableView)) else {
+                return
+            }
+
+            let targetDirectory = self.folder.children[indexPath.row]
+
+            let alertController = UIAlertController(title: "Rename", message: "Update name and description", preferredStyle: .alert)
+
+            alertController.addTextField{ (textField : UITextField!) -> Void in
+                textField.placeholder = "Enter Name"
+                textField.text = targetDirectory.name
+            }
+
+            alertController.addTextField{ (textField : UITextField!) -> Void in
+                textField.placeholder = "Enter Description"
+                textField.text = targetDirectory.description
+            }
+
+
+            let saveAction = UIAlertAction(
+                title: "Save",
+                style: .default,
+                handler: { alert -> Void in
+                    let nameTextField = alertController.textFields![0] as UITextField
+                    let descriptionTextField = alertController.textFields![1] as UITextField
+                    let name = nameTextField.text ?? String()
+                    let description = descriptionTextField.text ?? String()
+                    if let targetFolder = targetDirectory as? Folder {
+//                        targetFolder.rename(to: name)
+                    }
+                    else if let targetProject = targetDirectory as? Project {
+                        targetProject.setTitle(to: name)
+                    }
+                }
+            )
+
+            let cancelAction = UIAlertAction(
+                title: "Cancel",
+                style: .default, handler: {
+                (action : UIAlertAction!) -> Void in }
+            )
+
+
+            alertController.addAction(saveAction)
+            alertController.addAction(cancelAction)
+
+            self.present(alertController, animated: true, completion: nil)
+        default:
+            return
+        }
     }
 
 
@@ -175,9 +236,12 @@ extension DirectoryViewController: UITableViewDataSource {
 
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: false)
         switch currMode {
+
         case .select:
+
+            tableView.deselectRow(at: indexPath, animated: false)
+
             guard let selectedTableCell = tableView.cellForRow(at: indexPath)
                     as? DirectoryTableViewCell else {
                 return
@@ -195,11 +259,11 @@ extension DirectoryViewController: UITableViewDataSource {
             }
 
         case .rearrange:
-
             return
 
-
         case .view:
+
+            tableView.deselectRow(at: indexPath, animated: false)
 
             let targetDirectory = self.folder.children[indexPath.row]
 
@@ -213,8 +277,14 @@ extension DirectoryViewController: UITableViewDataSource {
                 self.navigationController?.pushViewController(directoryViewController, animated: true)
             }
 
-            else if var targetProject = targetDirectory as? Project {
-                return
+            else if let targetProject = targetDirectory as? Project {
+                guard let sceneViewController = self.storyboard?
+                        .instantiateViewController(identifier: "SceneViewController") as? SceneViewController else {
+                    return
+                }
+                sceneViewController.modalPresentationStyle = .fullScreen
+                sceneViewController.setProject(to: targetProject)
+                self.navigationController?.pushViewController(sceneViewController, animated: true)
             }
 
 

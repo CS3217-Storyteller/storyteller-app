@@ -34,6 +34,8 @@ class SceneViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.navigationController?.navigationBar.isTranslucent = false
+
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         self.collectionView.collectionViewLayout = layout
@@ -53,7 +55,7 @@ class SceneViewController: UIViewController {
         )
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
-        self.view.addSubview(collectionView)
+//        self.view.addSubview(collectionView)
 
         guard let project = self.project else {
             return
