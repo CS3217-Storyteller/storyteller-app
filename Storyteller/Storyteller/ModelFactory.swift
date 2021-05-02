@@ -92,7 +92,7 @@ class ModelFactory {
               let dir = buildDirectory(withRoot: rootDirectory,
                                        withSubDirectories: idToPersistedDirectory,
                                        withProjects: idToProjects) else {
-            return Folder(name: "Root", description: "New Root Folder")
+            return Folder(name: "Root", description: "This is the root folder")
         }
         return dir
     }
