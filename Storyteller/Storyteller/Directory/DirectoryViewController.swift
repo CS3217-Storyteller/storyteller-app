@@ -204,17 +204,19 @@ extension DirectoryViewController: UITableViewDataSource {
         self.observers.append(tableCell)
         return tableCell
     }
-
-
 }
 
 extension DirectoryViewController: UIPopoverPresentationControllerDelegate {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == DirectoryViewController.addPopoverSegueIdentifier {
-            let addPopoverViewController = segue.destination
+            guard let addPopoverViewController = segue.destination as? DirectoryAddPopoverViewController else {
+                return
+            }
             addPopoverViewController.modalPresentationStyle = .popover
             addPopoverViewController.preferredContentSize = CGSize(width: 200, height: 100)
+            addPopoverViewController.set(delegate: self)
+
         }
 
         if segue.identifier == DirectoryViewController.moveModalSegueIdentifier {
@@ -240,21 +242,31 @@ extension DirectoryViewController: UIPopoverPresentationControllerDelegate {
 
 extension DirectoryViewController: DirectoryViewControllerDelegate {
 
+    func didAddProject(project: Project) {
+        self.folder.addDirectory(project)
+    }
+
+    func didAddFolder(folder: Folder) {
+        self.folder.addDirectory(folder)
+    }
+
     func didSelectedDirectoriesMove(to folder: Folder) {
-        folder.moveChildren(indices: selectedIndexes, to: folder)
-        currMode = .view
+        self.folder.moveChildren(indices: selectedIndexes, to: folder)
+        self.currMode = .view
     }
 
 }
 
 extension DirectoryViewController: FolderObserver {
     func modelDidChange() {
-        tableView.reloadData()
+        self.tableView.reloadData()
     }
 }
 
 protocol DirectoryViewControllerDelegate {
     func didSelectedDirectoriesMove(to folder: Folder)
+    func didAddProject(project: Project)
+    func didAddFolder(folder: Folder)
 }
 
 protocol DirectoryViewControllerObserver {

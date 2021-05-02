@@ -17,7 +17,7 @@
 		A2235B4D263D6FD500BA15DE /* DirectoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B4B263D6FD500BA15DE /* DirectoryTableViewCell.swift */; };
 		A2235B4E263D6FD500BA15DE /* DirectoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A2235B4C263D6FD500BA15DE /* DirectoryTableViewCell.xib */; };
 		A2235B50263D8D3500BA15DE /* DirectoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B4F263D8D3500BA15DE /* DirectoryType.swift */; };
-		A2235B52263DC82A00BA15DE /* AddPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B51263DC82A00BA15DE /* AddPopoverViewController.swift */; };
+		A2235B52263DC82A00BA15DE /* DirectoryAddPopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B51263DC82A00BA15DE /* DirectoryAddPopoverViewController.swift */; };
 		A2235B5B263DCD4600BA15DE /* DirectoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B5A263DCD4600BA15DE /* DirectoryManager.swift */; };
 		A2235B5D263E21E900BA15DE /* DirectoryMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B5C263E21E800BA15DE /* DirectoryMode.swift */; };
 		A2235B61263E50CE00BA15DE /* DirectoryMoveModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B60263E50CE00BA15DE /* DirectoryMoveModalViewController.swift */; };
@@ -115,7 +115,7 @@
 		A2235B4B263D6FD500BA15DE /* DirectoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectoryTableViewCell.swift; sourceTree = "<group>"; };
 		A2235B4C263D6FD500BA15DE /* DirectoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DirectoryTableViewCell.xib; sourceTree = "<group>"; };
 		A2235B4F263D8D3500BA15DE /* DirectoryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectoryType.swift; sourceTree = "<group>"; };
-		A2235B51263DC82A00BA15DE /* AddPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPopoverViewController.swift; sourceTree = "<group>"; };
+		A2235B51263DC82A00BA15DE /* DirectoryAddPopoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectoryAddPopoverViewController.swift; sourceTree = "<group>"; };
 		A2235B5A263DCD4600BA15DE /* DirectoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectoryManager.swift; sourceTree = "<group>"; };
 		A2235B5C263E21E800BA15DE /* DirectoryMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectoryMode.swift; sourceTree = "<group>"; };
 		A2235B60263E50CE00BA15DE /* DirectoryMoveModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectoryMoveModalViewController.swift; sourceTree = "<group>"; };
@@ -259,7 +259,7 @@
 		A2235B5E263E45D300BA15DE /* AddPopover */ = {
 			isa = PBXGroup;
 			children = (
-				A2235B51263DC82A00BA15DE /* AddPopoverViewController.swift */,
+				A2235B51263DC82A00BA15DE /* DirectoryAddPopoverViewController.swift */,
 			);
 			path = AddPopover;
 			sourceTree = "<group>";
@@ -707,7 +707,7 @@
 				A2235B68263E824C00BA15DE /* PersistedShot.swift in Sources */,
 				A2235BA4263E82E200BA15DE /* NormalLayerMerger.swift in Sources */,
 				A2235BBF263E833800BA15DE /* LayerTableController.swift in Sources */,
-				A2235B52263DC82A00BA15DE /* AddPopoverViewController.swift in Sources */,
+				A2235B52263DC82A00BA15DE /* DirectoryAddPopoverViewController.swift in Sources */,
 				A2235B7A263E826000BA15DE /* ProjectPersistenceManager.swift in Sources */,
 				A209157F2606FE3F001A242E /* ProjectViewController.swift in Sources */,
 				B3D7AD6B2615B4C30082D591 /* UIView+showBorder.swift in Sources */,

@@ -7,11 +7,11 @@
 import PencilKit
 
 class Folder: Directory {
-    var description: String = "DESCRIPTION" // Todo: Proper Init
-    var name: String = "FOLDER UNNAMED" // Todo: Proper Init
-    let id: UUID // TODO: Proper init
-    var dateAdded: Date = Date() // TODO: Proper date init
-    var dateUpdated: Date = Date() // TODO: Proper date init
+    var description: String
+    var name: String
+    let id: UUID
+    var dateAdded: Date
+    var dateUpdated: Date
 
     private let persistenceManager = MainPersistenceManager()
     var observers = [FolderObserver]()
