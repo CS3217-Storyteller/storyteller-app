@@ -5,7 +5,7 @@
 //  Created by John Pan on 21/3/21.
 //
 
-import UIKit
+/* import UIKit
 
 class ProjectViewController: UIViewController {
 
@@ -16,7 +16,7 @@ class ProjectViewController: UIViewController {
 
     @IBOutlet private var collectionView: UICollectionView!
 
-    var folder = Folder()
+    var folder = Folder(name: "Root", description: "This is the fixed root folder")
     private var NumOfProjects: Int = 0
 
     lazy var addBarButton: UIBarButtonItem = {
@@ -131,7 +131,7 @@ class ProjectViewController: UIViewController {
         let canvasSize = Constants.defaultCanvasSize
         let projectTitle = "Project \(self.NumOfProjects)"
         let project = Project(name: projectTitle, canvasSize: canvasSize)
-        self.folder.addProject(project)
+        self.folder.addDirectory(project)
         self.NumOfProjects += 1
         self.collectionView.reloadData()
     }
@@ -169,7 +169,7 @@ class ProjectViewController: UIViewController {
             guard let project = project else {
                 return
             }
-            self.folder.renameProject(project, to: newProjectName)
+            self.folder.renameDirectory(project, to: newProjectName)
             self.collectionView.reloadData()
             self.mode = .view
         }
@@ -280,3 +280,4 @@ extension ProjectViewController: FolderObserver {
         self.collectionView.reloadData()
     }
 }
+*/

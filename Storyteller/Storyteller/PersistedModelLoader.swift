@@ -37,4 +37,16 @@ class PersistedModelLoader {
              })
         }
     }
+
+    func getRootIds() -> [UUID] {
+        rootManager.loadRootIds()
+    }
+
+    func loadPersistedFolders() -> [PersistedFolder] {
+        rootManager.loadPersistedFolders()
+    }
+
+    func loadPersistedDirectories() -> [PersistedDirectory] {
+        rootManager.loadPersistedDirectories()
+    }
 }

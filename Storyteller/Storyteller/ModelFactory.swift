@@ -95,21 +95,28 @@ class ModelFactory {
 
     private func buildDirectory(withRoot rootDirectory: PersistedDirectory,
                                 withSubDirectories subDirectories: [UUID: PersistedDirectory],
-                                withProjects projects: [UUID: Project]) -> Directory? {
+                                withProjects projects: [UUID: Project],
+                                withParent parent: Folder? = nil) -> Directory? {
         if let project = rootDirectory as? PersistedProject {
             return projects[project.id]
         } else if let folder = rootDirectory as? PersistedFolder {
             let subPersistedDirectories = folder.children.compactMap {
                 subDirectories[$0]
             }
+            let folder = Folder(name: folder.name,
+                                description: folder.description,
+                                id: folder.id,
+                                dateAdded: folder.dateAdded,
+                                dateUpdated: folder.dateUpdated,
+                                parent: parent)
             let subDirectories = subPersistedDirectories.compactMap {
-                buildDirectory(withRoot: $0, withSubDirectories: subDirectories, withProjects: projects)
+                buildDirectory(withRoot: $0,
+                               withSubDirectories: subDirectories,
+                               withProjects: projects,
+                               withParent: folder)
             }
-            return Folder(name: folder.name,
-                          description: folder.description,
-                          dateAdded: folder.dateAdded,
-                          dateUpdated: folder.dateUpdated,
-                          children: subDirectories)
+            folder.addDirectories(subDirectories)
+            return folder
         }
         return nil
     }

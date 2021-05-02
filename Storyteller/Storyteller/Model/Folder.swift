@@ -28,30 +28,41 @@ class Folder: Directory {
         PersistedFolder(self)
     }
 
+    private func retrieveDirectoriesFromStorage() -> [Directory] {
+        let loader = PersistedModelLoader()
+        let persistedModelTree = loader.loadPersistedModels()
+        let rootIds = loader.getRootIds()
+        let persistedDirectories = loader.loadPersistedDirectories()
+        let projects = ModelFactory().loadProjectModel(from: persistedModelTree)
+        let directories = ModelFactory().loadDirectoryModel(from: persistedDirectories,
+                                                            withRootIds: rootIds,
+                                                            withProjects: projects)
+
+        return directories
+    }
+
     init(name: String,
          description: String,
          id: UUID = UUID(),
          dateAdded: Date = Date(),
          dateUpdated: Date = Date(),
-         children: [Directory] = [Directory]()) {
-        let persistedModelTree = PersistedModelLoader().loadPersistedModels()
-        self.children = ModelFactory().loadProjectModel(from: persistedModelTree)
+         children: [Directory] = [],
+         parent: Folder? = nil) {
+
         self.description = description
         self.id = id
         self.name = name
         self.dateAdded = dateAdded
         self.dateUpdated = dateUpdated
         self.children = children
+        self.parent = parent
+        self.children = (parent == nil)
+            ? self.retrieveDirectoriesFromStorage()
+            : children
     }
 
-    func loadProject(at index: Int) -> Project? {
-        guard projects.indices.contains(index) else {
-            return nil
-        }
-        let project = projects[index]
-        project.setPersistenceManager(to: persistenceManager
-                                        .getProjectPersistenceManager(of: project.persisted))
-        return project
+    func setParent(to parent: Folder) {
+        self.parent = parent
     }
 
     private func saveDirectory(_ directory: Directory) {
@@ -78,6 +89,8 @@ class Folder: Directory {
         if let project = directory as? Project {
             project
                 .setPersistenceManager(to: self.persistenceManager.getProjectPersistenceManager(of: project.persisted))
+        } else if let folder = directory as? Folder {
+            folder.setParent(to: self)
         }
         self.children.append(directory)
         self.saveDirectory(directory)
@@ -115,45 +128,6 @@ class Folder: Directory {
         }
         saveDirectory(directory)
     }
-/*
-    // remove
-    func addProject(_ project: Project) {
-        project.setPersistenceManager(to: self.persistenceManager.getProjectPersistenceManager(of: project.persisted))
-        self.children.append(project)
-        self.saveProject(project)
-    }
-
-    // remove
-    func removeProject(_ project: Project) {
-        if let index = self.projects.firstIndex(where: { $0 === project }) {
-            self.children.remove(at: index)
-            self.deleteProject(project)
-        }
-    }
-
-    // remove
-    func renameProject(_ project: Project, to name: String) {
-        self.removeProject(project)
-        project.name = name
-        // project.setTitle(to: name)
-        self.addProject(project)
-    }
-
-    // remove
-    private func saveProject(_ project: Project?) {
-        guard let project = project else {
-            return
-        }
-        self.persistenceManager.saveProject(project.persisted)
-        notifyObservers()
-    }
-
-    // remove
-    func deleteProject(_ project: Project) {
-        self.persistenceManager.deleteProject(project.persisted)
-        notifyObservers()
-    }
-*/
 
     func observedBy(_ observer: FolderObserver) {
         observers.append(observer)
@@ -163,9 +137,9 @@ class Folder: Directory {
         observers.forEach({ $0.modelDidChange() })
     }
 
-    func addChildren(_ newChildren: [Directory]) {
-        self.children.append(contentsOf: newChildren)
-        newChildren.forEach { saveDirectory($0) }
+    func addDirectories(_ directories: [Directory]) {
+        self.children.append(contentsOf: directories)
+        directories.forEach { saveDirectory($0) }
         self.saveDirectory(self)
     }
 
@@ -174,7 +148,10 @@ class Folder: Directory {
         let movedChildren: [Directory] = sortedIndices.compactMap {
             children.indices.contains($0) ? children[$0] : nil
         }
-        folder.addChildren(movedChildren)
+        movedChildren.forEach {
+            ($0 as? Folder)?.setParent(to: folder)
+        }
+        folder.addDirectories(movedChildren)
         sortedIndices.forEach { self.children.remove(at: $0) }
         self.saveDirectory(folder)
         self.saveDirectory(self)

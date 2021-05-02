@@ -25,7 +25,7 @@ class DirectoryViewController: UIViewController {
     @IBOutlet weak var addButton: UIBarButtonItem!
     @IBOutlet weak var doneButton: UIBarButtonItem!
 
-    var folder: Folder = Folder()
+    var folder: Folder = Folder(name: "Root", description: "This is the topmost root folder")
     var observers: [DirectoryViewControllerObserver] = []
     var selectedIndexes: [Int] = []
 
@@ -222,7 +222,7 @@ extension DirectoryViewController: UIPopoverPresentationControllerDelegate {
                 return
             }
 
-            let parentFolder: Folder? = folder.parent as? Folder
+            let parentFolder: Folder? = folder.parent // as? Folder
             var childrenFolders: [Folder] = []
             for (index, child) in folder.children.enumerated() {
                 if !selectedIndexes.contains(index) {
