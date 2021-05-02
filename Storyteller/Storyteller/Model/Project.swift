@@ -47,7 +47,7 @@ class Project: Directory {
     init(title: String, canvasSize: CGSize, scenes: [Scene] = [],
          id: UUID = UUID(),
          persistenceManager: ProjectPersistenceManager? = nil) {
-        self.title = title
+        self.name = title
         self.canvasSize = canvasSize
         self.scenes = scenes
         self.id = id
@@ -91,7 +91,7 @@ class Project: Directory {
     }
 
     func setTitle(to title: String) {
-        self.title = title
+        self.name = title
         self.saveProject()
     }
 

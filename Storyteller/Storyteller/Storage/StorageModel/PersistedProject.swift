@@ -17,7 +17,7 @@ struct PersistedProject: Codable {
     init(_ project: Project) {
         self.scenes = project.scenes.map({ $0.id })
         self.canvasSize = project.canvasSize
-        self.title = project.title
+        self.title = project.name
         self.id = project.id
     }
 }

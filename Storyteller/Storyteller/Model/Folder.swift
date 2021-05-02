@@ -26,7 +26,7 @@ class Folder: Directory {
 
     init() {
         let persistedModelTree = PersistedModelLoader().loadPersistedModels()
-        self.projects = ModelFactory().loadProjectModel(from: persistedModelTree)
+        self.directories = ModelFactory().loadProjectModel(from: persistedModelTree)
     }
 
     func loadProject(at index: Int) -> Project? {
@@ -41,13 +41,13 @@ class Folder: Directory {
 
     func addProject(_ project: Project) {
         project.setPersistenceManager(to: self.persistenceManager.getProjectPersistenceManager(of: project.persisted))
-        self.projects.append(project)
+        self.directories.append(project)
         self.saveProject(project)
     }
 
     func removeProject(_ project: Project) {
         if let index = self.projects.firstIndex(where: { $0 === project }) {
-            self.projects.remove(at: index)
+            self.directories.remove(at: index)
             self.deleteProject(project)
         }
     }
