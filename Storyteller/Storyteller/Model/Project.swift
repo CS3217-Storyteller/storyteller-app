@@ -63,9 +63,6 @@ class Project: Directory {
     }
 
     func setPersistenceManager(to persistenceManager: ProjectPersistenceManager) {
-        if self.persistenceManager != nil {
-            return
-        }
         self.persistenceManager = persistenceManager
     }
 
