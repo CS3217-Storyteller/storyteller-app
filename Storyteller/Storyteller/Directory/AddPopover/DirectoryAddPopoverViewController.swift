@@ -41,6 +41,7 @@ class DirectoryAddPopoverViewController: UIViewController {
                 let description = descriptionTextField.text ?? String()
                 let project = Project(name: name, canvasSize: Constants.defaultCanvasSize)
                 self.delegate?.didAddProject(project: project)
+                self.dismiss(animated: true, completion: nil)
             }
         )
 
@@ -79,6 +80,7 @@ class DirectoryAddPopoverViewController: UIViewController {
                 let description = descriptionTextField.text ?? String()
                 let folder = Folder(name: name, description: description)
                 self.delegate?.didAddFolder(folder: folder)
+                self.dismiss(animated: true, completion: nil)
             }
         )
 

@@ -35,21 +35,21 @@ class DirectoryMoveModalViewController: UIViewController {
     @IBAction func confirmButtonPressed(_ sender: Any) {
 
         guard let indexPath = tableView.indexPathForSelectedRow else {
-            dismiss(animated: false, completion: nil)
+            self.dismiss(animated: false, completion: nil)
             return
         }
 
         if indexPath.section == 0 {
             guard let folder = parentFolder else {
-                dismiss(animated: false, completion: nil)
+                self.dismiss(animated: false, completion: nil)
                 return
             }
             delegate?.didSelectedDirectoriesMove(to: folder)
-            dismiss(animated: false, completion: nil)
+            self.dismiss(animated: false, completion: nil)
         } else {
             let folder = childrenFolders[indexPath.row]
             delegate?.didSelectedDirectoriesMove(to: folder)
-            dismiss(animated: false, completion: nil)
+            self.dismiss(animated: false, completion: nil)
         }
     }
 

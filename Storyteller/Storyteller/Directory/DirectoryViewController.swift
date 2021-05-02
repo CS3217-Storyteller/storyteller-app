@@ -9,9 +9,10 @@ import UIKit
 
 class DirectoryViewController: UIViewController {
 
-    static let navigationBarTitle = "Storyteller"
     static let addPopoverSegueIdentifier = "DirectoryAddPopoverSegue"
     static let moveModalSegueIdentifier = "DirectoryMoveModalSegue"
+    static let defaultFolderName = "Storyteller"
+    static let defaultFolderDescription = "Storyteller"
 
     @IBOutlet weak var tableHeaderView: UIView!
     @IBOutlet weak var tableView: UITableView!
@@ -25,7 +26,10 @@ class DirectoryViewController: UIViewController {
     @IBOutlet weak var addButton: UIBarButtonItem!
     @IBOutlet weak var doneButton: UIBarButtonItem!
 
-    var folder: Folder = Folder(name: "Root", description: "This is the topmost root folder")
+    var folder: Folder = Folder(
+        name: DirectoryViewController.defaultFolderName,
+        description: DirectoryViewController.defaultFolderDescription
+    )
     var observers: [DirectoryViewControllerObserver] = []
     var selectedIndexes: [Int] = []
 
@@ -34,38 +38,41 @@ class DirectoryViewController: UIViewController {
             switch currMode {
             case .view:
                 deleteButton.image = nil
-                moveButton.title = nil
-                rearrangeButton.title = "Rearrange"
-                selectButton.title = "Select"
-                sortButton.title = "Sort"
+                moveButton.image = nil
+                rearrangeButton.image = UIImage(systemName: "grid")
+                selectButton.image = UIImage(systemName: "hand.point.up.left.fill")
+                sortButton.image = UIImage(systemName: "square.2.stack.3d")
                 searchButton.image = UIImage(systemName: "magnifyingglass")
                 addButton.image = UIImage(systemName: "plus")
                 doneButton.title = nil
 
+                tableView.isEditing = false
                 selectedIndexes = []
                 observers.forEach({ $0.didModeChange(to: .view) })
             case .rearrange:
                 deleteButton.image = nil
-                moveButton.title = nil
-                rearrangeButton.title = nil
-                selectButton.title = nil
-                sortButton.title = nil
+                moveButton.image = nil
+                rearrangeButton.image = nil
+                selectButton.image = nil
+                sortButton.image = nil
                 searchButton.image = nil
                 addButton.image = nil
                 doneButton.title = "Done"
 
+                tableView.isEditing = true
                 selectedIndexes = []
                 self.observers.forEach({ $0.didModeChange(to: .rearrange) })
             case .select:
                 deleteButton.image = UIImage(systemName: "trash")
-                moveButton.title = "Move"
-                rearrangeButton.title = nil
-                selectButton.title = nil
-                sortButton.title = nil
+                moveButton.image = UIImage(systemName: "move.3d")
+                rearrangeButton.image = nil
+                selectButton.image = nil
+                sortButton.image = nil
                 searchButton.image = nil
                 addButton.image = nil
                 doneButton.title = "Done"
 
+                tableView.isEditing = false
                 selectedIndexes = []
                 self.observers.forEach({ $0.didModeChange(to: .select) })
             }
@@ -75,7 +82,7 @@ class DirectoryViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = DirectoryViewController.navigationBarTitle
+        self.navigationItem.title = self.folder.name
 
         /// Set the Table View
         self.tableView.register(
@@ -90,13 +97,12 @@ class DirectoryViewController: UIViewController {
 
         /// ModelManager
         self.folder.observedBy(self)
+
+        self.navigationItem.hidesBackButton = false
     }
 
-    public func configure(directory: Directory) {
-        if let folder = directory as? Folder {
-            self.folder = folder
-            // self.folder = DirectoryManager(current: directory, observer: self)
-        }
+    public func configure(folder: Folder) {
+        self.folder = folder
     }
     
     @IBAction func selectButtonPressed(_ sender: UIBarButtonItem) {
@@ -110,6 +116,11 @@ class DirectoryViewController: UIViewController {
     @IBAction func doneButtonPressed(_ sender: UIBarButtonItem) {
         self.currMode = .view
     }
+
+    @IBAction func backButtonPressed(_ sender: UIBarButtonItem) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
 
     @IBAction func deleteButtonPressed(_ sender: UIBarButtonItem) {
         if currMode == .select {
@@ -151,6 +162,21 @@ extension DirectoryViewController: UITableViewDelegate {
 
 extension DirectoryViewController: UITableViewDataSource {
 
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        self.folder.children.swapAt(sourceIndexPath.row, destinationIndexPath.row)
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            self.folder.deleteChildren(at: [indexPath.row])
+        }
+    }
+
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         switch currMode {
@@ -172,9 +198,30 @@ extension DirectoryViewController: UITableViewDataSource {
             }
 
         case .rearrange:
+
             return
+
+
         case .view:
-            return
+
+            let targetDirectory = self.folder.children[indexPath.row]
+
+            if let targetFolder = targetDirectory as? Folder {
+                guard let directoryViewController = self.storyboard?
+                        .instantiateViewController(identifier: "DirectoryViewController") as? DirectoryViewController else {
+                    return
+                }
+                directoryViewController.modalPresentationStyle = .fullScreen
+                directoryViewController.configure(folder: targetFolder)
+                self.navigationController?.pushViewController(directoryViewController, animated: true)
+            }
+
+            else if var targetProject = targetDirectory as? Project {
+                return
+            }
+
+
+
         }
     }
 
