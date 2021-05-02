@@ -31,7 +31,7 @@ class Folder: Directory {
     static func retrieveMainFolder() -> Folder {
         let loader = PersistedModelLoader()
         guard let rootId = loader.getRootId() else {
-            return Folder(name: "New Root", description: "This is a new root folder")
+            return Folder(name: "Root", description: "This is a root folder")
         }
         let persistedModelTree = loader.loadPersistedModels()
 
@@ -43,7 +43,7 @@ class Folder: Directory {
         print("directories:", directories)
 
         guard let folder = directories as? Folder else {
-            return Folder(name: "New Root", description: "This is a new root folder")
+            return Folder(name: "Root", description: "This is a root folder")
         }
         return folder
     }
@@ -143,8 +143,8 @@ class Folder: Directory {
 
     func updateDescription(_ directory: Directory? = nil, to description: String) {
         if let directory = directory {
-            (directory as? Folder)?.updateDescription(to: name)
-            (directory as? Project)?.updateDescription(to: name)
+            (directory as? Folder)?.updateDescription(to: description)
+            (directory as? Project)?.updateDescription(to: description)
         } else {
             self.description = description
         }

@@ -168,10 +168,12 @@ class DirectoryViewController: UIViewController {
                     let name = nameTextField.text ?? String()
                     let description = descriptionTextField.text ?? String()
                     if let targetFolder = targetDirectory as? Folder {
-//                        targetFolder.rename(to: name)
+                        self.folder.renameDirectory(targetFolder, to: name)
+                        self.folder.updateDescription(targetFolder, to: description)
                     }
                     else if let targetProject = targetDirectory as? Project {
-                        targetProject.setTitle(to: name)
+                        self.folder.renameDirectory(targetProject, to: name)
+                        self.folder.updateDescription(targetProject, to: description)
                     }
                 }
             )

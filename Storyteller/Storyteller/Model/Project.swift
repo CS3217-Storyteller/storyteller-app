@@ -75,10 +75,7 @@ class Project: Directory {
 
     // TODO: check if working properly
     private func saveScene(_ scene: Scene) {
-        print("old: ", dateUpdated) // TODO: Remove Print
-        var project = self
-        project.dateWasUpdated()
-        print("new: ", dateUpdated) // TODO: Make sure this value is changed.
+        self.updateDate()
         self.persistenceManager?.saveScene(scene.persisted)
         self.saveProject()
     }

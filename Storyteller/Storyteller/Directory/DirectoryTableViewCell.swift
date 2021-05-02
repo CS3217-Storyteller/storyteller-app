@@ -128,7 +128,7 @@ class DirectoryTableViewCell: UITableViewCell {
 }
 
 extension DirectoryTableViewCell: DirectoryViewControllerObserver {
-    func didModeChange(to mode: DirectoryMode) {
+    func didModehange(to mode: DirectoryMode) {
         self.currMode = mode
     }
 }

@@ -237,8 +237,8 @@
 		A2235B43263D558300BA15DE /* Directory */ = {
 			isa = PBXGroup;
 			children = (
-				A2235B5F263E509D00BA15DE /* MoveModal */,
-				A2235B5E263E45D300BA15DE /* AddPopover */,
+				A2235B60263E50CE00BA15DE /* DirectoryMoveModalViewController.swift */,
+				A2235B51263DC82A00BA15DE /* DirectoryAddPopoverViewController.swift */,
 				A2235B45263D573000BA15DE /* DirectoryViewController.swift */,
 				A2235B4B263D6FD500BA15DE /* DirectoryTableViewCell.swift */,
 				A2235B4C263D6FD500BA15DE /* DirectoryTableViewCell.xib */,
@@ -254,22 +254,6 @@
 				A2235B5A263DCD4600BA15DE /* DirectoryManager.swift */,
 			);
 			path = Managers;
-			sourceTree = "<group>";
-		};
-		A2235B5E263E45D300BA15DE /* AddPopover */ = {
-			isa = PBXGroup;
-			children = (
-				A2235B51263DC82A00BA15DE /* DirectoryAddPopoverViewController.swift */,
-			);
-			path = AddPopover;
-			sourceTree = "<group>";
-		};
-		A2235B5F263E509D00BA15DE /* MoveModal */ = {
-			isa = PBXGroup;
-			children = (
-				A2235B60263E50CE00BA15DE /* DirectoryMoveModalViewController.swift */,
-			);
-			path = MoveModal;
 			sourceTree = "<group>";
 		};
 		A2235B81263E82E200BA15DE /* Layer */ = {

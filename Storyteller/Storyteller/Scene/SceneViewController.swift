@@ -34,7 +34,7 @@ class SceneViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.isOpaque = true
 
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
