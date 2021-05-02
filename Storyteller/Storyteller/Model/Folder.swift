@@ -71,6 +71,10 @@ class Folder: Directory {
         self.parent = parent
     }
 
+    private func saveDirectory() {
+        saveDirectory(self)
+    }
+
     private func saveDirectory(_ directory: Directory) {
         self.updateDate()
         if let folder = directory as? Folder {
@@ -127,24 +131,24 @@ class Folder: Directory {
         self.dateUpdated = Date()
     }
 
-    // TODO: check if working properly
-    func renameDirectory(_ directory: Directory, to name: String) {
-        if var folder = directory as? Folder {
-            folder.rename(to: name)
-        } else if var project = directory as? Project {
-            project.rename(to: name)
+    func renameDirectory(_ directory: Directory? = nil, to name: String) {
+        if let directory = directory {
+            (directory as? Folder)?.renameDirectory(to: name)
+            (directory as? Project)?.renameProject(to: name)
+        } else {
+            self.name = name
         }
-        saveDirectory(directory)
+        saveDirectory(directory ?? self)
     }
 
-    // TODO: check if working properly
-    func updateDescription(_ directory: Directory, to description: String) {
-        if var folder = directory as? Folder {
-            folder.updateDescription(to: description)
-        } else if var project = directory as? Project {
-            project.updateDescription(to: description)
+    func updateDescription(_ directory: Directory? = nil, to description: String) {
+        if let directory = directory {
+            (directory as? Folder)?.updateDescription(to: name)
+            (directory as? Project)?.updateDescription(to: name)
+        } else {
+            self.description = description
         }
-        saveDirectory(directory)
+        saveDirectory(directory ?? self)
     }
 
     func observedBy(_ observer: FolderObserver) {
@@ -158,7 +162,7 @@ class Folder: Directory {
     func addDirectories(_ directories: [Directory]) {
         self.children.append(contentsOf: directories)
         directories.forEach { saveDirectory($0) }
-        self.saveDirectory(self)
+        self.saveDirectory()
     }
 
     func moveChildren(indices selectedIndices: [Int], to folder: Folder) {
@@ -172,12 +176,14 @@ class Folder: Directory {
         folder.addDirectories(movedChildren)
         sortedIndices.forEach { self.children.remove(at: $0) }
         self.saveDirectory(folder)
-        self.saveDirectory(self)
+        self.saveDirectory()
     }
 
     func deleteChildren(at selectedIndices: [Int]) {
         let sortedIndices = selectedIndices.sorted(by: { $1 < $0 })
-        sortedIndices.forEach { self.children.remove(at: $0) }
-        self.saveDirectory(self)
+        sortedIndices.forEach {
+            self.deleteDirectory(self.children.remove(at: $0))
+        }
+        self.saveDirectory()
     }
 }
