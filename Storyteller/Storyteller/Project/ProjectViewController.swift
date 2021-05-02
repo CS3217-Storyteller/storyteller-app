@@ -16,7 +16,7 @@ class ProjectViewController: UIViewController {
 
     @IBOutlet private var collectionView: UICollectionView!
 
-    private var modelManager = ModelManager()
+    var folder = Folder()
     private var NumOfProjects: Int = 0
 
     lazy var addBarButton: UIBarButtonItem = {
@@ -86,7 +86,7 @@ class ProjectViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.modelManager.observers.append(self)
+        self.folder.observedBy(self)
 
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -100,7 +100,7 @@ class ProjectViewController: UIViewController {
         self.collectionView.dataSource = self
         self.view.addSubview(collectionView)
 
-        self.NumOfProjects = self.modelManager.projects.count
+        self.NumOfProjects = self.folder.projects.count
 
         self.navigationItem.title = "My Projects"
         self.navigationItem.rightBarButtonItems = [
@@ -118,9 +118,10 @@ class ProjectViewController: UIViewController {
             toDeleteIndexPath.append(key)
         }
         for indexPath in toDeleteIndexPath {
-            let index = min(indexPath.row, self.modelManager.projects.count - 1)
-            let project = self.modelManager.projects[index]
-            self.modelManager.removeProject(project)
+            let index = min(indexPath.row, self.folder.projects.count - 1)
+            if let project = self.folder.loadProject(at: index) {
+                self.folder.removeProject(project)
+            }
         }
         self.selectedIndexPath.removeAll()
         self.mode = .view
@@ -129,18 +130,18 @@ class ProjectViewController: UIViewController {
     @objc func didAddButtonClicked(_ sender: UIButton) {
         let canvasSize = Constants.defaultCanvasSize
         let projectTitle = "Project \(self.NumOfProjects)"
-        let project = Project(title: projectTitle, canvasSize: canvasSize)
-        self.modelManager.addProject(project)
+        let project = Project(name: projectTitle, canvasSize: canvasSize)
+        self.folder.addProject(project)
         self.NumOfProjects += 1
         self.collectionView.reloadData()
     }
 
     @objc func didRenameButtonClicked(_ sender: UIButton) {
 
-//        for projectId in self.modelManager.projectOrder {
-//            let project = self.modelManager.projects[projectId]!
+//        for projectId in self.folder.projectOrder {
+//            let project = self.folder.projects[projectId]!
 //            let projectLabel = project.label
-//            self.modelManager.removeProject(of: projectLabel)
+//            self.folder.removeProject(of: projectLabel)
 //        }
 
         var index = 0
@@ -148,8 +149,8 @@ class ProjectViewController: UIViewController {
             index = key.row
         }
 
-        let project = self.modelManager.projects[index]
-        let projectName = project.name
+        let project = self.folder.loadProject(at: index)
+        let projectName = project?.name ?? "UNTITLED"
 
         let alertController = UIAlertController(
             title: "Rename",
@@ -165,7 +166,10 @@ class ProjectViewController: UIViewController {
             guard let newProjectName = alertController.textFields?[0].text else {
                 return
             }
-            self.modelManager.renameProject(project, to: newProjectName)
+            guard let project = project else {
+                return
+            }
+            self.folder.renameProject(project, to: newProjectName)
             self.collectionView.reloadData()
             self.mode = .view
         }
@@ -180,13 +184,13 @@ extension ProjectViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        let project = self.modelManager.projects[indexPath.row]
+        let project = self.folder.loadProject(at: indexPath.row)
         guard let projectViewCell = self.collectionView
                 .dequeueReusableCell(withReuseIdentifier: ProjectViewCell.identifier,
                                      for: indexPath) as? ProjectViewCell else {
             return UICollectionViewCell()
         }
-        projectViewCell.setTitle(to: project.name)
+        projectViewCell.setTitle(to: project?.name ?? "UNTITLED")
         return projectViewCell
     }
 
@@ -194,14 +198,15 @@ extension ProjectViewController: UICollectionViewDelegate {
         switch self.mode {
         case .view:
             self.collectionView.deselectItem(at: indexPath, animated: true)
-            let project = self.modelManager.projects[indexPath.row]
             guard let sceneViewController = self.storyboard?
                     .instantiateViewController(identifier: "SceneViewController") as? SceneViewController else {
                 return
             }
+            guard let project = self.folder.loadProject(at: indexPath.row) else {
+                return
+            }
             sceneViewController.modalPresentationStyle = .fullScreen
             sceneViewController.setProject(to: project)
-            sceneViewController.setModelManager(to: self.modelManager)
             self.navigationController?.pushViewController(sceneViewController, animated: true)
         case .select:
             self.selectedIndexPath[indexPath] = true
@@ -236,7 +241,7 @@ extension ProjectViewController: UICollectionViewDelegate {
 extension ProjectViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        self.modelManager.projects.count
+        self.folder.projects.count
     }
 
 }
@@ -269,8 +274,8 @@ extension ProjectViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-// MARK: - ModelManagerObserver
-extension ProjectViewController: ModelManagerObserver {
+// MARK: - FolderObserver
+extension ProjectViewController: FolderObserver {
     func modelDidChange() {
         self.collectionView.reloadData()
     }

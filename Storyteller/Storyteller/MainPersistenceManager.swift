@@ -18,6 +18,68 @@ class MainPersistenceManager {
         self.manager = PersistenceManager()
     }
 
+    // START: Folder methods
+
+    func saveRootIds(_ folderIds: [UUID]) {
+        guard let data = manager.encodeToJSON(folderIds) else {
+            return
+        }
+        manager.saveData(data, toFile: "Root IDs")
+    }
+
+    func loadRootIds() -> [UUID] {
+        guard let data = manager.loadData("Root IDs") else {
+            return []
+        }
+        return manager.decodeFromJSON(data, as: [UUID].self) ?? []
+    }
+
+    func saveFolder(_ folder: PersistedFolder) {
+        guard let data = manager.encodeToJSON(folder) else {
+            return
+        }
+        let fileName = folder.id.uuidString
+        manager.saveData(data, toFile: fileName)
+    }
+
+    func loadPersistedFolders() -> [PersistedFolder] {
+        let data = manager.getAllJsonUrls().compactMap {
+            manager.loadData($0.deletingPathExtension().lastPathComponent.description)
+        }
+        return data.compactMap {
+            manager.decodeFromJSON($0, as: PersistedFolder.self)
+        }
+    }
+
+    func loadPersistedDirectories() -> [PersistedDirectory] {
+        var output = [PersistedDirectory]()
+        output.append(contentsOf: loadPersistedFolders())
+        output.append(contentsOf: loadPersistedProjects())
+        return output
+    }
+
+    func loadPersistedFolder(id: UUID) -> PersistedFolder? {
+        let fileName = id.uuidString
+        guard let data = manager.loadData(fileName) else {
+            return nil
+        }
+        return manager.decodeFromJSON(data, as: PersistedFolder.self)
+    }
+
+    func deleteFolder(_ folder: PersistedFolder) {
+        folder.children.forEach {
+            if let subFolder = loadPersistedFolder(id: $0) {
+                // NOTE: recursive deletion
+                deleteFolder(subFolder)
+            } else if let project = loadPersistedProject(id: $0) {
+                deleteProject(project)
+            }
+        }
+        manager.deleteFolder(named: folder.id.uuidString)
+    }
+
+    // END: Folder methods
+
     func saveProject(_ project: PersistedProject) {
         guard let data = manager.encodeToJSON(project) else {
             return

@@ -25,7 +25,7 @@ class DirectoryViewController: UIViewController {
     @IBOutlet weak var addButton: UIBarButtonItem!
     @IBOutlet weak var doneButton: UIBarButtonItem!
 
-    var directoryManager: DirectoryManager = DirectoryManager()
+    var folder: Folder = Folder()
     var observers: [DirectoryViewControllerObserver] = []
     var selectedIndexes: [Int] = []
 
@@ -89,11 +89,14 @@ class DirectoryViewController: UIViewController {
         self.currMode = .view
 
         /// ModelManager
-        self.directoryManager.observer = self
+        self.folder.observedBy(self)
     }
 
     public func configure(directory: Directory) {
-        self.directoryManager = DirectoryManager(current: directory, observer: self)
+        if let folder = directory as? Folder {
+            self.folder = folder
+            // self.folder = DirectoryManager(current: directory, observer: self)
+        }
     }
     
     @IBAction func selectButtonPressed(_ sender: UIBarButtonItem) {
@@ -110,7 +113,7 @@ class DirectoryViewController: UIViewController {
 
     @IBAction func deleteButtonPressed(_ sender: UIBarButtonItem) {
         if currMode == .select {
-            directoryManager.deleteChildren(at: selectedIndexes)
+            folder.deleteChildren(at: selectedIndexes)
             selectedIndexes = []
             currMode = .view
         }
@@ -180,7 +183,7 @@ extension DirectoryViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return directoryManager.children.count
+        return folder.children.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -188,7 +191,7 @@ extension DirectoryViewController: UITableViewDataSource {
                 as? DirectoryTableViewCell else {
             return UITableViewCell()
         }
-        let directory = directoryManager.children[indexPath.row]
+        let directory = folder.children[indexPath.row]
         let directoryType: DirectoryType = (directory is Project) ? .project : .folder
 
         tableCell.configure(
@@ -219,9 +222,9 @@ extension DirectoryViewController: UIPopoverPresentationControllerDelegate {
                 return
             }
 
-            let parentFolder: Folder? = directoryManager.parent as? Folder
+            let parentFolder: Folder? = folder.parent as? Folder
             var childrenFolders: [Folder] = []
-            for (index, child) in directoryManager.children.enumerated() {
+            for (index, child) in folder.children.enumerated() {
                 if !selectedIndexes.contains(index) {
                     if let childFolder = child as? Folder {
                         childrenFolders.append(childFolder)
@@ -238,14 +241,14 @@ extension DirectoryViewController: UIPopoverPresentationControllerDelegate {
 extension DirectoryViewController: DirectoryViewControllerDelegate {
 
     func didSelectedDirectoriesMove(to folder: Folder) {
-        directoryManager.moveChildren(indexes: selectedIndexes, to: folder)
+        folder.moveChildren(indices: selectedIndexes, to: folder)
         currMode = .view
     }
 
 }
 
-extension DirectoryViewController: DirectoryManagerObserver {
-    func didChange() {
+extension DirectoryViewController: FolderObserver {
+    func modelDidChange() {
         tableView.reloadData()
     }
 }

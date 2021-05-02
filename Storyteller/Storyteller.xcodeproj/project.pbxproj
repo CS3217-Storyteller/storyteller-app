@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		89BC1837263E922B00995065 /* PersistedFolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BC1836263E922B00995065 /* PersistedFolder.swift */; };
 		A209157F2606FE3F001A242E /* ProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A209157E2606FE3F001A242E /* ProjectViewController.swift */; };
 		A2091585260703D1001A242E /* SceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2091584260703D1001A242E /* SceneViewController.swift */; };
 		A209158926070553001A242E /* SceneHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A209158826070553001A242E /* SceneHeaderView.swift */; };
@@ -104,6 +105,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		89BC1836263E922B00995065 /* PersistedFolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistedFolder.swift; sourceTree = "<group>"; };
 		A209157E2606FE3F001A242E /* ProjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewController.swift; sourceTree = "<group>"; };
 		A2091584260703D1001A242E /* SceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneViewController.swift; sourceTree = "<group>"; };
 		A209158826070553001A242E /* SceneHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneHeaderView.swift; sourceTree = "<group>"; };
@@ -472,6 +474,7 @@
 			children = (
 				A2235B62263E824C00BA15DE /* PersistedLayer.swift */,
 				A2235B65263E824C00BA15DE /* PersistedLayerComponent.swift */,
+				89BC1836263E922B00995065 /* PersistedFolder.swift */,
 				A2235B64263E824C00BA15DE /* PersistedProject.swift */,
 				A2235B66263E824C00BA15DE /* PersistedScene.swift */,
 				A2235B63263E824C00BA15DE /* PersistedShot.swift */,
@@ -710,6 +713,7 @@
 				B3D7AD6B2615B4C30082D591 /* UIView+showBorder.swift in Sources */,
 				B3C7BF98262C101F0005F159 /* UIImage+scaleToFit.swift in Sources */,
 				A2235BA3263E82E200BA15DE /* ThumbnailMerger.swift in Sources */,
+				89BC1837263E922B00995065 /* PersistedFolder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

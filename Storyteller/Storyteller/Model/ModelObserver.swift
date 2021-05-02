@@ -12,7 +12,6 @@ protocol ModelObserver {
 }
 
 protocol FolderObserver: ModelObserver {
-    var folder: Folder { get set }
 }
 
 protocol ProjectObserver: ModelObserver {

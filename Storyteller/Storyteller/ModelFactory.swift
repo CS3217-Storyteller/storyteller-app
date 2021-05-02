@@ -18,7 +18,7 @@ class ModelFactory {
     private func generateProject(from persistedProject: PersistedProject, withScenes scenes: [Scene]) -> Project {
         let idToScene: [UUID: Scene] = Dictionary(scenes.map { ($0.id, $0) }) { $1 }
         let orderedScenes = persistedProject.scenes.compactMap({ idToScene[$0] })
-        return Project(title: persistedProject.title,
+        return Project(name: persistedProject.name,
                        canvasSize: persistedProject.canvasSize,
                        scenes: orderedScenes,
                        id: persistedProject.id

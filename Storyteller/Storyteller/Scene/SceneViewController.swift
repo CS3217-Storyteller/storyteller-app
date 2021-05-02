@@ -66,7 +66,7 @@ class SceneViewController: UIViewController {
                 $0.observedBy(self)
             }
         }
-        self.navigationItem.title = project.title
+        self.navigationItem.title = project.name
         self.navigationItem.rightBarButtonItem = self.addSceneBarButton
 
         let gesture = UILongPressGestureRecognizer(

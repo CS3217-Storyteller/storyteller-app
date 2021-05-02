@@ -18,15 +18,15 @@ class Folder: Directory {
 
     var parent: Folder?
 
-    var directories: [Directory]
+    var children: [Directory]
 
     var projects: [Project] {
-        directories.compactMap { $0 as? Project }
+        children.compactMap { $0 as? Project }
     }
 
     init() {
         let persistedModelTree = PersistedModelLoader().loadPersistedModels()
-        self.directories = ModelFactory().loadProjectModel(from: persistedModelTree)
+        self.children = ModelFactory().loadProjectModel(from: persistedModelTree)
     }
 
     func loadProject(at index: Int) -> Project? {
@@ -41,13 +41,13 @@ class Folder: Directory {
 
     func addProject(_ project: Project) {
         project.setPersistenceManager(to: self.persistenceManager.getProjectPersistenceManager(of: project.persisted))
-        self.directories.append(project)
+        self.children.append(project)
         self.saveProject(project)
     }
 
     func removeProject(_ project: Project) {
         if let index = self.projects.firstIndex(where: { $0 === project }) {
-            self.directories.remove(at: index)
+            self.children.remove(at: index)
             self.deleteProject(project)
         }
     }
@@ -77,5 +77,25 @@ class Folder: Directory {
 
     func notifyObservers() {
         observers.forEach({ $0.modelDidChange() })
+    }
+
+    func addChildren(_ newChildren: [Directory]) {
+        self.children.append(contentsOf: newChildren)
+    }
+
+    func moveChildren(indices selectedIndices: [Int], to folder: Folder) {
+        let sortedIndices = selectedIndices.sorted(by: { $1 < $0 })
+        let movedChildren: [Directory] = sortedIndices.compactMap {
+            children.indices.contains($0) ? children[$0] : nil
+        }
+        folder.addChildren(movedChildren)
+        sortedIndices.forEach { self.children.remove(at: $0) }
+        notifyObservers()
+    }
+
+    func deleteChildren(at selectedIndices: [Int]) {
+        let sortedIndices = selectedIndices.sorted(by: { $1 < $0 })
+        sortedIndices.forEach { self.children.remove(at: $0) }
+        notifyObservers()
     }
 }
