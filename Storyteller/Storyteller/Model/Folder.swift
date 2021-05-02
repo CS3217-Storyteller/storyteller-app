@@ -177,7 +177,9 @@ class Folder: Directory {
 
     func deleteChildren(at selectedIndices: [Int]) {
         let sortedIndices = selectedIndices.sorted(by: { $1 < $0 })
-        sortedIndices.forEach { self.children.remove(at: $0) }
+        sortedIndices.forEach {
+            self.deleteDirectory(self.children.remove(at: $0))
+        }
         self.saveDirectory(self)
     }
 }

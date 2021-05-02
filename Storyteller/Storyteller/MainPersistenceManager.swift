@@ -76,7 +76,7 @@ class MainPersistenceManager {
                 deleteProject(project)
             }
         }
-        manager.deleteFolder(named: folder.id.uuidString)
+        manager.deleteFile(folder.id.uuidString)
     }
 
     // END: Folder methods
