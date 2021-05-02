@@ -108,9 +108,14 @@ class Project: Directory {
         self.deleteScene(removedScene)
     }
 
-    func setTitle(to name: String) {
+    func renameProject(to name: String) {
         self.name = name
         self.saveProject()
+    }
+
+    func updateDescription(_ directory: Directory? = nil, to description: String) {
+        self.description = description
+        saveProject()
     }
 
     func duplicate() -> Project {
