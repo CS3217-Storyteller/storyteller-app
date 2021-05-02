@@ -11,8 +11,8 @@ protocol ModelObserver {
     func modelDidChange()
 }
 
-protocol ModelManagerObserver: ModelObserver {
-    var modelManager: ModelManager { get set }
+protocol FolderObserver: ModelObserver {
+    var folder: Folder { get set }
 }
 
 protocol ProjectObserver: ModelObserver {
