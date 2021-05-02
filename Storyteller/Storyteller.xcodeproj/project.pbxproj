@@ -35,7 +35,6 @@
 		A2235B7B263E826000BA15DE /* ModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B73263E826000BA15DE /* ModelFactory.swift */; };
 		A2235B94263E82E200BA15DE /* ModelObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B7C263E82E100BA15DE /* ModelObserver.swift */; };
 		A2235B95263E82E200BA15DE /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B7D263E82E100BA15DE /* Scene.swift */; };
-		A2235B97263E82E200BA15DE /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B7F263E82E200BA15DE /* ModelManager.swift */; };
 		A2235B98263E82E200BA15DE /* Shot.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B80263E82E200BA15DE /* Shot.swift */; };
 		A2235B99263E82E200BA15DE /* Thumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B82263E82E200BA15DE /* Thumbnail.swift */; };
 		A2235B9A263E82E200BA15DE /* Thumbnailable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2235B83263E82E200BA15DE /* Thumbnailable.swift */; };
@@ -133,7 +132,6 @@
 		A2235B73263E826000BA15DE /* ModelFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelFactory.swift; sourceTree = "<group>"; };
 		A2235B7C263E82E100BA15DE /* ModelObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelObserver.swift; sourceTree = "<group>"; };
 		A2235B7D263E82E100BA15DE /* Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
-		A2235B7F263E82E200BA15DE /* ModelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
 		A2235B80263E82E200BA15DE /* Shot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shot.swift; sourceTree = "<group>"; };
 		A2235B82263E82E200BA15DE /* Thumbnail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Thumbnail.swift; sourceTree = "<group>"; };
 		A2235B83263E82E200BA15DE /* Thumbnailable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Thumbnailable.swift; sourceTree = "<group>"; };
@@ -170,7 +168,7 @@
 		A2235BD0263E851F00BA15DE /* Directory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Directory.swift; sourceTree = "<group>"; };
 		A2235BD2263E854800BA15DE /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		A2235BD6263E860700BA15DE /* Folder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
-		A2235BD8263E861600BA15DE /* Project.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Project.swift; path = ../../../../../../.Trash/Project.swift; sourceTree = "<group>"; };
+		A2235BD8263E861600BA15DE /* Project.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		A24F62F22600CC7300FC7CD4 /* Storyteller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Storyteller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A24F62F52600CC7300FC7CD4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A24F62F72600CC7300FC7CD4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -452,7 +450,6 @@
 				A2235BD6263E860700BA15DE /* Folder.swift */,
 				A2235BD2263E854800BA15DE /* File.swift */,
 				A2235B93263E82E200BA15DE /* Color.swift */,
-				A2235B7F263E82E200BA15DE /* ModelManager.swift */,
 				A2235BD8263E861600BA15DE /* Project.swift */,
 				A2235B7C263E82E100BA15DE /* ModelObserver.swift */,
 				A2235B7D263E82E100BA15DE /* Scene.swift */,
@@ -678,7 +675,6 @@
 				A2235B74263E826000BA15DE /* PersistedModelLoader.swift in Sources */,
 				A2235BA1263E82E200BA15DE /* RedOnionSkinMerger.swift in Sources */,
 				A2235BC3263E833800BA15DE /* SelectableView.swift in Sources */,
-				A2235B97263E82E200BA15DE /* ModelManager.swift in Sources */,
 				A2235B6B263E824C00BA15DE /* PersistedScene.swift in Sources */,
 				A2235BC6263E833800BA15DE /* EditingMode.swift in Sources */,
 				A2F2C8962607634800FD4FF6 /* AddShotViewCell.swift in Sources */,
