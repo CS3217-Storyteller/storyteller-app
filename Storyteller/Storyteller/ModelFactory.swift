@@ -81,4 +81,36 @@ class ModelFactory {
         initializePersistenceManagers(for: projects)
         return projects
     }
+
+    func loadDirectoryModel(from directories: [PersistedDirectory],
+                            withRootIds rootIds: [UUID],
+                            withProjects projects: [Project]) -> [Directory] {
+        let idToProjects: [UUID: Project] = Dictionary(projects.map { ($0.id, $0) }) { $1 }
+        let idToPersistedDirectory: [UUID: PersistedDirectory] = Dictionary(directories.map { ($0.id, $0) }) { $1 }
+        let rootDirectories: [PersistedDirectory] = rootIds.compactMap { idToPersistedDirectory[$0] }
+        return rootDirectories.compactMap {
+            buildDirectory(withRoot: $0, withSubDirectories: idToPersistedDirectory, withProjects: idToProjects)
+        }
+    }
+
+    private func buildDirectory(withRoot rootDirectory: PersistedDirectory,
+                                withSubDirectories subDirectories: [UUID: PersistedDirectory],
+                                withProjects projects: [UUID: Project]) -> Directory? {
+        if let project = rootDirectory as? PersistedProject {
+            return projects[project.id]
+        } else if let folder = rootDirectory as? PersistedFolder {
+            let subPersistedDirectories = folder.children.compactMap {
+                subDirectories[$0]
+            }
+            let subDirectories = subPersistedDirectories.compactMap {
+                buildDirectory(withRoot: $0, withSubDirectories: subDirectories, withProjects: projects)
+            }
+            return Folder(name: folder.name,
+                          description: folder.description,
+                          dateAdded: folder.dateAdded,
+                          dateUpdated: folder.dateUpdated,
+                          children: subDirectories)
+        }
+        return nil
+    }
 }

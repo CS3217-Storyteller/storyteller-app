@@ -28,7 +28,12 @@ class Folder: Directory {
         PersistedFolder(self)
     }
 
-    init(name: String, description: String, id: UUID = UUID(), dateAdded: Date = Date(), dateUpdated: Date = Date()) {
+    init(name: String,
+         description: String,
+         id: UUID = UUID(),
+         dateAdded: Date = Date(),
+         dateUpdated: Date = Date(),
+         children: [Directory] = [Directory]()) {
         let persistedModelTree = PersistedModelLoader().loadPersistedModels()
         self.children = ModelFactory().loadProjectModel(from: persistedModelTree)
         self.description = description
@@ -36,6 +41,7 @@ class Folder: Directory {
         self.name = name
         self.dateAdded = dateAdded
         self.dateUpdated = dateUpdated
+        self.children = children
     }
 
     func loadProject(at index: Int) -> Project? {
