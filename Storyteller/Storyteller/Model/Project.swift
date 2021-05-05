@@ -84,6 +84,7 @@ class Project: Directory {
     }
 
     private func saveProject() {
+        self.dateUpdated = Date()
         self.persistenceManager?.saveProject(self.persisted)
         self.notifyObservers()
     }

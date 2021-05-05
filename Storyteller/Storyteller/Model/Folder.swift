@@ -40,7 +40,6 @@ class Folder: Directory {
         let directories = ModelFactory().loadDirectoryModel(from: persistedDirectories,
                                                             withRootId: rootId,
                                                             withProjects: projects)
-        print("directories:", directories)
 
         guard let folder = directories as? Folder else {
             return Folder(name: "Root", description: "This is a root folder")
@@ -184,6 +183,11 @@ class Folder: Directory {
         sortedIndices.forEach {
             self.deleteDirectory(self.children.remove(at: $0))
         }
+        self.saveDirectory()
+    }
+
+    func swapChildrenAt(index1: Int, index2: Int) {
+        self.children.swapAt(index1, index2)
         self.saveDirectory()
     }
 }

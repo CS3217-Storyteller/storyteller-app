@@ -235,7 +235,7 @@ extension DirectoryViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        self.folder.children.swapAt(sourceIndexPath.row, destinationIndexPath.row)
+        self.folder.swapChildrenAt(index1: sourceIndexPath.row, index2: destinationIndexPath.row)
     }
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

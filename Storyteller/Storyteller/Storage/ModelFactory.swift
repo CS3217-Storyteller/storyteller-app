@@ -21,16 +21,14 @@ class ModelFactory {
         return Project(name: persistedProject.name,
                        canvasSize: persistedProject.canvasSize,
                        scenes: orderedScenes,
-                       id: persistedProject.id
+                       id: persistedProject.id,
+                       dateAdded: persistedProject.dateAdded,
+                       dateUpdated: persistedProject.dateUpdated
         )
     }
 
     private func generateScene(from persistedScene: PersistedScene, withShots shots: [Shot]) -> Scene {
         let idToShot: [UUID: Shot] = Dictionary(shots.map { ($0.id, $0) }) { $1 }
-//        return Scene(canvasSize: persistedScene.canvasSize,
-//                     shots: persistedScene.shots.compactMap({ idToShot[$0] }),
-//                     id: persistedScene.id
-//        )
         return Scene(
             name: persistedScene.name,
             canvasSize: persistedScene.canvasSize,
