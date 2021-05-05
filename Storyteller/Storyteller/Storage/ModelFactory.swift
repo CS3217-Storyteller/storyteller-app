@@ -27,9 +27,18 @@ class ModelFactory {
 
     private func generateScene(from persistedScene: PersistedScene, withShots shots: [Shot]) -> Scene {
         let idToShot: [UUID: Shot] = Dictionary(shots.map { ($0.id, $0) }) { $1 }
-        return Scene(canvasSize: persistedScene.canvasSize,
-                     shots: persistedScene.shots.compactMap({ idToShot[$0] }),
-                     id: persistedScene.id
+//        return Scene(canvasSize: persistedScene.canvasSize,
+//                     shots: persistedScene.shots.compactMap({ idToShot[$0] }),
+//                     id: persistedScene.id
+//        )
+        return Scene(
+            name: persistedScene.name,
+            canvasSize: persistedScene.canvasSize,
+            description: persistedScene.description,
+            id: persistedScene.id,
+            shots:  persistedScene.shots.compactMap({ idToShot[$0] }),
+            dateAdded: persistedScene.dateAdded,
+            dateUpdated: persistedScene.dateUpdated
         )
     }
 

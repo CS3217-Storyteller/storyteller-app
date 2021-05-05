@@ -93,7 +93,16 @@ class Project: Directory {
             scene.setPersistenceManager(to: persistenceManager
                                         .getScenePersistenceManager(of: scene.persisted))
         }
-        self.scenes.append(scene)
+        self.scenes.insert(scene, at: 0)
+        self.saveScene(scene)
+    }
+
+    func insertScene(_ scene: Scene, at index: Int) {
+        if let persistenceManager = persistenceManager {
+            scene.setPersistenceManager(to: persistenceManager
+                                        .getScenePersistenceManager(of: scene.persisted))
+        }
+        self.scenes.insert(scene, at: index)
         self.saveScene(scene)
     }
 

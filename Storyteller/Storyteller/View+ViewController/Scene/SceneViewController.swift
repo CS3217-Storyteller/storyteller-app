@@ -100,7 +100,7 @@ class SceneViewController: UIViewController {
             return
         }
 
-        let newScene = Scene(canvasSize: project.canvasSize)
+        let newScene = Scene(name: "new", canvasSize: Constants.defaultCanvasSize)
         project.addScene(newScene)
         self.collectionView.reloadData()
     }

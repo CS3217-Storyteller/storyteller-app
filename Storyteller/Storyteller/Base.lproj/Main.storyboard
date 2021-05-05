@@ -10,6 +10,40 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Project Scene View Controller-->
+        <scene sceneID="n8f-Xp-BSc">
+            <objects>
+                <viewController id="oAy-2B-OML" customClass="ProjectSceneViewController" customModule="Storyteller" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1RZ-Ks-JLb">
+                        <rect key="frame" x="0.0" y="0.0" width="1194" height="834"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="UaM-v9-QKu">
+                                <rect key="frame" x="0.0" y="50" width="1194" height="784"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="jPN-8s-BTa"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="UaM-v9-QKu" firstAttribute="leading" secondItem="jPN-8s-BTa" secondAttribute="leading" id="9XD-PN-cDi"/>
+                            <constraint firstItem="jPN-8s-BTa" firstAttribute="bottom" secondItem="UaM-v9-QKu" secondAttribute="bottom" id="CV4-im-2UG"/>
+                            <constraint firstItem="jPN-8s-BTa" firstAttribute="trailing" secondItem="UaM-v9-QKu" secondAttribute="trailing" id="GBJ-cx-sxf"/>
+                            <constraint firstItem="UaM-v9-QKu" firstAttribute="top" secondItem="jPN-8s-BTa" secondAttribute="top" id="zj1-dW-LdT"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="9Dw-Lh-Cmm">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="3df-ZL-9Yj"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="sceneTableView" destination="UaM-v9-QKu" id="kNL-Wn-g4d"/>
+                        <segue destination="mXm-tZ-pGV" kind="show" identifier="ShotDesignerViewControllerSegue" id="KQM-Gp-vKE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fi9-kh-oaQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3488.9447236180904" y="-621.58273381294964"/>
+        </scene>
         <!--Directory View Controller-->
         <scene sceneID="DAH-7e-4Qa">
             <objects>
@@ -96,6 +130,7 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="iZg-wq-egy">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="0kc-nL-MXy"/>
                         <leftBarButtonItems>
                             <barButtonItem image="arrow.backward" catalog="system" id="pXO-5J-v2X">
                                 <connections>
@@ -127,14 +162,12 @@
                                     </segue>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem image="magnifyingglass" catalog="system" id="fA5-s5-iiB" userLabel="Search"/>
-                            <barButtonItem image="square.2.stack.3d" catalog="system" id="WX5-ta-Vkx"/>
                             <barButtonItem image="hand.point.up.left.fill" catalog="system" id="fJh-IE-gK2" userLabel="Select">
                                 <connections>
                                     <action selector="selectButtonPressed:" destination="33D-pj-Ovo" id="PYb-41-vXN"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem image="grid" catalog="system" id="KjH-Bw-FWe" userLabel="Rearrange">
+                            <barButtonItem image="filemenu.and.cursorarrow.rtl" catalog="system" id="KjH-Bw-FWe" userLabel="Rearrange">
                                 <connections>
                                     <action selector="rearrangeButtonPressed:" destination="33D-pj-Ovo" id="fAd-26-VXV"/>
                                 </connections>
@@ -148,12 +181,11 @@
                         <outlet property="doneButton" destination="kdw-xC-unf" id="OBH-ag-TPz"/>
                         <outlet property="moveButton" destination="ggp-Vz-oh2" id="RvE-pi-eM8"/>
                         <outlet property="rearrangeButton" destination="KjH-Bw-FWe" id="vok-bb-Jht"/>
-                        <outlet property="searchButton" destination="fA5-s5-iiB" id="qV6-Wq-yqE"/>
                         <outlet property="selectButton" destination="fJh-IE-gK2" id="I15-qc-YSn"/>
-                        <outlet property="sortButton" destination="WX5-ta-Vkx" id="eKH-fD-Tzg"/>
                         <outlet property="tableHeaderView" destination="GNo-v5-I2H" id="wWE-r2-Jhc"/>
                         <outlet property="tableView" destination="wnw-ic-ucp" id="RxS-Ut-0hR"/>
                         <segue destination="qnF-db-jqW" kind="show" id="mlB-q4-xKf"/>
+                        <segue destination="oAy-2B-OML" kind="show" identifier="ProjectSceneViewControllerSegue" id="7QD-46-1jq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KXt-fB-kFW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -178,10 +210,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="AYk-ai-kak">
-                                <rect key="frame" x="20" y="145" width="664" height="500"/>
+                                <rect key="frame" x="20" y="145" width="664" height="300"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="500" id="fK3-QL-L9k"/>
+                                    <constraint firstAttribute="height" constant="300" id="fK3-QL-L9k"/>
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MoveCell" id="W6F-94-eaQ">
@@ -195,7 +227,7 @@
                                 </prototypes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OtR-en-jFP">
-                                <rect key="frame" x="295" y="665" width="114" height="50"/>
+                                <rect key="frame" x="295" y="465" width="114" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="yQc-gf-ma3"/>
                                 </constraints>
@@ -825,16 +857,18 @@
             <point key="canvasLocation" x="3249" y="837"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="KQM-Gp-vKE"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="20x20px-grid" width="1920" height="1138"/>
         <image name="arrow.backward" catalog="system" width="128" height="98"/>
         <image name="arrow.right" catalog="system" width="128" height="98"/>
         <image name="checkmark.square" catalog="system" width="128" height="114"/>
         <image name="cursorarrow.and.square.on.square.dashed" catalog="system" width="128" height="119"/>
-        <image name="grid" catalog="system" width="128" height="112"/>
+        <image name="filemenu.and.cursorarrow.rtl" catalog="system" width="128" height="88"/>
         <image name="hand.point.up.left.fill" catalog="system" width="120" height="128"/>
         <image name="lock.square" catalog="system" width="128" height="114"/>
-        <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="minus.square" catalog="system" width="128" height="114"/>
         <image name="move.3d" catalog="system" width="128" height="106"/>
         <image name="pencil.tip.crop.circle" catalog="system" width="128" height="121"/>
@@ -843,7 +877,6 @@
         <image name="plus.rectangle.on.rectangle" catalog="system" width="128" height="96"/>
         <image name="plus.square.on.square" catalog="system" width="128" height="113"/>
         <image name="rectangle.center.inset.fill" catalog="system" width="128" height="93"/>
-        <image name="square.2.stack.3d" catalog="system" width="128" height="118"/>
         <image name="square.3.stack.3d.top.fill" catalog="system" width="128" height="124"/>
         <image name="square.on.square.squareshape.controlhandles" catalog="system" width="128" height="116"/>
         <image name="square.stack" catalog="system" width="113" height="128"/>

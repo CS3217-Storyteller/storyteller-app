@@ -7,9 +7,13 @@
 import PencilKit
 
 class Scene {
-    let canvasSize: CGSize
-    var shots: [Shot] = [Shot]()
     let id: UUID
+    var name: String
+    let canvasSize: CGSize
+    var description: String
+    let dateAdded: Date
+    var dateUpdated: Date
+    var shots: [Shot] = [Shot]()
     private var persistenceManager: ScenePersistenceManager?
     private var observers = [SceneObserver]()
 
@@ -25,11 +29,25 @@ class Scene {
         observers.forEach({ $0.modelDidChange() })
     }
 
-    init(canvasSize: CGSize, shots: [Shot] = [], id: UUID = UUID()) {
-        self.canvasSize = canvasSize
-        self.shots = shots
+
+    init(
+        name: String,
+        canvasSize: CGSize,
+        description: String = "",
+        id: UUID = UUID(),
+        shots: [Shot] = [],
+        dateAdded: Date = Date(),
+        dateUpdated: Date = Date()
+    ) {
         self.id = id
+        self.name = name
+        self.canvasSize = canvasSize
+        self.description = description
+        self.dateUpdated = dateUpdated
+        self.dateAdded = dateAdded
+        self.shots = shots
     }
+
 
     func loadShot(at index: Int) -> Shot? {
         guard shots.indices.contains(index) else {
@@ -48,7 +66,16 @@ class Scene {
     }
 
     private func saveScene() {
+        self.updateDate()
+
+        print(self.dateUpdated)
+
         self.persistenceManager?.saveScene(self.persisted)
+        self.notifyObservers()
+    }
+
+    private func updateDate() {
+        self.dateUpdated = Date()
     }
 
     private func saveShot(_ shot: Shot) {
@@ -91,7 +118,9 @@ class Scene {
 
     func duplicate() -> Scene {
         Scene(
+            name: name,
             canvasSize: canvasSize,
+            description: description,
             shots: shots.map({ $0.duplicate() })
         )
     }
@@ -102,5 +131,15 @@ class Scene {
             return nil
         }
         return loadShot(at: currentIndex + index)
+    }
+
+    func rename(to name: String) {
+        self.name = name
+        self.saveScene()
+    }
+
+    func updateDescription(to description: String) {
+        self.description = description
+        self.saveScene()
     }
 }

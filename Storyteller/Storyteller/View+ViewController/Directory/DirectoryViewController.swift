@@ -11,6 +11,7 @@ class DirectoryViewController: UIViewController {
 
     static let addPopoverSegueIdentifier = "DirectoryAddPopoverSegue"
     static let moveModalSegueIdentifier = "DirectoryMoveModalSegue"
+    static let projectSceneViewControllerSegue = "ProjectSceneViewControllerSegue"
     static let defaultFolderName = "Storyteller"
     static let defaultFolderDescription = "Storyteller"
 
@@ -21,8 +22,6 @@ class DirectoryViewController: UIViewController {
     @IBOutlet weak var moveButton: UIBarButtonItem!
     @IBOutlet weak var rearrangeButton: UIBarButtonItem!
     @IBOutlet weak var selectButton: UIBarButtonItem!
-    @IBOutlet weak var sortButton: UIBarButtonItem!
-    @IBOutlet weak var searchButton: UIBarButtonItem!
     @IBOutlet weak var addButton: UIBarButtonItem!
     @IBOutlet weak var doneButton: UIBarButtonItem!
 
@@ -35,40 +34,49 @@ class DirectoryViewController: UIViewController {
             switch currMode {
             case .view:
                 deleteButton.image = nil
+                deleteButton.isEnabled = false
                 moveButton.image = nil
-                rearrangeButton.image = UIImage(systemName: "grid")
+                moveButton.isEnabled = false
+                rearrangeButton.image = UIImage(systemName: "filemenu.and.cursorarrow.rtl")
+                rearrangeButton.isEnabled = true
                 selectButton.image = UIImage(systemName: "hand.point.up.left.fill")
-                sortButton.image = UIImage(systemName: "square.2.stack.3d")
-                searchButton.image = UIImage(systemName: "magnifyingglass")
+                selectButton.isEnabled = true
                 addButton.image = UIImage(systemName: "plus")
+                addButton.isEnabled = true
                 doneButton.title = nil
-
+                doneButton.isEnabled = false
                 tableView.isEditing = false
                 selectedIndexes = []
                 observers.forEach({ $0.didModeChange(to: .view) })
             case .rearrange:
                 deleteButton.image = nil
+                deleteButton.isEnabled = false
                 moveButton.image = nil
+                moveButton.isEnabled = false
                 rearrangeButton.image = nil
+                rearrangeButton.isEnabled = false
                 selectButton.image = nil
-                sortButton.image = nil
-                searchButton.image = nil
+                selectButton.isEnabled = false
                 addButton.image = nil
+                addButton.isEnabled = false
                 doneButton.title = "Done"
-
+                doneButton.isEnabled = true
                 tableView.isEditing = true
                 selectedIndexes = []
                 self.observers.forEach({ $0.didModeChange(to: .rearrange) })
             case .select:
                 deleteButton.image = UIImage(systemName: "trash")
+                deleteButton.isEnabled = true
                 moveButton.image = UIImage(systemName: "move.3d")
+                moveButton.isEnabled = true
                 rearrangeButton.image = nil
+                rearrangeButton.isEnabled = false
                 selectButton.image = nil
-                sortButton.image = nil
-                searchButton.image = nil
+                selectButton.isEnabled = false
                 addButton.image = nil
+                addButton.isEnabled = false
                 doneButton.title = "Done"
-
+                doneButton.isEnabled = true
                 tableView.isEditing = false
                 selectedIndexes = []
                 self.observers.forEach({ $0.didModeChange(to: .select) })
@@ -280,13 +288,7 @@ extension DirectoryViewController: UITableViewDataSource {
             }
 
             else if let targetProject = targetDirectory as? Project {
-                guard let sceneViewController = self.storyboard?
-                        .instantiateViewController(identifier: "SceneViewController") as? SceneViewController else {
-                    return
-                }
-                sceneViewController.modalPresentationStyle = .fullScreen
-                sceneViewController.setProject(to: targetProject)
-                self.navigationController?.pushViewController(sceneViewController, animated: true)
+                self.performSegue(withIdentifier: DirectoryViewController.projectSceneViewControllerSegue, sender: targetProject)
             }
 
 
@@ -325,7 +327,7 @@ extension DirectoryViewController: UITableViewDataSource {
 extension DirectoryViewController: UIPopoverPresentationControllerDelegate {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == DirectoryViewController.addPopoverSegueIdentifier {
+        if segue.identifier == DirectoryViewController.addPopoverSegueIdentifier && self.currMode == .view {
             guard let addPopoverViewController = segue.destination as? DirectoryAddPopoverViewController else {
                 return
             }
@@ -336,6 +338,7 @@ extension DirectoryViewController: UIPopoverPresentationControllerDelegate {
         }
 
         if segue.identifier == DirectoryViewController.moveModalSegueIdentifier {
+
             guard let moveModalViewController = segue.destination as? DirectoryMoveModalViewController else {
                 return
             }
@@ -350,6 +353,20 @@ extension DirectoryViewController: UIPopoverPresentationControllerDelegate {
                 }
             }
             moveModalViewController.configure(parentFolder: parentFolder, childrenFolders:childrenFolders, delegate: self)
+        }
+
+        if segue.identifier == DirectoryViewController.projectSceneViewControllerSegue {
+            guard let projectSceneViewController = segue.destination as? ProjectSceneViewController else {
+                return
+            }
+
+            guard let project = sender as? Project else {
+                return
+            }
+
+            projectSceneViewController.set(project: project)
+            projectSceneViewController.modalPresentationStyle = .fullScreen
+
         }
 
     }

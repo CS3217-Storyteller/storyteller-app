@@ -17,20 +17,20 @@ import Foundation
 import Foundation
 
 struct PersistedFolder: Codable, PersistedDirectory {
+    var id: UUID
     var name: String
     var description: String
     var dateAdded: Date
     var dateUpdated: Date
     var children: [UUID]
-    var id: UUID
 
     init(_ folder: Folder) {
+        self.id = folder.id
         self.name = folder.name
         self.description = folder.description
         self.dateAdded = folder.dateAdded
         self.dateUpdated = folder.dateUpdated
         self.children = folder.children.map { $0.id }
-        self.id = folder.id
     }
 }
 
